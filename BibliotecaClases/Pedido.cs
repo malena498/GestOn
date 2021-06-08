@@ -11,8 +11,8 @@ namespace BibliotecaClases
     public class Pedido
     {
         [Key]
-        private int IdPedido { get; set; }
+        public int IdPedido { get; set; }
 
-        private DateTime FechaEntrega { get; set; }
+        public DateTime FechaEntrega { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace BibliotecaClases
     public class Usuario
     {
         [Key]
-        private int id { get; set; }
-        private String NombreUsuario { get; set; }
+        public int id { get; set; }
+        public String NombreUsuario { get; set; }
     }
 }
