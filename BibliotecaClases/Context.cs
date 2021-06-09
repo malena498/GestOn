@@ -13,6 +13,11 @@ namespace BibliotecaClases
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Documento> Documentos { get; set; }
+        public DbSet<Oferta> Ofertas { get; set; }
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Nivel> Niveles { get; set; }
+
 
         public Context()
              : base("GestOn")
