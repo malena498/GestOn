@@ -9,5 +9,6 @@ namespace BibliotecaClases
     class Context: DbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
     }
 }
