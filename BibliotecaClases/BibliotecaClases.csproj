@@ -57,6 +57,7 @@
     <Compile Include="Clases\Oferta.cs" />
     <Compile Include="Clases\Pedido.cs" />
     <Compile Include="Clases\Producto.cs" />
+    <Compile Include="Persistencias\PersistenciaUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Clases\Sistema.cs" />
     <Compile Include="Clases\Usuario.cs" />
@@ -65,9 +66,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Persistencias\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
