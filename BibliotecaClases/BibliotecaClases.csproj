@@ -51,19 +51,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
-    <Compile Include="Documento.cs" />
+    <Compile Include="Clases\Documento.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Nivel.cs" />
-    <Compile Include="Oferta.cs" />
-    <Compile Include="Pedido.cs" />
-    <Compile Include="Producto.cs" />
+    <Compile Include="Clases\Nivel.cs" />
+    <Compile Include="Clases\Oferta.cs" />
+    <Compile Include="Clases\Pedido.cs" />
+    <Compile Include="Clases\Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sistema.cs" />
-    <Compile Include="Usuario.cs" />
+    <Compile Include="Clases\Sistema.cs" />
+    <Compile Include="Clases\Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Persistencias\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
