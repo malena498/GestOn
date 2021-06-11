@@ -21,6 +21,10 @@ namespace BibliotecaClases
 
         public String Direccion { get; set; }
 
+        public String Descripcion { get; set; }
+
+        public List<Producto> productos { get; set; }
+
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public Usuario usuario { get; set; }
