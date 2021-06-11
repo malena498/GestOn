@@ -21,8 +21,8 @@ namespace BibliotecaClases
 
         public String Direccion { get; set; }
 
-        [ForeignKey("Usuario")]
-        public int IdUsuario { get; set; }
+        //[ForeignKey("UserId")]
+        //public int IdUsuario { get; set; }
 
     }
 }

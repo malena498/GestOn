@@ -13,7 +13,7 @@ namespace BibliotecaClases
         [Key]
         public int ProductoId { get; set; }
 
-        public String ProductoNombre{get;set;}
+        public String ProductoNombre{ get;set; }
 
         public int ProductoPrecioVenta { get; set; }
 
