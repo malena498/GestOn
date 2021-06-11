@@ -14,5 +14,15 @@ namespace BibliotecaClases
         public int IdPedido { get; set; }
 
         public DateTime FechaEntrega { get; set; }
+
+        public DateTime FechaPedido { get; set; }
+
+        public bool Activo { get; set; }
+
+        public String Direccion { get; set; }
+
+        [ForeignKey("Usuario")]
+        public int IdUsuario { get; set; }
+
     }
 }
