@@ -14,7 +14,7 @@ namespace GestOn2.ABMS
         {
 
             //Obtengo la fecha del sistema, ya que la uso para cargarla en la fecha que se hace el pedido
-            txtFechaPedido.Text = DateTime.Now.ToLongTimeString();
+            txtFechaPedido.Text = DateTime.Now.ToString();
         }
 
         protected void btnNuevoPedido_Click(object sender, EventArgs e)
