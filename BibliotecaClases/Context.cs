@@ -29,7 +29,7 @@ namespace BibliotecaClases
             try
             {
                 //Local 
-                String baseConnectionString = @"Data Source=TPZPC116;user id=sa;password=50983019Al;MultipleActiveResultSets=True";
+                String baseConnectionString = @"Data Source=LAPTOP-9SVDO2G2\SQLEXPRESS;user id=sa;password=123456789;MultipleActiveResultSets=True";
                 Database.DefaultConnectionFactory = new System.Data.Entity.Infrastructure.SqlConnectionFactory(baseConnectionString);
             }
             catch (Exception ex)

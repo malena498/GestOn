@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clases\Imagen.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Clases\Documento.cs" />
     <Compile Include="Migrations\Configuration.cs" />
