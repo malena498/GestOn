@@ -38,6 +38,7 @@ namespace GestOn2.ABMS
             lblDireccion.Text = txtDireccion.Text;
             lblDescripcion.Text = Descripcion;
             lblId.Text = idUser.ToString();
+            lblFecha.Text = txtFechaPedido.Text;
 
         }
     }
