@@ -12,6 +12,9 @@ namespace BibliotecaClases
     {
         [Key]
         public int IdNivel { get; set; }
-
+        public bool Activo { get; set; }
+        public String NombreNivel { get; set; }
+        public bool UserAdmin { get; set; }
+        public bool UserEstandar { get; set; }
     }
 }

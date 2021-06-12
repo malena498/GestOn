@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 
 
-namespace BibliotecaClases
+namespace BibliotecaClases.Clases
 {
     public class Oferta
     {
@@ -18,8 +18,9 @@ namespace BibliotecaClases
         public DateTime OfertaFechaDesde { get; set; }
         public DateTime OfertaFechaHasta { get; set; }
 
-        //public virtual List<Imagen> Imagenes { get; set; }
-
+        public virtual List<Imagen> Imagenes { get; set; }
+        public String OfertaDescripcion { get; set; }
+        public decimal OfertaPrecio { get; set; }
 
     }
 

@@ -5,7 +5,7 @@ using System.Text;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.IO;
-
+using BibliotecaClases.Clases;
 
 namespace BibliotecaClases
 {
@@ -17,6 +17,8 @@ namespace BibliotecaClases
         public DbSet<Oferta> Ofertas { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Nivel> Niveles { get; set; }
+        public DbSet<Imagen> Imagenes { get; set; }
+
 
 
         public Context()
@@ -36,6 +38,9 @@ namespace BibliotecaClases
             {
             }
         }
+        public Context(String baseDatos) : base(baseDatos) { }
+
+
         //Mapeo de relacion entre *  a  * ( Producto con Pedido)
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
