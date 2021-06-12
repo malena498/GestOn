@@ -23,7 +23,7 @@ namespace BibliotecaClases
 
         public String Descripcion { get; set; }
 
-        public List<Producto> productos { get; set; }
+        public virtual List<Producto> productos { get; set; }
 
         public int UserId { get; set; }
         [ForeignKey("UserId")]

@@ -27,16 +27,25 @@ namespace BibliotecaClases
         public static void ConfigureForSqlServer()
         {
             try
-            {//Local 
-                String baseConnectionString = @"Data Source=LAPTOP-9SVDO2G2\SQLEXPRESS;user id=sa;password=123456789;MultipleActiveResultSets=True";
-
-
+            {
+                //Local 
+                String baseConnectionString = @"Data Source=TPZPC116;user id=sa;password=50983019Al;MultipleActiveResultSets=True";
                 Database.DefaultConnectionFactory = new System.Data.Entity.Infrastructure.SqlConnectionFactory(baseConnectionString);
             }
             catch (Exception ex)
             {
-
             }
+        }
+        //Mapeo de relacion entre *  a  * ( Producto con Pedido)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Entity<Pedido>().HasMany(p => p.productos).WithMany().Map(mc =>
+            {
+                mc.ToTable("ProductoPedido");
+                mc.MapLeftKey("IdPedido");
+                mc.MapRightKey("ProductoId");
+            });
         }
     }
 }
