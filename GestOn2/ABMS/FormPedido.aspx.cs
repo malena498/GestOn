@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using BibliotecaClases;
 
@@ -20,8 +21,8 @@ namespace GestOn2.ABMS
         protected void btnNuevoPedido_Click(object sender, EventArgs e)
         {
             //Creo las variables donde voy a guardar los valores
-            String Descripcion;
-            String Direccion;
+            ;
+            string Direccion;
             DateTime FechaPedido;
             int IdPedido;
             int idUser = 1;
@@ -30,6 +31,13 @@ namespace GestOn2.ABMS
             //Encapsulo para guardar
             Pedido p = new Pedido();
             txtFechaPedido.Text = DateTime.Now.ToLongTimeString();
+
+            /*HtmlTextArea Description = (HtmlTextArea)FindControl("txtDescripcion");
+            string Descripcion = Description.Value;*/
+            string Descripcion = txtDescripcion.InnerText;
+            lblDireccion.Text = txtDireccion.Text;
+            lblDescripcion.Text = Descripcion;
+            lblId.Text = idUser.ToString();
 
         }
     }

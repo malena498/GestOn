@@ -22,17 +22,30 @@
         <br />
         <br />
         <asp:Label ID="Label4" runat="server" Text="Dirección:" Width="120px"></asp:Label>
-        <asp:TextBox ID="TextBox2" runat="server" style="margin-left: 0px" Width="200px"></asp:TextBox>
+        <asp:TextBox ID="txtDireccion" runat="server" style="margin-left: 0px" Width="200px"></asp:TextBox>
+        <asp:Label ID="lblDescripcion" runat="server" Text="Label"></asp:Label>
         <br />
         <br />
         <asp:Label ID="Label5" runat="server" Text="Descripción:" Width="120px"></asp:Label>
-        <textarea id="txtDescripcion" name="S1"></textarea><br />
+        <textarea id="txtDescripcion" runat="server" name="S1"></textarea><br />
 <br />
 <br />
         <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" style="margin-left: 122px" Text="Generar pedido" />
         <br />
         <br />
+        <asp:Label ID="lblId" runat="server"></asp:Label>
         <br />
+        <br />
+        <asp:Label ID="lblFecha" runat="server"></asp:Label>
+        <br />
+        <br />
+        <asp:Label ID="lblDireccion" runat="server"></asp:Label>
+        <br />
+        <br />
+        <asp:Label ID="Label11" runat="server" Text="Label"></asp:Label>
+        <br />
+        <br />
+        <asp:Label ID="Label10" runat="server" Text="Label"></asp:Label>
         <br />
     </ContentTemplate>
 </asp:UpdatePanel>
