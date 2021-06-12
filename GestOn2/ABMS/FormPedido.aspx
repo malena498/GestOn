@@ -45,7 +45,7 @@
         <asp:Label ID="Label11" runat="server" Text="Label"></asp:Label>
         <br />
         <br />
-        <asp:Label ID="Label10" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="lblResultado" runat="server" ForeColor="Red"></asp:Label>
         <br />
     </ContentTemplate>
 </asp:UpdatePanel>
