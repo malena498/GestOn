@@ -73,12 +73,12 @@ namespace GestOn2.ABMS
             }
             
         }
-        //protected void CalculoPrecioVenta(decimal precioCompra) {
-        //    decimal pventa = precioCompra  + ((precioCompra * 025) / 100);
-        //    string resultado = pventa.ToString();
-        //    String substring = resultado.Substring(0, 5);
-        //    lblprice.Text = substring;
-        //}
+        protected void CalculoPrecioVenta(decimal precioCompra) {
+            decimal pventa = precioCompra  + ((precioCompra * 025) / 100);
+            string resultado = pventa.ToString();
+            String substring = resultado.Substring(0, 5);
+            lblprice.Text = substring;
+        }
         protected void TimerMensajes_Tick(object sender, EventArgs e)
         {
             lblInformativo.Visible = false;
