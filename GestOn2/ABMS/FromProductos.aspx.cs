@@ -6,14 +6,20 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BibliotecaClases;
 using BibliotecaClases.Persistencias;
-
+using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Data.Sql;
 namespace GestOn2.ABMS
 {
     public partial class FromProductos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) Session["NombreBase"] = "GestOn";
+            if (!IsPostBack)
+            {
+                Session["NombreBase"] = "GestOn";
+                var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+            }
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -38,7 +44,7 @@ namespace GestOn2.ABMS
                 String marca = txtMarca.Text;
                 String nombre = txtNombreProducto.Text;
                 decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
-                CalculoPrecioVenta(precioCompra);
+                //CalculoPrecioVenta(precioCompra);
                 decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
                 String nameDB = "GestOn";
 
@@ -67,12 +73,12 @@ namespace GestOn2.ABMS
             }
             
         }
-        protected void CalculoPrecioVenta(decimal precioCompra) {
-            decimal pventa = precioCompra  + ((precioCompra * 025) / 100);
-            string resultado = pventa.ToString();
-            String substring = resultado.Substring(0, 5);
-            lblprice.Text = substring;
-        }
+        //protected void CalculoPrecioVenta(decimal precioCompra) {
+        //    decimal pventa = precioCompra  + ((precioCompra * 025) / 100);
+        //    string resultado = pventa.ToString();
+        //    String substring = resultado.Substring(0, 5);
+        //    lblprice.Text = substring;
+        //}
         protected void TimerMensajes_Tick(object sender, EventArgs e)
         {
             lblInformativo.Visible = false;
