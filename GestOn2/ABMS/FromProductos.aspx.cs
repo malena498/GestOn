@@ -73,6 +73,7 @@ namespace GestOn2.ABMS
             String substring = resultado.Substring(0, 5);
             lblprice.Text = substring;
         }
+
         protected void TimerMensajes_Tick(object sender, EventArgs e)
         {
             lblInformativo.Visible = false;

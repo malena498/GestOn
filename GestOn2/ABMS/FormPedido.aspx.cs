@@ -35,10 +35,6 @@ namespace GestOn2.ABMS
             txtFechaPedido.Text = DateTime.Now.ToLongTimeString();
             nameDB = Session.ToString();
             string Descripcion = txtDescripcion.InnerText;
-            lblDireccion.Text = txtDireccion.Text;
-            lblDescripcion.Text = Descripcion;
-            lblId.Text = idUser.ToString();
-            lblFecha.Text = txtFechaPedido.Text;
 
             p.IdPedido = 1;
             p.FechaPedido = DateTime.Parse(txtFechaPedido.Text);
@@ -49,6 +45,23 @@ namespace GestOn2.ABMS
             PersistenciaPedido persistencia = new PersistenciaPedido();
             persistencia.GuardarPedido(p,nameDB);
             lblResultado.Text = "Se guardo con éxito";
+        }
+
+        protected void btnAgregarTodo_Click(object sender, EventArgs e)
+        {
+            while (ListSeleccionados.GetSelectedIndices().Length > 0) {
+                ListProductos.Items.Add(ListSeleccionados.SelectedItem);
+                ListSeleccionados.Items.Remove(ListSeleccionados.SelectedItem);
+            }
+        }
+
+        protected void btnQuitarTodo_Click(object sender, EventArgs e)
+        {
+            while (ListProductos.GetSelectedIndices().Length > 0)
+            {
+                ListSeleccionados.Items.Add(ListProductos.SelectedItem);
+                ListProductos.Items.Remove(ListProductos.SelectedItem);
+            }
         }
     }
 }
