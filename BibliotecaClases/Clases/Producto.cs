@@ -15,14 +15,16 @@ namespace BibliotecaClases
 
         public String ProductoNombre{ get;set; }
 
-        public int ProductoPrecioVenta { get; set; }
+        public decimal ProductoPrecioVenta { get; set; }
 
         public bool Activo { get; set; }
 
-        public float ProductoPrecioCompra { get; set; }
+        public decimal ProductoPrecioCompra { get; set; }
 
         public String ProductoCategoría { get; set; }
 
         public String ProductoMarca { get; set; }
+
+        public int Cantidad { get; set; }
     }
 }

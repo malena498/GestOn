@@ -17,32 +17,32 @@
 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
     <ContentTemplate>
 <br />
+        <br />
+        <br />
+        <br />
         <asp:Label ID="Label3" runat="server" Text="Fecha de pedido:" Width="120px"></asp:Label>
         <asp:TextBox ID="txtFechaPedido" runat="server" ReadOnly="True" Width="200px"></asp:TextBox>
         <asp:Label ID="lblFecha" runat="server"></asp:Label>
         <br />
         <br />
-        <asp:Label ID="Label4" runat="server" Text="Dirección:" Width="120px"></asp:Label>
+        <asp:Label ID="Label4" runat="server" Text="Dirección:" Width="120px" style="margin-bottom: 0px"></asp:Label>
         <asp:TextBox ID="txtDireccion" runat="server" style="margin-left: 0px" Width="200px"></asp:TextBox>
         <asp:Label ID="lblDireccion" runat="server"></asp:Label>
+<br />
+<br />
+        <asp:Label ID="lblDescripcion" runat="server" Text="Label"></asp:Label>
         <br />
         <br />
         <asp:Label ID="Label5" runat="server" Text="Descripción:" Width="120px"></asp:Label>
-        <textarea id="txtDescripcion" runat="server" name="S1"></textarea><asp:Label ID="lblDescripcion" runat="server" Text="Label"></asp:Label>
+        <textarea id="txtDescripcion" runat="server" name="S1" cols="20" rows="1"></textarea><br />
         <br />
-<br />
-<br />
+        <br />
         <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" style="margin-left: 122px" Text="Generar pedido" />
-        <br />
-        <br />
-        <asp:Label ID="lblId" runat="server"></asp:Label>
-        <br />
-        <br />
-        <br />
         <br />
         <br />
         <br />
         <asp:Label ID="Label11" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="lblId" runat="server"></asp:Label>
         <br />
         <br />
         <asp:Label ID="lblResultado" runat="server" ForeColor="Red"></asp:Label>
