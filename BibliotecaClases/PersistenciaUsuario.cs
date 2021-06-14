@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BibliotecaClases.Persistencias
-{
+namespace BibliotecaClases
     class PersistenciaUsuario
     {
     }

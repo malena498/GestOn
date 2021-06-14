@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BibliotecaClases.Clases;
-namespace BibliotecaClases.Persistencias
+namespace BibliotecaClases
 {
-    public class PersistenciaPedido
+    public class PersistenciaProducto
     {
-        public bool GuardarPedido(Pedido pedido, String NombreBase)
+        public bool GuardarProducto(Producto producto, String NombreBase)
         {
             try
             {
                 using (var baseDatos = new Context(NombreBase))
                 {
-                    pedido.Activo = true;
-                    baseDatos.Pedidos.Add(pedido);
+                    producto.Activo = true;
+                    baseDatos.Productos.Add(producto);
                     baseDatos.SaveChanges();
-                    if (pedido.IdPedido != 0)
+                    if (producto.ProductoId!= 0)
                     {
                         baseDatos.SaveChanges();
                     }
@@ -29,16 +29,17 @@ namespace BibliotecaClases.Persistencias
             }
         }
 
-        public bool EliminarPedido(Pedido pedido)
+        public bool EliminarProducto(Producto producto)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    Pedido p = baseDatos.Pedidos.FirstOrDefault(de => de.IdPedido == pedido.IdPedido);
+                    Producto p = baseDatos.Productos.FirstOrDefault(de => de.ProductoId == producto.ProductoId);
                     if (p != null)
                     {
                         p.Activo = false;
+
                         baseDatos.SaveChanges();
                         return true;
                     }
@@ -54,23 +55,21 @@ namespace BibliotecaClases.Persistencias
             }
         }
 
-        public bool ModificarPedido(Pedido pedido)
+        public bool ModificarOferta(Producto producto)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    Pedido pe = baseDatos.Pedidos.FirstOrDefault(cl => cl.IdPedido == pedido.IdPedido);
-                    if (pe != null)
+                    Producto pr = baseDatos.Productos.FirstOrDefault(cl => cl.ProductoId == producto.ProductoId);
+                    if (pr != null)
                     {
-                        pe.IdPedido = pedido.IdPedido;
-                        pe.FechaPedido = pedido.FechaPedido;
-                        pe.Direccion = pedido.Direccion;
-                        pe.Descripcion = pedido.Descripcion;
-                        pe.Activo = pedido.Activo;
-                        pe.FechaEntrega = pedido.FechaEntrega;
-                        pe.productos = pedido.productos;
-                        pe.UserId = pedido.UserId;
+                        pr.ProductoId = producto.ProductoId;
+                        pr.ProductoCategoría = producto.ProductoCategoría;
+                        pr.ProductoMarca = producto.ProductoMarca;
+                        pr.ProductoNombre = producto.ProductoNombre;
+                        pr.ProductoPrecioCompra = producto.ProductoPrecioCompra;
+                        pr.ProductoPrecioVenta = producto.ProductoPrecioVenta;
                         baseDatos.SaveChanges();
                         return true;
                     }
@@ -86,13 +85,14 @@ namespace BibliotecaClases.Persistencias
             }
         }
 
-        public Pedido BuscarPedido(int id)
+        public Producto BuscarProducto(int id)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Pedidos.FirstOrDefault(prop => prop.IdPedido == id);
+                    return baseDatos.Productos.FirstOrDefault(prop => prop.ProductoId
+ == id);
                 }
 
             }
@@ -104,7 +104,7 @@ namespace BibliotecaClases.Persistencias
 
         }
 
-        public List<Pedido> ListadoPedidos()
+        public List<Producto> ListadoProductos()
         {
             try
             {
@@ -112,13 +112,13 @@ namespace BibliotecaClases.Persistencias
                 {
                     try
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true).OrderBy(ej => ej.IdPedido).ToList();
-                        return pedidos;
+                        List<Producto> productos = baseDatos.Productos.Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoId).ToList();
+                        return productos;
                     }
                     catch
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true).OrderBy(ej => ej.UserId).ToList();
-                        return pedidos;
+                        List<Producto> productos = baseDatos.Productos.Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoNombre).ToList();
+                        return productos;
                     }
                 }
             }
