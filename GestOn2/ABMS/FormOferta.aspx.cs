@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BibliotecaClases;
 using BibliotecaClases.Clases;
 using BibliotecaClases.Persistencias;
 using System.Drawing;
@@ -38,9 +39,9 @@ namespace GestOn2.ABMS
                 //{
                 //    imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
                 //}
-                PersistenciaOfertas persistencia = new PersistenciaOfertas();
-                bool exito = persistencia.GuardarOferta(o, imagenes, nameDB);
-                if (exito) { lblResultado.Text = "Se guardo con éxito"; }
+                bool exito = Sistema.GetInstancia().GuardarOferta(o, imagenes, nameDB);
+                // = persistencia.GuardarOferta
+                 if (exito) { lblResultado.Text = "Se guardo con éxito"; }
             }
             catch (Exception ex) { lblResultado.Text = "No se logro guardar"; }
         }

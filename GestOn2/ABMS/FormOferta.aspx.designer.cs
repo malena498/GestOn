@@ -121,42 +121,6 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// Control fuImagenes.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuImagenes;
-        
-        /// <summary>
-        /// Control btnUpload.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
-        
-        /// <summary>
-        /// Control txtURLs.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtURLs;
-        
-        /// <summary>
-        /// Control GridView1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
-        
-        /// <summary>
         /// Control Label6.
         /// </summary>
         /// <remarks>

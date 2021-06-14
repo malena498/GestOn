@@ -25,15 +25,7 @@
             <br />
             <asp:Label ID="Label5" runat="server" Text="Imagenes:"></asp:Label>
             <br />
-            <!--<asp:FileUpload ID="fuImagenes" runat="server" AllowMultiple="false"/>
-                        <asp:Button ID="btnUpload" runat="server" OnClick="btnUpload_Click" Text="Subir" Style="display: none;" />
-                        <asp:TextBox ID="txtURLs" Style="display: none;" runat="server"></asp:TextBox>
-                        <asp:GridView ID="GridView1" runat="server" Width="100%" RowStyle-HorizontalAlign="Center" RowStyle-CssClass="col-6 p-0" AutoGenerateColumns="false" ShowHeader="false" OnRowDataBound="GridView1_RowDataBound">
-                            <Columns>
-                                <asp:ImageField DataImageUrlField="Value" ControlStyle-Width="40%" />
-                            </Columns>
-                        </asp:GridView>
-            <br />-->
+            
             <asp:Label ID="Label6" runat="server" Text="Descripción:"></asp:Label>
             <br />
             <asp:TextBox ID="txtDescripcionOferta" runat="server" TextMode="MultiLine"></asp:TextBox>

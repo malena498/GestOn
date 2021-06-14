@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.IO;
 using BibliotecaClases.Clases;

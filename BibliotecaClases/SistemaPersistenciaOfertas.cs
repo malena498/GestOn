@@ -2,10 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using BibliotecaClases.Clases;
-namespace BibliotecaClases.Persistencias
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.IO;
+using System.ComponentModel;
+using System.Reflection;
+using System.Data.SqlClient;
+using System.Net.Mail;
+using System.Net;
+
+
+namespace BibliotecaClases
 {
-    public class PersistenciaOfertas
+    partial class Sistema
     {
         public bool GuardarOferta(Oferta oferta, List<String> imagenes, String NombreBase)
         {
