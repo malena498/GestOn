@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BibliotecaClases.Clases;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations;
-
 namespace BibliotecaClases.Persistencias
 {
     public class PersistenciaProducto
