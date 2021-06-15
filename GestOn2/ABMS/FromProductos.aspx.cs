@@ -63,6 +63,16 @@ namespace GestOn2.ABMS
                     lblInformativo.Text = "Se guardo con éxito";
                     lblInformativo.Visible = true;
                     TimerMensajes.Enabled = true;
+
+                    //Elimino campos luego que se inserto con éxito
+                    txtCantidad.Text = "";
+                    txtCategoria.Text = "";
+                    txtIdProducto.Text = "";
+                    txtMarca.Text = "";
+                    txtNombreProducto.Text = "";
+                    txtPrecioCompra.Text = "";
+                    txtPrecioVenta.Text = "";
+
                 }
                 else {
                     lblInformativo.Text = "No se guardo (Error)" ;

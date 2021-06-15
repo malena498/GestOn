@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text;
+using BibliotecaClases.Clases;
 
-namespace BibliotecaClases { 
-    partial class Sistema
+namespace BibliotecaClases
+    class PersistenciaUsuario
     {
     }
 }

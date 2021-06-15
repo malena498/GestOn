@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BibliotecaClases.Clases;
-namespace BibliotecaClases
+namespace BibliotecaClases.Persistencias
 {
     public class PersistenciaProducto
     {
+
         public bool GuardarProducto(Producto producto, String NombreBase)
-        {
+        {  
             try
             {
-                using (var baseDatos = new Context(NombreBase))
+                using (var baseDatos = new Context())
                 {
                     producto.Activo = true;
                     baseDatos.Productos.Add(producto);
-                    baseDatos.SaveChanges();
                     if (producto.ProductoId!= 0)
                     {
                         baseDatos.SaveChanges();
@@ -55,7 +55,7 @@ namespace BibliotecaClases
             }
         }
 
-        public bool ModificarOferta(Producto producto)
+        public bool ModificarProducto(Producto producto)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace BibliotecaClases
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 return false;
             }
