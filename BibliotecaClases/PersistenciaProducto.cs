@@ -8,7 +8,7 @@ namespace BibliotecaClases.Persistencias
     public class PersistenciaProducto
     {
 
-        public bool GuardarProducto(Producto producto, String NombreBase)
+        public bool GuardarProducto(Producto producto)
         {  
             try
             {
@@ -91,10 +91,8 @@ namespace BibliotecaClases.Persistencias
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Productos.FirstOrDefault(prop => prop.ProductoId
- == id);
+                    return baseDatos.Productos.FirstOrDefault(prop => prop.ProductoId == id);
                 }
-
             }
             catch (Exception ex)
             {

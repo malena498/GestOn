@@ -9,7 +9,7 @@
 <br />
             <asp:Label ID="Label1" runat="server" Font-Size="13pt" ForeColor="Black" Text="Id:" Width="120px"></asp:Label>
             <asp:TextBox ID="txtIdProducto" runat="server" Width="50px"></asp:TextBox>
-            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" Width="100px" />
+            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" Width="100px" OnClick="btnBuscar_Click" />
 <br />
             <asp:Label ID="lblInformativo" runat="server" Font-Size="14pt" ForeColor="#FF3300" style="margin-left: 120px" Visible="False" Width="150px"></asp:Label>
 <br />
@@ -38,7 +38,7 @@
 <br />
 <br />
             <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" style="margin-left: 120px" Text="Guardar" Width="75px" />
-            <asp:Button ID="btnModificar" runat="server" Text="Modificar" Width="75px" />
+            <asp:Button ID="btnModificar" runat="server" Text="Modificar" Width="75px" OnClick="btnModificar_Click" />
 <br />
 <br />
             <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick">
