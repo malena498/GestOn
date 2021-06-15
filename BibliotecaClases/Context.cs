@@ -54,5 +54,14 @@ namespace BibliotecaClases
                 mc.MapRightKey("ProductoId");
             });
         }
+
+        public class Initializer : IDatabaseInitializer<Context>
+        {
+            public void InitializeDatabase(Context context)
+            {
+                context.Database.Delete();
+                context.Database.Create();
+            }
+        }
     }
 }

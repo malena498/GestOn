@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BibliotecaClases;
 using BibliotecaClases.Clases;
-using BibliotecaClases.Persistencias;
+
 using System.Drawing;
 using System.IO;
 
