@@ -23,7 +23,7 @@ namespace BibliotecaClases
         {
             try
             {
-                using (var baseDatos = new Context(NombreBase))
+                using (var baseDatos = new Context())
                 {
                     oferta.Activo = true;
                     baseDatos.Ofertas.Add(oferta);
@@ -36,9 +36,10 @@ namespace BibliotecaClases
                             img.ImagenURL = url;
                             img.IdOferta= oferta.IdOferta;
                             baseDatos.Imagenes.Add(img);
+                            
                         }
-
                         baseDatos.SaveChanges();
+
                     }
                 }
                 return true;
