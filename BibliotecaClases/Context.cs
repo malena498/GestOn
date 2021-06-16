@@ -20,6 +20,7 @@ namespace BibliotecaClases
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Nivel> Niveles { get; set; }
         public DbSet<Imagen> Imagenes { get; set; }
+        public DbSet<CategoriaProducto> Categorias { get; set; }
 
 
 
@@ -40,6 +41,7 @@ namespace BibliotecaClases
             {
             }
         }
+
         public Context(String baseDatos) : base(baseDatos) { }
 
 

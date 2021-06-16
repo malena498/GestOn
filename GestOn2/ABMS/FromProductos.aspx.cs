@@ -18,7 +18,6 @@ namespace GestOn2.ABMS
         {
             if (!IsPostBack)
             {
-                Session["NombreBase"] = "GestOn";
                 var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             }
         }
@@ -26,9 +25,7 @@ namespace GestOn2.ABMS
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             //Validaciones que las caja de texto no estén vacias.
-            if (txtIdProducto.Text == "" || txtCantidad.Text == "" || txtCategoria.Text == ""
-                || txtMarca.Text == "" || txtNombreProducto.Text == "" || txtPrecioCompra.Text == ""
-                || txtPrecioVenta.Text == "")
+            if (CompleteCampos())
             {
                 lblInformativo.Visible = true;
                 lblInformativo.Text = "Debe completar todos los campos";
@@ -65,13 +62,7 @@ namespace GestOn2.ABMS
                     TimerMensajes.Enabled = true;
 
                     //Elimino campos luego que se inserto con éxito
-                    txtCantidad.Text = "";
-                    txtCategoria.Text = "";
-                    txtIdProducto.Text = "";
-                    txtMarca.Text = "";
-                    txtNombreProducto.Text = "";
-                    txtPrecioCompra.Text = "";
-                    txtPrecioVenta.Text = "";
+                    VaciarCampos();
 
                 }
                 else {
@@ -83,25 +74,10 @@ namespace GestOn2.ABMS
             
         }
 
-        protected void CalculoPrecioVenta(decimal precioCompra) {
-            decimal pventa = precioCompra  + ((precioCompra * 025) / 100);
-            string resultado = pventa.ToString();
-            String substring = resultado.Substring(0, 5);
-            lblprice.Text = substring;
-        }
-
-        protected void TimerMensajes_Tick(object sender, EventArgs e)
-        {
-            lblInformativo.Visible = false;
-            TimerMensajes.Enabled = false;
-        }
-
         protected void btnModificar_Click(object sender, EventArgs e)
         {
             //Validaciones que las caja de texto no estén vacias.
-            if (txtIdProducto.Text == "" || txtCantidad.Text == "" || txtCategoria.Text == ""
-                || txtMarca.Text == "" || txtNombreProducto.Text == "" || txtPrecioCompra.Text == ""
-                || txtPrecioVenta.Text == "")
+            if (CompleteCampos())
             {
                 lblInformativo.Visible = true;
                 lblInformativo.Text = "Debe completar todos los campos";
@@ -139,17 +115,11 @@ namespace GestOn2.ABMS
                     TimerMensajes.Enabled = true;
 
                     //Elimino campos luego que se modifico con éxito
-                    txtCantidad.Text = "";
-                    txtCategoria.Text = "";
-                    txtIdProducto.Text = "";
-                    txtMarca.Text = "";
-                    txtNombreProducto.Text = "";
-                    txtPrecioCompra.Text = "";
-                    txtPrecioVenta.Text = "";
+                    VaciarCampos();
                 }
                 else
                 {
-                    lblInformativo.Text = "No se modificó (Error)";
+                    lblInformativo.Text = "No se pudo modificó ";
                     lblInformativo.Visible = true;
                     TimerMensajes.Enabled = true;
                 }
@@ -165,18 +135,31 @@ namespace GestOn2.ABMS
                 Producto p = persistencia.BuscarProducto(id);
                 if (p != null)
                 {
-                    txtCantidad.Text = p.Cantidad.ToString();
-                    txtCategoria.Text = p.Cantidad.ToString();
-                    txtMarca.Text = p.ProductoMarca.ToString();
-                    txtNombreProducto.Text = p.ProductoNombre.ToString();
-                    txtPrecioCompra.Text = p.ProductoPrecioCompra.ToString();
-                    txtPrecioVenta.Text = p.ProductoPrecioVenta.ToString();
-                    btnModificar.Enabled = true;
+                    if (p.Activo == true)
+                    {
+                        txtCantidad.Text = p.Cantidad.ToString();
+                        txtCategoria.Text = p.Cantidad.ToString();
+                        txtMarca.Text = p.ProductoMarca.ToString();
+                        txtNombreProducto.Text = p.ProductoNombre.ToString();
+                        txtPrecioCompra.Text = p.ProductoPrecioCompra.ToString();
+                        txtPrecioVenta.Text = p.ProductoPrecioVenta.ToString();
+                        btnModificar.Enabled = true;
+                        btnEliminar.Enabled = true;
+                    }
+                    else
+                    {
+                        lblInformativo.Text = "El producto fue dado de baja";
+                        lblInformativo.Visible = true;
+                        TimerMensajes.Enabled = true;
+                        VaciarCampos();
+                    }
                 }
-                else {
+                else
+                {
                     lblInformativo.Text = "El producto buscado no éxiste en el sistema";
                     lblInformativo.Visible = true;
                     TimerMensajes.Enabled = true;
+                    VaciarCampos();
                 }
             }
             else {
@@ -185,5 +168,74 @@ namespace GestOn2.ABMS
                 TimerMensajes.Enabled = true;
             }
         }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (txtIdProducto.Text != "")
+            {
+                int id = Int32.Parse(txtIdProducto.Text);
+                Producto p = new Producto();
+                p.ProductoId = id;
+                PersistenciaProducto persistencia = new PersistenciaProducto();
+                if (persistencia.EliminarProducto(p))
+                {
+                    lblInformativo.Text = "Se elimino con éxito";
+                    lblInformativo.Visible = true;
+                    TimerMensajes.Enabled = true;
+
+                    //Elimino campos luego que se modifico con éxito
+                    VaciarCampos();
+                }
+                else
+                {
+                    lblInformativo.Text = "No se pudo eliminar ";
+                    lblInformativo.Visible = true;
+                    TimerMensajes.Enabled = true;
+                }
+            }
+            else {
+                lblInformativo.Text = "Complete id del poducto que desea eliminar";
+                lblInformativo.Visible = true;
+                TimerMensajes.Enabled = true;
+            }
+            
+        }
+
+        //Timer usado para mostrar o ocultar mensajes
+        protected void TimerMensajes_Tick(object sender, EventArgs e)
+        {
+            lblInformativo.Visible = false;
+            TimerMensajes.Enabled = false;
+        }
+
+        //Valida si falta poner algun dato (retorna true en caso que falte alguno)
+        public bool CompleteCampos() {
+            if (txtIdProducto.Text == "" || txtCantidad.Text == "" || txtCategoria.Text == ""
+                || txtMarca.Text == "" || txtNombreProducto.Text == "" || txtPrecioCompra.Text == ""
+                || txtPrecioVenta.Text == "")
+                return true;
+            else return false;
+        }
+
+        //Vacia los campos de la pantalla excepto el id y los mensajes
+        protected void VaciarCampos() {
+            txtCantidad.Text = "";
+            txtCategoria.Text = "";
+            txtMarca.Text = "";
+            txtNombreProducto.Text = "";
+            txtPrecioCompra.Text = "";
+            txtPrecioVenta.Text = "";
+        }
+
+        //Calcula el precio de venta a traves de un porcentaje dado y el precio de compra
+        protected void CalculoPrecioVenta(decimal precioCompra)
+        {
+            decimal pventa = precioCompra + ((precioCompra * 025) / 100);
+            string resultado = pventa.ToString();
+            String substring = resultado.Substring(0, 5);
+            lblprice.Text = substring;
+        }
+
+
     }
 }

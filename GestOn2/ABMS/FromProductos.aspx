@@ -39,6 +39,7 @@
 <br />
             <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" style="margin-left: 120px" Text="Guardar" Width="75px" />
             <asp:Button ID="btnModificar" runat="server" Text="Modificar" Width="75px" OnClick="btnModificar_Click" Enabled="False" />
+            <asp:Button ID="btnEliminar" runat="server" Enabled="False" OnClick="btnEliminar_Click" Text="Eliminar" Width="76px" />
 <br />
 <br />
             <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick">
