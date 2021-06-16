@@ -82,12 +82,14 @@ namespace GestOn2.ABMS
             }
             
         }
+
         protected void CalculoPrecioVenta(decimal precioCompra) {
             decimal pventa = precioCompra  + ((precioCompra * 025) / 100);
             string resultado = pventa.ToString();
             String substring = resultado.Substring(0, 5);
             lblprice.Text = substring;
         }
+
         protected void TimerMensajes_Tick(object sender, EventArgs e)
         {
             lblInformativo.Visible = false;
@@ -120,6 +122,7 @@ namespace GestOn2.ABMS
                 decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
 
                 Producto p = new Producto();
+                p.Activo = true;
                 p.Cantidad = cantidad;
                 p.ProductoCategoría = categoria;
                 p.ProductoId = id;
@@ -146,7 +149,7 @@ namespace GestOn2.ABMS
                 }
                 else
                 {
-                    lblInformativo.Text = "No se guardo (Error)";
+                    lblInformativo.Text = "No se modificó (Error)";
                     lblInformativo.Visible = true;
                     TimerMensajes.Enabled = true;
                 }

@@ -61,7 +61,7 @@ namespace BibliotecaClases.Persistencias
             {
                 using (var baseDatos = new Context())
                 {
-                    Producto pr = baseDatos.Productos.FirstOrDefault(cl => cl.ProductoId == producto.ProductoId);
+                    Producto pr = baseDatos.Productos.SingleOrDefault(cl => cl.ProductoId == producto.ProductoId);
                     if (pr != null)
                     {
                         pr.ProductoId = producto.ProductoId;
@@ -70,6 +70,8 @@ namespace BibliotecaClases.Persistencias
                         pr.ProductoNombre = producto.ProductoNombre;
                         pr.ProductoPrecioCompra = producto.ProductoPrecioCompra;
                         pr.ProductoPrecioVenta = producto.ProductoPrecioVenta;
+                        pr.Cantidad = producto.Cantidad;
+                        pr.Activo = producto.Activo;
                         baseDatos.SaveChanges();
                         return true;
                     }
