@@ -26,7 +26,6 @@ namespace BibliotecaClases
         public Context()
              : base("GestOn")
         {
-            this.Configuration.AutoDetectChangesEnabled = false;
             ConfigureForSqlServer();
         }
         public static void ConfigureForSqlServer()
