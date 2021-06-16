@@ -5,7 +5,7 @@ using System.Text;
 using System.Text;
 using BibliotecaClases.Clases;
 
-namespace BibliotecaClases
+namespace BibliotecaClases { 
     class PersistenciaUsuario
     {
     }
