@@ -13,6 +13,7 @@ namespace BibliotecaClases.Clases
     {
         [Key]
         public int IdOferta { get; set; }
+        [Required]
         public String OfertaTitulo { get; set; }
         public bool Activo { get; set; }
         public DateTime OfertaFechaDesde { get; set; }
@@ -20,6 +21,7 @@ namespace BibliotecaClases.Clases
 
         public virtual List<Imagen> Imagenes { get; set; }
         public String OfertaDescripcion { get; set; }
+        [Required]
         public decimal OfertaPrecio { get; set; }
 
     }
