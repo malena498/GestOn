@@ -59,10 +59,10 @@
     <Compile Include="Clases\Oferta.cs" />
     <Compile Include="Clases\Pedido.cs" />
     <Compile Include="Clases\Producto.cs" />
-    <Compile Include="SistemaPersistenciaOfertas.cs" />
+    <Compile Include="PersistenciaUsuarios.cs" />
     <Compile Include="PersistenciaPedido.cs" />
     <Compile Include="PersistenciaProducto.cs" />
-    <Compile Include="PersistenciaUsuario.cs" />
+    <Compile Include="PersistenciaOfertas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sistema.cs" />
     <Compile Include="Clases\Usuario.cs" />

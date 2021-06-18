@@ -12,13 +12,18 @@ namespace BibliotecaClases.Clases
     {
         [Key]
         public int UserId { get; set; }
+        [Required]
         public String UserNombre { get; set; }
+        [Required]
         public String UserEmail { get; set; }
+        [Required]
         public String UserCedula { get; set; }
         public String UserTelefono { get; set; }
         public int IdNivel { get; set; }
-
+        [ForeignKey("IdNivel")]
+        public Nivel nivel { get; set; }
         public bool Activo { get; set; }
-        public String UserContraseña { get; set; }
+        [Required]
+        public String UserContrasenia { get; set; }
     }
 }
