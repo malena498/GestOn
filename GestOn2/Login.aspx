@@ -14,7 +14,7 @@
 <br />
             <asp:Label ID="Label2" runat="server" Text="Contraseña"></asp:Label>
 <br />
-            <asp:TextBox ID="txtPassUser" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtPassUser" runat="server" TextMode="Password"></asp:TextBox>
             <br />
             <br />
             <asp:Button ID="btnIngresar" runat="server" OnClick="btnIngresar_Click" Text="Ingresar" />
