@@ -28,7 +28,6 @@ namespace GestOn2.ABMS
             {
                 Oferta o = new Oferta();
                 String nameDB = Session["NombreBase"].ToString();
-                o.IdOferta = int.Parse(txtIdOferta.Text);
                 o.OfertaTitulo = txtTituloOferta.Text;
                 o.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
                 o.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
@@ -89,8 +88,11 @@ namespace GestOn2.ABMS
                 int id = Int32.Parse(txtIdOferta.Text);
 
                 Oferta of = Sistema.GetInstancia().BuscarOferta(id);
+               
                 if (of != null)
                 {
+                    List<Imagen> imagenes = Sistema.GetInstancia().BuscarImagenesOferta(of.IdOferta);
+                    CargarImagenes(imagenes);
                     txtTituloOferta.Text = of.OfertaTitulo;
                     txtFechaDesde.Text = of.OfertaFechaDesde.ToString();
                     txtFechaHasta.Text = of.OfertaFechaHasta.ToString();
@@ -299,8 +301,12 @@ namespace GestOn2.ABMS
                 of.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
                 of.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
                 of.OfertaPrecio = decimal.Parse(txtPrecio.Text);
-
-                bool exito = Sistema.GetInstancia().ModificarOferta(of);
+                List<String> imagenes = new List<String>();
+                if (!String.IsNullOrEmpty(txtURLs.Text))
+                {
+                    imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
+                }
+                bool exito = Sistema.GetInstancia().ModificarOferta(of, imagenes);
                 if (exito)
                 {
                     lblResultado.Text = "Se modificó con éxito";
