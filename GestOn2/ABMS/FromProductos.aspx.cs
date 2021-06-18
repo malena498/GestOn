@@ -31,7 +31,12 @@ namespace GestOn2.ABMS
             lstCategorias.DataSource = Sistema.GetInstancia().ListadoCategorias();
             lstCategorias.DataTextField = "NombreCategoria";
             lstCategorias.DataValueField = "IdCategoria";
-            lstCategorias.DataBind();
+            lstCategorias.DataBind();  
+
+
+
+
+
         }
 
         //Guardo el producto 
