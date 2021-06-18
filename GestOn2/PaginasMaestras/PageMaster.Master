@@ -5,7 +5,6 @@
 <html>
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <title>GestOn</title>
@@ -13,82 +12,6 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-nav" style="min-height: 55px;">
-            <asp:HyperLink ID="HyperLink18" runat="server" class="navbar-brand" CausesValidation="false"
-                NavigateUrl="~/Inicio.aspx" Font-Overline="false">
-            GestOn
-            </asp:HyperLink>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_menu"
-                aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar_menu" runat="server">
-                <ul  id="NavMenu" class="navbar-nav mr-auto" runat="server">
-                </ul>
-                 <ul class="navbar-nav navbar-right">
-                     
-                     <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Presupuestos">
-                          <asp:HyperLink ID="hlinkPresupuesto" runat="server" class="nav-link pt-2" CausesValidation="false" NavigateUrl="~/Reportes/Presupuesto.aspx"
-                                Font-Overline="false">
-                                <span class="fas fa-car-crash" style="border:2px solid; border-radius: 7px; padding: 10px;"></span>
-                            </asp:HyperLink>
-                    
-                    </li>
-                  
-                    <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Consulta de Precios"
-                        style="margin-right: 5px;">
-                        <asp:LinkButton ID="btnConsultaPrecio" runat="server" class="nav-link pt-2" Style="padding: 0;"
-                            Font-Overline="false" CausesValidation="false">
-                        <span class="display-collapsed">CONSULTA DE PRECIOS</span>
-                        <span class="fa fa-dollar-sign fa-lg" style="border:2px solid; border-radius: 7px; padding: 10px;"></span>
-                        </asp:LinkButton>
-                    </li>
-                    <li class="nav-item dropdown" data-toggle="tooltip" data-placement="bottom" title="Alertas" style="margin-right: 5px;">
-                        <a class="nav-link dropdown-toggle p-0 pr-2 pt-2" data-toggle="dropdown" data-placement="bottom" title="Alertas">
-                            <span class="display-collapsed">ALERTAS</span>
-                            <span id="spanAlert" runat="server" class="fas fa-bell fa-lg" style="border: 2px solid; border-radius: 7px; padding: 10px;"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                             <!--  -->
-                           
-                            
-                            <asp:HyperLink ID="lnkAlerts" runat="server" class="dropdown-item" CausesValidation="false" NavigateUrl="~/Reportes/ReporteBajoStock.aspx"
-                                Font-Overline="false">
-                                <asp:Label ID="lblAlertaStock" runat="server" Text="Alerta de Stock"></asp:Label>
-                            </asp:HyperLink>
-                             <asp:HyperLink ID="lnkAlertEnvio" runat="server" class="dropdown-item" CausesValidation="false" NavigateUrl="~/Reportes/AlertaEnvios.aspx"
-                                Font-Overline="false">
-                                <asp:Label ID="lblAlertaEnvio" runat="server" Text="Rastreo de Pedidos"></asp:Label>
-                            </asp:HyperLink>
-                            <asp:HyperLink ID="lnkAlertsFechaIngreso" runat="server" class="dropdown-item" CausesValidation="false" NavigateUrl="~/Reportes/ReporteAlertaFechaIngreso.aspx"
-                                Font-Overline="false">
-                                <asp:Label ID="lblAlertaFechaIngreso" runat="server" Text="Alerta por Fecha Ingreso"></asp:Label>
-                            </asp:HyperLink>
-                            
-                              <asp:HyperLink ID="lnkExcelToFacturas" runat="server" class="dropdown-item" CausesValidation="false" NavigateUrl="~/Reportes/ExcelToFactura.aspx"
-                                Font-Overline="false">
-                                <asp:Label ID="lblFacturacionMasiva" runat="server" Text="Excel to Facturas"></asp:Label>
-                            </asp:HyperLink>
-                           
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown" style="margin-right: 5px;"><a class="nav-link dropdown-toggle text-center" data-toggle="dropdown"
-                        data-placement="bottom" title="Usuario"><span id="spanUsuario" runat="server"></span>
-                        <br />
-                        <span id="spanEmpresa" runat="server"></span></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <asp:LinkButton ID="LinkButton1" runat="server" class="dropdown-item" OnClick="lbCerrarSesion_Click"
-                                Font-Overline="false" CausesValidation="false" Style="padding: 0 5px;">
-                            <span>Salir</span>
-                            <span class="fa fa-sign-out-alt fa-lg float-right"></span>
-                            </asp:LinkButton>
-                           
-                        </div>
-                    </li>
-                    
-                </ul>
-            </div>
-        </nav>
-    </form>
+    
 </body>
 </html>

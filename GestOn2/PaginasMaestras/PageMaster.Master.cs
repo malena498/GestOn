@@ -13,11 +13,11 @@ namespace GestOn2
         {
 
         }
-        protected void lbCerrarSesion_Click(object sender, EventArgs e)
-        {
-            Session.Abandon();
-            Response.Redirect("~/Login.aspx");
-        }
+        //protected void lbCerrarSesion_Click(object sender, EventArgs e)
+        //{
+        //    Session.Abandon();
+        //    Response.Redirect("~/Login.aspx");
+        //}
 
     }
 }
