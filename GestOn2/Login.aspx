@@ -1,7 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PaginasMaestras/PageMaster.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="GestOn2.Login" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
+﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/PaginasMaestras/PageMaster.Master" AutoEventWireup="true" 
+    CodeBehind="Login.aspx.cs" Inherits="GestOn2.Login" %>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -25,6 +26,7 @@
             <asp:Label ID="Label3" runat="server" Text="No posee una cuenta?"></asp:Label>
             &nbsp;<asp:LinkButton ID="lnkRegistrarse" runat="server" OnClick="lnkRegistrarse_Click">Registrarse</asp:LinkButton>
             <br />
+            
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
