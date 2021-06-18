@@ -6,7 +6,7 @@ using BibliotecaClases.Clases;
 
 namespace BibliotecaClases
 {
-    public class PersistenciaCategoriaProducto
+    partial class Sistema
     {
         public bool GuardarCategoria(CategoriaProducto categoria)
         {
@@ -29,13 +29,13 @@ namespace BibliotecaClases
             }
         }
 
-        public bool EliminarCategoria(CategoriaProducto categoria)
+        public bool EliminarCategoria(int id)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    CategoriaProducto c = baseDatos.Categorias.FirstOrDefault(de => de.IdCategoria == categoria.IdCategoria);
+                    CategoriaProducto c = baseDatos.Categorias.FirstOrDefault(de => de.IdCategoria == id);
                     if (c != null)
                     {
                         c.Activo = false;

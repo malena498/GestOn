@@ -11,6 +11,7 @@ namespace BibliotecaClases
     public partial class Sistema
     {
         private static Sistema sistema;
+
         public static Sistema GetInstancia()
         {
 
@@ -22,9 +23,5 @@ namespace BibliotecaClases
 
             return sistema;
         }
-
-     
-
-      
     }
 }

@@ -8,7 +8,6 @@ using BibliotecaClases;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Data.Sql;
-using BibliotecaClases.Persistencias;
 using BibliotecaClases.Clases;
 
 namespace GestOn2.ABMS
@@ -28,14 +27,10 @@ namespace GestOn2.ABMS
         }
 
         public void ListarCategorias() {
-            PersistenciaCategoriaProducto cp = new PersistenciaCategoriaProducto();
-            List<CategoriaProducto> categoriaProductos = cp.ListadoCategorias();
-            lstCategorias.Items.Clear();
-            foreach (CategoriaProducto cat in categoriaProductos)
-            {
-                String Nombre = cat.NombreCategoria.ToString();
-                lstCategorias.DataSource = Nombre;
-            }
+            lstCategorias.Items.Clear();    
+            lstCategorias.DataSource = Sistema.GetInstancia().ListadoCategorias();
+            lstCategorias.DataTextField = "NombreCategoria";
+            lstCategorias.DataValueField = "IdCategoria";
             lstCategorias.DataBind();
         }
 
@@ -59,20 +54,21 @@ namespace GestOn2.ABMS
                 String marca = txtMarca.Text;
                 String nombre = txtNombreProducto.Text;
                 decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
+                int categoria = int.Parse(lstCategorias.SelectedValue);
                 //CalculoPrecioVenta(precioCompra);
                 decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
-
+                CategoriaProducto cat = Sistema.GetInstancia().BuscarCategorias(categoria);
                 Producto p = new Producto();
                 p.Cantidad = cantidad;
-                //p.ProductoCategoría = categoria;
+                p.categoria = cat;
                 p.ProductoId = id;
                 p.ProductoMarca = marca;
                 p.ProductoNombre = nombre;
                 p.ProductoPrecioCompra = precioCompra;
                 p.ProductoPrecioVenta = PrecioVenta;
 
-                PersistenciaProducto persistencia = new PersistenciaProducto();
-                if (persistencia.GuardarProducto(p))
+                bool exito = Sistema.GetInstancia().GuardarProducto(p);
+                if (exito)
                 {
                     lblInformativo.Text = "Se guardo con éxito";
                     lblInformativo.Visible = true;
@@ -108,25 +104,25 @@ namespace GestOn2.ABMS
                 lblInformativo.Text = "";
                 int id = Int32.Parse(txtIdProducto.Text);
                 int cantidad = Int32.Parse(txtCantidad.Text);
-                //String categoria = txtCategoria.Text;
+                int categoria = int.Parse(lstCategorias.SelectedValue);
                 String marca = txtMarca.Text;
                 String nombre = txtNombreProducto.Text;
                 decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
                 //CalculoPrecioVenta(precioCompra);
                 decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
-
+                CategoriaProducto cat = Sistema.GetInstancia().BuscarCategorias(categoria);
                 Producto p = new Producto();
                 p.Activo = true;
                 p.Cantidad = cantidad;
-               // p.ProductoCategoría = categoria;
+                p.categoria = cat;
                 p.ProductoId = id;
                 p.ProductoMarca = marca;
                 p.ProductoNombre = nombre;
                 p.ProductoPrecioCompra = precioCompra;
                 p.ProductoPrecioVenta = PrecioVenta;
 
-                PersistenciaProducto persistencia = new PersistenciaProducto();
-                if (persistencia.ModificarProducto(p))
+                bool exito = Sistema.GetInstancia().ModificarProducto(p);
+                if (exito)
                 {
                     lblInformativo.Text = "Se modificó con éxito";
                     lblInformativo.Visible = true;
@@ -149,18 +145,19 @@ namespace GestOn2.ABMS
         {
             if (txtIdProducto.Text != "")
             {
-                int id = Int32.Parse(txtIdProducto.Text);
-                PersistenciaProducto persistencia = new PersistenciaProducto();
-                Producto p = persistencia.BuscarProducto(id);
+                int id = int.Parse(txtIdProducto.Text);
+                Producto p = Sistema.GetInstancia().BuscarProducto(id);
                 if (p != null)
                 {
                     if (p.Activo == true)
                     {
+                        ListarCategorias();
                         txtCantidad.Text = p.Cantidad.ToString();
                         txtMarca.Text = p.ProductoMarca.ToString();
                         txtNombreProducto.Text = p.ProductoNombre.ToString();
                         txtPrecioCompra.Text = p.ProductoPrecioCompra.ToString();
                         txtPrecioVenta.Text = p.ProductoPrecioVenta.ToString();
+                        lstCategorias.Items.FindByValue(p.categoria.IdCategoria.ToString()).Selected = true;
                         btnModificar.Enabled = true;
                         btnEliminar.Enabled = true;
                     }
@@ -192,11 +189,9 @@ namespace GestOn2.ABMS
         {
             if (txtIdProducto.Text != "")
             {
-                int id = Int32.Parse(txtIdProducto.Text);
-                Producto p = new Producto();
-                p.ProductoId = id;
-                PersistenciaProducto persistencia = new PersistenciaProducto();
-                if (persistencia.EliminarProducto(p))
+                int id = int.Parse(txtIdProducto.Text);
+                bool exito = Sistema.GetInstancia().EliminarProducto(id);
+                if (exito)
                 {
                     lblInformativo.Text = "Se elimino con éxito";
                     lblInformativo.Visible = true;
@@ -267,8 +262,7 @@ namespace GestOn2.ABMS
             if (txtIdCat.Text != "")
             {
                 int id = Int32.Parse(txtIdCat.Text);
-                PersistenciaCategoriaProducto persistencia = new PersistenciaCategoriaProducto();
-                CategoriaProducto cat = persistencia.BuscarCategorias(id);
+                CategoriaProducto cat = Sistema.GetInstancia().BuscarCategorias(id);
                 if (cat != null)
                 {
                     if (cat.Activo == true)
@@ -320,12 +314,13 @@ namespace GestOn2.ABMS
                 cat.NombreCategoria = nombre;
                 cat.IdCategoria = id;
 
-                PersistenciaCategoriaProducto persistencia = new PersistenciaCategoriaProducto();
-                if (persistencia.GuardarCategoria(cat))
+                bool existe = Sistema.GetInstancia().GuardarCategoria(cat);
+                if (existe)
                 {
                     lblCategoriasMsj.Text = "Se guardo con éxito";
                     lblCategoriasMsj.Visible = true;
                     TimerMensajes.Enabled = true;
+                    ListarCategorias();
 
                     //Elimino campos luego que se inserto con éxito
                     txtIdCat.Text = "";
@@ -346,14 +341,13 @@ namespace GestOn2.ABMS
             if (txtIdCat.Text != "")
             {
                 int id = Int32.Parse(txtIdCat.Text);
-                CategoriaProducto cat = new CategoriaProducto();
-                cat.IdCategoria = id;
-                PersistenciaCategoriaProducto persistencia = new PersistenciaCategoriaProducto();
-                if (persistencia.EliminarCategoria(cat))
+                bool exito = Sistema.GetInstancia().EliminarCategoria(id);
+                if (exito)
                 {
                     lblCategoriasMsj.Text = "Se elimino con éxito";
                     lblCategoriasMsj.Visible = true;
                     TimerMensajes.Enabled = true;
+                    ListarCategorias();
 
                     //Elimino campos luego que se modifico con éxito
                     txtIdCat.Text = "";

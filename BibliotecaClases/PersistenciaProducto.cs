@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BibliotecaClases.Clases;
-namespace BibliotecaClases.Persistencias
+namespace BibliotecaClases
 {
-    public class PersistenciaProducto
+    partial class Sistema
     {
 
         public bool GuardarProducto(Producto producto)
@@ -29,13 +29,13 @@ namespace BibliotecaClases.Persistencias
             }
         }
 
-        public bool EliminarProducto(Producto producto)
+        public bool EliminarProducto(int id)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    Producto p = baseDatos.Productos.FirstOrDefault(de => de.ProductoId == producto.ProductoId);
+                    Producto p = baseDatos.Productos.FirstOrDefault(de => de.ProductoId == id);
                     if (p != null)
                     {
                         p.Activo = false;
@@ -65,7 +65,7 @@ namespace BibliotecaClases.Persistencias
                     if (pr != null)
                     {
                         pr.ProductoId = producto.ProductoId;
-                        pr.ProductoCategoría = producto.ProductoCategoría;
+                        pr.categoria = producto.categoria;
                         pr.ProductoMarca = producto.ProductoMarca;
                         pr.ProductoNombre = producto.ProductoNombre;
                         pr.ProductoPrecioCompra = producto.ProductoPrecioCompra;
@@ -93,7 +93,7 @@ namespace BibliotecaClases.Persistencias
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Productos.FirstOrDefault(prop => prop.ProductoId == id);
+                    return baseDatos.Productos.Include("categoria").FirstOrDefault(prop => prop.ProductoId == id);
                 }
             }
             catch (Exception ex)
