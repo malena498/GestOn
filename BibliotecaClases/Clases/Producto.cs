@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO; 
+using System.IO;
+using BibliotecaClases.Clases;
 
 namespace BibliotecaClases
 {
@@ -13,7 +14,7 @@ namespace BibliotecaClases
         [Key]
         public int ProductoId { get; set; }
 
-        public String ProductoNombre{ get;set; }
+        public string ProductoNombre{ get;set; }
 
         public decimal ProductoPrecioVenta { get; set; }
 
@@ -21,9 +22,11 @@ namespace BibliotecaClases
 
         public decimal ProductoPrecioCompra { get; set; }
 
-        public String ProductoCategoría { get; set; }
+        public int IdCategoria { get; set; }
+        [ForeignKey("IdCategoria")]
+        public CategoriaProducto categoria { get; set; }
 
-        public String ProductoMarca { get; set; }
+        public string ProductoMarca { get; set; }
 
         public int Cantidad { get; set; }
     }

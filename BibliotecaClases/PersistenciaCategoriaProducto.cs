@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BibliotecaClases.Clases;
+
 namespace BibliotecaClases
 {
     partial class Sistema
     {
-
-        public bool GuardarProducto(Producto producto)
-        {  
+        public bool GuardarCategoria(CategoriaProducto categoria)
+        {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    producto.Activo = true;
-                    baseDatos.Productos.Add(producto);
-                    if (producto.ProductoId!= 0)
+                    categoria.Activo = true;
+                    baseDatos.Categorias.Add(categoria);
+                    if (categoria.IdCategoria != 0)
                     {
                         baseDatos.SaveChanges();
                     }
@@ -29,16 +29,16 @@ namespace BibliotecaClases
             }
         }
 
-        public bool EliminarProducto(int id)
+        public bool EliminarCategoria(int id)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    Producto p = baseDatos.Productos.FirstOrDefault(de => de.ProductoId == id);
-                    if (p != null)
+                    CategoriaProducto c = baseDatos.Categorias.FirstOrDefault(de => de.IdCategoria == id);
+                    if (c != null)
                     {
-                        p.Activo = false;
+                        c.Activo = false;
 
                         baseDatos.SaveChanges();
                         return true;
@@ -55,23 +55,18 @@ namespace BibliotecaClases
             }
         }
 
-        public bool ModificarProducto(Producto producto)
+        public bool ModificarCategorias(CategoriaProducto categoria)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    Producto pr = baseDatos.Productos.SingleOrDefault(cl => cl.ProductoId == producto.ProductoId);
-                    if (pr != null)
+                    CategoriaProducto cat = baseDatos.Categorias.SingleOrDefault(cl => cl.IdCategoria == categoria.IdCategoria);
+                    if (cat != null)
                     {
-                        pr.ProductoId = producto.ProductoId;
-                        pr.categoria = producto.categoria;
-                        pr.ProductoMarca = producto.ProductoMarca;
-                        pr.ProductoNombre = producto.ProductoNombre;
-                        pr.ProductoPrecioCompra = producto.ProductoPrecioCompra;
-                        pr.ProductoPrecioVenta = producto.ProductoPrecioVenta;
-                        pr.Cantidad = producto.Cantidad;
-                        pr.Activo = producto.Activo;
+                        cat.IdCategoria = categoria.IdCategoria;
+                        cat.NombreCategoria = categoria.NombreCategoria;
+                        cat.Activo = categoria.Activo;
                         baseDatos.SaveChanges();
                         return true;
                     }
@@ -87,13 +82,13 @@ namespace BibliotecaClases
             }
         }
 
-        public Producto BuscarProducto(int id)
+        public CategoriaProducto BuscarCategorias(int id)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Productos.Include("categoria").FirstOrDefault(prop => prop.ProductoId == id);
+                    return baseDatos.Categorias.FirstOrDefault(prop => prop.IdCategoria == id);
                 }
             }
             catch (Exception ex)
@@ -104,7 +99,7 @@ namespace BibliotecaClases
 
         }
 
-        public List<Producto> ListadoProductos()
+        public List<CategoriaProducto> ListadoCategorias()
         {
             try
             {
@@ -112,13 +107,13 @@ namespace BibliotecaClases
                 {
                     try
                     {
-                        List<Producto> productos = baseDatos.Productos.Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoId).ToList();
-                        return productos;
+                        List<CategoriaProducto> categorias = baseDatos.Categorias.Where(ej => ej.Activo == true).OrderBy(ej => ej.IdCategoria).ToList();
+                        return categorias;
                     }
                     catch
                     {
-                        List<Producto> productos = baseDatos.Productos.Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoNombre).ToList();
-                        return productos;
+                        List<CategoriaProducto> categorias = baseDatos.Categorias.Where(ej => ej.Activo == true).OrderBy(ej => ej.NombreCategoria).ToList();
+                        return categorias;
                     }
                 }
             }
