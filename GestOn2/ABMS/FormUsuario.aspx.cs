@@ -102,8 +102,7 @@ namespace GestOn2
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
             int id = Int32.Parse(txtIdUsuario.Text);
-            Usuario us = Sistema.GetInstancia().BuscarUsuario(id);
-            bool exito = Sistema.GetInstancia().EliminarUsuario(us);
+            bool exito = Sistema.GetInstancia().EliminarUsuario(id);
             if (exito)
             {
                 lblResultado.Text = "Se elimino con éxito";
