@@ -115,15 +115,15 @@ namespace GestOn2.ABMS
             }
         }
 
-        protected void CargarImagenes(List<Imagen> imagenesProducto)
+        protected void CargarImagenes(List<Imagen> imagenes)
         {
             try
             {
-                List<System.Web.UI.WebControls.ListItem> files = new List<System.Web.UI.WebControls.ListItem>();
-                foreach (Imagen i in imagenesProducto)
+                List<System.Web.UI.WebControls.ListItem> archivos = new List<System.Web.UI.WebControls.ListItem>();
+                foreach (Imagen i in imagenes)
                 {
                     string pathImg = "~/Imagenes/" + i.ImagenURL;
-                    files.Add(new System.Web.UI.WebControls.ListItem(i.ImagenId.ToString(), pathImg));
+                    archivos.Add(new System.Web.UI.WebControls.ListItem(i.ImagenId.ToString(), pathImg));
                 }
 
                 //Recorro la lista de imagenes cargadas
@@ -133,14 +133,14 @@ namespace GestOn2.ABMS
                     if (!String.IsNullOrEmpty(filePath))
                     {
                         string pathImg = "~/Imagenes/" + filePath;
-                        files.Add(new System.Web.UI.WebControls.ListItem(filePath, pathImg));
+                        archivos.Add(new System.Web.UI.WebControls.ListItem(filePath, pathImg));
                     }
 
 
                 }
 
 
-                GridView1.DataSource = files;
+                GridView1.DataSource = archivos;
                 GridView1.DataBind();
 
             }
@@ -154,13 +154,13 @@ namespace GestOn2.ABMS
             try
             {
 
-                List<Imagen> imagenesLote = new List<Imagen>();
+                List<Imagen> imagenes= new List<Imagen>();
                 if (fuImagenes.HasFile)
                 {
-                    HttpPostedFile file = fuImagenes.PostedFile;
-                    if ((file != null) && (file.ContentLength > 0))
+                    HttpPostedFile archivo = fuImagenes.PostedFile;
+                    if ((archivo != null) && (archivo.ContentLength > 0))
                     {
-                        if (EsImagen(file) == false)
+                        if (EsImagen(archivo) == false)
                         {
                             lblResultado.Text = "Debe seleccionar una imagen.";
                             return;
@@ -168,13 +168,13 @@ namespace GestOn2.ABMS
                     }
 
 
-                    int iFileSize = file.ContentLength;
+                    int iFileSize = archivo.ContentLength;
 
                     // todo bien subo la imagen
                     string NombreArchivo = Path.GetFileNameWithoutExtension(fuImagenes.PostedFile.FileName);
 
                     //CREO UNA IMAGEN BitMap
-                    System.Drawing.Bitmap imagen = new System.Drawing.Bitmap(file.InputStream);
+                    System.Drawing.Bitmap imagen = new System.Drawing.Bitmap(archivo.InputStream);
 
                     //Me fijo la orientacion por si necesito rotarla
                     if (Array.IndexOf(imagen.PropertyIdList, 274) > -1)
@@ -227,7 +227,7 @@ namespace GestOn2.ABMS
                     {
                         txtURLs.Text = txtURLs.Text + "," + nombrearchivo;
                     }
-                    CargarImagenes(imagenesLote);
+                    CargarImagenes(imagenes);
                 }
             }
             catch (Exception ex)
@@ -246,9 +246,9 @@ namespace GestOn2.ABMS
                 img.Attributes.Add("onclick", "window.open('" + img.ImageUrl.Replace("~", "") + "', '_blank')");
             }
         }
-        private bool EsImagen(HttpPostedFile file)
+        private bool EsImagen(HttpPostedFile archivo)
         {
-            return ((file != null) && System.Text.RegularExpressions.Regex.IsMatch(file.ContentType, "image/\\S+") && (file.ContentLength > 0));
+            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
         }
 
         public static System.Drawing.Image ImagenPad(System.Drawing.Image originalImage)
