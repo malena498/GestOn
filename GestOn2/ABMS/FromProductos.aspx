@@ -23,21 +23,21 @@
 <br />
             <asp:Label ID="Label4" runat="server" Font-Size="13pt" ForeColor="Black" Text="Precio venta:" Width="120px"></asp:Label>
             <asp:TextBox ID="txtPrecioVenta" runat="server" Width="150px"></asp:TextBox>
-            <asp:Panel ID="pnlNuevaCat" runat="server" Visible="False" Width="315px" style="position:absolute;align-content:flex-start; top: 97px; left: 404px; height: 219px;" BackColor="#999999" BorderColor="Black" BorderStyle="Solid">
+            <asp:Panel ID="pnlNuevaCat" runat="server" Visible="False" style="position:absolute;align-content:flex-start; top: 97px; left: 404px; height: 219px; width: 360px;" BackColor="#999999" BorderColor="Black" BorderStyle="Solid">
                 <asp:Button ID="btnClosePanel" runat="server"  Height="25px" Text="X" Width="25px" style="float:right" Font-Size="15pt" ForeColor="Black" OnClick="btnClosePanel_Click"  />
                 <br />
-                <asp:Label ID="lbllll" runat="server" Text="Id Categoría:" Width="120px"></asp:Label>
+                <asp:Label ID="lbllll" runat="server" Text="Id Categoría:" Width="140px"></asp:Label>
                 <asp:TextBox ID="txtIdCat" runat="server" Width="50px"></asp:TextBox>
                 <asp:Button ID="btnBuscarCat" runat="server" OnClick="btnBuscarCat_Click" Text="Buscar" Width="100px" />
                 <br />
                 <asp:Label ID="lblCategoriasMsj" runat="server" Font-Size="14pt" ForeColor="#FF3300" style="margin-left: 0px" Visible="False" Width="313px"></asp:Label>
                 <br />
-                <asp:Label ID="Label9" runat="server" Text="Nombre Categoría" Width="120px"></asp:Label>
+                <asp:Label ID="Label9" runat="server" Text="Nombre Categoría" Width="140px"></asp:Label>
                 <asp:TextBox ID="txtNomCat" runat="server" Width="150px"></asp:TextBox>
                 <br />
                 <br />
-                <asp:Button ID="btnGuardarCategoria" runat="server" OnClick="btnGuardarCategoria_Click" style="margin-left: 0px" Text="Guardar" Width="75px" Height="25px" />
-                <asp:Button ID="btnEliminarCategoria" runat="server" OnClick="btnEliminarCategoria_Click" Text="Eliminar" Width="75px" Height="25px" />
+                <asp:Button ID="btnGuardarCategoria" runat="server" OnClick="btnGuardarCategoria_Click" style="margin-left: 140px" Text="Guardar" Width="75px" Height="33px" />
+                <asp:Button ID="btnEliminarCategoria" runat="server" OnClick="btnEliminarCategoria_Click" Text="Eliminar" Width="75px" Height="33px" />
                 <br />
             </asp:Panel>
 <br />
@@ -58,9 +58,9 @@
             <asp:LinkButton ID="linkNewCategoria" runat="server" OnClick="linkNewCategoria_Click" style="margin-left: 125px" Width="150px">Nueva Categoría</asp:LinkButton>
             <br />
 <br />
-            <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" style="margin-left: 120px" Text="Guardar" Width="75px" />
-            <asp:Button ID="btnModificar" runat="server" Text="Modificar" Width="75px" OnClick="btnModificar_Click" Enabled="False" />
-            <asp:Button ID="btnEliminar" runat="server" Enabled="False" OnClick="btnEliminar_Click" Text="Eliminar" Width="76px" />
+            <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" style="margin-left: 120px" Text="Guardar" Width="90px" />
+            <asp:Button ID="btnModificar" runat="server" Text="Modificar" Width="90px" OnClick="btnModificar_Click" Enabled="False" />
+            <asp:Button ID="btnEliminar" runat="server" Enabled="False" OnClick="btnEliminar_Click" Text="Eliminar" Width="90px" />
 <br />
 <br />
             <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick">

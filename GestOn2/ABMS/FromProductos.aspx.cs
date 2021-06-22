@@ -26,17 +26,13 @@ namespace GestOn2.ABMS
             }
         }
 
+        //Listo categorias de productos en el ListBox
         public void ListarCategorias() {
             lstCategorias.Items.Clear();    
             lstCategorias.DataSource = Sistema.GetInstancia().ListadoCategorias();
             lstCategorias.DataTextField = "NombreCategoria";
             lstCategorias.DataValueField = "IdCategoria";
             lstCategorias.DataBind();  
-
-
-
-
-
         }
 
         //Guardo el producto 
@@ -266,7 +262,7 @@ namespace GestOn2.ABMS
         {
             if (txtIdCat.Text != "")
             {
-                int id = Int32.Parse(txtIdCat.Text);
+                int id = int.Parse(txtIdCat.Text);
                 CategoriaProducto cat = Sistema.GetInstancia().BuscarCategorias(id);
                 if (cat != null)
                 {
@@ -277,6 +273,7 @@ namespace GestOn2.ABMS
                     else
                     {
                         lblCategoriasMsj.Text = "La categoria fue dada de baja";
+                        txtNomCat.Text = "";
                         lblCategoriasMsj.Visible = true;
                         TimerMensajes.Enabled = true;
                     }
