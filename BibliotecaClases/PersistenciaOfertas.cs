@@ -77,7 +77,7 @@ namespace BibliotecaClases {
 
 
 
-            public bool ModificarOferta(Oferta oferta/*, List<String> listaImagenes*/)
+            public bool ModificarOferta(Oferta oferta, List<String> listaImagenes)
             {
                 try
                 {
@@ -91,15 +91,15 @@ namespace BibliotecaClases {
                             of.OfertaFechaHasta = oferta.OfertaFechaHasta;
                             of.OfertaPrecio = oferta.OfertaPrecio;
                             of.OfertaTitulo = oferta.OfertaTitulo;
-                            //foreach (String url in listaImagenes)
-                            //{
-                            //    Imagen img = new Imagen();
-                            //    img.ImagenURL = url;
-                            //    img.IdOferta = oferta.IdOferta;
-                            //    baseDatos.Imagenes.Add(img);
-                            //}
+                        foreach (String url in listaImagenes)
+                        {
+                            Imagen img = new Imagen();
+                            img.ImagenURL = url;
+                            img.IdOferta = oferta.IdOferta;
+                            baseDatos.Imagenes.Add(img);
+                        }
 
-                            baseDatos.SaveChanges();
+                        baseDatos.SaveChanges();
                             return true;
 
                         }
@@ -122,7 +122,7 @@ namespace BibliotecaClases {
                 {
                     using (var baseDatos = new Context())
                     {
-                        return baseDatos.Ofertas.FirstOrDefault(prop => prop.IdOferta == id);
+                        return baseDatos.Ofertas.Include("Imagenes").FirstOrDefault(prop => prop.IdOferta == id);
                     }
 
                 }
@@ -156,6 +156,18 @@ namespace BibliotecaClases {
                     return null;
                 }
             }
+
+        public List<Imagen> BuscarImagenesOferta(int idOferta)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    return baseDatos.Imagenes.Where(i => i.IdOferta == idOferta).ToList();
+                }
+            }
+            catch { return null; }
+        }
     }
 }
 

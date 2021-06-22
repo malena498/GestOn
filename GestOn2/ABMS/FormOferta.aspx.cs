@@ -6,7 +6,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BibliotecaClases;
 using BibliotecaClases.Clases;
-
 using System.Drawing;
 using System.IO;
 
@@ -28,7 +27,6 @@ namespace GestOn2.ABMS
             {
                 Oferta o = new Oferta();
                 String nameDB = Session["NombreBase"].ToString();
-                o.IdOferta = int.Parse(txtIdOferta.Text);
                 o.OfertaTitulo = txtTituloOferta.Text;
                 o.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
                 o.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
@@ -89,8 +87,11 @@ namespace GestOn2.ABMS
                 int id = Int32.Parse(txtIdOferta.Text);
 
                 Oferta of = Sistema.GetInstancia().BuscarOferta(id);
+               
                 if (of != null)
                 {
+                    List<Imagen> imagenes = Sistema.GetInstancia().BuscarImagenesOferta(of.IdOferta);
+                    CargarImagenes(imagenes);
                     txtTituloOferta.Text = of.OfertaTitulo;
                     txtFechaDesde.Text = of.OfertaFechaDesde.ToString();
                     txtFechaHasta.Text = of.OfertaFechaHasta.ToString();
@@ -113,15 +114,15 @@ namespace GestOn2.ABMS
             }
         }
 
-        protected void CargarImagenes(List<Imagen> imagenesProducto)
+        protected void CargarImagenes(List<Imagen> imagenes)
         {
             try
             {
-                List<System.Web.UI.WebControls.ListItem> files = new List<System.Web.UI.WebControls.ListItem>();
-                foreach (Imagen i in imagenesProducto)
+                List<System.Web.UI.WebControls.ListItem> archivos = new List<System.Web.UI.WebControls.ListItem>();
+                foreach (Imagen i in imagenes)
                 {
                     string pathImg = "~/Imagenes/" + i.ImagenURL;
-                    files.Add(new System.Web.UI.WebControls.ListItem(i.ImagenId.ToString(), pathImg));
+                    archivos.Add(new System.Web.UI.WebControls.ListItem(i.ImagenId.ToString(), pathImg));
                 }
 
                 //Recorro la lista de imagenes cargadas
@@ -131,14 +132,14 @@ namespace GestOn2.ABMS
                     if (!String.IsNullOrEmpty(filePath))
                     {
                         string pathImg = "~/Imagenes/" + filePath;
-                        files.Add(new System.Web.UI.WebControls.ListItem(filePath, pathImg));
+                        archivos.Add(new System.Web.UI.WebControls.ListItem(filePath, pathImg));
                     }
 
 
                 }
 
 
-                GridView1.DataSource = files;
+                GridView1.DataSource = archivos;
                 GridView1.DataBind();
 
             }
@@ -152,13 +153,13 @@ namespace GestOn2.ABMS
             try
             {
 
-                List<Imagen> imagenesLote = new List<Imagen>();
+                List<Imagen> imagenes= new List<Imagen>();
                 if (fuImagenes.HasFile)
                 {
-                    HttpPostedFile file = fuImagenes.PostedFile;
-                    if ((file != null) && (file.ContentLength > 0))
+                    HttpPostedFile archivo = fuImagenes.PostedFile;
+                    if ((archivo != null) && (archivo.ContentLength > 0))
                     {
-                        if (EsImagen(file) == false)
+                        if (EsImagen(archivo) == false)
                         {
                             lblResultado.Text = "Debe seleccionar una imagen.";
                             return;
@@ -166,13 +167,13 @@ namespace GestOn2.ABMS
                     }
 
 
-                    int iFileSize = file.ContentLength;
+                    int iFileSize = archivo.ContentLength;
 
                     // todo bien subo la imagen
                     string NombreArchivo = Path.GetFileNameWithoutExtension(fuImagenes.PostedFile.FileName);
 
                     //CREO UNA IMAGEN BitMap
-                    System.Drawing.Bitmap imagen = new System.Drawing.Bitmap(file.InputStream);
+                    System.Drawing.Bitmap imagen = new System.Drawing.Bitmap(archivo.InputStream);
 
                     //Me fijo la orientacion por si necesito rotarla
                     if (Array.IndexOf(imagen.PropertyIdList, 274) > -1)
@@ -225,7 +226,7 @@ namespace GestOn2.ABMS
                     {
                         txtURLs.Text = txtURLs.Text + "," + nombrearchivo;
                     }
-                    CargarImagenes(imagenesLote);
+                    CargarImagenes(imagenes);
                 }
             }
             catch (Exception ex)
@@ -244,9 +245,9 @@ namespace GestOn2.ABMS
                 img.Attributes.Add("onclick", "window.open('" + img.ImageUrl.Replace("~", "") + "', '_blank')");
             }
         }
-        private bool EsImagen(HttpPostedFile file)
+        private bool EsImagen(HttpPostedFile archivo)
         {
-            return ((file != null) && System.Text.RegularExpressions.Regex.IsMatch(file.ContentType, "image/\\S+") && (file.ContentLength > 0));
+            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
         }
 
         public static System.Drawing.Image ImagenPad(System.Drawing.Image originalImage)
@@ -299,8 +300,12 @@ namespace GestOn2.ABMS
                 of.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
                 of.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
                 of.OfertaPrecio = decimal.Parse(txtPrecio.Text);
-
-                bool exito = Sistema.GetInstancia().ModificarOferta(of);
+                List<String> imagenes = new List<String>();
+                if (!String.IsNullOrEmpty(txtURLs.Text))
+                {
+                    imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
+                }
+                bool exito = Sistema.GetInstancia().ModificarOferta(of, imagenes);
                 if (exito)
                 {
                     lblResultado.Text = "Se modificó con éxito";

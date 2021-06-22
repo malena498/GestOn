@@ -28,12 +28,12 @@
             <br />
             <asp:Label ID="Label4" runat="server" Text="Contraseña"></asp:Label>
             <br />
-            <asp:TextBox ID="txtContrasenia" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtContrasenia" runat="server" TextMode="Password"></asp:TextBox>
             <br />
             <br />
             <asp:Label ID="Label5" runat="server" Text="Confirmar contraseña"></asp:Label>
             <br />
-            <asp:TextBox ID="txtConfirmarContrasenia" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtConfirmarContrasenia" runat="server" TextMode="Password"></asp:TextBox>
             <br />
              <asp:Label ID="Label8" runat="server" Text="Categoría"></asp:Label>
             <br />

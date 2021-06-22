@@ -37,7 +37,7 @@
              <asp:Label ID="Label5" runat="server" Text="Imagenes:"></asp:Label>
             <br />
             <asp:FileUpload ID="fuImagenes" runat="server" AllowMultiple="false"/>
-                        <asp:Button ID="btnUpload" runat="server" OnClick="btnUpload_Click" Text="Subir" Style="display: none;" />
+                        <asp:Button ID="btnUpload" runat="server" OnClick="btnUpload_Click" Text="Subir"  />
                         <asp:TextBox ID="txtURLs" Style="display: none;" runat="server"></asp:TextBox>
                         <asp:GridView ID="GridView1" runat="server" Width="100%" RowStyle-HorizontalAlign="Center" RowStyle-CssClass="col-6 p-0" AutoGenerateColumns="false" ShowHeader="false" OnRowDataBound="GridView1_RowDataBound">
                             <Columns>
@@ -52,5 +52,8 @@
             <asp:Button ID="btnModificar" runat="server" OnClick="btnModificar_Click" style="margin-left: 15px" Text="Modificar" />
             <br />
         </ContentTemplate>
+         <Triggers>
+                        <asp:PostBackTrigger ControlID="btnUpload" />
+                    </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
