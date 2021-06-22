@@ -23,7 +23,7 @@
 <br />
             <asp:Label ID="Label4" runat="server" Font-Size="13pt" ForeColor="Black" Text="Precio venta:" Width="120px"></asp:Label>
             <asp:TextBox ID="txtPrecioVenta" runat="server" Width="150px"></asp:TextBox>
-            <asp:Panel ID="pnlNuevaCat" runat="server" Height="175px" Visible="False" Width="315px" style="position:absolute;align-content:flex-start; top: 97px; left: 404px;" BackColor="#999999" BorderColor="Black" BorderStyle="Solid">
+            <asp:Panel ID="pnlNuevaCat" runat="server" Visible="False" Width="315px" style="position:absolute;align-content:flex-start; top: 97px; left: 404px; height: 219px;" BackColor="#999999" BorderColor="Black" BorderStyle="Solid">
                 <asp:Button ID="btnClosePanel" runat="server"  Height="25px" Text="X" Width="25px" style="float:right" Font-Size="15pt" ForeColor="Black" OnClick="btnClosePanel_Click"  />
                 <br />
                 <asp:Label ID="lbllll" runat="server" Text="Id Categoría:" Width="120px"></asp:Label>
@@ -36,8 +36,8 @@
                 <asp:TextBox ID="txtNomCat" runat="server" Width="150px"></asp:TextBox>
                 <br />
                 <br />
-                <asp:Button ID="btnGuardarCategoria" runat="server" OnClick="btnGuardarCategoria_Click" style="margin-left: 120px" Text="Guardar" Width="75px" Height="25px" />
-                <asp:Button ID="btnEliminarCategoria" runat="server" OnClick="btnEliminarCategoria_Click" Text="Eliminar" Width="75px" />
+                <asp:Button ID="btnGuardarCategoria" runat="server" OnClick="btnGuardarCategoria_Click" style="margin-left: 0px" Text="Guardar" Width="75px" Height="25px" />
+                <asp:Button ID="btnEliminarCategoria" runat="server" OnClick="btnEliminarCategoria_Click" Text="Eliminar" Width="75px" Height="25px" />
                 <br />
             </asp:Panel>
 <br />
