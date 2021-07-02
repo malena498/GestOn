@@ -8,13 +8,15 @@ namespace BibliotecaClases
     partial class Sistema
     {
 
-        public bool GuardarProducto(Producto producto)
+        public bool GuardarProducto(Producto producto, int cate)
         {  
             try
             {
                 using (var baseDatos = new Context())
                 {
+                    int cat = cate;
                     producto.Activo = true;
+                    producto.IdCategoria = cat;
                     baseDatos.Productos.Add(producto);
                     if (producto.ProductoId!= 0)
                     {
@@ -65,7 +67,7 @@ namespace BibliotecaClases
                     if (pr != null)
                     {
                         pr.ProductoId = producto.ProductoId;
-                        pr.categoria = producto.categoria;
+                        pr.IdCategoria = producto.IdCategoria;
                         pr.ProductoMarca = producto.ProductoMarca;
                         pr.ProductoNombre = producto.ProductoNombre;
                         pr.ProductoPrecioCompra = producto.ProductoPrecioCompra;
@@ -93,7 +95,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Productos.Include("categoria").FirstOrDefault(prop => prop.ProductoId == id);
+                    return baseDatos.Productos.FirstOrDefault(prop => prop.ProductoId == id);
                 }
             }
             catch (Exception ex)

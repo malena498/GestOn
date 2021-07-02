@@ -14,7 +14,7 @@ namespace GestOn2.ABMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack) {
+            if (!IsPostBack) {
                 ListarProductos();
             }
             //Obtengo la fecha del sistema, ya que la uso para cargarla en la fecha que se hace el pedido
@@ -44,23 +44,21 @@ namespace GestOn2.ABMS
             {
                 lblInformativo.Visible = false;
                 lblInformativo.Text = "";
-                int identificador = Int32.Parse(txtId.Text);
+                int identificador = int.Parse(txtId.Text);
                 txtFechaPedido.Text = DateTime.Now.ToLongTimeString();
                 DateTime fchPedido = DateTime.Parse(txtFechaPedido.Text);
                 DateTime fchEntrega = DateTime.Parse(txtFechaPedido.Text);
                 string Descripcion = txtDescripcion.InnerText;
                 string Direccion = txtDireccion.Text;
                 int user = 1;
-                /*List<Producto> lstitems = new List<Producto>();
+
+                List<int> lstitems = new List<int>();
 
                 for (int i = 0; i < ListSeleccionados.Items.Count; i++)
                 {
-                    if (ListSeleccionados.Items[i].Selected)
-                    {
-                        //Producto prod = ListSeleccionados.Items[i].Value;
-                        lstitems.Add(prod);
-                    }
-                }*/
+                    int prod = int.Parse(ListSeleccionados.Items[i].Value);
+                    lstitems.Add(prod);
+                }
 
 
                 Pedido p = new Pedido();
@@ -70,10 +68,9 @@ namespace GestOn2.ABMS
                 p.FechaEntrega = fchEntrega;
                 p.FechaPedido = fchPedido;
                 p.IdPedido = identificador;
-               // p.productos = lstitems;
                 p.UserId = user;
 
-                bool exito = Sistema.GetInstancia().GuardarPedido(p);
+                bool exito = Sistema.GetInstancia().GuardarPedido(p, lstitems);
                 if (exito)
                 {
                     lblInformativo.Text = "Se guardo con éxito";
@@ -83,7 +80,6 @@ namespace GestOn2.ABMS
                     //Elimino campos luego que se inserto con éxito
                     VaciarCampos();
                     ListarProductos();
-
                 }
                 else
                 {
@@ -131,6 +127,70 @@ namespace GestOn2.ABMS
         {
             lblInformativo.Visible = false;
             TimerMensajes.Enabled = false;
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            if (txtId.Text != "")
+            {
+                int id = int.Parse(txtId.Text);
+                Pedido p = Sistema.GetInstancia().BuscarPedido(id);
+                if (p != null)
+                {
+                    if (p.Activo == true)
+                    {
+                        txtDescripcion.InnerText = p.Descripcion.ToString();
+                        txtDireccion.Text = p.Direccion.ToString();
+                        txtFechaPedido.Text = p.FechaPedido.ToString();
+                        ListSeleccionados.DataSource = p.productos;
+                        ListProductos.Items.Remove(ListSeleccionados.Items.ToString());
+                        ListSeleccionados.DataBind();
+                        RadioBtnSi.Checked = true;
+                        lblDireccion.Visible = true;
+                        txtDireccion.Visible = true;
+                        txtDireccion.Enabled = true;
+                    }
+                    else
+                    {
+                        lblInformativo.Text = "El pedido fue dada de baja";
+                        txtDescripcion.InnerText = "";
+                        txtDireccion.Text = "";
+                        lblInformativo.Visible = true;
+                        TimerMensajes.Enabled = true;
+                    }
+                }
+                else
+                {
+                    lblInformativo.Text = "El pedido buscado no éxiste en el sistema";
+                    txtDescripcion.InnerText = "";
+                    txtDireccion.Text = "";
+                    lblInformativo.Visible = true;
+                    TimerMensajes.Enabled = true;
+                }
+            }
+            else
+            {
+                lblInformativo.Text = "Debe completar id del pedido";
+                lblInformativo.Visible = true;
+                TimerMensajes.Enabled = true;
+            }
+        }
+
+        protected void RadioBtnSi_CheckedChanged(object sender, EventArgs e)
+        {
+            if (RadioBtnSi.Checked) { 
+                txtDireccion.Enabled = true;
+                txtDireccion.Visible = true;
+                lblDireccion.Visible = true;
+            }
+        }
+
+        protected void RadioBtnNo_CheckedChanged(object sender, EventArgs e)
+        {
+            txtDireccion.Enabled = false;
+            txtDireccion.Text = "";
+            txtDireccion.Visible = false;
+            lblDireccion.Visible = false;
         }
     }
 }

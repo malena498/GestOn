@@ -8,6 +8,7 @@ using BibliotecaClases;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Data.Sql;
+using System.Web.UI.HtmlControls;
 using BibliotecaClases.Clases;
 
 namespace GestOn2.ABMS
@@ -21,9 +22,15 @@ namespace GestOn2.ABMS
                 var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
                 if (!Page.IsPostBack)
                 {
+                    ListarProductos();
                     ListarCategorias();
                 }
             }
+        }
+
+        public void ListarProductos() {
+            gridProductos.DataSource = Sistema.GetInstancia().ListadoProductos();
+            gridProductos.DataBind();
         }
 
         //Listo categorias de productos en el ListBox
@@ -56,19 +63,17 @@ namespace GestOn2.ABMS
                 String nombre = txtNombreProducto.Text;
                 decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
                 int categoria = int.Parse(lstCategorias.SelectedValue);
-                //CalculoPrecioVenta(precioCompra);
                 decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
                 CategoriaProducto cat = Sistema.GetInstancia().BuscarCategorias(categoria);
                 Producto p = new Producto();
                 p.Cantidad = cantidad;
-                p.categoria = cat;
                 p.ProductoId = id;
                 p.ProductoMarca = marca;
                 p.ProductoNombre = nombre;
                 p.ProductoPrecioCompra = precioCompra;
                 p.ProductoPrecioVenta = PrecioVenta;
 
-                bool exito = Sistema.GetInstancia().GuardarProducto(p);
+                bool exito = Sistema.GetInstancia().GuardarProducto(p,categoria);
                 if (exito)
                 {
                     lblInformativo.Text = "Se guardo con éxito";
@@ -85,7 +90,7 @@ namespace GestOn2.ABMS
                     TimerMensajes.Enabled = true;
                 }
             }
-            
+            ListarProductos();
         }
 
         //Modifico el producto a traves de la ID
@@ -111,11 +116,10 @@ namespace GestOn2.ABMS
                 decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
                 //CalculoPrecioVenta(precioCompra);
                 decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
-                CategoriaProducto cat = Sistema.GetInstancia().BuscarCategorias(categoria);
                 Producto p = new Producto();
                 p.Activo = true;
                 p.Cantidad = cantidad;
-                p.categoria = cat;
+                p.IdCategoria = categoria;
                 p.ProductoId = id;
                 p.ProductoMarca = marca;
                 p.ProductoNombre = nombre;
@@ -125,6 +129,7 @@ namespace GestOn2.ABMS
                 bool exito = Sistema.GetInstancia().ModificarProducto(p);
                 if (exito)
                 {
+                    ListarProductos();
                     lblInformativo.Text = "Se modificó con éxito";
                     lblInformativo.Visible = true;
                     TimerMensajes.Enabled = true;
@@ -158,7 +163,7 @@ namespace GestOn2.ABMS
                         txtNombreProducto.Text = p.ProductoNombre.ToString();
                         txtPrecioCompra.Text = p.ProductoPrecioCompra.ToString();
                         txtPrecioVenta.Text = p.ProductoPrecioVenta.ToString();
-                        lstCategorias.Items.FindByValue(p.categoria.IdCategoria.ToString()).Selected = true;
+                        lstCategorias.Items.FindByValue(p.IdCategoria.ToString()).Selected = true;
                         btnModificar.Enabled = true;
                         btnEliminar.Enabled = true;
                     }
@@ -200,6 +205,7 @@ namespace GestOn2.ABMS
 
                     //Elimino campos luego que se modifico con éxito
                     VaciarCampos();
+                    ListarProductos();
                 }
                 else
                 {
@@ -243,13 +249,13 @@ namespace GestOn2.ABMS
         }
 
         //Calcula el precio de venta a traves de un porcentaje dado y el precio de compra
-        protected void CalculoPrecioVenta(decimal precioCompra)
+        /*protected void CalculoPrecioVenta(decimal precioCompra)
         {
             decimal pventa = precioCompra + ((precioCompra * 025) / 100);
             string resultado = pventa.ToString();
             String substring = resultado.Substring(0, 5);
             lblprice.Text = substring;
-        }
+        }*/
 
         //Muestro el panel de edicion de categoria de productos
         protected void linkNewCategoria_Click(object sender, EventArgs e)
@@ -298,6 +304,7 @@ namespace GestOn2.ABMS
         protected void btnGuardarCategoria_Click(object sender, EventArgs e)
         {
             //Validaciones que las caja de texto no estén vacias.
+
             if (txtIdCat.Text == "" || txtNomCat.Text == "")
             {
                 lblCategoriasMsj.Text = "Debe completar todos los campos";

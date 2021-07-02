@@ -27,8 +27,6 @@ namespace BibliotecaClases
         public virtual List<Producto> productos { get; set; }
 
         public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public Usuario usuario { get; set; }
 
     }
 }

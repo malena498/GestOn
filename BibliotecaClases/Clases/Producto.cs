@@ -13,7 +13,7 @@ namespace BibliotecaClases
     {
         [Key]
         public int ProductoId { get; set; }
-
+        
         public string ProductoNombre{ get;set; }
 
         public decimal ProductoPrecioVenta { get; set; }
@@ -23,11 +23,14 @@ namespace BibliotecaClases
         public decimal ProductoPrecioCompra { get; set; }
 
         public int IdCategoria { get; set; }
-        [ForeignKey("IdCategoria")]
-        public CategoriaProducto categoria { get; set; }
 
         public string ProductoMarca { get; set; }
 
         public int Cantidad { get; set; }
+
+        public override string ToString()
+        {
+            return ProductoNombre.ToString();
+        }
     }
 }

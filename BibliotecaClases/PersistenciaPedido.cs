@@ -3,18 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BibliotecaClases.Clases;
+
 namespace BibliotecaClases
 {
     partial class Sistema
     {
 
-        public bool GuardarPedido(Pedido pedido)
+        public bool GuardarPedido(Pedido pedido, List<int> lista)
         {
             try
             {
+                List<Producto> productos = new List<Producto>();
                 using (var baseDatos = new Context())
                 {
+                for (int i = 0; i < lista.Count; i++)
+                {
+                    int idprod = lista[i];
+                    productos = baseDatos.Productos.Where(p => p.ProductoId == idprod).ToList();
+                }
+
                     pedido.Activo = true;
+                    pedido.productos = productos;
                     baseDatos.Pedidos.Add(pedido);
                     if (pedido.IdPedido != 0)
                     {
