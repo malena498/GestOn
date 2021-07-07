@@ -143,7 +143,11 @@ namespace GestOn2.ABMS
                         txtDireccion.Text = p.Direccion.ToString();
                         txtFechaPedido.Text = p.FechaPedido.ToString();
                         ListSeleccionados.DataSource = p.productos;
-                        ListProductos.Items.Remove(ListSeleccionados.Items.ToString());
+                        ListarProductos();
+                        for (int i = 0; i < p.productos.Count; i++)
+                        {
+                            ListProductos.Items.Remove(ListProductos.Items.FindByValue(p.productos[i].ProductoId.ToString()));
+                        }
                         ListSeleccionados.DataBind();
                         RadioBtnSi.Checked = true;
                         lblDireccion.Visible = true;
@@ -153,8 +157,11 @@ namespace GestOn2.ABMS
                     else
                     {
                         lblInformativo.Text = "El pedido fue dada de baja";
+                        ListSeleccionados.Items.Clear();
+                        ListarProductos();
                         txtDescripcion.InnerText = "";
                         txtDireccion.Text = "";
+                        RadioBtnNo.Checked = true;
                         lblInformativo.Visible = true;
                         TimerMensajes.Enabled = true;
                     }
@@ -162,8 +169,11 @@ namespace GestOn2.ABMS
                 else
                 {
                     lblInformativo.Text = "El pedido buscado no éxiste en el sistema";
+                    ListSeleccionados.Items.Clear();
+                    ListarProductos();
                     txtDescripcion.InnerText = "";
                     txtDireccion.Text = "";
+                    RadioBtnNo.Checked = true;
                     lblInformativo.Visible = true;
                     TimerMensajes.Enabled = true;
                 }
@@ -171,6 +181,7 @@ namespace GestOn2.ABMS
             else
             {
                 lblInformativo.Text = "Debe completar id del pedido";
+                RadioBtnNo.Checked = true;
                 lblInformativo.Visible = true;
                 TimerMensajes.Enabled = true;
             }
@@ -191,6 +202,63 @@ namespace GestOn2.ABMS
             txtDireccion.Text = "";
             txtDireccion.Visible = false;
             lblDireccion.Visible = false;
+        }
+
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            //Validaciones que las caja de texto no estén vacias.
+            if (CompleteCampos())
+            {
+                lblInformativo.Visible = true;
+                lblInformativo.Text = "Debe completar todos los campos";
+                TimerMensajes.Enabled = true;
+            }
+            //Si esta todo correcto, procedo a hacer la modificación.
+            else
+            {
+                lblInformativo.Visible = false;
+                lblInformativo.Text = "";
+                int id = int.Parse(txtId.Text);
+                DateTime fchPedido = DateTime.Parse(txtFechaPedido.Text);
+                DateTime fchEntrega = DateTime.Parse(txtFechaPedido.Text);
+                string Descripcion = txtDescripcion.InnerText;
+                string Direccion = txtDireccion.Text;
+                int user = 1;
+
+                List<int> lstitems = new List<int>();
+
+                for (int i = 0; i < ListSeleccionados.Items.Count; i++)
+                {
+                    int prod = int.Parse(ListSeleccionados.Items[i].Value);
+                    lstitems.Add(prod);
+                }
+                Pedido p = new Pedido();
+                p.Activo = true;
+                p.Descripcion = Descripcion;
+                p.Direccion = Direccion;
+                p.FechaEntrega = fchEntrega;
+                p.FechaPedido = fchPedido;
+                p.IdPedido = id;
+                p.UserId = user;
+
+                bool exito = Sistema.GetInstancia().ModificarPedido(p, lstitems);
+                if (exito)
+                {
+                    ListarProductos();
+                    lblInformativo.Text = "Se modificó con éxito";
+                    lblInformativo.Visible = true;
+                    TimerMensajes.Enabled = true;
+
+                    //Elimino campos luego que se modifico con éxito
+                    VaciarCampos();
+                }
+                else
+                {
+                    lblInformativo.Text = "No se pudo modificó ";
+                    lblInformativo.Visible = true;
+                    TimerMensajes.Enabled = true;
+                }
+            }
         }
     }
 }

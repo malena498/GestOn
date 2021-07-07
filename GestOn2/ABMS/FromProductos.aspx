@@ -6,7 +6,7 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <asp:Panel ID="pnlNuevaCat" cssClass="" runat="server" Visible="False" style="position:absolute;align-content:flex-start; top: 318px; left: 67px; height: 60%; width: 40%;" BackColor="#CC99FF" BorderColor="Black" BorderStyle="Solid">
+            <asp:Panel ID="pnlNuevaCat" cssClass="" runat="server" Visible="False" style="position:absolute;align-content:flex-start; top: 266px; left: 160px; height: 30%; width: 30%; margin-top: 2px;" BackColor="#CC99FF" BorderColor="Black" BorderStyle="Solid">
                 <asp:Button ID="btnClosePanel" runat="server" CssClass="btn-danger"  Height="25px" Text="X" Width="25px" style="float:right" Font-Size="12pt" ForeColor="Black" OnClick="btnClosePanel_Click"  />
                 <br />
                 <asp:Label ID="lbllll" runat="server" Text="Id Categoría:" Width="140px"></asp:Label>
@@ -63,7 +63,7 @@
                 <br />
                 <br />
             </asp:Panel>
-            <asp:GridView  ID="gridProductos" runat="server" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" Height="100px" Width="700px">
+            <asp:GridView  ID="gridProductos" runat="server" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" Height="100px" Width="650px">
                 <Columns>
                     <asp:BoundField DataField="ProductoId" HeaderText="ID" HeaderStyle-Width ="10%" >
                         <HeaderStyle Width="50px" />
@@ -72,8 +72,12 @@
                     <asp:BoundField DataField="ProductoMarca" HeaderText="MARCA" />
                     <asp:BoundField DataField="IdCategoria" HeaderText="CATEGORÍA" />
                     <asp:BoundField DataField="Cantidad" HeaderText="CANTIDAD" />
-                    <asp:BoundField DataField="ProductoPrecioCompra" HeaderText="PRECIO COMPRA" />
-                    <asp:BoundField DataField="ProductoPrecioVenta" HeaderText="PRECIO VENTA" />
+                    <asp:BoundField DataField="ProductoPrecioCompra" HeaderText="PRECIO COMPRA" >
+                        <ItemStyle HorizontalAlign="Right" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="ProductoPrecioVenta" HeaderText="PRECIO VENTA" >
+                        <ItemStyle HorizontalAlign="Right" />
+                    </asp:BoundField>
                 </Columns>
                 <HeaderStyle CssClass="bg-danger" Height="30px" BorderColor="Black" BorderStyle="Solid" BorderWidth="3px" />
                 <PagerStyle BorderColor="Black" BorderStyle="Solid" BorderWidth="3px" />

@@ -16,14 +16,14 @@ namespace BibliotecaClases
                 List<Producto> productos = new List<Producto>();
                 using (var baseDatos = new Context())
                 {
-                for (int i = 0; i < lista.Count; i++)
-                {
-                    int idprod = lista[i];
-                    productos = baseDatos.Productos.Where(p => p.ProductoId == idprod).ToList();
-                }
-
-                    pedido.Activo = true;
+                    for (int i = 0; i < lista.Count; i++)
+                    {
+                        int idprod = lista[i];
+                        Producto pe = baseDatos.Productos.FirstOrDefault(p => p.ProductoId == idprod);
+                        productos.Add(pe);
+                    }
                     pedido.productos = productos;
+                    pedido.Activo = true;
                     baseDatos.Pedidos.Add(pedido);
                     if (pedido.IdPedido != 0)
                     {
@@ -64,12 +64,22 @@ namespace BibliotecaClases
             }
         }
 
-        public bool ModificarPedido(Pedido pedido)
+        public bool ModificarPedido(Pedido pedido, List<int> lista)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
+                    List<Producto> productos = new List<Producto>();
+                    for (int i = 0; i < lista.Count; i++)
+                    {
+                        int idprod = lista[i];
+                        Producto pr = baseDatos.Productos.FirstOrDefault(p => p.ProductoId == idprod);
+                        productos.Add(pr);
+                    }
+                    pedido.productos = productos;
+                    pedido.Activo = true;
+                    baseDatos.Pedidos.Add(pedido);
                     Pedido pe = baseDatos.Pedidos.SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
                     if (pe != null)
                     {

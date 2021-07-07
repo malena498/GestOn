@@ -48,7 +48,7 @@
         <br />
         <br />
         <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" style="margin-left: 0px" Text="Generar pedido" Width="200px" Font-Bold="True" />
-        <asp:Button ID="btnModificar" runat="server" Text="Modificar" Width="200px" Font-Bold="True" />
+        <asp:Button ID="btnModificar" runat="server" Text="Modificar" Width="200px" Font-Bold="True" OnClick="btnModificar_Click" />
         <br />
         <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick" />
         <br />
