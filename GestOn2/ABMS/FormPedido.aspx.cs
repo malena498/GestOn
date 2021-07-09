@@ -143,6 +143,8 @@ namespace GestOn2.ABMS
                         txtDireccion.Text = p.Direccion.ToString();
                         txtFechaPedido.Text = p.FechaPedido.ToString();
                         ListSeleccionados.DataSource = p.productos;
+                        ListSeleccionados.DataTextField = "ProductoNombre";
+                        ListSeleccionados.DataValueField = "ProductoId";
                         ListarProductos();
                         for (int i = 0; i < p.productos.Count; i++)
                         {

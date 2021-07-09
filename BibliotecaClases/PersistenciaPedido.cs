@@ -70,6 +70,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
+                    pedido.productos = null;
                     List<Producto> productos = new List<Producto>();
                     for (int i = 0; i < lista.Count; i++)
                     {
