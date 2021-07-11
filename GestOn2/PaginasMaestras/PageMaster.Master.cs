@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BibliotecaClases;
+using BibliotecaClases.Clases;
+using System.Drawing;
+using System.IO;
 
 namespace GestOn2.PaginasMaestras
 {
@@ -11,7 +15,25 @@ namespace GestOn2.PaginasMaestras
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack) {
+                SessionStorage.setItem('ProductName', 'Mobile');
+                CargarMenues(); }
+        }
 
+        public void CargarMenues()
+        {
+            String id = Session["IdUsuario"].ToString();
+            Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
+            if (u.nivel.UserEstandar || u.nivel.NombreNivel.Equals("Docente"))
+            {
+
+                Admin.Visible = false;
+            }
+            else if (u.nivel.UserAdmin)
+            {
+                Admin.Visible = true;
+
+            }
         }
     }
 }

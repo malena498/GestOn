@@ -75,7 +75,7 @@ namespace BibliotecaClases
                     for (int i = 0; i < lista.Count; i++)
                     {
                         int idprod = lista[i];
-                        Producto pr = baseDatos.Productos.FirstOrDefault(p => p.ProductoId == idprod);
+                        Producto pr = baseDatos.Productos.Include("ProductoPedido").FirstOrDefault(p => p.ProductoId == idprod);
                         productos.Add(pr);
                     }
                     pedido.productos = productos;
@@ -147,5 +147,27 @@ namespace BibliotecaClases
                 return null;
             }
         }
+
+        //public bool eliminar()
+        //{
+        //    try
+        //    {
+        //        using (Context baseDatos = new Context())
+        //        {
+        //            var query = (from p in baseDatos.ProductoPedido
+        //                         where p.Id == id
+        //                         select p).Single();
+
+        //            baseDatos.(query);
+        //            baseDatos.SaveChanges();
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
     }
+    
 }

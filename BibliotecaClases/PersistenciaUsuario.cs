@@ -91,7 +91,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Usuarios.FirstOrDefault(prop => prop.UserId == id);
+                    return baseDatos.Usuarios.Include("nivel").FirstOrDefault(prop => prop.UserId == id);
                 }
 
             }
