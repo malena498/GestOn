@@ -11,13 +11,13 @@ namespace GestOn2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
-            {
-                if (String.IsNullOrEmpty(Session["IdUsuario"].ToString()))
-                {
-                    Response.Redirect("~/Login.aspx");
-                }
-            }
+            //if (!IsPostBack)
+            //{
+            //    if (String.IsNullOrEmpty(Session["IdUsuario"].ToString()) || Session["IdUsuario"].ToString().Equals("0"))
+            //    {
+            //        Response.Redirect("~/Login.aspx");
+            //    }
+            //}
         }
     }
 }

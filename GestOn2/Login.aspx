@@ -7,6 +7,7 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+        <div runat="server" class="container align-content-center">
             <asp:Label ID="Label1" runat="server" Text="Usuario"></asp:Label>
 <br />
             <asp:TextBox ID="txtEmail" runat="server" TextMode="Email"></asp:TextBox>
@@ -26,7 +27,7 @@
             <asp:Label ID="Label3" runat="server" Text="No posee una cuenta?"></asp:Label>
             &nbsp;<asp:LinkButton ID="lnkRegistrarse" runat="server" OnClick="lnkRegistrarse_Click">Registrarse</asp:LinkButton>
             <br />
-            
+            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
