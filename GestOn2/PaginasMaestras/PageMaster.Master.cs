@@ -16,23 +16,34 @@ namespace GestOn2.PaginasMaestras
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack) {
-                SessionStorage.setItem('ProductName', 'Mobile');
-                CargarMenues(); }
+                
+                Session["IdUsuario"] = "0";
+                CargarMenues();
+                //Session.Add("IdUsuario", "0");
+                }
         }
 
         public void CargarMenues()
         {
             String id = Session["IdUsuario"].ToString();
-            Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
-            if (u.nivel.UserEstandar || u.nivel.NombreNivel.Equals("Docente"))
+            if (id.Equals("0"))
             {
+                Session["IdUsuario"] = "";
+                Server.Transfer("~/Login.aspx");
 
-                Admin.Visible = false;
             }
-            else if (u.nivel.UserAdmin)
-            {
-                Admin.Visible = true;
+            else {
+                Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
+                if (u.nivel.UserEstandar || u.nivel.NombreNivel.Equals("Docente"))
+                {
 
+                    Admin.Visible = false;
+                }
+                else if (u.nivel.UserAdmin)
+                {
+                    Admin.Visible = true;
+
+                }
             }
         }
     }

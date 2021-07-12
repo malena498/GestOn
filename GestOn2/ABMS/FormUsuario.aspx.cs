@@ -18,6 +18,11 @@ namespace GestOn2
             if (!IsPostBack)
             {
                 Session["NombreBase"] = "GestOn";
+                //if (String.IsNullOrEmpty(Session["IdUsuario"].ToString()) || Session["IdUsuario"].ToString().Equals("0"))
+                //{
+                //    Response.Redirect("~/Login.aspx");
+                //}
+
                 ddlCategoriaUsuario.DataSource = Sistema.GetInstancia().ListadoNiveles();
                 ddlCategoriaUsuario.DataTextField = "NombreNivel";
                 ddlCategoriaUsuario.DataValueField = "IdNivel";
