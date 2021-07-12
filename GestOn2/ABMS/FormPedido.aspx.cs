@@ -256,7 +256,7 @@ namespace GestOn2.ABMS
                 }
                 else
                 {
-                    lblInformativo.Text = "No se pudo modificó ";
+                    lblInformativo.Text = "No se pudo modifiar ";
                     lblInformativo.Visible = true;
                     TimerMensajes.Enabled = true;
                 }
