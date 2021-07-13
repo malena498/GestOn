@@ -76,13 +76,13 @@ namespace BibliotecaClases
                     for (int i = 0; i < lista.Count; i++)
                     {
                         int idprod = lista[i];
-                        Producto pr = baseDatos.Productos.Include("ProductoPedido").FirstOrDefault(p => p.ProductoId == idprod);
+                        Producto pr = baseDatos.Productos.FirstOrDefault(p => p.ProductoId == idprod);
                         productos.Add(pr);
                     }
                     pedido.productos = productos;
                     pedido.Activo = true;
                     baseDatos.Pedidos.Add(pedido);
-                    Pedido pe = baseDatos.Pedidos.SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
+                    Pedido pe = baseDatos.Pedidos.Include("productos").SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
                     if (pe != null)
                     {
                         pe.IdPedido = pedido.IdPedido;

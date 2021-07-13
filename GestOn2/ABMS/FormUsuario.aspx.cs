@@ -15,7 +15,7 @@ namespace GestOn2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            /*if (!IsPostBack)
             {
                 Session["NombreBase"] = "GestOn";
                 //if (String.IsNullOrEmpty(Session["IdUsuario"].ToString()) || Session["IdUsuario"].ToString().Equals("0"))
@@ -27,7 +27,7 @@ namespace GestOn2
                 ddlCategoriaUsuario.DataTextField = "NombreNivel";
                 ddlCategoriaUsuario.DataValueField = "IdNivel";
                 ddlCategoriaUsuario.DataBind();
-            }
+            }*/
 
             
         }

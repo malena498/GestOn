@@ -15,15 +15,15 @@ namespace GestOn2.PaginasMaestras
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) {
+           /* if (!IsPostBack) {
                 
                 Session["IdUsuario"] = "0";
                 CargarMenues();
-                //Session.Add("IdUsuario", "0");
-                }
+                Session.Add("IdUsuario", "0");
+                }*/
         }
 
-        public void CargarMenues()
+       /* public void CargarMenues()
         {
             String id = Session["IdUsuario"].ToString();
             if (id.Equals("0"))
@@ -45,6 +45,6 @@ namespace GestOn2.PaginasMaestras
 
                 }
             }
-        }
+        }*/
     }
 }
