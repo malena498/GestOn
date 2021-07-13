@@ -23,7 +23,7 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Ofertas</a>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="ndABMS" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" runat="server" id="ndABMS" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ingresos
         </a>
         <div runat= "server" class="dropdown-menu" aria-labelledby="navbarDropdown" id="estandar">
@@ -32,13 +32,13 @@
         </div>
       </li>
          <li runat="server" class="nav-item dropdown" id="Admin">
-        <a class="nav-link dropdown-toggle" href="#" id="ndAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle"  runat="server" id="ndAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Administrador
         </a>
         <div runat= "server" class="dropdown-menu" aria-labelledby="navbarDropdown" id="Div1">
-          <a  id= "formUser" class="dropdown-item" href="~/ABMS/FormUsuario.aspx">Usuarios</a>
-          <a  id= "formProductos"  class="dropdown-item" href="~/ABMS/FromProductos.aspx">Productos</a>
-          <a  id= "formOfertas" class="dropdown-item" href="~/ABMS/FormOferta.aspx">Ofertas</a>
+          <a runat= "server" id= "formUser" class="dropdown-item" href="~/ABMS/FormUsuario.aspx">Usuarios</a>
+          <a runat= "server" id= "formProductos"  class="dropdown-item" href="~/ABMS/FromProductos.aspx">Productos</a>
+          <a runat= "server" id= "formOfertas" class="dropdown-item" href="~/ABMS/FormOferta.aspx">Ofertas</a>
          
         </div>
       </li>

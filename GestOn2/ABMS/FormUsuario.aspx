@@ -18,7 +18,7 @@
             <br />
             <asp:Label ID="Label2" runat="server" Text="E-Mail"></asp:Label>
             <br />
-            <asp:TextBox ID="txtEmailUser" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtEmailUser" runat="server" TextMode="Email"></asp:TextBox>
             <br />
             <br />
             <asp:Label ID="Label3" runat="server" Text="Documento"></asp:Label>

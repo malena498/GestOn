@@ -29,7 +29,7 @@ namespace GestOn2
             }
             else
             {
-                Session["IdUsuario"] = u.UserId;
+               // Session["IdUsuario"] = u.UserId;
                 System.Web.Security.FormsAuthentication.RedirectFromLoginPage(u.UserNombre.ToString(), false);
                 Response.Redirect("~/Inicio.aspx");
             }

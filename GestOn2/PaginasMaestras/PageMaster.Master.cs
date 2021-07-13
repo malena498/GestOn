@@ -23,28 +23,30 @@ namespace GestOn2.PaginasMaestras
                 }*/
         }
 
-       /* public void CargarMenues()
-        {
-            String id = Session["IdUsuario"].ToString();
-            if (id.Equals("0"))
-            {
-                Session["IdUsuario"] = "";
-                Server.Transfer("~/Login.aspx");
+        /* public void CargarMenues()
+         {
+             String id = Session["IdUsuario"].ToString();
+             if (id.Equals("0"))
+             {
+                 Session["IdUsuario"] = "";
+                 Server.Transfer("~/Login.aspx");
 
-            }
-            else {
-                Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
-                if (u.nivel.UserEstandar || u.nivel.NombreNivel.Equals("Docente"))
-                {
+             }
+             else {
+                 Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
+                 if (u.nivel.UserEstandar || u.nivel.NombreNivel.Equals("Docente"))
+                 {
 
-                    Admin.Visible = false;
-                }
-                else if (u.nivel.UserAdmin)
-                {
-                    Admin.Visible = true;
+                     Admin.Visible = false;
+                 }
+                 else if (u.nivel.UserAdmin)
+                 {
+                     Admin.Visible = true;
 
-                }
-            }
-        }*/
+                 }
+             }
+         }*/
+
+
     }
 }

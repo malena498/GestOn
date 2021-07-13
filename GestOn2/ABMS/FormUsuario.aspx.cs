@@ -15,32 +15,34 @@ namespace GestOn2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*if (!IsPostBack)
+            if (!IsPostBack)
             {
-                Session["NombreBase"] = "GestOn";
-                //if (String.IsNullOrEmpty(Session["IdUsuario"].ToString()) || Session["IdUsuario"].ToString().Equals("0"))
+               /*  Session["NombreBase"] = "GestOn";
+               //if (String.IsNullOrEmpty(Session["IdUsuario"].ToString()) || Session["IdUsuario"].ToString().Equals("0"))
                 //{
                 //    Response.Redirect("~/Login.aspx");
-                //}
+                //}*/
 
                 ddlCategoriaUsuario.DataSource = Sistema.GetInstancia().ListadoNiveles();
                 ddlCategoriaUsuario.DataTextField = "NombreNivel";
                 ddlCategoriaUsuario.DataValueField = "IdNivel";
                 ddlCategoriaUsuario.DataBind();
-            }*/
+            }
 
             
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            bool ciValida = ValidarCI(txtCedulaUser.Text);
-            if (ciValida)
+            try
             {
-                try
+
+                bool ciValida = ValidarCI(txtCedulaUser.Text);
+                if (ciValida)
                 {
+
                     Usuario u = new Usuario();
-                    String nameDB = Session["NombreBase"].ToString();
+                    String nameDB = "GestOn";
                     u.UserNombre = txtNombreUser.Text;
                     u.UserEmail = txtEmailUser.Text;
                     u.UserCedula = txtCedulaUser.Text;
@@ -48,59 +50,71 @@ namespace GestOn2
                     u.UserContrasenia = txtPassUser.Text;
                     u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
 
-                    bool exito = Sistema.GetInstancia().GuardarUsuario(u,  nameDB);
+                    bool exito = Sistema.GetInstancia().GuardarUsuario(u, nameDB);
                     if (exito)
                     {
                         lblResultado.Text = "Se guardo con éxito";
                         limpiar();
                     }
                 }
-                catch (Exception ex)
-                {
-                    lblResultado.Text = "No se logro guardar";
-                }
             }
+            catch (Exception ex)
+            {
+                lblResultado.Text = "No se logro guardar";
+            }
+            
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (txtNombreUser.Text == "" || txtEmailUser.Text == "" || txtTelefonoUser.Text == ""
-               || txtCedulaUser.Text == "" || txtPassUser.Text == "" )
+            try
             {
-                lblResultado.Visible = true;
-                lblResultado.Text = "Debe completar todos los campos";
-                //TimerMensajes.Enabled = true;
-            }
-            //Si esta todo correcto, procedo a hacer la modificación.
-            else
-            {
-                lblResultado.Visible = false;
-                lblResultado.Text = "";
-                Usuario us = null;
-                us = Sistema.GetInstancia().BuscarUsuario(int.Parse(txtIdUsuario.Text));
-                us.UserNombre= txtNombreUser.Text;
-                us.UserEmail= txtEmailUser.Text;
-                us.UserTelefono = txtTelefonoUser.Text;
-                us.UserCedula = txtCedulaUser.Text;
-                us.UserContrasenia = txtPassUser.Text;
-                us.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
-
-                bool exito = Sistema.GetInstancia().ModificarUsuario(us);
-                if (exito)
+                if (!CamposCompletos())
                 {
-                    lblResultado.Text = "Se modificó con éxito";
                     lblResultado.Visible = true;
+                    lblResultado.Text = "Debe completar todos los campos";
                     //TimerMensajes.Enabled = true;
-
-                    //Elimino campos luego que se modifico con éxito
-                    limpiar();
                 }
+                //Si esta todo correcto, procedo a hacer la modificación.
                 else
                 {
-                    lblResultado.Text = "No se guardo (Error)";
-                    lblResultado.Visible = true;
-                    //TimerMensajes.Enabled = true;
+                    bool ciValida = ValidarCI(txtCedulaUser.Text);
+                    if (ciValida)
+                    {
+                        lblResultado.Visible = false;
+                        lblResultado.Text = "";
+                        Usuario us = null;
+                        us = Sistema.GetInstancia().BuscarUsuario(int.Parse(txtIdUsuario.Text));
+                        us.UserNombre = txtNombreUser.Text;
+                        us.UserEmail = txtEmailUser.Text;
+                        us.UserTelefono = txtTelefonoUser.Text;
+                        us.UserCedula = txtCedulaUser.Text;
+                        us.UserContrasenia = txtPassUser.Text;
+                        us.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
+
+                        bool exito = Sistema.GetInstancia().ModificarUsuario(us);
+                        if (exito)
+                        {
+                            lblResultado.Text = "Se modificó con éxito";
+                            lblResultado.Visible = true;
+                            //TimerMensajes.Enabled = true;
+
+                            //Elimino campos luego que se modifico con éxito
+                            limpiar();
+                        }
+                    }
+                    else
+                    {
+                        lblResultado.Text = "No se logro modificar.";
+                        lblResultado.Visible = true;
+                        //TimerMensajes.Enabled = true;
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                lblResultado.Text = "No se logro modificar.";
+                lblResultado.Visible = true;
             }
         }
 
@@ -232,6 +246,20 @@ namespace GestOn2
                     //TimerMensajes.Enabled = true;
                 }
             
+        }
+
+        protected bool CamposCompletos()
+        {
+            if (String.IsNullOrEmpty(txtIdUsuario.Text) || String.IsNullOrEmpty(txtNombreUser.Text) ||
+                String.IsNullOrEmpty(txtEmailUser.Text) || String.IsNullOrEmpty(txtCedulaUser.Text) ||
+                String.IsNullOrEmpty(txtTelefonoUser.Text) || String.IsNullOrEmpty(txtPassUser.Text))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

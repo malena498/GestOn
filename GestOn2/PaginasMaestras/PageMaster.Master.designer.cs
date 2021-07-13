@@ -22,6 +22,15 @@ namespace GestOn2.PaginasMaestras {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
+        /// Control ndABMS.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ndABMS;
+        
+        /// <summary>
         /// Control estandar.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,15 @@ namespace GestOn2.PaginasMaestras {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Admin;
         
         /// <summary>
+        /// Control ndAdmin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ndAdmin;
+        
+        /// <summary>
         /// Control Div1.
         /// </summary>
         /// <remarks>
@@ -47,6 +65,33 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
+        
+        /// <summary>
+        /// Control formUser.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor formUser;
+        
+        /// <summary>
+        /// Control formProductos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor formProductos;
+        
+        /// <summary>
+        /// Control formOfertas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor formOfertas;
         
         /// <summary>
         /// Control form1.

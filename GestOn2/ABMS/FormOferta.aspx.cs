@@ -17,7 +17,7 @@ namespace GestOn2.ABMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) Session["NombreBase"] = "GestOn";
+            //if (!IsPostBack) Session["NombreBase"] = "GestOn";
 
         }
 
@@ -25,23 +25,30 @@ namespace GestOn2.ABMS
         {
             try
             {
-                Oferta o = new Oferta();
-                String nameDB = Session["NombreBase"].ToString();
-                o.OfertaTitulo = txtTituloOferta.Text;
-                o.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
-                o.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
-                o.OfertaDescripcion = txtDescripcionOferta.Text;
-                o.OfertaPrecio = decimal.Parse(txtPrecio.Text);
-                List<String> imagenes = new List<String>();
-                if (!String.IsNullOrEmpty(txtURLs.Text))
+                if (CamposCompletos())
                 {
-                    imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
+                    Oferta o = new Oferta();
+                    String nameDB = "GestOn";
+                    o.OfertaTitulo = txtTituloOferta.Text;
+                    o.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
+                    o.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
+                    o.OfertaDescripcion = txtDescripcionOferta.Text;
+                    o.OfertaPrecio = decimal.Parse(txtPrecio.Text);
+                    List<String> imagenes = new List<String>();
+                    if (!String.IsNullOrEmpty(txtURLs.Text))
+                    {
+                        imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
+                    }
+                    bool exito = Sistema.GetInstancia().GuardarOferta(o, imagenes, nameDB);
+                    if (exito)
+                    {
+                        lblResultado.Text = "Se guardo con éxito";
+                        limpiar();
+                    }
                 }
-                bool exito = Sistema.GetInstancia().GuardarOferta(o, imagenes, nameDB);
-                if (exito)
+                else
                 {
-                    lblResultado.Text = "Se guardo con éxito";
-                    limpiar();
+                    lblResultado.Text = "Complete los campos";
                 }
             }
             catch (Exception ex)
@@ -280,9 +287,8 @@ namespace GestOn2.ABMS
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-          
-            if (txtIdOferta.Text == "" || txtTituloOferta.Text == "" || txtFechaHasta.Text == ""
-                || txtFechaDesde.Text == "" || txtDescripcionOferta.Text == "" || txtPrecio.Text == "")
+                      
+            if (CamposCompletos())
             {
                 lblResultado.Visible = true;
                 lblResultado.Text = "Debe completar todos los campos";
@@ -321,6 +327,20 @@ namespace GestOn2.ABMS
                     lblResultado.Visible = true;
                     //TimerMensajes.Enabled = true;
                 }
+            }
+        }
+
+        protected bool CamposCompletos()
+        {
+            if (String.IsNullOrEmpty(txtIdOferta.Text) || String.IsNullOrEmpty(txtTituloOferta.Text) ||
+                String.IsNullOrEmpty(txtFechaHasta.Text) || String.IsNullOrEmpty(txtFechaDesde.Text) ||
+                String.IsNullOrEmpty(txtDescripcionOferta.Text) || String.IsNullOrEmpty(txtPrecio.Text))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }
