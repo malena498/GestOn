@@ -60,7 +60,6 @@ namespace GestOn2.ABMS
                     lstitems.Add(prod);
                 }
 
-
                 Pedido p = new Pedido();
                 p.Activo = true;
                 p.Descripcion = Descripcion;
@@ -109,9 +108,24 @@ namespace GestOn2.ABMS
 
         public bool CompleteCampos()
         {
-            if (txtId.Text == "" || txtFechaPedido.Text == "" ||
-                txtDireccion.Text == "" || txtDescripcion.InnerText == "")
-                return true;
+            if (RadioBtnSi.Checked == true)
+            {
+                if (txtId.Text == "" || txtFechaPedido.Text == "" ||
+                   txtDireccion.Text == "" || txtDescripcion.InnerText == "")
+                {
+                    return true;
+                }
+                else { return false; }
+            }
+            else if (RadioBtnNo.Checked == false)
+            {
+                if (txtId.Text == "" || txtFechaPedido.Text == "" ||
+                    txtDescripcion.InnerText == "")
+                {
+                    return true;
+                }
+                else { return false; }
+            }
             else return false;
         }
 
@@ -141,6 +155,18 @@ namespace GestOn2.ABMS
                     {
                         txtDescripcion.InnerText = p.Descripcion.ToString();
                         txtDireccion.Text = p.Direccion.ToString();
+                        if (txtDireccion.Text == "")
+                        {
+                            txtDireccion.Visible = false;
+                            RadioBtnNo.Checked = true;
+                            lblDireccion.Visible = false;
+                        }
+                        else
+                        {
+                            RadioBtnSi.Checked = true;
+                            lblDireccion.Visible = true;
+                            txtDireccion.Visible = true;
+                        }
                         txtFechaPedido.Text = p.FechaPedido.ToString();
                         ListSeleccionados.DataSource = p.productos;
                         ListSeleccionados.DataTextField = "ProductoNombre";
@@ -151,10 +177,6 @@ namespace GestOn2.ABMS
                             ListProductos.Items.Remove(ListProductos.Items.FindByValue(p.productos[i].ProductoId.ToString()));
                         }
                         ListSeleccionados.DataBind();
-                        RadioBtnSi.Checked = true;
-                        lblDireccion.Visible = true;
-                        txtDireccion.Visible = true;
-                        txtDireccion.Enabled = true;
                     }
                     else
                     {
@@ -164,6 +186,8 @@ namespace GestOn2.ABMS
                         txtDescripcion.InnerText = "";
                         txtDireccion.Text = "";
                         RadioBtnNo.Checked = true;
+                        txtDireccion.Visible = false;
+                        lblDireccion.Visible = false;
                         lblInformativo.Visible = true;
                         TimerMensajes.Enabled = true;
                     }
@@ -174,7 +198,8 @@ namespace GestOn2.ABMS
                     ListSeleccionados.Items.Clear();
                     ListarProductos();
                     txtDescripcion.InnerText = "";
-                    txtDireccion.Text = "";
+                    txtDireccion.Visible = false;
+                    lblDireccion.Visible = false;
                     RadioBtnNo.Checked = true;
                     lblInformativo.Visible = true;
                     TimerMensajes.Enabled = true;
@@ -184,6 +209,8 @@ namespace GestOn2.ABMS
             {
                 lblInformativo.Text = "Debe completar id del pedido";
                 RadioBtnNo.Checked = true;
+                lblDireccion.Visible = false;
+                txtDireccion.Text = "";
                 lblInformativo.Visible = true;
                 TimerMensajes.Enabled = true;
             }

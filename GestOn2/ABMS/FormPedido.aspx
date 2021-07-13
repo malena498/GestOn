@@ -44,7 +44,7 @@
         <asp:RadioButton ID="RadioBtnSi" runat="server" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnSi_CheckedChanged" Text="Si" Width="40px" AutoPostBack="True" Font-Bold="True" />
         <br />
         <asp:Label ID="lblDireccion" runat="server" Text="Dirección:" Width="140px" style="margin-bottom: 0px" Visible="False" Font-Bold="True"></asp:Label>
-        <asp:TextBox ID="txtDireccion" runat="server" style="margin-left: 0px" Width="250px" Enabled="False" Visible="False"></asp:TextBox>
+        <asp:TextBox ID="txtDireccion" runat="server" style="margin-left: 0px" Width="250px" Visible="False"></asp:TextBox>
         <br />
         <br />
         <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" style="margin-left: 0px" Text="Generar pedido" Width="200px" Font-Bold="True" />
