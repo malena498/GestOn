@@ -66,6 +66,7 @@
     <Compile Include="Clases\Pedido.cs" />
     <Compile Include="Clases\Producto.cs" />
     <Compile Include="PersistenciaCategoriaProducto.cs" />
+    <Compile Include="PersistenciaDocumentos.cs" />
     <Compile Include="PersistenciaPedido.cs" />
     <Compile Include="PersistenciaProducto.cs" />
     <Compile Include="PersistenciaOfertas.cs" />

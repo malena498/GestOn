@@ -83,6 +83,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ABMS\FormDocumento.aspx" />
     <Content Include="ABMS\FormOferta.aspx" />
     <Content Include="ABMS\FormPedido.aspx" />
     <Content Include="ABMS\FromProductos.aspx" />
@@ -149,6 +150,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABMS\FormDocumento.aspx.cs">
+      <DependentUpon>FormDocumento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABMS\FormDocumento.aspx.designer.cs">
+      <DependentUpon>FormDocumento.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ABMS\FormOferta.aspx.cs">
       <DependentUpon>FormOferta.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -216,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Documentos\" />
     <Folder Include="Imagenes\" />
     <Folder Include="Reportes\" />
   </ItemGroup>
