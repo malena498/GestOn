@@ -16,62 +16,73 @@ namespace GestOn2.ABMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
+
         protected void btnUpload_Click(object sender, EventArgs e)
         {
             try
             {
                 Documento doc = new Documento();
-                doc.IdDocumento = 1;
-                doc.NombreDocumento = txtNombre.Text;
-                doc.Formato = txtFormato.Text;
-                doc.Descripcion = txtDescripcion.Text;
-                doc.Tipo = txtTipo.Text;
-                doc.gradoLiceal = txtGradoLiceal.Text;
-                doc.esEnvio = false;
-                doc.EsPractico = false;
-                if (chkEsEnvio.Checked)
-                {
-                    doc.esEnvio = true;
-                }
-                if (chkEsPractico.Checked)
-                {
-                    doc.EsPractico = true;
-                }
-                if (chkDobleFaz.Checked)
-                {
-                    doc.EsDobleFaz = true;
-                }
-                else
-                {
-                    doc.EsDobleFaz = false;
-
-                }
-                if (chkColor.Checked)
-                {
-                    doc.AColor = true;
-                }
-                else
-                {
-                    doc.AColor = false;
-                }
-                String ruta = GuardarArchivo();
+                string ruta = lblrutaarchivo.Text;
                 if (ruta.Equals("Error"))
                 {
-                    //aca va el mensajito
-                    return; 
+                    lblMensaje.Text = "Error al cargar el archivo";
+                    return;
                 }
                 else
                 {
                     doc.ruta = ruta;
+                    doc.Formato = lblTipoDoc.Text;
+                    doc.NombreDocumento = txtNombre.Text;
+                    doc.Descripcion = txtDescripcion.Text;
+                    doc.gradoLiceal = ddlGradoLiceal.SelectedValue;
+                    doc.esEnvio = false;
+                    doc.EsPractico = false;
+                    if (chkEsEnvio.Checked)
+                    {
+                        doc.Direccion = txtDireccion.Text;
+                        doc.esEnvio = true;
+                    }
+                    if (chkEsPractico.Checked)
+                    {
+                        doc.NroPractico = txtNroPractico.Text;
+                        doc.EsPractico = true;
+                    }
+                    if (chkDobleFaz.Checked)
+                    {
+                        doc.EsDobleFaz = true;
+                    }
+                    else
+                    {
+                        doc.EsDobleFaz = false;
+                    }
+                    if (chkColor.Checked)
+                    {
+                        doc.AColor = true;
+                    }
+                    else
+                    {
+                        doc.AColor = false;
+                    }
+                    doc.UserId = 1;
+                    if (!CamposCompletos())
+                    {
+                        lblMensaje.Text = "Debe completar todos los campos";
+                    }
+                    else
+                    {
+                        bool exito = Sistema.GetInstancia().GuardarDocumento(doc);
+                        if (exito)
+                        {
+                            lblMensaje.Text = "";
+                            VaciarCampos();
+                        }
+                        else
+                        {
+                            lblMensaje.Text = "No anduvo";
+                        }
+                    }
                 }
-                doc.UserId = 1;
-                bool exito = Sistema.GetInstancia().GuardarDocumento(doc);
-                if (exito)
-                    txtDescripcion.Text = "";
-                else txtDescripcion.Text = "No anduvo petes";
-
             }
             catch (Exception ex)
             {
@@ -79,47 +90,31 @@ namespace GestOn2.ABMS
             }
         }
 
-//        protected String GuardarArchivo()
-//        {
-//            
+        protected bool CamposCompletos()
+        {
+            if (chkEsPractico.Checked && String.IsNullOrEmpty(txtNroPractico.Text))
+                return false;
+            if (chkEsEnvio.Checked && String.IsNullOrEmpty(txtDireccion.Text))
+                return false;
+            if (String.IsNullOrEmpty(txtDescripcion.Text) || String.IsNullOrEmpty(txtNombre.Text))
+                return false;
+            else
+                return true;
+        }
 
-//                return filePath;
-//            }
-//                else
-//                {
-//                Aca va el mensajito
-//                    return "Error";
-//            }
+        protected void VaciarCampos() {
+            txtDescripcion.Text = string.Empty;
+            txtDireccion.Text = string.Empty;
+            txtNombre.Text = string.Empty;
+            txtNroPractico.Text = string.Empty;
+            chkColor.Checked = false;
+            chkDobleFaz.Checked = false;
+            chkEsEnvio.Checked = false;
+            chkEsPractico.Checked = false;
+            ddlGradoLiceal.SelectedIndex = 0;
+        }
 
-//            return filePath;
-//        }
-//            catch(Exception ex)
-//            {
-//                return "Error";
-
-//            }
-//}
-
-//private void SendToPrinter()
-//{
-//    Documento doc = new Documento();
-//    ProcessStartInfo info = new ProcessStartInfo();
-//    info.Verb = "print";                          // Seleccionar el programa para imprimir PDF por defecto
-//    info.FileName = @"C:\Firmador\1.pdf";         // Ruta hacia el fichero que quieres imprimir
-//    info.CreateNoWindow = true;                   // Hacerlo sin mostrar ventana
-//    info.WindowStyle = ProcessWindowStyle.Hidden; // Y de forma oculta
-
-//    Process p = new Process();
-//    p.StartInfo = info;
-//    p.Start();  // Lanza el proceso
-
-//    p.WaitForInputIdle();
-//    System.Threading.Thread.Sleep(3000);          // Espera 3 segundos
-//    if (false == p.CloseMainWindow())
-//        p.Kill();                                  // Y cierra el programa de imprimir PDF's
-//}
-
-private bool EsDoc(HttpPostedFile archivo)
+        private bool EsDoc(HttpPostedFile archivo)
         {
             return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
         }
@@ -141,28 +136,103 @@ private bool EsDoc(HttpPostedFile archivo)
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            //Validaciones que las caja de texto no estén vacias.
+            if (String.IsNullOrEmpty(txtIdDocumento.Text))
+            {
+                lblMensaje.Text = "Debe completar todos los campos";
+            }
+            //Si esta todo correcto, procedo a hacer la modificación.
+            else
+            {
+                lblMensaje.Visible = false;
+                lblMensaje.Text = "";
+                int id = Int32.Parse(txtIdDocumento.Text);
+                string nombreDocumento = txtNombre.Text;
+                string descripcion = txtDescripcion.Text;
+                string ruta = lblrutaarchivo.Text;
+                string Formato = lblTipoDoc.Text;
+                string gradoliceal = ddlGradoLiceal.SelectedValue;
+                string direccion = "";
+                string nroPractico = "";
+                bool esEnvio = false;
+                bool EsPractico = false;
+                bool EsDobleFaz = false;
+                bool AColor = false;
 
+                if (chkEsEnvio.Checked)
+                {
+                    direccion = txtDireccion.Text;
+                    esEnvio = true;
+                }
+                if (chkEsPractico.Checked)
+                {
+                    nroPractico = txtNroPractico.Text;
+                    EsPractico = true;
+                }
+                if (chkDobleFaz.Checked)
+                    EsDobleFaz = true;
+                if (chkColor.Checked)
+                    AColor = true;
+                int UserId = 2;
+
+                Documento d = new Documento();
+                d.IdDocumento = id;
+                d.AColor = AColor;
+                d.Descripcion = descripcion;
+                d.Direccion = direccion;
+                d.EsDobleFaz = EsDobleFaz;
+                d.esEnvio = esEnvio;
+                d.EsPractico = EsPractico;
+                d.FechaIngreso = DateTime.Today;
+                d.Formato = Formato;
+                d.gradoLiceal = gradoliceal;
+                d.NombreDocumento = nombreDocumento;
+                d.NroPractico = nroPractico;
+                d.ruta = ruta;
+                d.UserId = UserId;
+
+
+                bool exito = Sistema.GetInstancia().ModificarDocumento(d);
+                if (exito)
+                {
+                    lblMensaje.Text = "Se modificó con éxito";
+                    //Elimino campos luego que se modifico con éxito
+                    VaciarCampos();
+                }
+                else
+                {
+                    lblMensaje.Text = "No se pudo modificar ";
+                }
+            }
         }
 
         protected void chkEsEnvio_CheckedChanged(object sender, EventArgs e)
         {
             if (chkEsEnvio.Checked)
+            {
                 txtDireccion.Visible = true;
+                lblDireccion.Visible = true;
+            }
             else
             {
                 txtDireccion.Text = string.Empty;
                 txtDireccion.Visible = false;
+                lblDireccion.Visible = false;
             }
         }
 
         protected void chkEsPractico_CheckedChanged(object sender, EventArgs e)
         {
             if (chkEsPractico.Checked)
+            {
+                lblPractico.Visible = true;
                 txtNroPractico.Visible = true;
+            }
             else
             {
                 txtNroPractico.Text = string.Empty;
                 txtNroPractico.Visible = false;
+                lblPractico.Visible = false;
             }
         }
 
@@ -184,10 +254,10 @@ private bool EsDoc(HttpPostedFile archivo)
                         Directory.CreateDirectory(folder);
 
                     }
-                    filePath = Path.Combine(Server.MapPath("~/Documentos/")
-                        , NombreArchivo + extencion);
+                    filePath = Path.Combine(Server.MapPath("~/Documentos/"), NombreArchivo);
                     archivo.SaveAs(filePath);
-
+                    lblTipoDoc.Text =  extencion;
+                    lblrutaarchivo.Text = filePath;
                     txtNombre.Text = Path.GetFileNameWithoutExtension(fuDocs.PostedFile.FileName);
                 }
                 else
@@ -203,6 +273,122 @@ private bool EsDoc(HttpPostedFile archivo)
 
         }
 
+        protected void btnSubir_Click(object sender, EventArgs e)
+        {
+            string rrr = GuardarArchivo();
+            btnUpload.Enabled = true;
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(txtIdDocumento.Text))
+            {
+                int id = int.Parse(txtIdDocumento.Text);
+                bool exito = Sistema.GetInstancia().EliminarDocumento(id);
+                if (exito)
+                {
+                    lblMensaje.Text = "Se elimino con éxito";
+                    //Elimino campos luego que se modifico con éxito
+                    VaciarCampos();
+                }
+                else
+                {
+                    lblMensaje.Text = "No se pudo eliminar ";
+                }
+            }
+            else
+            {
+                lblMensaje.Text = "Complete id del docuemnto que desea eliminar";
+            }
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(txtIdDocumento.Text))
+            {
+                int id = int.Parse(txtIdDocumento.Text);
+                Documento d = Sistema.GetInstancia().BuscarDocumento(id);
+                if (d != null)
+                {
+                    if (d.Activo == true)
+                    {
+                        
+                        txtDescripcion.Text = d.Descripcion;
+                        txtNombre.Text = d.NombreDocumento;
+                        ddlGradoLiceal.SelectedValue = d.gradoLiceal;
+                        if (d.AColor == true)
+                            chkColor.Checked = true;
+                        else chkColor.Checked = false;
+                        if (d.EsDobleFaz)
+                            chkDobleFaz.Checked = true;
+                        else chkDobleFaz.Checked = false;
+                        if (d.esEnvio == true)
+                        {
+                            chkEsEnvio.Checked = true;
+                            txtDireccion.Text = d.Direccion;
+                            txtDireccion.Visible = true;
+                            lblDireccion.Visible = true;
+                        }
+                        else
+                        {
+                            chkEsEnvio.Checked = false;
+                            txtDireccion.Text = string.Empty;
+                            txtDireccion.Visible = false;
+                            lblDireccion.Visible = false;
+                        }
+                        if (d.EsPractico == true)
+                        {
+                            chkEsPractico.Checked = true;
+                            txtNroPractico.Text = d.NroPractico;
+                            txtNroPractico.Visible = true;
+                            lblPractico.Visible = true;
+                        }
+                        else
+                        {
+                            chkEsPractico.Checked = false;
+                            txtNroPractico.Text = string.Empty;
+                            txtNroPractico.Visible = false;
+                            lblPractico.Visible = false;
+                        }
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "El documento fue dada de baja";
+                        VaciarCampos();
+                    }
+                }
+                else
+                {
+                    lblMensaje.Text = "El documento buscado no éxiste en el sistema";
+                    VaciarCampos();
+                }
+            }
+            else
+            {
+                lblMensaje.Text = "Debe completar id del pedido";
+                VaciarCampos();
+            }
+        }
+
+        //Mando a impresora
+        //private void SendToPrinter()
+        //{
+        //    Documento doc = new Documento();
+        //    ProcessStartInfo info = new ProcessStartInfo();
+        //    info.Verb = "print";                          // Seleccionar el programa para imprimir PDF por defecto
+        //    info.FileName = @"C:\Firmador\1.pdf";         // Ruta hacia el fichero que quieres imprimir
+        //    info.CreateNoWindow = true;                   // Hacerlo sin mostrar ventana
+        //    info.WindowStyle = ProcessWindowStyle.Hidden; // Y de forma oculta
+
+        //    Process p = new Process();
+        //    p.StartInfo = info;
+        //    p.Start();  // Lanza el proceso
+
+        //    p.WaitForInputIdle();
+        //    System.Threading.Thread.Sleep(3000);          // Espera 3 segundos
+        //    if (false == p.CloseMainWindow())
+        //        p.Kill();                                  // Y cierra el programa de imprimir PDF's
+        //}
     }
 }
 

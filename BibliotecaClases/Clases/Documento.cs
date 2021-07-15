@@ -19,7 +19,6 @@ namespace BibliotecaClases.Clases
         public bool esEnvio { get; set; }
         public String Direccion { get; set; }
         public String gradoLiceal { get; set; }
-        public String Tipo { get; set; }
         public bool EsPractico { get; set; }
         public String NroPractico { get; set; }
         public String NombreDocumento { get; set; }

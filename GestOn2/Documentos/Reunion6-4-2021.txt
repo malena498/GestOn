@@ -1,0 +1,3 @@
+1) Auditar las tablas, a traves de un triger , uno para insert, update, delete y cada vez que hay una de estas acciones, se guarda en la tabla de auditoria, con la fecha que fue realizada.
+2) Para el repositorio, se justifica porque se cambia, y se hace enfasis en los riesgos de la tecnología.
+3) Surge el nuevo requerimiento de hacer auditorias, en la reunion con el cliente, la cual puede ser de ciertas tablas no es necesario que sea de todas.
