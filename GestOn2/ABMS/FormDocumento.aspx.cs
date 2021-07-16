@@ -8,6 +8,7 @@ using BibliotecaClases;
 using BibliotecaClases.Clases;
 using System.Drawing;
 using System.IO;
+using System.Drawing.Printing;
 using System.Diagnostics;
 
 namespace GestOn2.ABMS
@@ -353,7 +354,7 @@ namespace GestOn2.ABMS
                     }
                     else
                     {
-                        lblMensaje.Text = "El documento fue dada de baja";
+                        lblMensaje.Text = "El documento fue dado de baja";
                         VaciarCampos();
                     }
                 }
@@ -370,25 +371,6 @@ namespace GestOn2.ABMS
             }
         }
 
-        //Mando a impresora
-        //private void SendToPrinter()
-        //{
-        //    Documento doc = new Documento();
-        //    ProcessStartInfo info = new ProcessStartInfo();
-        //    info.Verb = "print";                          // Seleccionar el programa para imprimir PDF por defecto
-        //    info.FileName = @"C:\Firmador\1.pdf";         // Ruta hacia el fichero que quieres imprimir
-        //    info.CreateNoWindow = true;                   // Hacerlo sin mostrar ventana
-        //    info.WindowStyle = ProcessWindowStyle.Hidden; // Y de forma oculta
-
-        //    Process p = new Process();
-        //    p.StartInfo = info;
-        //    p.Start();  // Lanza el proceso
-
-        //    p.WaitForInputIdle();
-        //    System.Threading.Thread.Sleep(3000);          // Espera 3 segundos
-        //    if (false == p.CloseMainWindow())
-        //        p.Kill();                                  // Y cierra el programa de imprimir PDF's
-        //}
     }
 }
 

@@ -6,6 +6,7 @@
             font-size: medium;
         }
     </style>
+    <link href="../Content/font-awesome.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
@@ -15,8 +16,8 @@
             <asp:Label ID="Label8" runat="server" Text="ID:"></asp:Label>
             <br />
             <asp:TextBox ID="txtIdDocumento" runat="server"></asp:TextBox>
-            <asp:Button ID="btnBuscar" runat="server" OnClick="btnBuscar_Click" Text="Buscar" />
-            <br />
+            <asp:Button ID="btnBuscar" runat="server" OnClick="btnBuscar_Click" Text="Buscar"/>
+            <i class="fas fa-search"></i>
             <br />
             <asp:Label ID="Label1" runat="server" Text="Importar Documento"></asp:Label>
             <br />
@@ -29,11 +30,9 @@
             <br />
             <asp:TextBox ID="txtNombre" runat="server" Width="185px"></asp:TextBox>
             <br />
-            <br />
             <asp:Label ID="Label4" runat="server" Text="Descripcion:"></asp:Label>
             <br />
-            <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine"></asp:TextBox>
-            <br />
+            <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" Height="27px"></asp:TextBox>
             <br />
             <asp:Label ID="Label7" runat="server" Text="Grado Liceal:"></asp:Label>
             <br />
@@ -46,10 +45,8 @@
                 <asp:ListItem>6</asp:ListItem>
             </asp:DropDownList>
             <br />
-            <br />
             <asp:CheckBox ID="chkColor" runat="server" Text="Impresion a color?" />
             <asp:CheckBox ID="chkDobleFaz" runat="server" Text="Es doble faz?" />
-            <br />
             <br />
             <asp:CheckBox ID="chkEsPractico" runat="server" OnCheckedChanged="chkEsPractico_CheckedChanged" Text="Es practico?" AutoPostBack="True" />
             <br />
@@ -63,10 +60,11 @@
             <br />
             <asp:TextBox ID="txtDireccion" runat="server" Visible="False"></asp:TextBox>
             <br />
-            <br />
             <asp:Button ID="btnUpload" runat="server" CssClass="auto-style1" OnClick="btnUpload_Click" Text="Guardar" Width="120px" Enabled="False" />
             <asp:Button ID="btnModificar" runat="server" CssClass="auto-style1" OnClick="btnModificar_Click" Text="Modificar" Width="120px" />
             <asp:Button ID="btnEliminar" runat="server" OnClick="btnEliminar_Click" Text="Eliminar" />
+            <br />
+            <br />
             <br />
             <asp:Label ID="lblrutaarchivo" runat="server" Visible="False"></asp:Label>
             <br />
