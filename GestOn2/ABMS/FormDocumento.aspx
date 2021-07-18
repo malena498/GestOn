@@ -66,6 +66,10 @@
             <br />
             <br />
             <br />
+            <br />
+            <asp:TextBox ID="txtIDImpresion" runat="server"></asp:TextBox>
+            <asp:Button ID="btnImprimir" runat="server" OnClick="btnImprimir_Click" Text="Imprimir" />
+            <br />
             <asp:Label ID="lblrutaarchivo" runat="server" Visible="False"></asp:Label>
             <br />
             <asp:Label ID="lblTipoDoc" runat="server" Visible="False"></asp:Label>

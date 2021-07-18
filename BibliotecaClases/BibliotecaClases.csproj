@@ -81,12 +81,99 @@
     <Compile Include="Clases\Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.esm.js" />
+    <Content Include="Scripts\bootstrap.esm.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <None Include="App.config" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <None Include="Content\bootstrap\bootstrap-grid.scss" />
+    <None Include="Content\bootstrap\bootstrap-reboot.scss" />
+    <None Include="Content\bootstrap\bootstrap-utilities.scss" />
+    <None Include="Content\bootstrap\bootstrap.scss" />
+    <None Include="Content\bootstrap\forms\_floating-labels.scss" />
+    <None Include="Content\bootstrap\forms\_form-check.scss" />
+    <None Include="Content\bootstrap\forms\_form-control.scss" />
+    <None Include="Content\bootstrap\forms\_form-range.scss" />
+    <None Include="Content\bootstrap\forms\_form-select.scss" />
+    <None Include="Content\bootstrap\forms\_form-text.scss" />
+    <None Include="Content\bootstrap\forms\_input-group.scss" />
+    <None Include="Content\bootstrap\forms\_labels.scss" />
+    <None Include="Content\bootstrap\forms\_validation.scss" />
+    <None Include="Content\bootstrap\helpers\_clearfix.scss" />
+    <None Include="Content\bootstrap\helpers\_colored-links.scss" />
+    <None Include="Content\bootstrap\helpers\_position.scss" />
+    <None Include="Content\bootstrap\helpers\_ratio.scss" />
+    <None Include="Content\bootstrap\helpers\_stretched-link.scss" />
+    <None Include="Content\bootstrap\helpers\_text-truncation.scss" />
+    <None Include="Content\bootstrap\helpers\_visually-hidden.scss" />
+    <None Include="Content\bootstrap\mixins\_alert.scss" />
+    <None Include="Content\bootstrap\mixins\_border-radius.scss" />
+    <None Include="Content\bootstrap\mixins\_box-shadow.scss" />
+    <None Include="Content\bootstrap\mixins\_breakpoints.scss" />
+    <None Include="Content\bootstrap\mixins\_buttons.scss" />
+    <None Include="Content\bootstrap\mixins\_caret.scss" />
+    <None Include="Content\bootstrap\mixins\_clearfix.scss" />
+    <None Include="Content\bootstrap\mixins\_color-scheme.scss" />
+    <None Include="Content\bootstrap\mixins\_container.scss" />
+    <None Include="Content\bootstrap\mixins\_deprecate.scss" />
+    <None Include="Content\bootstrap\mixins\_forms.scss" />
+    <None Include="Content\bootstrap\mixins\_gradients.scss" />
+    <None Include="Content\bootstrap\mixins\_grid.scss" />
+    <None Include="Content\bootstrap\mixins\_image.scss" />
+    <None Include="Content\bootstrap\mixins\_list-group.scss" />
+    <None Include="Content\bootstrap\mixins\_lists.scss" />
+    <None Include="Content\bootstrap\mixins\_pagination.scss" />
+    <None Include="Content\bootstrap\mixins\_reset-text.scss" />
+    <None Include="Content\bootstrap\mixins\_resize.scss" />
+    <None Include="Content\bootstrap\mixins\_table-variants.scss" />
+    <None Include="Content\bootstrap\mixins\_text-truncate.scss" />
+    <None Include="Content\bootstrap\mixins\_transition.scss" />
+    <None Include="Content\bootstrap\mixins\_utilities.scss" />
+    <None Include="Content\bootstrap\mixins\_visually-hidden.scss" />
+    <None Include="Content\bootstrap\utilities\_api.scss" />
+    <None Include="Content\bootstrap\vendor\_rfs.scss" />
+    <None Include="Content\bootstrap\_accordion.scss" />
+    <None Include="Content\bootstrap\_alert.scss" />
+    <None Include="Content\bootstrap\_badge.scss" />
+    <None Include="Content\bootstrap\_breadcrumb.scss" />
+    <None Include="Content\bootstrap\_button-group.scss" />
+    <None Include="Content\bootstrap\_buttons.scss" />
+    <None Include="Content\bootstrap\_card.scss" />
+    <None Include="Content\bootstrap\_carousel.scss" />
+    <None Include="Content\bootstrap\_close.scss" />
+    <None Include="Content\bootstrap\_containers.scss" />
+    <None Include="Content\bootstrap\_dropdown.scss" />
+    <None Include="Content\bootstrap\_forms.scss" />
+    <None Include="Content\bootstrap\_functions.scss" />
+    <None Include="Content\bootstrap\_grid.scss" />
+    <None Include="Content\bootstrap\_helpers.scss" />
+    <None Include="Content\bootstrap\_images.scss" />
+    <None Include="Content\bootstrap\_list-group.scss" />
+    <None Include="Content\bootstrap\_mixins.scss" />
+    <None Include="Content\bootstrap\_modal.scss" />
+    <None Include="Content\bootstrap\_nav.scss" />
+    <None Include="Content\bootstrap\_navbar.scss" />
+    <None Include="Content\bootstrap\_offcanvas.scss" />
+    <None Include="Content\bootstrap\_pagination.scss" />
+    <None Include="Content\bootstrap\_popover.scss" />
+    <None Include="Content\bootstrap\_progress.scss" />
+    <None Include="Content\bootstrap\_reboot.scss" />
+    <None Include="Content\bootstrap\_root.scss" />
+    <None Include="Content\bootstrap\_spinners.scss" />
+    <None Include="Content\bootstrap\_tables.scss" />
+    <None Include="Content\bootstrap\_toasts.scss" />
+    <None Include="Content\bootstrap\_tooltip.scss" />
+    <None Include="Content\bootstrap\_transitions.scss" />
+    <None Include="Content\bootstrap\_type.scss" />
+    <None Include="Content\bootstrap\_utilities.scss" />
+    <None Include="Content\bootstrap\_variables.scss" />
     <None Include="GestOnDataSet.xsc">
       <DependentUpon>GestOnDataSet.xsd</DependentUpon>
     </None>
@@ -103,6 +190,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Scripts\bootstrap.bundle.js.map" />
+    <None Include="Scripts\bootstrap.bundle.min.js.map" />
+    <None Include="Scripts\bootstrap.esm.js.map" />
+    <None Include="Scripts\bootstrap.esm.min.js.map" />
+    <None Include="Scripts\bootstrap.js.map" />
+    <None Include="Scripts\bootstrap.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\font-awesome.css" />

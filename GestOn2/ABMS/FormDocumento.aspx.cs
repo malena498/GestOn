@@ -371,6 +371,22 @@ namespace GestOn2.ABMS
             }
         }
 
+        
+
+        protected void btnImprimir_Click(object sender, EventArgs e)
+        {
+            int idDoc = int.Parse(txtIDImpresion.Text);
+            Documento d = Sistema.GetInstancia().BuscarDocumento(idDoc);
+            if (d != null)
+            {
+               // Session["GUID"] = ((System.Web.UI.WebControls.LinkButton)(sender)).CommandArgument;
+                Session["DOC"] = idDoc.ToString();
+                Response.Redirect("download.aspx", false);
+            }
+            else {
+                lblMensaje.Text = "El documento que se quiere descargar no existe";
+            }
+        }
     }
 }
 

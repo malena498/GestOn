@@ -168,6 +168,38 @@ namespace BibliotecaClases {
             }
             catch { return null; }
         }
+
+        public List<Oferta> BuscarOfertaFiltros(DateTime fechaDesde, DateTime fechaHasta, string titulo)
+        {
+            try
+            {
+                List<Oferta> ofertas = new List<Oferta>();
+                using (var baseDatos = new Context())
+                {
+
+                    if (fechaDesde != null && fechaHasta != null)
+                    {
+                        ofertas = baseDatos.Ofertas.Include("Imagenes").Where(ej => ej.OfertaFechaDesde == fechaDesde && ej.OfertaFechaHasta == fechaHasta).OrderBy(ej => ej.OfertaTitulo).ToList();
+                    }
+                    else if (!String.IsNullOrWhiteSpace(titulo))
+                    {
+                        ofertas = baseDatos.Ofertas.Include("Imagenes").Where(ej => ej.OfertaTitulo.Contains(titulo)).OrderBy(ej => ej.OfertaTitulo).ToList();
+                    }
+                    else if ((fechaDesde != null && fechaHasta != null) && (!String.IsNullOrWhiteSpace(titulo)))
+                    {
+                        ofertas = baseDatos.Ofertas.Include("Imagenes").Where(ej => ej.OfertaTitulo.Contains(titulo) && ej.OfertaFechaDesde == fechaDesde && ej.OfertaFechaHasta == fechaHasta).OrderBy(ej => ej.OfertaTitulo).ToList();
+
+                    }
+                    return ofertas;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                List<Oferta> ofertas = null;
+                return ofertas;
+            }
+        }
     }
 }
 

@@ -1,7 +1,0 @@
-Atributos pk
-modificar los dos a la vez 
-
-
-eliminar 
-ctx.Employ.Remove(employer);
-ctx.SaveChanges();

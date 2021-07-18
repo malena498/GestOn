@@ -17,16 +17,22 @@ namespace GestOn2
         {
             if (!IsPostBack)
             {
-               /*  Session["NombreBase"] = "GestOn";
-               //if (String.IsNullOrEmpty(Session["IdUsuario"].ToString()) || Session["IdUsuario"].ToString().Equals("0"))
-                //{
-                //    Response.Redirect("~/Login.aspx");
-                //}*/
+                /*  Session["NombreBase"] = "GestOn";
+                //if (String.IsNullOrEmpty(Session["IdUsuario"].ToString()) || Session["IdUsuario"].ToString().Equals("0"))
+                 //{
+                 //    Response.Redirect("~/Login.aspx");
+                 //}*/
+
+                GridViewUsuarios.DataSource = Sistema.GetInstancia().ListadoUsuarios();
+                GridViewUsuarios.DataBind();
 
                 ddlCategoriaUsuario.DataSource = Sistema.GetInstancia().ListadoNiveles();
                 ddlCategoriaUsuario.DataTextField = "NombreNivel";
                 ddlCategoriaUsuario.DataValueField = "IdNivel";
                 ddlCategoriaUsuario.DataBind();
+
+                divNuevoUsuario.Visible = false;
+                txtIdUsuario.Text = "0";
             }
 
             
@@ -218,36 +224,30 @@ namespace GestOn2
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             
-                if (txtIdUsuario.Text != "")
-                {
+                
                     int id = Int32.Parse(txtIdUsuario.Text);
-
-                    Usuario u = Sistema.GetInstancia().BuscarUsuario(id);
-                    if (u != null)
+                    string nombre = txtNomUsuario.Text;
+                    List<Usuario> users = Sistema.GetInstancia().BuscarUsuarioFiltros(id, nombre);
+                    if (users != null)
                     {
-                    txtNombreUser.Text = u.UserNombre;
-                    txtEmailUser.Text = u.UserEmail;
-                    txtCedulaUser.Text = u.UserCedula;
-                    txtTelefonoUser.Text = u.UserTelefono;
-                    //txtPassUser.Text = u.UserContrasenia;
-                        btnModificar.Enabled = true;
+
+                        GridViewUsuarios.DataSource = users;
+                        GridViewUsuarios.DataBind();
                     }
                     else
                     {
                         lblResultado.Text = "El usuario buscado no éxiste en el sistema";
                         lblResultado.Visible = true;
                         //TimerMensajes.Enabled = true;
-                    }
-                }
-                else
-                {
-                    lblResultado.Text = "Debe completar id del usuario";
-                    lblResultado.Visible = true;
-                    //TimerMensajes.Enabled = true;
-                }
+                   }
+                
+                
             
         }
-
+        protected void btnNuevo_Click(object sender, EventArgs e)
+        {
+            divNuevoUsuario.Visible = true;
+        }
         protected bool CamposCompletos()
         {
             if (String.IsNullOrEmpty(txtIdUsuario.Text) || String.IsNullOrEmpty(txtNombreUser.Text) ||
