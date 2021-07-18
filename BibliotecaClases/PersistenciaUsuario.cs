@@ -102,6 +102,32 @@ namespace BibliotecaClases
 
 
         }
+        public List<Usuario> BuscarUsuarioFiltros(int id, string nombre)
+        {
+            try
+            {
+                List<Usuario> usuarios = new List<Usuario>();
+                using (var baseDatos = new Context())
+                {
+                    
+                    if (id != 0)
+                    {
+                        usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.UserId == id).OrderBy(ej => ej.UserId).ToList();
+                    }
+                    else if (!String.IsNullOrWhiteSpace(nombre))
+                    {
+                         usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.UserNombre.Contains(nombre)).OrderBy(ej => ej.UserNombre).ToList();
+                    }
+                    return usuarios;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                List<Usuario> usuarios = null;
+                return usuarios;
+            }
+        }
 
         public Usuario BuscarUsuarioEmail(string email)
         {

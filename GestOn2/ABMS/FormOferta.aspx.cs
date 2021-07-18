@@ -9,15 +9,19 @@ using BibliotecaClases.Clases;
 using System.Drawing;
 using System.IO;
 
-
-
 namespace GestOn2.ABMS
 {
     public partial class FormOferta : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack) Session["NombreBase"] = "GestOn";
+            if (!IsPostBack)
+            {
+                GridViewOfertas.DataSource = Sistema.GetInstancia().ListadoOfertas();
+                GridViewOfertas.DataBind();
+
+                divNuevaOferta.Visible = false;
+            }
 
         }
 
@@ -89,36 +93,29 @@ namespace GestOn2.ABMS
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (txtIdOferta.Text != "")
+            DateTime fechaDesde = DateTime.Parse(txtFchDesde.Text);
+            DateTime fechaHasta = DateTime.Parse(txtFchHasta.Text);
+            string titulo = txtTituloOferta.Text;
+            List<Oferta> ofertas = Sistema.GetInstancia().BuscarOfertaFiltros(fechaDesde, fechaHasta, titulo);
+            if (ofertas != null)
             {
-                int id = Int32.Parse(txtIdOferta.Text);
 
-                Oferta of = Sistema.GetInstancia().BuscarOferta(id);
-               
-                if (of != null)
-                {
-                    List<Imagen> imagenes = Sistema.GetInstancia().BuscarImagenesOferta(of.IdOferta);
-                    CargarImagenes(imagenes);
-                    txtTituloOferta.Text = of.OfertaTitulo;
-                    txtFechaDesde.Text = of.OfertaFechaDesde.ToString();
-                    txtFechaHasta.Text = of.OfertaFechaHasta.ToString();
-                    txtDescripcionOferta.Text = of.OfertaDescripcion;
-                    txtPrecio.Text = of.OfertaPrecio.ToString();
-                    btnModificar.Enabled = true;
-                }
+                GridViewOfertas.DataSource = ofertas;
+                GridViewOfertas.DataBind();
+            }
+            
                 else
                 {
                     lblResultado.Text = "La oferta buscada no éxiste en el sistema";
                     lblResultado.Visible = true;
                     //TimerMensajes.Enabled = true;
                 }
-            }
-            else
-            {
-                lblResultado.Text = "Debe completar id de la oferta";
-                lblResultado.Visible = true;
-                //TimerMensajes.Enabled = true;
-            }
+           
+        }
+
+        protected void btnNuevo_Click(object sender, EventArgs e)
+        {
+            divNuevaOferta.Visible = true;
         }
 
         protected void CargarImagenes(List<Imagen> imagenes)

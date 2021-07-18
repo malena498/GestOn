@@ -31,15 +31,6 @@ namespace GestOn2 {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// Control Label7.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
-        
-        /// <summary>
         /// Control txtIdUsuario.
         /// </summary>
         /// <remarks>
@@ -49,6 +40,15 @@ namespace GestOn2 {
         protected global::System.Web.UI.WebControls.TextBox txtIdUsuario;
         
         /// <summary>
+        /// Control txtNomUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNomUsuario;
+        
+        /// <summary>
         /// Control btnBuscar.
         /// </summary>
         /// <remarks>
@@ -56,6 +56,42 @@ namespace GestOn2 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBuscar;
+        
+        /// <summary>
+        /// Control btnNuevo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNuevo;
+        
+        /// <summary>
+        /// Control GridViewUsuarios.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewUsuarios;
+        
+        /// <summary>
+        /// Control divNuevoUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNuevoUsuario;
+        
+        /// <summary>
+        /// Control Label7.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label7;
         
         /// <summary>
         /// Control Label1.

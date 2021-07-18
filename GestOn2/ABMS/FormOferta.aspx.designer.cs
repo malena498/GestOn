@@ -31,6 +31,24 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
+        /// Control div1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div1;
+        
+        /// <summary>
+        /// Control txtFchDesde.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFchDesde;
+        
+        /// <summary>
         /// Control Label1.
         /// </summary>
         /// <remarks>
@@ -40,13 +58,22 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Control txtIdOferta.
+        /// Control txtFchHasta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdOferta;
+        protected global::System.Web.UI.WebControls.TextBox txtFchHasta;
+        
+        /// <summary>
+        /// Control txtTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTitulo;
         
         /// <summary>
         /// Control btnBuscar.
@@ -56,6 +83,42 @@ namespace GestOn2.ABMS {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBuscar;
+        
+        /// <summary>
+        /// Control btnNuevo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNuevo;
+        
+        /// <summary>
+        /// Control GridViewOfertas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewOfertas;
+        
+        /// <summary>
+        /// Control divNuevaOferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNuevaOferta;
+        
+        /// <summary>
+        /// Control txtIdOferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdOferta;
         
         /// <summary>
         /// Control Label2.
