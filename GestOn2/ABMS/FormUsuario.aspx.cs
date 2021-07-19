@@ -8,6 +8,7 @@ using BibliotecaClases;
 using BibliotecaClases.Clases;
 using System.Drawing;
 using System.IO;
+using System.Data;
 
 namespace GestOn2
 {
@@ -33,9 +34,11 @@ namespace GestOn2
 
                 divNuevoUsuario.Visible = false;
                 txtIdUsuario.Text = "0";
+
+
             }
 
-            
+
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -68,7 +71,7 @@ namespace GestOn2
             {
                 lblResultado.Text = "No se logro guardar";
             }
-            
+
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
@@ -117,7 +120,7 @@ namespace GestOn2
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 lblResultado.Text = "No se logro modificar.";
                 lblResultado.Visible = true;
@@ -143,6 +146,160 @@ namespace GestOn2
                 lblResultado.Visible = true;
                 //TimerMensajes.Enabled = true;
             }
+        }
+
+        
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+
+
+            int id = Int32.Parse(txtIdUsuario.Text);
+            string nombre = txtNomUsuario.Text;
+            List<Usuario> users = Sistema.GetInstancia().BuscarUsuarioFiltros(id, nombre);
+            if (users != null)
+            {
+
+                GridViewUsuarios.DataSource = users;
+                GridViewUsuarios.DataBind();
+            }
+            else
+            {
+                lblResultado.Text = "El usuario buscado no éxiste en el sistema";
+                lblResultado.Visible = true;
+                //TimerMensajes.Enabled = true;
+            }
+
+
+
+        }
+        protected void btnNuevo_Click(object sender, EventArgs e)
+        {
+            divNuevoUsuario.Visible = true;
+        }
+        protected bool CamposCompletos()
+        {
+            if (String.IsNullOrEmpty(txtIdUsuario.Text) || String.IsNullOrEmpty(txtNombreUser.Text) ||
+                String.IsNullOrEmpty(txtEmailUser.Text) || String.IsNullOrEmpty(txtCedulaUser.Text) ||
+                String.IsNullOrEmpty(txtTelefonoUser.Text) || String.IsNullOrEmpty(txtPassUser.Text))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        protected void GridViewUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (e.Row.RowState == DataControlRowState.Edit)
+                {
+                    DropDownList ddlNivel = (DropDownList)e.Row.FindControl("ddlNivel");
+                    //bind dropdown-list
+                    
+                    ddlNivel.DataSource = Sistema.GetInstancia().ListadoNiveles();
+                    ddlNivel.DataTextField = "NombreNivel";
+                    ddlNivel.DataValueField = "IdNivel";
+                    ddlNivel.DataBind();
+
+                    GridViewRow row = GridViewUsuarios.Rows[e.Row.RowIndex];
+                    LinkButton btnEditar = row.FindControl("btnEditar") as LinkButton;
+                    btnEditar.Visible = false;
+                    LinkButton btnBorrar = row.FindControl("btnBorrar") as LinkButton;
+                    btnBorrar.Visible = false;
+                    LinkButton btnCancelar = row.FindControl("btnCancelar") as LinkButton;
+                    btnCancelar.Visible = true;
+                    LinkButton btnUpdate = row.FindControl("btnUpdate") as LinkButton;
+                    btnUpdate.Visible = true;
+                }
+                
+
+            }
+        }
+
+        protected void GridViewUsuarios_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridViewUsuarios.EditIndex = e.NewEditIndex;
+            llenarGrilla();
+        }
+
+
+        protected void llenarGrilla()
+        {
+            GridViewUsuarios.DataSource = Sistema.GetInstancia().ListadoUsuarios();
+            GridViewUsuarios.DataBind();
+        }
+
+        protected void GridViewUsuarios_RowUpdated(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = GridViewUsuarios.Rows[e.RowIndex];
+            int Id = Convert.ToInt32(GridViewUsuarios.DataKeys[e.RowIndex].Values[0]);
+            string nombre = (row.FindControl("txtNombre") as TextBox).Text;
+            string email = (row.FindControl("txtEmail") as TextBox).Text;
+            string cedula = (row.FindControl("txtDocumento") as TextBox).Text;
+            string telefono = (row.FindControl("txtTeléfono") as TextBox).Text;
+            bool activo = Convert.ToBoolean((row.FindControl("chkActivo1") as CheckBox).Checked);
+            int IdNivel = Convert.ToInt32((row.FindControl("ddlNivel") as DropDownList).SelectedValue);
+
+            bool ciValida = ValidarCI(cedula);
+            if (ciValida)
+            {
+                lblResultado.Visible = false;
+                lblResultado.Text = string.Empty;
+                Usuario us = null;
+                us = Sistema.GetInstancia().BuscarUsuario(Id);
+                us.UserNombre = nombre;
+                us.UserEmail = email;
+                us.UserTelefono = telefono;
+                us.UserCedula = cedula;
+                us.Activo = activo;
+                us.IdNivel = IdNivel;
+
+                bool exito = Sistema.GetInstancia().ModificarUsuario(us);
+                if (exito)
+                {
+                    lblResultado.Visible = true;
+                    lblResultado.Text = "Se modificó con éxito";
+                    GridViewUsuarios.EditIndex = -1;
+                    llenarGrilla();
+                }
+            }
+            else
+            {
+
+                lblResultado.Visible = true;
+                lblResultado.Text = "Documento invalido.";
+
+            }
+        }
+
+        protected void GridViewUsuarios_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridViewUsuarios.EditIndex = -1;
+            llenarGrilla();
+        }
+
+        protected void GridViewUsuarios_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = GridViewUsuarios.Rows[e.RowIndex];
+            int Id = Convert.ToInt32(GridViewUsuarios.DataKeys[e.RowIndex].Values[0]);
+            bool exito = Sistema.GetInstancia().EliminarUsuario(Id);
+            if (exito)
+            {
+                lblResultado.Visible = true;
+                lblResultado.Text = "Se elimino con éxito";
+                GridViewUsuarios.EditIndex = -1;
+                llenarGrilla();
+            }
+        }
+
+        protected void OnPaging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewUsuarios.PageIndex = e.NewPageIndex;
+            this.llenarGrilla();
         }
 
         protected void limpiar()
@@ -218,47 +375,6 @@ namespace GestOn2
             catch (Exception ex)
             {
                 return false;
-            }
-        }
-
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            
-                
-                    int id = Int32.Parse(txtIdUsuario.Text);
-                    string nombre = txtNomUsuario.Text;
-                    List<Usuario> users = Sistema.GetInstancia().BuscarUsuarioFiltros(id, nombre);
-                    if (users != null)
-                    {
-
-                        GridViewUsuarios.DataSource = users;
-                        GridViewUsuarios.DataBind();
-                    }
-                    else
-                    {
-                        lblResultado.Text = "El usuario buscado no éxiste en el sistema";
-                        lblResultado.Visible = true;
-                        //TimerMensajes.Enabled = true;
-                   }
-                
-                
-            
-        }
-        protected void btnNuevo_Click(object sender, EventArgs e)
-        {
-            divNuevoUsuario.Visible = true;
-        }
-        protected bool CamposCompletos()
-        {
-            if (String.IsNullOrEmpty(txtIdUsuario.Text) || String.IsNullOrEmpty(txtNombreUser.Text) ||
-                String.IsNullOrEmpty(txtEmailUser.Text) || String.IsNullOrEmpty(txtCedulaUser.Text) ||
-                String.IsNullOrEmpty(txtTelefonoUser.Text) || String.IsNullOrEmpty(txtPassUser.Text))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
             }
         }
     }

@@ -8,26 +8,85 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container" runat="server">
-                <asp:Label runat="server">Id</asp:Label>                
-                <asp:TextBox ID="txtIdUsuario" runat="server"></asp:TextBox>
-                <asp:Label runat="server">Nombre</asp:Label>
-                <asp:TextBox ID="txtNomUsuario" runat="server"></asp:TextBox>
-                <asp:Button ID="btnBuscar" runat="server" Style="margin-left: 14px" Text="Buscar" OnClick="btnBuscar_Click" />
-                <asp:Button ID="btnNuevo" runat="server" Style="margin-left: 14px" Text="Nuevo" OnClick="btnNuevo_Click" />
+                <form class="form-control">
+                    <asp:Label runat="server">Id</asp:Label>
+                    <asp:TextBox ID="txtIdUsuario" runat="server"></asp:TextBox>
+                    <asp:Label runat="server">Nombre</asp:Label>
+                    <asp:TextBox ID="txtNomUsuario" runat="server"></asp:TextBox>
+                    <asp:Button ID="btnBuscar" runat="server" class="btn btn-info" Style="margin-left: 14px" Text="Buscar" OnClick="btnBuscar_Click" />
+                    <asp:Button ID="btnNuevo" runat="server" class="btn btn-primary" Style="margin-left: 14px" Text="Nuevo" OnClick="btnNuevo_Click" />
+                </form>
             </div>
             <hr />
-            <asp:GridView id="GridViewUsuarios"  autogeneratecolumns="False" emptydatatext="No data available." 
-                allowpaging="True" runat="server" DataKeyNames="UserId">
+            <asp:GridView ID="GridViewUsuarios" AutoGenerateColumns="False" EmptyDataText="No data available."
+                AllowPaging="True" runat="server" DataKeyNames="UserId" OnRowDataBound="GridViewUsuarios_RowDataBound"
+                OnRowEditing="GridViewUsuarios_RowEditing" OnRowUpdating="GridViewUsuarios_RowUpdated"
+                OnRowCancelingEdit="GridViewUsuarios_RowCancelingEdit" OnRowDeleting="GridViewUsuarios_OnRowDeleting">
                 <Columns>
-                    <asp:BoundField HeaderText="IdUsuario" DataField="UserId" Visible="false"/>
-                    <asp:BoundField HeaderText="Nombre" DataField="UserNombre"/>
-                     <asp:BoundField HeaderText="E-mail" DataField="UserEmail"/>
-                     <asp:BoundField HeaderText="Documento" DataField="UserCedula"/>
-                     <asp:BoundField HeaderText="Teléfono" DataField="UserTelefono"/>
-                     <asp:BoundField HeaderText="Activo" DataField="Activo"/>
-                     <asp:BoundField HeaderText="Rol" DataField="nivel.NombreNivel"/>
-                    </Columns>
-                </asp:GridView>
+                    <asp:TemplateField HeaderText="IdUsuario" ItemStyle-Width="150" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblIdUsuario" runat="server" Text='<%# Eval("UserId") %>' ReadOnly="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("UserNombre") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtNombre" runat="server" Text='<%# Eval("UserNombre") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="E-mail" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("UserEmail") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtEmail" runat="server" Text='<%# Eval("UserEmail") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Documento" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDocumento" runat="server" Text='<%# Eval("UserCedula") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtDocumento" runat="server" Text='<%# Eval("UserCedula") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Teléfono" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblTeléfono" runat="server" Text='<%# Eval("UserTelefono") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtTeléfono" runat="server" Text='<%# Eval("UserTelefono") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Activo" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="chkActivo" runat="server" Checked='<%# Eval("Activo") %>'></asp:CheckBox>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:CheckBox ID="chkActivo1" runat="server" Checked='<%# Eval("Activo") %>' Width="140"></asp:CheckBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Rol" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblNivel" runat="server" Text='<%# Eval("nivel.NombreNivel") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddlNivel" runat="server" Width="140"></asp:DropDownList>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Accion">
+                        <ItemTemplate>
+                            <asp:Button ID="btnEditar" runat="server" CommandName="Edit" Text="Editar" Width="45px"></asp:Button>
+                            <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" Text="Borrar" Width="50px"
+                                OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
+                            <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Visible="false" Width="45px"></asp:Button>
+                            <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" Text="Cancelar" Visible="false"  Width="45px"></asp:Button>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
             <div class="container" runat="server" id="divNuevoUsuario">
                 <asp:Label ID="Label7" runat="server" Text="Id"></asp:Label>
                 <br />
