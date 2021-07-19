@@ -6,6 +6,7 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+            <div 
             <asp:Panel ID="pnlNuevaCat" cssClass="" runat="server" Visible="False" style="position:absolute;align-content:flex-start; top: 266px; left: 160px; height: 30%; width: 30%; margin-top: 2px;" BackColor="#CC99FF" BorderColor="Black" BorderStyle="Solid">
                 <asp:Button ID="btnClosePanel" runat="server" CssClass="btn-danger"  Height="25px" Text="X" Width="25px" style="float:right" Font-Size="12pt" ForeColor="Black" OnClick="btnClosePanel_Click"  />
                 <br />
