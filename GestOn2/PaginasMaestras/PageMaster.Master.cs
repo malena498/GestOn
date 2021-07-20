@@ -15,12 +15,10 @@ namespace GestOn2.PaginasMaestras
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           /* if (!IsPostBack) {
-                
-                Session["IdUsuario"] = "0";
+           if (!IsPostBack) {
+
                 CargarMenues();
-                Session.Add("IdUsuario", "0");
-                }*/
+           }
         }
         protected void btnSalir_Click(object sender, EventArgs e)
         {
@@ -29,29 +27,31 @@ namespace GestOn2.PaginasMaestras
             Response.Redirect("~/Login.aspx");
         }
 
-        /* public void CargarMenues()
+        public void CargarMenues()
          {
-             String id = Session["IdUsuario"].ToString();
-             if (id.Equals("0"))
-             {
-                 Session["IdUsuario"] = "";
-                 Server.Transfer("~/Login.aspx");
+            if(Session["IdUsuario"] != null)
+            { 
+                String id = Session["IdUsuario"].ToString();
+                if (id.Equals("0"))
+                {
+                    Session["IdUsuario"] = "";
+                    Server.Transfer("~/Login.aspx");
+                }
+                else
+                {
+                    Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
+                    if (u.nivel.UserEstandar || u.nivel.NombreNivel.Equals("Docente"))
+                    {
+                        Admin.Visible = false;
+                    }
+                    else if (u.nivel.UserAdmin)
+                    {
+                        Admin.Visible = true;
 
+                    }
+                }
              }
-             else {
-                 Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
-                 if (u.nivel.UserEstandar || u.nivel.NombreNivel.Equals("Docente"))
-                 {
-
-                     Admin.Visible = false;
-                 }
-                 else if (u.nivel.UserAdmin)
-                 {
-                     Admin.Visible = true;
-
-                 }
-             }
-         }*/
+         }
 
 
     }
