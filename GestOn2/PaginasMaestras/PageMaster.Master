@@ -49,7 +49,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <asp:Button ID="btnSalir" runat="server" Cssclass="nav-link disabled" OnClick="btnSalir_Click"></asp:Button>
+                        <asp:Button ID="btnSalir" runat="server" Text="Salir" Cssclass="nav-link disabled" OnClick="btnSalir_Click"></asp:Button>
                     </li>
                 </ul>
                 <div class="form-inline my-2 my-lg-0">
