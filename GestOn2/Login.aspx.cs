@@ -29,7 +29,10 @@ namespace GestOn2
             }
             else
             {
-               // Session["IdUsuario"] = u.UserId;
+                //HttpCookie userIdCookie = new HttpCookie("UserID");
+                //userIdCookie.Value = u.UserId.ToString();
+                //Response.Cookies.Add(userIdCookie);
+                Session["IdUsuario"] = u.UserId;
                 System.Web.Security.FormsAuthentication.RedirectFromLoginPage(u.UserNombre.ToString(), false);
                 Response.Redirect("~/Inicio.aspx");
             }

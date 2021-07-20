@@ -22,6 +22,12 @@ namespace GestOn2.PaginasMaestras
                 Session.Add("IdUsuario", "0");
                 }*/
         }
+        protected void btnSalir_Click(object sender, EventArgs e)
+        {
+            Session.Remove("IdUsuario");
+            Session.Abandon();
+            Response.Redirect("~/Login.aspx");
+        }
 
         /* public void CargarMenues()
          {

@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/PaginasMaestras/Account.Master" AutoEventWireup="true" 
-    CodeBehind="Login.aspx.cs" Inherits="GestOn2.Login" %>
+    CodeBehind="Login.aspx.cs" Inherits="GestOn2.Login"  EnableSessionState="True"%>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
