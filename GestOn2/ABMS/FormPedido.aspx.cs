@@ -50,7 +50,7 @@ namespace GestOn2.ABMS
                 DateTime fchEntrega = DateTime.Parse(txtFechaPedido.Text);
                 string Descripcion = txtDescripcion.InnerText;
                 string Direccion = txtDireccion.Text;
-                int user = 1;
+                int user = int.Parse(Session["IdUsuario"].ToString());
 
                 List<int> lstitems = new List<int>();
 
