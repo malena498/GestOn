@@ -108,7 +108,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="download.aspx" />
     <Content Include="fonts\fontawesome-webfont.svg" />
-    <Content Include="Inicio.aspx" />
+    <Content Include="ABMS\Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Registrarse.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -224,11 +224,11 @@
     <Compile Include="download.aspx.designer.cs">
       <DependentUpon>download.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Inicio.aspx.cs">
+    <Compile Include="ABMS\Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Inicio.aspx.designer.cs">
+    <Compile Include="ABMS\Inicio.aspx.designer.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">

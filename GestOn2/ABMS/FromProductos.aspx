@@ -6,7 +6,6 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <div 
             <asp:Panel ID="pnlNuevaCat" cssClass="" runat="server" Visible="False" style="position:absolute;align-content:flex-start; top: 266px; left: 160px; height: 30%; width: 30%; margin-top: 2px;" BackColor="#CC99FF" BorderColor="Black" BorderStyle="Solid">
                 <asp:Button ID="btnClosePanel" runat="server" CssClass="btn-danger"  Height="25px" Text="X" Width="25px" style="float:right" Font-Size="12pt" ForeColor="Black" OnClick="btnClosePanel_Click"  />
                 <br />
@@ -24,7 +23,7 @@
                 <asp:Button ID="btnEliminarCategoria" runat="server" OnClick="btnEliminarCategoria_Click" Text="Eliminar" Width="100px" Height="33px" />
                 <br />
             </asp:Panel>
-            <asp:Panel ID="Panel2" runat="server" style="position:absolute;align-content:flex-start; margin-left:10px; left: 50%; top: 0%; height: 492px; width:100%;" BackColor="#999999">
+            <asp:Panel ID="Panel2" runat="server" style="position:absolute;align-content:flex-start; margin-left:10px; left: 55%; top: 24%; height: 492px; width:100%;" BackColor="#999999">
                 <asp:Label ID="Label1" runat="server" Font-Size="13pt" ForeColor="Black" Text="Id:" Width="140px" Font-Bold="True"></asp:Label>
                 <asp:TextBox ID="txtIdProducto" runat="server" Width="70px"></asp:TextBox>
                 <asp:Button ID="btnBuscar" runat="server" OnClick="btnBuscar_Click" Text="Buscar" Width="130px" />
