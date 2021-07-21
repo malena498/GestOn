@@ -28,5 +28,7 @@ namespace BibliotecaClases
 
         public int UserId { get; set; }
 
+        public int Precio { get; set; }
+
     }
 }

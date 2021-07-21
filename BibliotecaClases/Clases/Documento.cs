@@ -26,6 +26,7 @@ namespace BibliotecaClases.Clases
         public bool Activo { get; set; }
         public int UserId { get; set; }
         public String ruta { get; set; }
+        public bool EsImagen { get; set; }
 
     }
 }

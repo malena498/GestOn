@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using BibliotecaClases;
+using BibliotecaClases.Clases;
 
 
 namespace GestOn2.ABMS
@@ -69,7 +70,10 @@ namespace GestOn2.ABMS
                 p.IdPedido = identificador;
                 p.UserId = user;
 
-                bool exito = Sistema.GetInstancia().GuardarPedido(p, lstitems);
+                ProductoPedidoCantidad productoPedidoCantidad = new ProductoPedidoCantidad();
+
+
+                bool exito = Sistema.GetInstancia().GuardarPedido(p, productoPedidoCantidad, lstitems);
                 if (exito)
                 {
                     lblInformativo.Text = "Se guardo con éxito";
@@ -288,6 +292,20 @@ namespace GestOn2.ABMS
                     TimerMensajes.Enabled = true;
                 }
             }
+        }
+
+        protected void ListProductos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+                txtCantidadProducto.Focus();
+        }
+
+        protected void txtCantidadProducto_TextChanged(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(txtCantidadProducto.Text))
+            {
+                btnAgregarTodo.Enabled = true;
+            }
+            else btnAgregarTodo.Enabled = false;
         }
     }
 }
