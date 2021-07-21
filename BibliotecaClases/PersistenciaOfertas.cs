@@ -28,16 +28,16 @@ namespace BibliotecaClases {
                         baseDatos.SaveChanges();
                         if (oferta.IdOferta != 0)
                         {
-                            foreach (String url in imagenes)
+                            if (imagenes != null)
                             {
-                                Imagen img = new Imagen();
-                                img.ImagenURL = url;
-                                img.IdOferta = oferta.IdOferta;
-                                baseDatos.Imagenes.Add(img);
-
+                                foreach (String url in imagenes)
+                                {
+                                    Imagen img = new Imagen();
+                                    img.ImagenURL = url;
+                                    img.IdOferta = oferta.IdOferta;
+                                    baseDatos.Imagenes.Add(img);
+                                }
                             }
-
-
                         }
                         baseDatos.SaveChanges();
                     }
@@ -91,17 +91,17 @@ namespace BibliotecaClases {
                             of.OfertaFechaHasta = oferta.OfertaFechaHasta;
                             of.OfertaPrecio = oferta.OfertaPrecio;
                             of.OfertaTitulo = oferta.OfertaTitulo;
-                        foreach (String url in listaImagenes)
-                        {
-                            Imagen img = new Imagen();
-                            img.ImagenURL = url;
-                            img.IdOferta = oferta.IdOferta;
-                            baseDatos.Imagenes.Add(img);
-                        }
-
-                        baseDatos.SaveChanges();
+                            if (listaImagenes != null) {
+                                foreach (String url in listaImagenes)
+                                {
+                                    Imagen img = new Imagen();
+                                    img.ImagenURL = url;
+                                    img.IdOferta = oferta.IdOferta;
+                                    baseDatos.Imagenes.Add(img);
+                                }
+                            }
+                            baseDatos.SaveChanges();
                             return true;
-
                         }
                         else
                         {

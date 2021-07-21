@@ -17,8 +17,8 @@ namespace GestOn2.ABMS
         {
             if (!IsPostBack)
             {
-                GridViewOfertas.DataSource = Sistema.GetInstancia().ListadoOfertas();
-                GridViewOfertas.DataBind();
+                GridViewOferta.DataSource = Sistema.GetInstancia().ListadoOfertas();
+                GridViewOferta.DataBind();
 
                 divNuevaOferta.Visible = false;
             }
@@ -91,6 +91,51 @@ namespace GestOn2.ABMS
             }
         }
 
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+
+            if (CamposCompletos())
+            {
+                lblResultado.Visible = true;
+                lblResultado.Text = "Debe completar todos los campos";
+                //TimerMensajes.Enabled = true;
+            }
+            //Si esta todo correcto, procedo a hacer la modificación.
+            else
+            {
+                lblResultado.Visible = false;
+                lblResultado.Text = "";
+                Oferta of = null;
+                of = Sistema.GetInstancia().BuscarOferta(int.Parse(txtIdOferta.Text));
+                of.OfertaTitulo = txtTituloOferta.Text;
+                of.OfertaDescripcion = txtDescripcionOferta.Text;
+                of.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
+                of.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
+                of.OfertaPrecio = decimal.Parse(txtPrecio.Text);
+                List<String> imagenes = new List<String>();
+                if (!String.IsNullOrEmpty(txtURLs.Text))
+                {
+                    imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
+                }
+                bool exito = Sistema.GetInstancia().ModificarOferta(of, imagenes);
+                if (exito)
+                {
+                    lblResultado.Text = "Se modificó con éxito";
+                    lblResultado.Visible = true;
+                    //TimerMensajes.Enabled = true;
+
+                    //Elimino campos luego que se modifico con éxito
+                    limpiar();
+                }
+                else
+                {
+                    lblResultado.Text = "No se guardo (Error)";
+                    lblResultado.Visible = true;
+                    //TimerMensajes.Enabled = true;
+                }
+            }
+        }
+
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             DateTime fechaDesde = DateTime.Parse(txtFchDesde.Text);
@@ -100,8 +145,8 @@ namespace GestOn2.ABMS
             if (ofertas != null)
             {
 
-                GridViewOfertas.DataSource = ofertas;
-                GridViewOfertas.DataBind();
+                GridViewOferta.DataSource = ofertas;
+                GridViewOferta.DataBind();
             }
             
                 else
@@ -270,7 +315,104 @@ namespace GestOn2.ABMS
             }
             return squareImage;
         }
-        
+
+        protected void GridViewOferta_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (e.Row.RowState == DataControlRowState.Edit)
+                {
+                    
+
+                    GridViewRow row = GridViewOferta.Rows[e.Row.RowIndex];
+                    LinkButton btnEditar = row.FindControl("btnEditar") as LinkButton;
+                    btnEditar.Visible = false;
+                    LinkButton btnBorrar = row.FindControl("btnBorrar") as LinkButton;
+                    btnBorrar.Visible = false;
+                    LinkButton btnCancelar = row.FindControl("btnCancelar") as LinkButton;
+                    btnCancelar.Visible = true;
+                    LinkButton btnUpdate = row.FindControl("btnUpdate") as LinkButton;
+                    btnUpdate.Visible = true;
+                }
+
+
+            }
+        }
+
+        protected void GridViewOferta_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridViewOferta.EditIndex = e.NewEditIndex;
+            llenarGrilla();
+        }
+
+
+        protected void llenarGrilla()
+        {
+            GridViewOferta.DataSource = Sistema.GetInstancia().ListadoOfertas();
+            GridViewOferta.DataBind();
+        }
+
+        protected void GridViewOferta_RowUpdated(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = GridViewOferta.Rows[e.RowIndex];
+            int Id = Convert.ToInt32((row.FindControl("lblIdOferta") as Label).Text);
+            string titulo = (row.FindControl("txtTitulo") as TextBox).Text;
+            DateTime fechadesde = DateTime.Parse((row.FindControl("txtFechaDesde") as TextBox).Text);
+            DateTime fechahasta = DateTime.Parse((row.FindControl("txtFechaHasta") as TextBox).Text);
+            string descripcion = (row.FindControl("txtDescripcion") as TextBox).Text;
+            bool activo = Convert.ToBoolean((row.FindControl("chkActivo1") as CheckBox).Checked);
+            decimal precio = decimal.Parse((row.FindControl("txtPrecio") as TextBox).Text);
+           
+            lblResultado.Visible = false;
+            lblResultado.Text = string.Empty;
+            Oferta of = null;
+            of = Sistema.GetInstancia().BuscarOferta(Id);
+            of.OfertaTitulo = titulo;
+            of.OfertaDescripcion = txtDescripcionOferta.Text;
+            of.OfertaFechaDesde = fechadesde;
+            of.OfertaFechaHasta = fechahasta;
+            of.OfertaPrecio = precio;
+            of.Activo = activo;
+            List<String> imagenes = new List<string>(); 
+
+            bool exito = Sistema.GetInstancia().ModificarOferta(of, imagenes);
+            if (exito)
+            {
+                lblResultado.Visible = true;
+                lblResultado.Text = "Se modificó con éxito";
+                GridViewOferta.EditIndex = -1;
+                llenarGrilla();
+            }
+            
+
+            
+        }
+
+        protected void GridViewOferta_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridViewOferta.EditIndex = -1;
+            llenarGrilla();
+        }
+
+        protected void GridViewOferta_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = GridViewOferta.Rows[e.RowIndex];
+            int Id = Convert.ToInt32(GridViewOferta.DataKeys[e.RowIndex].Values[0]);
+            bool exito = Sistema.GetInstancia().EliminarUsuario(Id);
+            if (exito)
+            {
+                lblResultado.Visible = true;
+                lblResultado.Text = "Se elimino con éxito";
+                GridViewOferta.EditIndex = -1;
+                llenarGrilla();
+            }
+        }
+
+        protected void OnPaging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewOferta.PageIndex = e.NewPageIndex;
+            this.llenarGrilla();
+        }
 
         protected void limpiar()
         {
@@ -282,50 +424,7 @@ namespace GestOn2.ABMS
             txtPrecio.Text = string.Empty;
         }
 
-        protected void btnModificar_Click(object sender, EventArgs e)
-        {
-                      
-            if (CamposCompletos())
-            {
-                lblResultado.Visible = true;
-                lblResultado.Text = "Debe completar todos los campos";
-                //TimerMensajes.Enabled = true;
-            }
-            //Si esta todo correcto, procedo a hacer la modificación.
-            else
-            {
-                lblResultado.Visible = false;
-                lblResultado.Text = "";
-                Oferta of = null;
-                of = Sistema.GetInstancia().BuscarOferta(int.Parse(txtIdOferta.Text));
-                of.OfertaTitulo = txtTituloOferta.Text;
-                of.OfertaDescripcion = txtDescripcionOferta.Text;
-                of.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
-                of.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
-                of.OfertaPrecio = decimal.Parse(txtPrecio.Text);
-                List<String> imagenes = new List<String>();
-                if (!String.IsNullOrEmpty(txtURLs.Text))
-                {
-                    imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
-                }
-                bool exito = Sistema.GetInstancia().ModificarOferta(of, imagenes);
-                if (exito)
-                {
-                    lblResultado.Text = "Se modificó con éxito";
-                    lblResultado.Visible = true;
-                    //TimerMensajes.Enabled = true;
-
-                    //Elimino campos luego que se modifico con éxito
-                    limpiar();
-                }
-                else
-                {
-                    lblResultado.Text = "No se guardo (Error)";
-                    lblResultado.Visible = true;
-                    //TimerMensajes.Enabled = true;
-                }
-            }
-        }
+       
 
         protected bool CamposCompletos()
         {

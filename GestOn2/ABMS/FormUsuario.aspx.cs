@@ -18,27 +18,24 @@ namespace GestOn2
         {
             if (!IsPostBack)
             {
-                /*  Session["NombreBase"] = "GestOn";
-                //if (String.IsNullOrEmpty(Session["IdUsuario"].ToString()) || Session["IdUsuario"].ToString().Equals("0"))
-                 //{
-                 //    Response.Redirect("~/Login.aspx");
-                 //}*/
+                // Session["NombreBase"] = "GestOn";
+                if (Session["IdUsuario"] != null)
+                {
+                    llenarGrilla();
+                    ddlCategoriaUsuario.DataSource = Sistema.GetInstancia().ListadoNiveles();
+                    ddlCategoriaUsuario.DataTextField = "NombreNivel";
+                    ddlCategoriaUsuario.DataValueField = "IdNivel";
+                    ddlCategoriaUsuario.DataBind();
 
-                GridViewUsuarios.DataSource = Sistema.GetInstancia().ListadoUsuarios();
-                GridViewUsuarios.DataBind();
+                    divNuevoUsuario.Visible = false;
+                    txtIdUsuario.Text = "0";
 
-                ddlCategoriaUsuario.DataSource = Sistema.GetInstancia().ListadoNiveles();
-                ddlCategoriaUsuario.DataTextField = "NombreNivel";
-                ddlCategoriaUsuario.DataValueField = "IdNivel";
-                ddlCategoriaUsuario.DataBind();
-
-                divNuevoUsuario.Visible = false;
-                txtIdUsuario.Text = "0";
-
-
+                }
+                else
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
             }
-
-
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -197,23 +194,25 @@ namespace GestOn2
             {
                 if (e.Row.RowState == DataControlRowState.Edit)
                 {
-                    DropDownList ddlNivel = (DropDownList)e.Row.FindControl("ddlNivel");
-                    //bind dropdown-list
                     
-                    ddlNivel.DataSource = Sistema.GetInstancia().ListadoNiveles();
-                    ddlNivel.DataTextField = "NombreNivel";
-                    ddlNivel.DataValueField = "IdNivel";
-                    ddlNivel.DataBind();
+                        DropDownList ddlNivel = (DropDownList)e.Row.FindControl("ddlNivel");
+                        //bind dropdown-list
 
-                    GridViewRow row = GridViewUsuarios.Rows[e.Row.RowIndex];
-                    LinkButton btnEditar = row.FindControl("btnEditar") as LinkButton;
-                    btnEditar.Visible = false;
-                    LinkButton btnBorrar = row.FindControl("btnBorrar") as LinkButton;
-                    btnBorrar.Visible = false;
-                    LinkButton btnCancelar = row.FindControl("btnCancelar") as LinkButton;
-                    btnCancelar.Visible = true;
-                    LinkButton btnUpdate = row.FindControl("btnUpdate") as LinkButton;
-                    btnUpdate.Visible = true;
+                        ddlNivel.DataSource = Sistema.GetInstancia().ListadoNiveles();
+                        ddlNivel.DataTextField = "NombreNivel";
+                        ddlNivel.DataValueField = "IdNivel";
+                        ddlNivel.DataBind();
+                   
+                        
+                        //LinkButton btnEditar = FindControl("btnEditar") as LinkButton;
+                        //btnEditar.Visible = false;
+                        //LinkButton btnBorrar = FindControl("btnBorrar") as LinkButton;
+                        //btnBorrar.Visible = false;
+                        //LinkButton btnCancelar = FindControl("btnCancelar") as LinkButton;
+                        //btnCancelar.Visible = true;
+                        //LinkButton btnUpdate = FindControl("btnUpdate") as LinkButton;
+                        //btnUpdate.Visible = true;
+                    
                 }
                 
 
@@ -229,14 +228,14 @@ namespace GestOn2
 
         protected void llenarGrilla()
         {
-            GridViewUsuarios.DataSource = Sistema.GetInstancia().ListadoUsuarios();
+            GridViewUsuarios.DataSource = Sistema.GetInstancia().ListadoUsuarios(); 
             GridViewUsuarios.DataBind();
         }
 
         protected void GridViewUsuarios_RowUpdated(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = GridViewUsuarios.Rows[e.RowIndex];
-            int Id = Convert.ToInt32(GridViewUsuarios.DataKeys[e.RowIndex].Values[0]);
+            int Id = Convert.ToInt32((row.FindControl("lblIdUsuario") as Label).Text);
             string nombre = (row.FindControl("txtNombre") as TextBox).Text;
             string email = (row.FindControl("txtEmail") as TextBox).Text;
             string cedula = (row.FindControl("txtDocumento") as TextBox).Text;

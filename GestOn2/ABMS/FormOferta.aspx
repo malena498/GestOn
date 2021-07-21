@@ -7,8 +7,8 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-                <div class="row" runat="server" id="div1">
-                    <div class="col-12" runat="server">
+            <div class="row" runat="server" id="div1">
+                <div class="col-12" runat="server">
                     <asp:Label runat="server">Fecha Desde</asp:Label>
                     <asp:TextBox ID="txtFchDesde" runat="server" TextMode="DateTime"></asp:TextBox>
                     <br />
@@ -22,19 +22,77 @@
                     <asp:Button ID="btnNuevo" runat="server" Style="margin-left: 14px" Text="Nuevo" OnClick="btnNuevo_Click" />
 
 
-                    </div>
+                </div>
             </div>
 
-           <hr />
-            <asp:GridView ID="GridViewOfertas" AutoGenerateColumns="False" EmptyDataText="No data available."
-                AllowPaging="True" runat="server" DataKeyNames="IdOferta">
+            <hr />
+            <asp:GridView ID="GridViewOferta" AutoGenerateColumns="False" EmptyDataText="No hay registros."
+                AllowPaging="True" runat="server" DataKeyNames="UserId" OnRowDataBound="GridViewOferta_RowDataBound"
+                OnRowEditing="GridViewOferta_RowEditing" OnRowUpdating="GridViewOferta_RowUpdated"
+                OnRowCancelingEdit="GridViewOferta_RowCancelingEdit" OnRowDeleting="GridViewOferta_OnRowDeleting">
                 <Columns>
-                    <asp:BoundField HeaderText="IdOferta" DataField="IdOferta" Visible="false" />
-                    <asp:BoundField HeaderText="Titulo" DataField="OfertaTitulo" />
-                    <asp:BoundField HeaderText="Descripcion" DataField="OfertaDescripcion" />
-                    <asp:BoundField HeaderText="Fecha desde" DataField="OfertaFechaDesde" />
-                    <asp:BoundField HeaderText="Fecha hasta" DataField="OfertaFechaHasta" />
-                    <asp:BoundField HeaderText="Activo" DataField="Activo" />
+                    <asp:TemplateField HeaderText="IdOferta" ItemStyle-Width="150" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblIdOferta" runat="server" Text='<%# Eval("IdOferta") %>' ReadOnly="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Título" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblTitulo" runat="server" Text='<%# Eval("OfertaTitulo") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtTitulo" runat="server" Text='<%# Eval("OfertaTitulo") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Fecha desde" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblFechaDesde" runat="server" Text='<%# Eval("OfertaFechaDesde") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtFechaDesde" runat="server" Text='<%# Eval("OfertaFechaDesde") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Fecha hasta" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblFechaHasta" runat="server" Text='<%# Eval("OfertaFechaHasta") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtFechaHasta" runat="server" Text='<%# Eval("OfertaFechaHasta") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Descripción" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDescripcion" runat="server" Text='<%# Eval("OfertaDescripcion") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtDescripcion" runat="server" Text='<%# Eval("OfertaDescripcion") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Activo" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="chkActivo" runat="server" Checked='<%# Eval("Activo") %>'></asp:CheckBox>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:CheckBox ID="chkActivo1" runat="server" Checked='<%# Eval("Activo") %>' Width="140"></asp:CheckBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Precio" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPrecio" runat="server" Text='<%# Eval("OfertaPrecio") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtPrecio" runat="server" Text='<%# Eval("OfertaPrecio") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Accion">
+                        <ItemTemplate>
+                            <asp:Button ID="btnEditar" runat="server" CommandName="Edit" Text="Editar" Width="45px"></asp:Button>
+                            <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" Text="Borrar" Width="50px"
+                                OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
+                            <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Visible="false" Width="45px"></asp:Button>
+                            <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" Text="Cancelar" Visible="false" Width="45px"></asp:Button>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
             <div class="container" runat="server" id="divNuevaOferta">
