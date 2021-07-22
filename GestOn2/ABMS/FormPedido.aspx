@@ -23,61 +23,21 @@
         <asp:Label ID="Label6" runat="server" Text="Seleccionar producto" class="col-6 col-md-6 col-lg-6" Font-Bold="True"></asp:Label>
         <asp:Label ID="Label7" runat="server" Text="Productos seleccionados"  class="col-6 col-md-6 col-lg-6"  Font-Bold="True"></asp:Label>
         </div>
-            <asp:GridView ID="GridViewProductos" AutoGenerateColumns="False" EmptyDataText="No hay registros."
-                AllowPaging="True" runat="server" DataKeyNames="ProductoId" OnRowDataBound="GridViewProductos_RowDataBound"
-                OnRowEditing="GridViewProductos_RowEditing" OnRowUpdating="GridViewProductos_RowUpdated"
-                OnRowCancelingEdit="GridViewProductos_RowCancelingEdit" class="table text-info" OnRowDeleting="GridViewProductos_OnRowDeleting">
+         <asp:DropDownList ID="ListProductos1" runat="server" Height="150px" AutoPostBack="True" OnSelectedIndexChanged="ListProductos1_SelectedIndexChanged"></asp:DropDownList>
+         <asp:TextBox ID="txtCantidadProducto" runat="server" placeholder="Ingrese cantidad" class="col-12 col-md-12 col-lg-12" AutoPostBack="True" OnTextChanged="txtCantidadProducto_TextChanged"></asp:TextBox>
+         <asp:Button ID="btnAgregarTodo" runat="server" OnClick="btnAgregarTodo_Click" Text="Agregar" class="btn btn-info col-3 col-md-3 col-lg-3" Font-Bold="True" Enabled="False" />
+            <asp:GridView ID="GridViewProductos" EmptyDataText="No hay registros."
+                AllowPaging="True" runat="server">
                 <Columns>
-                     <asp:TemplateField HeaderText="Seleccionar" ItemStyle-Width="150">
-                        <ItemTemplate>
-                            <asp:CheckBox ID="chkSeleccionar" runat="server" Width="140"></asp:CheckBox>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="ProductoId" ItemStyle-Width="150" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
-                        <ItemTemplate>
-                            <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("ProductoNombre") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Precio" ItemStyle-Width="100">
-                        <ItemTemplate>
-                            <asp:Label ID="lblPrecio" runat="server" Text='<%# Eval("ProductoPrecioVenta") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="80">
-                        <ItemTemplate>
-                            <asp:Label ID="lblCantidad" runat="server"></asp:Label>
-                        </ItemTemplate>
-                        <EditItemTemplate>
-                            <asp:TextBox ID="txtCantidad" runat="server" class="col-md-12"></asp:TextBox>
-                        </EditItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Accion" ItemStyle-Width="150">
-                        <ItemTemplate>
-                            <div class="form-row">
-                            <asp:LinkButton ID="btnEditar" class="btn btn-danger col-md-4 col-lg-4 col-sm-4" CommandName="Edit" runat="server"><i class="fa fa-pencil" aria-hidden="true"></i></asp:LinkButton>
-                            <asp:LinkButton ID="btnBorrar" class="btn btn-danger col-md-4 col-lg-4 col-sm-4" CommandName="Delete" runat="server"
-                                OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');">X</asp:LinkButton>
-                            <asp:Button ID="btnActualizar" class="btn btn-danger col-md-4 col-lg-4 col-sm-4" runat="server" CommandName="Update" Text="A"></asp:Button>
-                            <asp:Button ID="btnCancelar" class="btn btn-danger col-md-4 col-lg-4 col-sm-4" runat="server" CommandName="Cancel" Text="Cancelar" Visible="false"></asp:Button>
-                                </div>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+                     
                 </Columns>
             </asp:GridView>
-
         <asp:ListBox ID="ListProductos" runat="server" Height="150px" SelectionMode="Multiple" Width="180px" AutoPostBack="True" OnSelectedIndexChanged="ListProductos_SelectedIndexChanged"></asp:ListBox>
         <asp:ListBox ID="ListSeleccionados" runat="server" Height="150px" SelectionMode="Multiple" style="margin-left: 50px" Width="180px" AutoPostBack="True"></asp:ListBox>
-        <asp:TextBox ID="txtCantidadProducto" runat="server" placeholder="Ingrese cantidad" class="col-12 col-md-12 col-lg-12" AutoPostBack="True" OnTextChanged="txtCantidadProducto_TextChanged"></asp:TextBox>
         <div class="form-row">
         <asp:Label ID="lblPrecioTexto" runat="server" Text="Precio total del pedido" class="col-8 col-md-8 col-lg-8" Font-Bold="True"></asp:Label>
         <asp:Label ID="lblPrecioResultado" runat="server" Text="" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
         </div>
-        <asp:Button ID="btnAgregarTodo" runat="server" OnClick="btnAgregarTodo_Click" Text="Agregar" class="btn btn-info col-3 col-md-3 col-lg-3" Font-Bold="True" Enabled="False" />
         <asp:Button ID="btnQuitarTodo" runat="server" OnClick="btnQuitarTodo_Click" Text="Quitar" class="btn btn-info col-3 col-md-3 col-lg-3 ml-30" Font-Bold="True" Enabled="False" /><br />
         <asp:Label ID="Label9" runat="server" Text="Envío a domicilo" class="col-12 col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
         <asp:RadioButton ID="RadioBtnNo" runat="server" Checked="True" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnNo_CheckedChanged" Text="No" AutoPostBack="True" Font-Bold="True" />
