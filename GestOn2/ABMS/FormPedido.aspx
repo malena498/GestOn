@@ -1,15 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PaginasMaestras/PageMaster.Master" AutoEventWireup="true" CodeBehind="FormPedido.aspx.cs" Inherits="GestOn2.ABMS.FormPedido" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
-    #TextArea1 {
-        width: 200px;
-        height: 54px;
-    }
-    #txtDescripcion {
-        width: 222px;
-        height: 27px;
-    }
-</style>
+    <link href="../Styles/PedidoCSS.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
@@ -35,8 +26,13 @@
             <asp:GridView ID="GridViewProductos" AutoGenerateColumns="False" EmptyDataText="No hay registros."
                 AllowPaging="True" runat="server" DataKeyNames="ProductoId" OnRowDataBound="GridViewProductos_RowDataBound"
                 OnRowEditing="GridViewProductos_RowEditing" OnRowUpdating="GridViewProductos_RowUpdated"
-                OnRowCancelingEdit="GridViewProductos_RowCancelingEdit" OnRowDeleting="GridViewProductos_OnRowDeleting">
+                OnRowCancelingEdit="GridViewProductos_RowCancelingEdit" class="table text-info" OnRowDeleting="GridViewProductos_OnRowDeleting">
                 <Columns>
+                     <asp:TemplateField HeaderText="Seleccionar" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="chkSeleccionar" runat="server" Width="140"></asp:CheckBox>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="ProductoId" ItemStyle-Width="150" Visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
@@ -47,26 +43,28 @@
                             <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("ProductoNombre") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Precio" ItemStyle-Width="150">
+                    <asp:TemplateField HeaderText="Precio" ItemStyle-Width="100">
                         <ItemTemplate>
                             <asp:Label ID="lblPrecio" runat="server" Text='<%# Eval("ProductoPrecioVenta") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="150">
+                    <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="80">
                         <ItemTemplate>
                             <asp:Label ID="lblCantidad" runat="server"></asp:Label>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtCantidad" runat="server" Width="140"></asp:TextBox>
+                            <asp:TextBox ID="txtCantidad" runat="server" class="col-md-12"></asp:TextBox>
                         </EditItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Accion" ItemStyle-Width="150">
                         <ItemTemplate>
-                            <asp:Button ID="btnEditar" runat="server" CommandName="Edit" Text="Editar" ></asp:Button>
-                            <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" Text="Borrar" Width="50px"
-                                OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
-                            <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Width="45px"></asp:Button>
-                            <asp:Button ID="btnCancelar" runat="server" CommandName="Cancelar" Text="Cancelar" Visible="false"  Width="45px"></asp:Button>
+                            <div class="form-row">
+                            <asp:LinkButton ID="btnEditar" class="btn btn-danger col-md-4 col-lg-4 col-sm-4" CommandName="Edit" runat="server"><i class="fa fa-pencil" aria-hidden="true"></i></asp:LinkButton>
+                            <asp:LinkButton ID="btnBorrar" class="btn btn-danger col-md-4 col-lg-4 col-sm-4" CommandName="Delete" runat="server"
+                                OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');">X</asp:LinkButton>
+                            <asp:Button ID="btnActualizar" class="btn btn-danger col-md-4 col-lg-4 col-sm-4" runat="server" CommandName="Update" Text="A"></asp:Button>
+                            <asp:Button ID="btnCancelar" class="btn btn-danger col-md-4 col-lg-4 col-sm-4" runat="server" CommandName="Cancel" Text="Cancelar" Visible="false"></asp:Button>
+                                </div>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

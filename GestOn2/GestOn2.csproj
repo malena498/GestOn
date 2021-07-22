@@ -179,6 +179,7 @@
     <Content Include="Styles\bootstrap.min.css" />
     <Content Include="Styles\LoginCSS.css" />
     <Content Include="Styles\MasterCss.css" />
+    <Content Include="Styles\PedidoCSS.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

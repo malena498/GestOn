@@ -350,20 +350,35 @@ namespace GestOn2.ABMS
             try
             {
                 List<int> ProdyCantidad = new List<int>();
-                GridViewRow row = GridViewProductos.Rows[e.RowIndex];
-                int Id = Convert.ToInt32((row.FindControl("ProductoId") as Label).Text);
-                int cantidad = Convert.ToInt32((row.FindControl("txtCantidad") as TextBox).Text);
-                ProdyCantidad.Add(Id);
-                ProdyCantidad.Add(cantidad);
-                if (ProdyCantidad.Count > 0)
-                {
-                    exito = true;
-                }
-                if (exito) lblInformativo.Text = "quedo";
-            }
-            catch (Exception ex) { exito = false; }
 
+                foreach (GridViewRow row in GridViewProductos.Rows)
+                {
+                    if (row.RowType == DataControlRowType.DataRow)
+                    {
+                        CheckBox chkRow = (row.FindControl("chkRow") as CheckBox);
+                        if (chkRow.Checked)
+                        {
+                            int Id = Convert.ToInt32((row.FindControl("lblIdProducto") as Label).Text);
+                            int cantidad = Convert.ToInt32((row.FindControl("txtCantidad") as TextBox).Text);
+                            ProdyCantidad.Add(Id);
+                            ProdyCantidad.Add(cantidad);
+                        }
+                    }
+
+                    if (ProdyCantidad.Count > 0)
+                    {
+                        exito = true;
+                        llenarGrillaProducto();
+                    }
+                    if (exito) lblInformativo.Text = "quedo";
+                }
+            }
+            catch (Exception ex)
+            {
+                exito = false;
+            }
         }
+        
 
         protected void GridViewProductos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
