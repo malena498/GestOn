@@ -32,6 +32,46 @@
         <asp:Label ID="Label6" runat="server" Text="Seleccionar producto" class="col-6 col-md-6 col-lg-6" Font-Bold="True"></asp:Label>
         <asp:Label ID="Label7" runat="server" Text="Productos seleccionados"  class="col-6 col-md-6 col-lg-6"  Font-Bold="True"></asp:Label>
         </div>
+            <asp:GridView ID="GridViewProductos" AutoGenerateColumns="False" EmptyDataText="No hay registros."
+                AllowPaging="True" runat="server" DataKeyNames="ProductoId" OnRowDataBound="GridViewProductos_RowDataBound"
+                OnRowEditing="GridViewProductos_RowEditing" OnRowUpdating="GridViewProductos_RowUpdated"
+                OnRowCancelingEdit="GridViewProductos_RowCancelingEdit" OnRowDeleting="GridViewProductos_OnRowDeleting">
+                <Columns>
+                    <asp:TemplateField HeaderText="ProductoId" ItemStyle-Width="150" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("ProductoNombre") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Precio" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPrecio" runat="server" Text='<%# Eval("ProductoPrecioVenta") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblCantidad" runat="server"></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtCantidad" runat="server" Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Accion" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Button ID="btnEditar" runat="server" CommandName="Edit" Text="Editar" ></asp:Button>
+                            <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" Text="Borrar" Width="50px"
+                                OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
+                            <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Width="45px"></asp:Button>
+                            <asp:Button ID="btnCancelar" runat="server" CommandName="Cancelar" Text="Cancelar" Visible="false"  Width="45px"></asp:Button>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+
         <asp:ListBox ID="ListProductos" runat="server" Height="150px" SelectionMode="Multiple" Width="180px" AutoPostBack="True" OnSelectedIndexChanged="ListProductos_SelectedIndexChanged"></asp:ListBox>
         <asp:ListBox ID="ListSeleccionados" runat="server" Height="150px" SelectionMode="Multiple" style="margin-left: 50px" Width="180px" AutoPostBack="True"></asp:ListBox>
         <asp:TextBox ID="txtCantidadProducto" runat="server" placeholder="Ingrese cantidad" class="col-12 col-md-12 col-lg-12" AutoPostBack="True" OnTextChanged="txtCantidadProducto_TextChanged"></asp:TextBox>

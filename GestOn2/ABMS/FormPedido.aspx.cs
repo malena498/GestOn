@@ -17,6 +17,7 @@ namespace GestOn2.ABMS
         {
             if (!IsPostBack) {
                 ListarProductos();
+                llenarGrillaProducto();
             }
             //Obtengo la fecha del sistema, ya que la uso para cargarla en la fecha que se hace el pedido
             txtFechaPedido.Text = DateTime.Now.ToString();
@@ -306,6 +307,88 @@ namespace GestOn2.ABMS
                 btnAgregarTodo.Enabled = true;
             }
             else btnAgregarTodo.Enabled = false;
+        }
+
+        protected void GridViewProductos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (e.Row.RowState == DataControlRowState.Edit)
+                {
+
+                    //LinkButton btnEditar = FindControl("btnEditar") as LinkButton;
+                    //btnEditar.Visible = false;
+                    //LinkButton btnBorrar = FindControl("btnBorrar") as LinkButton;
+                    //btnBorrar.Visible = false;
+                    //LinkButton btnCancelar = FindControl("btnCancelar") as LinkButton;
+                    //btnCancelar.Visible = true;
+                    //LinkButton btnUpdate = FindControl("btnUpdate") as LinkButton;
+                    //btnUpdate.Visible = true;
+
+                }
+
+
+            }
+        }
+
+        protected void GridViewProductos_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridViewProductos.EditIndex = e.NewEditIndex;
+            llenarGrillaProducto();
+        }
+
+
+        protected void llenarGrillaProducto()
+        {
+            GridViewProductos.DataSource = Sistema.GetInstancia().ListadoProductos();
+            GridViewProductos.DataBind();
+        }
+
+        protected void GridViewProductos_RowUpdated(object sender, GridViewUpdateEventArgs e)
+        {
+            bool exito = false;
+            try
+            {
+                List<int> ProdyCantidad = new List<int>();
+                GridViewRow row = GridViewProductos.Rows[e.RowIndex];
+                int Id = Convert.ToInt32((row.FindControl("ProductoId") as Label).Text);
+                int cantidad = Convert.ToInt32((row.FindControl("txtCantidad") as TextBox).Text);
+                ProdyCantidad.Add(Id);
+                ProdyCantidad.Add(cantidad);
+                if (ProdyCantidad.Count > 0)
+                {
+                    exito = true;
+                }
+                if (exito) lblInformativo.Text = "quedo";
+            }
+            catch (Exception ex) { exito = false; }
+
+        }
+
+        protected void GridViewProductos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridViewProductos.EditIndex = -1;
+            llenarGrillaProducto();
+        }
+
+        protected void GridViewProductos_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = GridViewProductos.Rows[e.RowIndex];
+            int Id = Convert.ToInt32(GridViewProductos.DataKeys[e.RowIndex].Values[0]);
+            bool exito = Sistema.GetInstancia().EliminarProducto(Id);
+            if (exito)
+            {
+                lblInformativo.Visible = true;
+                lblInformativo.Text = "Se elimino con éxito";
+                GridViewProductos.EditIndex = -1;
+                llenarGrillaProducto();
+            }
+        }
+
+        protected void OnPaging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewProductos.PageIndex = e.NewPageIndex;
+            this.llenarGrillaProducto();
         }
     }
 }

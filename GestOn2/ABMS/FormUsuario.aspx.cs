@@ -284,7 +284,7 @@ namespace GestOn2
         protected void GridViewUsuarios_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             GridViewRow row = GridViewUsuarios.Rows[e.RowIndex];
-            int Id = Convert.ToInt32(GridViewUsuarios.DataKeys[e.RowIndex].Values[0]);
+            int Id = Convert.ToInt32((row.FindControl("lblIdUsuario") as Label).Text);
             bool exito = Sistema.GetInstancia().EliminarUsuario(Id);
             if (exito)
             {
