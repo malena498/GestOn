@@ -32,10 +32,15 @@
         <asp:Label ID="Label6" runat="server" Text="Seleccionar producto" class="col-6 col-md-6 col-lg-6" Font-Bold="True"></asp:Label>
         <asp:Label ID="Label7" runat="server" Text="Productos seleccionados"  class="col-6 col-md-6 col-lg-6"  Font-Bold="True"></asp:Label>
         </div>
-        <asp:ListBox ID="ListProductos" runat="server" Height="150px" SelectionMode="Multiple" Width="180px"></asp:ListBox>
-        <asp:ListBox ID="ListSeleccionados" runat="server" Height="150px" SelectionMode="Multiple" style="margin-left: 50px" Width="180px"></asp:ListBox>
-        <asp:Button ID="btnAgregarTodo" runat="server" OnClick="btnAgregarTodo_Click" Text="Agregar" class="btn btn-info col-3 col-md-3 col-lg-3" Font-Bold="True" />
-        <asp:Button ID="btnQuitarTodo" runat="server" OnClick="btnQuitarTodo_Click" Text="Quitar" class="btn btn-info col-3 col-md-3 col-lg-3 ml-30" Font-Bold="True" /><br />
+        <asp:ListBox ID="ListProductos" runat="server" Height="150px" SelectionMode="Multiple" Width="180px" AutoPostBack="True" OnSelectedIndexChanged="ListProductos_SelectedIndexChanged"></asp:ListBox>
+        <asp:ListBox ID="ListSeleccionados" runat="server" Height="150px" SelectionMode="Multiple" style="margin-left: 50px" Width="180px" AutoPostBack="True"></asp:ListBox>
+        <asp:TextBox ID="txtCantidadProducto" runat="server" placeholder="Ingrese cantidad" class="col-12 col-md-12 col-lg-12" AutoPostBack="True" OnTextChanged="txtCantidadProducto_TextChanged"></asp:TextBox>
+        <div class="form-row">
+        <asp:Label ID="lblPrecioTexto" runat="server" Text="Precio total del pedido" class="col-8 col-md-8 col-lg-8" Font-Bold="True"></asp:Label>
+        <asp:Label ID="lblPrecioResultado" runat="server" Text="" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
+        </div>
+        <asp:Button ID="btnAgregarTodo" runat="server" OnClick="btnAgregarTodo_Click" Text="Agregar" class="btn btn-info col-3 col-md-3 col-lg-3" Font-Bold="True" Enabled="False" />
+        <asp:Button ID="btnQuitarTodo" runat="server" OnClick="btnQuitarTodo_Click" Text="Quitar" class="btn btn-info col-3 col-md-3 col-lg-3 ml-30" Font-Bold="True" Enabled="False" /><br />
         <asp:Label ID="Label9" runat="server" Text="Envío a domicilo" class="col-12 col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
         <asp:RadioButton ID="RadioBtnNo" runat="server" Checked="True" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnNo_CheckedChanged" Text="No" AutoPostBack="True" Font-Bold="True" />
         <asp:RadioButton ID="RadioBtnSi" runat="server" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnSi_CheckedChanged" Text="Si" Width="40px" AutoPostBack="True" Font-Bold="True" /><br />

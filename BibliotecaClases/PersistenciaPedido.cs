@@ -10,7 +10,7 @@ namespace BibliotecaClases
     partial class Sistema
     {
 
-        public bool GuardarPedido(Pedido pedido, List<int> lista)
+        public bool GuardarPedido(Pedido pedido,ProductoPedidoCantidad productoPedidoCantidad, List<int> lista)
         {
             try
             {

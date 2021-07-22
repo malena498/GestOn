@@ -21,6 +21,7 @@ namespace BibliotecaClases
         public DbSet<Nivel> Niveles { get; set; }
         public DbSet<Imagen> Imagenes { get; set; }
         public DbSet<CategoriaProducto> Categorias { get; set; }
+        public DbSet<ProductoPedidoCantidad> CanttidadProductos { get; set; }
 
 
 
@@ -34,7 +35,7 @@ namespace BibliotecaClases
             try
             {
                 //Local 
-                String baseConnectionString = @"Data Source=TPZPC127\SQLEXPRESS;user id=sa;password=Alicia2206**;MultipleActiveResultSets=True";
+                String baseConnectionString = @"Data Source=TPZPC116;user id=sa;password=50983019Al;MultipleActiveResultSets=True";
                 Database.DefaultConnectionFactory = new System.Data.Entity.Infrastructure.SqlConnectionFactory(baseConnectionString);
             }
             catch (Exception ex)
@@ -43,7 +44,6 @@ namespace BibliotecaClases
         }
 
         public Context(String baseDatos) : base(baseDatos) { }
-
 
         //Mapeo de relacion entre *  a  * ( Producto con Pedido)
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -55,6 +55,7 @@ namespace BibliotecaClases
                 mc.MapLeftKey("IdPedido");
                 mc.MapRightKey("ProductoId");
             });
+            modelBuilder.Entity<ProductoPedidoCantidad>().HasKey(c => new { c.IdPedido, c.ProductoId,c.Cantidad});
         }
 
         public class Initializer : IDatabaseInitializer<Context>
@@ -65,8 +66,5 @@ namespace BibliotecaClases
                 context.Database.Create();
             }
         }
-
-
-       
         }
     }
