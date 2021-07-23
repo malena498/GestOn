@@ -8,7 +8,7 @@ namespace BibliotecaClases
 {
     partial class Sistema
     {
-        public bool GuardarUsuario(Usuario usu, String NombreBase)
+        public bool GuardarUsuario(Usuario usu)
         {
             try
             {
@@ -102,6 +102,7 @@ namespace BibliotecaClases
 
 
         }
+
         public List<Usuario> BuscarUsuarioFiltros(int id, string nombre)
         {
             try
@@ -131,22 +132,19 @@ namespace BibliotecaClases
 
         public Usuario BuscarUsuarioEmail(string email)
         {
-
             try
             {
                 using (var baseDatos = new Context())
                 {
                     return baseDatos.Usuarios.FirstOrDefault(prop => prop.UserEmail == email);
                 }
-
             }
             catch (Exception ex)
             {
                 return null;
             }
-
-
         }
+
         public List<Usuario> ListadoUsuarios()
         {
             try
@@ -170,28 +168,29 @@ namespace BibliotecaClases
                 return null;
             }
         }
-            public List<Nivel> ListadoNiveles()
+
+        public List<Nivel> ListadoNiveles()
+        {
+            try
             {
-                try
+                using (var baseDatos = new Context())
                 {
-                    using (var baseDatos = new Context())
+                    try
                     {
-                        try
-                        {
-                            List<Nivel> niveles = baseDatos.Niveles.Where(ej => ej.Activo == true).OrderBy(ej => ej.IdNivel).ToList();
-                            return niveles;
-                        }
-                        catch
-                        {
-                            List<Nivel> niveles = baseDatos.Niveles.Where(ej => ej.Activo == true).OrderBy(ej => ej.NombreNivel).ToList();
-                            return niveles;
-                        }
+                        List<Nivel> niveles = baseDatos.Niveles.Where(ej => ej.Activo == true).OrderBy(ej => ej.IdNivel).ToList();
+                        return niveles;
+                    }
+                    catch
+                    {
+                        List<Nivel> niveles = baseDatos.Niveles.Where(ej => ej.Activo == true).OrderBy(ej => ej.NombreNivel).ToList();
+                        return niveles;
                     }
                 }
-                catch (Exception ex)
-                {
-                    return null;
-                }
             }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

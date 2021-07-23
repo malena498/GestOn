@@ -177,6 +177,7 @@
     <Content Include="Styles\bootstrap-reboot.min.css" />
     <Content Include="Styles\bootstrap.css" />
     <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Styles\InicioCSS.css" />
     <Content Include="Styles\LoginCSS.css" />
     <Content Include="Styles\MasterCss.css" />
     <Content Include="Styles\PedidoCSS.css" />

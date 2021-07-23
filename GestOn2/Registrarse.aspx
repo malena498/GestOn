@@ -6,50 +6,47 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <asp:Label ID="Label1" runat="server" Text="Nombre"></asp:Label>
-            <br />
-            <asp:TextBox ID="txtNombre" runat="server"></asp:TextBox>
-            <br />
-<br />
-            <asp:Label ID="Label2" runat="server" Text="E-Mail"></asp:Label>
-            <br />
-            <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
-            <br />
-            <br />
-            <asp:Label ID="Label3" runat="server" Text="Documento"></asp:Label>
-            <br />
-            <asp:TextBox ID="txtDocumento" runat="server"></asp:TextBox>
-            <br />
-            <br />
-            <asp:Label ID="Label6" runat="server" Text="Telefono"></asp:Label>
-            <br />
-            <asp:TextBox ID="txtTelefono" runat="server"></asp:TextBox>
-            <br />
-            <br />
-            <asp:Label ID="Label4" runat="server" Text="Contraseña"></asp:Label>
-            <br />
-            <asp:TextBox ID="txtContrasenia" runat="server" TextMode="Password"></asp:TextBox>
-            <br />
-            <br />
-            <asp:Label ID="Label5" runat="server" Text="Confirmar contraseña"></asp:Label>
-            <br />
-            <asp:TextBox ID="txtConfirmarContrasenia" runat="server" TextMode="Password"></asp:TextBox>
-            <br />
-             <asp:Label ID="Label8" runat="server" Text="Categoría"></asp:Label>
-            <br />
-            <asp:DropDownList ID="ddlCategoriaUsuario" runat="server">
-            </asp:DropDownList>
-            <br />
-            <br />
-            <asp:Button ID="btnRegistrarse" runat="server" OnClick="btnRegistrarse_Click" Text="Registrarse" />
-            <br />
-            <br />
-            <asp:Label ID="lblResultado" runat="server"></asp:Label>
-            <br />
-            <br />
-            <asp:Label ID="Label7" runat="server" Text="Ya está registrado?  "></asp:Label>
-            <asp:LinkButton ID="lnkLogin" runat="server" OnClick="lnkLogin_Click">Ingresar</asp:LinkButton>
-            <br />
+            <div class="container col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4 offset-4 mt-3" runat="server">
+                <form id="form1">
+                    <div class="row bg-light border border-dark">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <h3 class="col-md-12 col-lg-12 col-sm-12 col-12 text-center">Registro al sistema</h3>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+
+                                    <asp:TextBox ID="txtNombre" placeholder="Nombre y apellido" class=" form-control col-md-12 col-lg-12 col-12 col-sm-12 mt-3" runat="server"></asp:TextBox>
+                                    
+                                    <div class="form-row col-md-12 col-lg-11 col-11 col-sm-11">
+                                    <asp:Label ID="lblResultado" class="alert alert-danger offset-1 col-md-12 col-lg-12 col-12 col-sm-12 mt-0 mb-2 mt-2 ml-4" runat="server" Text="" Visible="false"></asp:Label>
+                                    </div>
+                                    
+                                    <asp:TextBox ID="txtEmail" placeholder="Email" type="text" TextMode="Email" class="form-control mt-3" runat="server"></asp:TextBox>
+
+                                    <asp:TextBox ID="txtDocumento" placeholder="Cédula" type="number" TextMode="number" class="form-control mt-3" runat="server"></asp:TextBox>
+
+                                    <asp:TextBox ID="txtTelefono" placeholder="Número de celular" type="number" TextMode="number" class="form-control mt-3" runat="server"></asp:TextBox>
+
+                                    <asp:TextBox ID="txtContrasenia" placeholder="Contraseña" type="password" TextMode="Password" class="form-control mt-3" runat="server"></asp:TextBox>
+
+                                    <asp:TextBox ID="txtConfirmarContrasenia" placeholder="Repetir contraseña" type="password" TextMode="Password" class="form-control mt-3" runat="server"></asp:TextBox>
+
+                                    <div class="form-row col-md-12 col-lg-12 col-12 col-sm-12 mt-3">
+                                    <label class="col-5 col-md-5 col-lg-5 col-sm-5 mr-3" for="inputCity">Categoría de usuario</label>
+                                    <asp:DropDownList ID="ddlCategoriaUsuario" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server"></asp:DropDownList>
+                                    </div>
+
+                                    <asp:Button ID="btnRegistrarse" runat="server" class="btn btn-primary col-md-12 col-lg-12 col-12 col-sm-12 mt-3" OnClick="btnRegistrarse_Click" Text="Registrarse" />
+                                   
+                                    <div class="form-row col-md-12 col-lg-12 col-12 col-sm-12 mt-3">
+                                    <asp:Label ID="Label10" class="col-md-6 col-lg-6 col-xl-6 col-sm-6 ml-5" runat="server" Text="Ya tienes una cuenta?"></asp:Label>
+                                    &nbsp;<asp:LinkButton ID="lnkLogin" runat="server" class="btn btn-link" OnClick="lnkLogin_Click">Iniciar Sesión</asp:LinkButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

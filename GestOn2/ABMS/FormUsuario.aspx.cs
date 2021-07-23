@@ -18,7 +18,6 @@ namespace GestOn2
         {
             if (!IsPostBack)
             {
-                // Session["NombreBase"] = "GestOn";
                 if (Session["IdUsuario"] != null)
                 {
                     llenarGrilla();
@@ -48,7 +47,6 @@ namespace GestOn2
                 {
 
                     Usuario u = new Usuario();
-                    String nameDB = "GestOn";
                     u.UserNombre = txtNombreUser.Text;
                     u.UserEmail = txtEmailUser.Text;
                     u.UserCedula = txtCedulaUser.Text;
@@ -56,7 +54,7 @@ namespace GestOn2
                     u.UserContrasenia = txtPassUser.Text;
                     u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
 
-                    bool exito = Sistema.GetInstancia().GuardarUsuario(u, nameDB);
+                    bool exito = Sistema.GetInstancia().GuardarUsuario(u);
                     if (exito)
                     {
                         lblResultado.Text = "Se guardo con éxito";
@@ -145,8 +143,6 @@ namespace GestOn2
             }
         }
 
-        
-
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
 
@@ -170,10 +166,12 @@ namespace GestOn2
 
 
         }
+
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
             divNuevoUsuario.Visible = true;
         }
+
         protected bool CamposCompletos()
         {
             if (String.IsNullOrEmpty(txtIdUsuario.Text) || String.IsNullOrEmpty(txtNombreUser.Text) ||
@@ -224,7 +222,6 @@ namespace GestOn2
             GridViewUsuarios.EditIndex = e.NewEditIndex;
             llenarGrilla();
         }
-
 
         protected void llenarGrilla()
         {

@@ -31,13 +31,13 @@ namespace GestOn2 {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// Control Label1.
+        /// Control contenedor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl contenedor;
         
         /// <summary>
         /// Control txtEmail.
@@ -49,13 +49,13 @@ namespace GestOn2 {
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
         
         /// <summary>
-        /// Control Label2.
+        /// Control lblResultado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblResultado;
         
         /// <summary>
         /// Control txtPassUser.
@@ -76,13 +76,13 @@ namespace GestOn2 {
         protected global::System.Web.UI.WebControls.Button btnIngresar;
         
         /// <summary>
-        /// Control lblResultado.
+        /// Control lnkRestablecerContraseña.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblResultado;
+        protected global::System.Web.UI.WebControls.LinkButton lnkRestablecerContraseña;
         
         /// <summary>
         /// Control Label3.

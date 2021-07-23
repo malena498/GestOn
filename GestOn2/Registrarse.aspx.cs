@@ -15,52 +15,65 @@ namespace GestOn2
         {
             if (!IsPostBack)
             {
-                Session["NombreBase"] = "GestOn";
                 ddlCategoriaUsuario.DataSource = Sistema.GetInstancia().ListadoNiveles();
                 ddlCategoriaUsuario.DataTextField = "NombreNivel";
                 ddlCategoriaUsuario.DataValueField = "IdNivel";
                 ddlCategoriaUsuario.DataBind();
-
             }
         }
 
         protected void btnRegistrarse_Click(object sender, EventArgs e)
         {
+            if (confirmar()) { 
             bool ciValida = ValidarCI(txtDocumento.Text);
-            if (ciValida)
-            {
-                try
+                if (ciValida)
                 {
-                    Usuario u = new Usuario();
-                    String nameDB = Session["NombreBase"].ToString();
-                    u.UserNombre = txtNombre.Text;
-                    u.UserEmail = txtEmail.Text;
-                    u.UserCedula = txtDocumento.Text;
-                    u.UserTelefono = txtTelefono.Text;
-                    u.UserContrasenia = txtContrasenia.Text;
-                    u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
-                    bool exito = false;
-                    if (confirmar())
+                    try
                     {
-                        if (txtConfirmarContrasenia.Text == txtContrasenia.Text)
+                        bool exito = false;
+                        if (confirmar())
                         {
-                            exito = Sistema.GetInstancia().GuardarUsuario(u, nameDB);
-                        }
-                        else
-                        {
-                            lblResultado.Text = "Las contraseñas no coinciden";
-                        }
-                        if (exito)
-                        {
-                            lblResultado.Text = "Se guardo con éxito";
-                            limpiar();
+                            if (txtConfirmarContrasenia.Text.Equals(txtContrasenia.Text))
+                            {
+                                string contraseña = Encriptar(txtContrasenia.Text);
+                                Usuario u = new Usuario();
+                                u.UserNombre = txtNombre.Text;
+                                u.UserEmail = txtEmail.Text;
+                                u.UserCedula = txtDocumento.Text;
+                                u.UserTelefono = txtTelefono.Text;
+                                u.UserContrasenia = contraseña;
+                                u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
+                                exito = Sistema.GetInstancia().GuardarUsuario(u);
+                            }
+                            else
+                            {
+                                lblResultado.Visible = true;
+                                lblResultado.Text = "Las contraseñas no coinciden";
+                            }
+                            if (exito)
+                            {
+                                lblResultado.Visible = true;
+                                lblResultado.Text = "Registrado con éxito";
+                                limpiar();
+                            }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        lblResultado.Visible = true;
+                        lblResultado.Text = "Error al registrarse";
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    lblResultado.Text = "No se logro guardar";
+                    lblResultado.Visible = true;
+                    lblResultado.Text = "La cédula ingresada no es válida";
                 }
+            }
+            else
+            {
+                lblResultado.Visible = true;
+                lblResultado.Text = "Debe completar todos los campos";
             }
         }
 
@@ -160,6 +173,15 @@ namespace GestOn2
         protected void lnkLogin_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Login.aspx");
+        }
+
+        // Encripta la contraseña para compararla con la guardada en BD
+        private static string Encriptar(string password)
+        {
+            string result = string.Empty;
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(password);
+            result = Convert.ToBase64String(encryted);
+            return result;
         }
     }
 }

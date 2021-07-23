@@ -21,26 +21,45 @@ namespace GestOn2
             Usuario u = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmail.Text);
             if (String.IsNullOrEmpty(txtEmail.Text) || String.IsNullOrEmpty(txtPassUser.Text))
             {
+                lblResultado.Visible = true;
                 lblResultado.Text = "Debe completar todos los campos.";
             }
             else if (u == null)
             {
-                lblResultado.Text = "El usuario especificado no fue encontrado.";
+                lblResultado.Visible = true;
+                lblResultado.Text = "Este usuario no existe en el sistema.";
             }
             else
             {
                 //HttpCookie userIdCookie = new HttpCookie("UserID");
                 //userIdCookie.Value = u.UserId.ToString();
                 //Response.Cookies.Add(userIdCookie);
-                Session["IdUsuario"] = u.UserId;
-                System.Web.Security.FormsAuthentication.RedirectFromLoginPage(u.UserNombre.ToString(), false);
-                Response.Redirect("~/Inicio.aspx");
+                string encriptada = Encriptar(txtPassUser.Text);
+                if (u.UserContrasenia.Equals(encriptada))
+                {
+                    Session["IdUsuario"] = u.UserId;
+                    System.Web.Security.FormsAuthentication.RedirectFromLoginPage(u.UserNombre.ToString(), false);
+                    Response.Redirect("~/Inicio.aspx");
+                }
+                else {
+                    lblResultado.Visible = true;
+                    lblResultado.Text = "Contraseña incorrecta";
+                }
             }
         }
 
         protected void lnkRegistrarse_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Registrarse.aspx");
+        }
+
+        // Encripta la contraseña para compararla con la guardada en BD
+        private static string Encriptar(string password)
+        {
+            string result = string.Empty;
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(password);
+            result = Convert.ToBase64String(encryted);
+            return result;
         }
     }
 }
