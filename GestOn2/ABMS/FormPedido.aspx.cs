@@ -15,17 +15,7 @@ namespace GestOn2.ABMS
     public partial class FormPedido : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack) {
-                ListProductos1.DataSource = Sistema.GetInstancia().ListadoProductos();
-                ListProductos1.DataTextField = "ProductoNombre";
-                ListProductos1.DataValueField = "ProductoId";
-                ListProductos1.DataBind();
-                //llenarGrillaProducto();
-            }
-            //Obtengo la fecha del sistema, ya que la uso para cargarla en la fecha que se hace el pedido
-            txtFechaPedido.Text = DateTime.Now.ToString();
-        }
+
         protected void btnNuevoPedido_Click(object sender, EventArgs e)
         {
             //Validaciones que las caja de texto no estén vacias.
