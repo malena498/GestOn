@@ -16,10 +16,10 @@
 
                                     <asp:TextBox ID="txtNombre" placeholder="Nombre y apellido" class=" form-control col-md-12 col-lg-12 col-12 col-sm-12 mt-3" runat="server"></asp:TextBox>
                                     
-                                    <div class="form-row col-md-12 col-lg-11 col-11 col-sm-11">
-                                    <asp:Label ID="lblResultado" class="alert alert-danger offset-1 col-md-12 col-lg-12 col-12 col-sm-12 mt-0 mb-2 mt-2 ml-4" runat="server" Text="" Visible="false"></asp:Label>
+                                    <div class="form-row mb-0 mt-3">
+                                    <asp:Label ID="lblResultado" class="alert alert-danger col-md-12 col-lg-12 col-12 col-sm-12" runat="server" Text="" Visible="false"></asp:Label>
                                     </div>
-                                    
+
                                     <asp:TextBox ID="txtEmail" placeholder="Email" type="text" TextMode="Email" class="form-control mt-3" runat="server"></asp:TextBox>
 
                                     <asp:TextBox ID="txtDocumento" placeholder="Cédula" type="number" TextMode="number" class="form-control mt-3" runat="server"></asp:TextBox>

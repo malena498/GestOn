@@ -15,7 +15,6 @@ namespace GestOn2
         {
          
         }
-
         protected void btnIngresar_Click(object sender, EventArgs e)
         {
             Usuario u = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmail.Text);

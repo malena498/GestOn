@@ -17,7 +17,6 @@ namespace GestOn2.ABMS
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack) {
-                ListarProductos();
                 ListProductos1.DataSource = Sistema.GetInstancia().ListadoProductos();
                 ListProductos1.DataTextField = "ProductoNombre";
                 ListProductos1.DataValueField = "ProductoId";
@@ -27,16 +26,6 @@ namespace GestOn2.ABMS
             //Obtengo la fecha del sistema, ya que la uso para cargarla en la fecha que se hace el pedido
             txtFechaPedido.Text = DateTime.Now.ToString();
         }
-
-        public void ListarProductos()
-        {
-            ListProductos.Items.Clear();
-            ListProductos.DataSource = Sistema.GetInstancia().ListadoProductos();
-            ListProductos.DataTextField = "ProductoNombre";
-            ListProductos.DataValueField = "ProductoId";
-            ListProductos.DataBind();
-        }
-
         protected void btnNuevoPedido_Click(object sender, EventArgs e)
         {
             //Validaciones que las caja de texto no estén vacias.
@@ -60,12 +49,6 @@ namespace GestOn2.ABMS
                 int user = 1;//int.Parse(Session["IdUsuario"].ToString());
 
                 List<int> lstitems = new List<int>();
-
-                for (int i = 0; i < ListSeleccionados.Items.Count; i++)
-                {
-                    int prod = int.Parse(ListSeleccionados.Items[i].Value);
-                    lstitems.Add(prod);
-                }
 
                 Pedido p = new Pedido();
                 p.Activo = true;
@@ -99,7 +82,6 @@ namespace GestOn2.ABMS
 
                         //Elimino campos luego que se inserto con éxito
                         VaciarCampos();
-                        ListarProductos();
                     }
                 }
                 else
@@ -174,15 +156,6 @@ namespace GestOn2.ABMS
             }
         }
 
-        protected void btnQuitarTodo_Click(object sender, EventArgs e)
-        {
-            while (ListSeleccionados.SelectedItem != null)
-            {
-                ListProductos.Items.Add(ListSeleccionados.SelectedItem);
-                ListSeleccionados.Items.Remove(ListSeleccionados.SelectedItem);
-            }
-        }
-
         public bool CompleteCampos()
         {
             if (RadioBtnSi.Checked == true)
@@ -211,7 +184,6 @@ namespace GestOn2.ABMS
             txtFechaPedido.Text = "";
             txtDireccion.Text = "";
             txtDescripcion.InnerText = "";
-            ListSeleccionados.Items.Clear();
         }
 
         protected void TimerMensajes_Tick(object sender, EventArgs e)
@@ -245,21 +217,10 @@ namespace GestOn2.ABMS
                             txtDireccion.Visible = true;
                         }
                         txtFechaPedido.Text = p.FechaPedido.ToString();
-                        ListSeleccionados.DataSource = p.productos;
-                        ListSeleccionados.DataTextField = "ProductoNombre";
-                        ListSeleccionados.DataValueField = "ProductoId";
-                        ListarProductos();
-                        for (int i = 0; i < p.productos.Count; i++)
-                        {
-                            ListProductos.Items.Remove(ListProductos.Items.FindByValue(p.productos[i].ProductoId.ToString()));
-                        }
-                        ListSeleccionados.DataBind();
                     }
                     else
                     {
                         lblInformativo.Text = "El pedido fue dada de baja";
-                        ListSeleccionados.Items.Clear();
-                        ListarProductos();
                         txtDescripcion.InnerText = "";
                         txtDireccion.Text = "";
                         RadioBtnNo.Checked = true;
@@ -272,8 +233,6 @@ namespace GestOn2.ABMS
                 else
                 {
                     lblInformativo.Text = "El pedido buscado no éxiste en el sistema";
-                    ListSeleccionados.Items.Clear();
-                    ListarProductos();
                     txtDescripcion.InnerText = "";
                     txtDireccion.Visible = false;
                     lblDireccion.Visible = false;
@@ -333,11 +292,6 @@ namespace GestOn2.ABMS
 
                 List<int> lstitems = new List<int>();
 
-                for (int i = 0; i < ListSeleccionados.Items.Count; i++)
-                {
-                    int prod = int.Parse(ListSeleccionados.Items[i].Value);
-                    lstitems.Add(prod);
-                }
                 Pedido p = new Pedido();
                 p.Activo = true;
                 p.Descripcion = Descripcion;
@@ -350,7 +304,6 @@ namespace GestOn2.ABMS
                 bool exito = Sistema.GetInstancia().ModificarPedido(p, lstitems);
                 if (exito)
                 {
-                    ListarProductos();
                     lblInformativo.Text = "Se modificó con éxito";
                     lblInformativo.Visible = true;
                     TimerMensajes.Enabled = true;
@@ -380,6 +333,7 @@ namespace GestOn2.ABMS
             }
             else btnAgregarTodo.Enabled = false;
         }
+
         protected void ListProductos1_SelectedIndexChanged(object sender, EventArgs e)
         {
             txtCantidadProducto.Focus();
