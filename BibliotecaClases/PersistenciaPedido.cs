@@ -10,7 +10,7 @@ namespace BibliotecaClases
     partial class Sistema
     {
 
-        public bool GuardarPedido(Pedido pedido,ProductoPedidoCantidad productoPedidoCantidad, List<int> lista)
+        public int GuardarPedido(Pedido pedido, List<int> lista)
         {
             try
             {
@@ -30,6 +30,27 @@ namespace BibliotecaClases
                     {
                         baseDatos.SaveChanges();
                     }
+                }
+                return pedido.IdPedido;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public bool GuardarProductoPedidoCantidad(List<ProductoPedidoCantidad> productoPedidoCantidad)
+        {
+            try
+            {
+                List<Producto> productos = new List<Producto>();
+                using (var baseDatos = new Context())
+                {
+                    foreach (ProductoPedidoCantidad p in productoPedidoCantidad)
+                    {
+                        baseDatos.CanttidadProductos.Add(p);
+                    }
+                    baseDatos.SaveChanges();
                 }
                 return true;
             }

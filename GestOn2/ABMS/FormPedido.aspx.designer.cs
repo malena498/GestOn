@@ -121,6 +121,33 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.WebControls.Label Label7;
         
         /// <summary>
+        /// Control ListProductos1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ListProductos1;
+        
+        /// <summary>
+        /// Control txtCantidadProducto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCantidadProducto;
+        
+        /// <summary>
+        /// Control btnAgregarTodo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarTodo;
+        
+        /// <summary>
         /// Control GridViewProductos.
         /// </summary>
         /// <remarks>
@@ -148,15 +175,6 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.WebControls.ListBox ListSeleccionados;
         
         /// <summary>
-        /// Control txtCantidadProducto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCantidadProducto;
-        
-        /// <summary>
         /// Control lblPrecioTexto.
         /// </summary>
         /// <remarks>
@@ -173,15 +191,6 @@ namespace GestOn2.ABMS {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPrecioResultado;
-        
-        /// <summary>
-        /// Control btnAgregarTodo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarTodo;
         
         /// <summary>
         /// Control btnQuitarTodo.
