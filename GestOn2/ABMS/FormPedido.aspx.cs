@@ -360,5 +360,63 @@ namespace GestOn2.ABMS
             GridViewPedidos.DataSource = Sistema.GetInstancia().ListadoPedidosUsuario(id);
             GridViewPedidos.DataBind();
         }
+
+        protected void GridViewProductos_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridViewProductos.EditIndex = e.NewEditIndex;
+            llenarGrillaProductos();
+        }
+
+        protected void llenarGrillaProductos()
+        {
+            DataTable dt = Session["Tabla"] as DataTable;
+            GridViewProductos.DataSource = dt;
+            GridViewProductos.DataBind();
+        }
+
+        protected void GridViewProductos_RowUpdated(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = GridViewProductos.Rows[e.RowIndex];
+            DataTable dt = Session["Tabla"] as DataTable;
+            DataRow row1; 
+            row1 = dt.NewRow();
+            row1["IdProducto"] = (row.FindControl("lblIdProducto") as Label).Text;
+            row1["Nombre"] = (row.FindControl("txtNombre") as TextBox).Text;
+            row1["Cantidad"] = (row.FindControl("txtCantidad") as TextBox).Text; 
+            dt.Rows.Add(row1);
+            dt.Rows[e.RowIndex].Delete();
+            Session["Tabla"] = dt;
+
+            lblInformativo.Visible = true;
+            lblInformativo.Text = "Se modificó con éxito";
+            GridViewProductos.EditIndex = -1;
+            llenarGrillaProductos();
+        }
+
+        protected void GridViewProductos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridViewProductos.EditIndex = -1;
+            llenarGrillaProductos();
+        }
+
+        protected void GridViewProductos_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                GridViewRow row = GridViewProductos.Rows[e.RowIndex];
+                DataTable dt = Session["Tabla"] as DataTable;
+                dt.Rows[e.RowIndex].Delete();
+                Session["Tabla"] = dt;
+                lblInformativo.Visible = true;
+                lblInformativo.Text = "Se elimino con éxito";
+                GridViewProductos.EditIndex = -1;
+                llenarGrillaProductos();
+                
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
     }
 }
