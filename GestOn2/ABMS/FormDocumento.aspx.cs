@@ -17,6 +17,11 @@ namespace GestOn2.ABMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            /*if (!IsPostBack)
+            {
+                GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
+                GridViewDocumentos.DataBind();
+            }*/
         }
 
         protected void btnUpload_Click(object sender, EventArgs e)
@@ -212,13 +217,11 @@ namespace GestOn2.ABMS
             if (chkEsEnvio.Checked)
             {
                 txtDireccion.Visible = true;
-                lblDireccion.Visible = true;
             }
             else
             {
                 txtDireccion.Text = string.Empty;
                 txtDireccion.Visible = false;
-                lblDireccion.Visible = false;
             }
         }
 
@@ -226,14 +229,12 @@ namespace GestOn2.ABMS
         {
             if (chkEsPractico.Checked)
             {
-                lblPractico.Visible = true;
                 txtNroPractico.Visible = true;
             }
             else
             {
                 txtNroPractico.Text = string.Empty;
                 txtNroPractico.Visible = false;
-                lblPractico.Visible = false;
             }
         }
 
@@ -328,28 +329,24 @@ namespace GestOn2.ABMS
                             chkEsEnvio.Checked = true;
                             txtDireccion.Text = d.Direccion;
                             txtDireccion.Visible = true;
-                            lblDireccion.Visible = true;
                         }
                         else
                         {
                             chkEsEnvio.Checked = false;
                             txtDireccion.Text = string.Empty;
                             txtDireccion.Visible = false;
-                            lblDireccion.Visible = false;
                         }
                         if (d.EsPractico == true)
                         {
                             chkEsPractico.Checked = true;
                             txtNroPractico.Text = d.NroPractico;
                             txtNroPractico.Visible = true;
-                            lblPractico.Visible = true;
                         }
                         else
                         {
                             chkEsPractico.Checked = false;
                             txtNroPractico.Text = string.Empty;
                             txtNroPractico.Visible = false;
-                            lblPractico.Visible = false;
                         }
                     }
                     else
@@ -371,21 +368,97 @@ namespace GestOn2.ABMS
             }
         }
 
-        
-
-        protected void btnImprimir_Click(object sender, EventArgs e)
+        protected void GridViewDocumento_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            int idDoc = int.Parse(txtIDImpresion.Text);
-            Documento d = Sistema.GetInstancia().BuscarDocumento(idDoc);
-            if (d != null)
+            if (e.Row.RowType == DataControlRowType.DataRow)
             {
-               // Session["GUID"] = ((System.Web.UI.WebControls.LinkButton)(sender)).CommandArgument;
-                Session["DOC"] = idDoc.ToString();
-                Response.Redirect("download.aspx", false);
+                if (e.Row.RowState == DataControlRowState.Edit)
+                {
+                    GridViewRow row = GridViewDocumentos.Rows[e.Row.RowIndex];
+                    LinkButton btnEditar = row.FindControl("btnEditar") as LinkButton;
+                    btnEditar.Visible = false;
+                    LinkButton btnBorrar = row.FindControl("btnBorrar") as LinkButton;
+                    btnBorrar.Visible = false;
+                }
             }
-            else {
-                lblMensaje.Text = "El documento que se quiere descargar no existe";
+        }
+
+        protected void GridViewDocumento_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridViewDocumentos.EditIndex = e.NewEditIndex;
+            llenarGrillaDocumentos();
+        }
+
+        protected void llenarGrillaDocumentos()
+        {
+            GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
+            GridViewDocumentos.DataBind();
+        }
+
+        protected void GridViewDocumento_RowUpdated(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = GridViewDocumentos.Rows[e.RowIndex];
+            int Id = Convert.ToInt32((row.FindControl("lblIdDocumento") as Label).Text);
+            string nombre = (row.FindControl("txtNombreDoc") as TextBox).Text;
+            string descripcion = (row.FindControl("txtDescripcionDoc") as TextBox).Text;
+            DateTime FechaIngreso = DateTime.Parse((row.FindControl("txtFechaIngresoDoc") as TextBox).Text);
+            bool AColor = Convert.ToBoolean((row.FindControl("chkAColorDoc1") as CheckBox).Checked);
+            bool DobleFaz = Convert.ToBoolean((row.FindControl("chkDobleFazDoc1") as CheckBox).Checked);
+            bool EsPractico = Convert.ToBoolean((row.FindControl("chkEsPractico1") as CheckBox).Checked);
+            bool Adomicilio = Convert.ToBoolean((row.FindControl("chkADomicilio1") as CheckBox).Checked);
+            string NroPractico = (row.FindControl("txtNumeroPracticoDoc") as TextBox).Text;
+            string Dire = (row.FindControl("txtADomicilioDoc") as TextBox).Text;
+
+            lblResultado.Visible = false;
+            lblResultado.Text = string.Empty;
+            Documento doc = null;
+            doc = Sistema.GetInstancia().BuscarDocumento(Id);
+            doc.NombreDocumento = nombre;
+            doc.Descripcion = descripcion;
+            doc.FechaIngreso = FechaIngreso;
+            doc.AColor = AColor;
+            doc.EsDobleFaz = DobleFaz;
+            doc.EsPractico = EsPractico;
+            doc.esEnvio = Adomicilio;
+            if (EsPractico)
+                doc.NroPractico = NroPractico;
+            if (Adomicilio)
+                doc.Direccion = Dire;
+
+            bool exito = Sistema.GetInstancia().ModificarDocumento(doc);
+            if (exito)
+            {
+                lblResultado.Visible = true;
+                lblResultado.Text = "Modificado con éxito";
+                GridViewDocumentos.EditIndex = -1;
+                llenarGrillaDocumentos();
             }
+        }
+
+        protected void GridViewDocumento_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridViewDocumentos.EditIndex = -1;
+            llenarGrillaDocumentos();
+        }
+
+        protected void GridViewDocumento_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = GridViewDocumentos.Rows[e.RowIndex];
+            int Id = Convert.ToInt32(GridViewDocumentos.DataKeys[e.RowIndex].Values[0]);
+            bool exito = Sistema.GetInstancia().EliminarDocumento(Id);
+            if (exito)
+            {
+                lblResultado.Visible = true;
+                lblResultado.Text = "Se elimino con éxito";
+                GridViewDocumentos.EditIndex = -1;
+                llenarGrillaDocumentos();
+            }
+        }
+
+        protected void OnPaging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewDocumentos.PageIndex = e.NewPageIndex;
+            this.llenarGrillaDocumentos();
         }
     }
 }

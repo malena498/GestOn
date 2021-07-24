@@ -107,5 +107,29 @@ namespace BibliotecaClases
                 return false;
             }
         }
+
+        public List<Documento> ListadoDocumentos()
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<Documento> documentos = baseDatos.Documentos.Where(ej => ej.Activo == true).OrderBy(ej => ej.IdDocumento).ToList();
+                        return documentos;
+                    }
+                    catch
+                    {
+                        List<Documento> documentos = baseDatos.Documentos.Where(ej => ej.Activo == true).OrderBy(ej => ej.NombreDocumento).ToList();
+                        return documentos;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }
