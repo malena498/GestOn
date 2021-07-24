@@ -199,36 +199,13 @@ namespace GestOn2
                     ddlNivel.DataValueField = "IdNivel";
                     ddlNivel.DataBind();
 
-                    //int editIndex = int.Parse(Session["EditIndex"].ToString());
-
-                    //for (int i = 0; i<GridViewUsuarios.Rows.Count; i++)
-                    //{
-                    //    if (GridViewUsuarios.Rows[i].RowIndex == editIndex)
-                    //    {
-                    //        GridViewRow row = GridViewUsuarios.Rows[i];
-
-                    //        LinkButton btnEditar = row.FindControl("btnEditar") as LinkButton;
-                    //        btnEditar.Visible = false;
-                    //        LinkButton btnBorrar = row.FindControl("btnBorrar") as LinkButton;
-                    //        btnBorrar.Visible = false;
-                    //        LinkButton btnCancelar = row.FindControl("btnCancelar") as LinkButton;
-                    //        btnCancelar.Visible = true;
-                    //        LinkButton btnUpdate = row.FindControl("btnUpdate") as LinkButton;
-                    //        btnUpdate.Visible = true;
-                    //    }
-                    //}
-                        
-                    
                 }
-                
-
             }
         }
 
         protected void GridViewUsuarios_RowEditing(object sender, GridViewEditEventArgs e)
         {
             GridViewUsuarios.EditIndex = e.NewEditIndex;
-            Session["EditIndex"] = GridViewUsuarios.EditIndex;
             llenarGrilla();
         }
 

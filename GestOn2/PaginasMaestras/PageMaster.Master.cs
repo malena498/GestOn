@@ -51,7 +51,14 @@ namespace GestOn2.PaginasMaestras
                     }
                 }
              }
-         }
+        }
+
+        protected void Salir_Click(object sender, EventArgs e)
+        {
+            Session.Remove("IdUsuario");
+            Session.Abandon();
+            Response.Redirect("~/Login.aspx");
+        }
 
 
     }

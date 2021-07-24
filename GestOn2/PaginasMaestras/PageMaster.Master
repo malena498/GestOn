@@ -48,12 +48,19 @@
                             <asp:HyperLink ID="formProductos" class="dropdown-item" NavigateUrl="~/ABMS/FromProductos.aspx" runat="server">Productos</asp:HyperLink>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <asp:Button ID="btnSalir" runat="server" Text="Salir" Cssclass="nav-link disabled" OnClick="btnSalir_Click"></asp:Button>
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <asp:HyperLink ID="HyperLink1" class="navbar-brand" NavigateUrl="~/Inicio.aspx" runat="server">Iniciar Sesión</asp:HyperLink>
+                   
+                    <li class="nav-item">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="my_navbarDropdown2" runat="server" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Configuración
+                        </a>
+                        <div runat="server" class="dropdown-menu" aria-labelledby="my_navbarDropdown2" id="Div2">
+                            <asp:HyperLink ID="HyperLink2" class="dropdown-item" NavigateUrl="~/CambiarContraseña.aspx" runat="server">Cambiar contraseña</asp:HyperLink>
+                            <asp:Button ID="btnCerrarSesion" class="dropdown-item" Text="Cerrar sesión" OnClick="Salir_Click" runat="server"></asp:Button>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav> 
