@@ -14,7 +14,28 @@ namespace GestOn2.ABMS
 {
     public partial class FormPedido : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e) { }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(!IsPostBack)
+            {
+                //if (Session["IdUsuario"] != null)
+                //{
+                //    String idUsuarioLogueado = Session["IdUsuario"].ToString();
+                //}
+                //else
+                //{
+                //    Response.Redirect("~/Login.aspx");
+                //}
+                ListProductos1.DataSource = Sistema.GetInstancia().ListadoProductos();
+                ListProductos1.DataTextField = "ProductoNombre";
+                ListProductos1.DataValueField = "ProductoId";
+                ListProductos1.DataBind();
+                txtFechaEntregaPedido.Text = DateTime.Now.ToShortDateString();
+                Session["Tabla"] = null;
+                Session["IdUsuario"] = 1;
+                llenarGrillaPedidos();
+            }
+        }
 
         protected void btnNuevoPedido_Click(object sender, EventArgs e)
         {
@@ -30,30 +51,31 @@ namespace GestOn2.ABMS
             {
                 lblInformativo.Visible = false;
                 lblInformativo.Text = "";
-                int identificador = int.Parse(txtId.Text);
-                txtFechaPedido.Text = DateTime.Now.ToLongTimeString();
-                DateTime fchPedido = DateTime.Parse(txtFechaPedido.Text);
-                DateTime fchEntrega = DateTime.Parse(txtFechaPedido.Text);
+                
+                DateTime fchEntrega = DateTime.Parse(txtFechaEntregaPedido.Text);
                 string Descripcion = txtDescripcion.InnerText;
                 string Direccion = txtDireccion.Text;
-                int user = 1;//int.Parse(Session["IdUsuario"].ToString());
+                int user = int.Parse(Session["IdUsuario"].ToString());
 
                 List<int> lstitems = new List<int>();
 
                 Pedido p = new Pedido();
-                p.Activo = true;
                 p.Descripcion = Descripcion;
                 p.Direccion = Direccion;
                 p.FechaEntrega = fchEntrega;
-                p.FechaPedido = fchPedido;
-                p.IdPedido = identificador;
                 p.UserId = user;
 
+                DataTable dt = Session["Tabla"] as DataTable;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    int idProd = int.Parse(dt.Rows[i]["IdProducto"].ToString());
+                    lstitems.Add(idProd);
+                }
                 int id = Sistema.GetInstancia().GuardarPedido(p, lstitems);
                 if (id > 0)
                 {
                     List<ProductoPedidoCantidad> lista = new List<ProductoPedidoCantidad>();
-                    DataTable dt = Session["Tabla"] as DataTable;
+                   
                     for (int i = 0; i <dt.Rows.Count; i++) {
                         ProductoPedidoCantidad productoPedidoCantidad = new ProductoPedidoCantidad();
 
@@ -61,6 +83,7 @@ namespace GestOn2.ABMS
                         productoPedidoCantidad.Cantidad =   int.Parse(dt.Rows[i]["cantidad"].ToString());
                         productoPedidoCantidad.IdPedido = id;
 
+                        
                         lista.Add(productoPedidoCantidad);
                     }
                     bool exito = Sistema.GetInstancia().GuardarProductoPedidoCantidad(lista);
@@ -69,6 +92,7 @@ namespace GestOn2.ABMS
                         lblInformativo.Text = "Se guardo con éxito";
                         lblInformativo.Visible = true;
                         TimerMensajes.Enabled = true;
+                        Session["Tabla"] = null;
 
                         //Elimino campos luego que se inserto con éxito
                         VaciarCampos();
@@ -86,8 +110,6 @@ namespace GestOn2.ABMS
         protected void btnAgregarTodo_Click(object sender, EventArgs e)
         {
             if(ListProductos1.SelectedItem != null) {
-                //ListSeleccionados.Items.Add(ListProductos1.SelectedItem);
-                //ListProductos1.Items.Remove(ListProductos1.SelectedItem);
 
                 int idProducto = int.Parse(ListProductos1.SelectedValue);
                 int cantidad = int.Parse(txtCantidadProducto.Text);
@@ -107,6 +129,9 @@ namespace GestOn2.ABMS
 
                     GridViewProductos.DataSource = dt;
                     GridViewProductos.DataBind();
+
+                    ListProductos1.Items.Remove(ListProductos1.Items.FindByValue(idProducto.ToString()));
+                    txtCantidadProducto.Text = string.Empty;
 
                 }
                 else
@@ -141,6 +166,7 @@ namespace GestOn2.ABMS
 
                     GridViewProductos.DataSource = dt;
                     GridViewProductos.DataBind();
+
                 }
 
             }
@@ -150,8 +176,8 @@ namespace GestOn2.ABMS
         {
             if (RadioBtnSi.Checked == true)
             {
-                if (txtId.Text == "" || txtFechaPedido.Text == "" ||
-                   txtDireccion.Text == "" || txtDescripcion.InnerText == "")
+                if (String.IsNullOrEmpty(txtFechaEntregaPedido.Text) ||
+                   String.IsNullOrEmpty(txtDireccion.Text) || String.IsNullOrEmpty(txtDescripcion.InnerText ))
                 {
                     return true;
                 }
@@ -159,8 +185,8 @@ namespace GestOn2.ABMS
             }
             else if (RadioBtnNo.Checked == false)
             {
-                if (txtId.Text == "" || txtFechaPedido.Text == "" ||
-                    txtDescripcion.InnerText == "")
+                if (String.IsNullOrEmpty(txtFechaEntregaPedido.Text)||
+                    String.IsNullOrEmpty(txtDescripcion.InnerText))
                 {
                     return true;
                 }
@@ -170,10 +196,11 @@ namespace GestOn2.ABMS
         }
 
         public void VaciarCampos() {
-            txtId.Text = "";
-            txtFechaPedido.Text = "";
-            txtDireccion.Text = "";
-            txtDescripcion.InnerText = "";
+            txtId.Text = string.Empty;
+            txtFechaEntregaPedido.Text = string.Empty;
+            txtDireccion.Text = string.Empty;
+            txtDescripcion.InnerText = string.Empty;
+            txtCantidadProducto.Text = string.Empty;
         }
 
         protected void TimerMensajes_Tick(object sender, EventArgs e)
@@ -206,7 +233,7 @@ namespace GestOn2.ABMS
                             lblDireccion.Visible = true;
                             txtDireccion.Visible = true;
                         }
-                        txtFechaPedido.Text = p.FechaPedido.ToString();
+                        txtFechaEntregaPedido.Text = p.FechaPedido.ToString();
                     }
                     else
                     {
@@ -274,8 +301,7 @@ namespace GestOn2.ABMS
                 lblInformativo.Visible = false;
                 lblInformativo.Text = "";
                 int id = int.Parse(txtId.Text);
-                DateTime fchPedido = DateTime.Parse(txtFechaPedido.Text);
-                DateTime fchEntrega = DateTime.Parse(txtFechaPedido.Text);
+                DateTime fchEntrega = DateTime.Parse(txtFechaEntregaPedido.Text);
                 string Descripcion = txtDescripcion.InnerText;
                 string Direccion = txtDireccion.Text;
                 int user = 1;
@@ -287,7 +313,6 @@ namespace GestOn2.ABMS
                 p.Descripcion = Descripcion;
                 p.Direccion = Direccion;
                 p.FechaEntrega = fchEntrega;
-                p.FechaPedido = fchPedido;
                 p.IdPedido = id;
                 p.UserId = user;
 
@@ -328,101 +353,12 @@ namespace GestOn2.ABMS
         {
             txtCantidadProducto.Focus();
         }
-        //protected void GridViewProductos_RowDataBound(object sender, GridViewRowEventArgs e)
-        //{
-        //    if (e.Row.RowType == DataControlRowType.DataRow)
-        //    {
-        //        if (e.Row.RowState == DataControlRowState.Edit)
-        //        {
-
-        //            //LinkButton btnEditar = FindControl("btnEditar") as LinkButton;
-        //            //btnEditar.Visible = false;
-        //            //LinkButton btnBorrar = FindControl("btnBorrar") as LinkButton;
-        //            //btnBorrar.Visible = false;
-        //            //LinkButton btnCancelar = FindControl("btnCancelar") as LinkButton;
-        //            //btnCancelar.Visible = true;
-        //            //LinkButton btnUpdate = FindControl("btnUpdate") as LinkButton;
-        //            //btnUpdate.Visible = true;
-
-        //        }
-
-
-        //    }
-        //}
-
-        //protected void GridViewProductos_RowEditing(object sender, GridViewEditEventArgs e)
-        //{
-        //    GridViewProductos.EditIndex = e.NewEditIndex;
-        //    llenarGrillaProducto();
-        //}
-
-
-        //protected void llenarGrillaProducto()
-        //{
-        //    GridViewProductos.DataSource = Sistema.GetInstancia().ListadoProductos();
-        //    GridViewProductos.DataBind();
-        //}
-
-        //protected void GridViewProductos_RowUpdated(object sender, GridViewUpdateEventArgs e)
-        //{
-        //    bool exito = false;
-        //    try
-        //    {
-        //        List<int> ProdyCantidad = new List<int>();
-
-        //        foreach (GridViewRow row in GridViewProductos.Rows)
-        //        {
-        //            if (row.RowType == DataControlRowType.DataRow)
-        //            {
-        //                CheckBox chkRow = (row.FindControl("chkRow") as CheckBox);
-        //                if (chkRow.Checked)
-        //                {
-        //                    int Id = Convert.ToInt32((row.FindControl("lblIdProducto") as Label).Text);
-        //                    int cantidad = Convert.ToInt32((row.FindControl("txtCantidad") as TextBox).Text);
-        //                    ProdyCantidad.Add(Id);
-        //                    ProdyCantidad.Add(cantidad);
-        //                }
-        //            }
-
-        //            if (ProdyCantidad.Count > 0)
-        //            {
-        //                exito = true;
-        //                llenarGrillaProducto();
-        //            }
-        //            if (exito) lblInformativo.Text = "quedo";
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        exito = false;
-        //    }
-        //}
-
-
-        //protected void GridViewProductos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        //{
-        //    GridViewProductos.EditIndex = -1;
-        //    llenarGrillaProducto();
-        //}
-
-        //protected void GridViewProductos_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
-        //{
-        //    GridViewRow row = GridViewProductos.Rows[e.RowIndex];
-        //    int Id = Convert.ToInt32(GridViewProductos.DataKeys[e.RowIndex].Values[0]);
-        //    bool exito = Sistema.GetInstancia().EliminarProducto(Id);
-        //    if (exito)
-        //    {
-        //        lblInformativo.Visible = true;
-        //        lblInformativo.Text = "Se elimino con éxito";
-        //        GridViewProductos.EditIndex = -1;
-        //        llenarGrillaProducto();
-        //    }
-        //}
-
-        //protected void OnPaging(object sender, GridViewPageEventArgs e)
-        //{
-        //    GridViewProductos.PageIndex = e.NewPageIndex;
-        //    this.llenarGrillaProducto();
-        //}
+        
+        protected void llenarGrillaPedidos()
+        {
+            int id = int.Parse(Session["IdUsuario"].ToString());
+            GridViewPedidos.DataSource = Sistema.GetInstancia().ListadoPedidosUsuario(id);
+            GridViewPedidos.DataBind();
+        }
     }
 }

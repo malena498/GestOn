@@ -193,23 +193,31 @@ namespace GestOn2
                 if (e.Row.RowState == DataControlRowState.Edit)
                 {
                     
-                        DropDownList ddlNivel = (DropDownList)e.Row.FindControl("ddlNivel");
-                        //bind dropdown-list
+                    DropDownList ddlNivel = (DropDownList)e.Row.FindControl("ddlNivel");
+                    ddlNivel.DataSource = Sistema.GetInstancia().ListadoNiveles();
+                    ddlNivel.DataTextField = "NombreNivel";
+                    ddlNivel.DataValueField = "IdNivel";
+                    ddlNivel.DataBind();
 
-                        ddlNivel.DataSource = Sistema.GetInstancia().ListadoNiveles();
-                        ddlNivel.DataTextField = "NombreNivel";
-                        ddlNivel.DataValueField = "IdNivel";
-                        ddlNivel.DataBind();
-                   
+                    //int editIndex = int.Parse(Session["EditIndex"].ToString());
+
+                    //for (int i = 0; i<GridViewUsuarios.Rows.Count; i++)
+                    //{
+                    //    if (GridViewUsuarios.Rows[i].RowIndex == editIndex)
+                    //    {
+                    //        GridViewRow row = GridViewUsuarios.Rows[i];
+
+                    //        LinkButton btnEditar = row.FindControl("btnEditar") as LinkButton;
+                    //        btnEditar.Visible = false;
+                    //        LinkButton btnBorrar = row.FindControl("btnBorrar") as LinkButton;
+                    //        btnBorrar.Visible = false;
+                    //        LinkButton btnCancelar = row.FindControl("btnCancelar") as LinkButton;
+                    //        btnCancelar.Visible = true;
+                    //        LinkButton btnUpdate = row.FindControl("btnUpdate") as LinkButton;
+                    //        btnUpdate.Visible = true;
+                    //    }
+                    //}
                         
-                        //LinkButton btnEditar = FindControl("btnEditar") as LinkButton;
-                        //btnEditar.Visible = false;
-                        //LinkButton btnBorrar = FindControl("btnBorrar") as LinkButton;
-                        //btnBorrar.Visible = false;
-                        //LinkButton btnCancelar = FindControl("btnCancelar") as LinkButton;
-                        //btnCancelar.Visible = true;
-                        //LinkButton btnUpdate = FindControl("btnUpdate") as LinkButton;
-                        //btnUpdate.Visible = true;
                     
                 }
                 
@@ -220,6 +228,7 @@ namespace GestOn2
         protected void GridViewUsuarios_RowEditing(object sender, GridViewEditEventArgs e)
         {
             GridViewUsuarios.EditIndex = e.NewEditIndex;
+            Session["EditIndex"] = GridViewUsuarios.EditIndex;
             llenarGrilla();
         }
 

@@ -21,7 +21,7 @@
             <asp:GridView ID="GridViewUsuarios" AutoGenerateColumns="False" EmptyDataText="No hay registros."
                 AllowPaging="True" runat="server" DataKeyNames="UserId" OnRowDataBound="GridViewUsuarios_RowDataBound"
                 OnRowEditing="GridViewUsuarios_RowEditing" OnRowUpdating="GridViewUsuarios_RowUpdated"
-                OnRowCancelingEdit="GridViewUsuarios_RowCancelingEdit" OnRowDeleting="GridViewUsuarios_OnRowDeleting">
+                OnRowCancelingEdit="GridViewUsuarios_RowCancelingEdit" OnRowDeleting="GridViewUsuarios_OnRowDeleting" OnPageIndexChanging="OnPaging">
                 <Columns>
                     <asp:TemplateField HeaderText="IdUsuario" ItemStyle-Width="150" Visible="false">
                         <ItemTemplate>
@@ -81,9 +81,11 @@
                             <asp:Button ID="btnEditar" runat="server" CommandName="Edit" Text="Editar" ></asp:Button>
                             <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" Text="Borrar" Width="50px"
                                 OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
-                            <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Visible="false" Width="45px"></asp:Button>
-                            <asp:Button ID="btnCancelar" runat="server" CommandName="Cancelar" Text="Cancelar" Visible="false"  Width="45px"></asp:Button>
                         </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Width="45px"></asp:Button>
+                            <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" Text="Cancelar"  Width="45px"></asp:Button>
+                        </EditItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>

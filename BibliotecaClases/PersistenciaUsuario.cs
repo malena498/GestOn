@@ -136,7 +136,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Usuarios.FirstOrDefault(prop => prop.UserEmail == email);
+                    return baseDatos.Usuarios.FirstOrDefault(prop => prop.UserEmail == email && prop.Activo == true);
                 }
             }
             catch (Exception ex)

@@ -23,13 +23,13 @@ namespace BibliotecaClases
                         Producto pe = baseDatos.Productos.FirstOrDefault(p => p.ProductoId == idprod);
                         productos.Add(pe);
                     }
+                    pedido.FechaPedido = DateTime.Now;
                     pedido.productos = productos;
                     pedido.Activo = true;
+                    pedido.Estado = "Pendiente";
                     baseDatos.Pedidos.Add(pedido);
-                    if (pedido.IdPedido != 0)
-                    {
-                        baseDatos.SaveChanges();
-                    }
+                    baseDatos.SaveChanges();
+                    
                 }
                 return pedido.IdPedido;
             }
@@ -111,7 +111,7 @@ namespace BibliotecaClases
                         pe.Descripcion = pedido.Descripcion;
                         pe.Direccion = pedido.Direccion;
                         pe.FechaEntrega = pedido.FechaEntrega;
-                        pe.FechaPedido = pedido.FechaPedido;
+                        pe.FechaPedido = DateTime.Now;
                         pe.productos = pedido.productos;
                         pe.UserId = pedido.UserId;
                         baseDatos.SaveChanges();
@@ -160,6 +160,30 @@ namespace BibliotecaClases
                     catch
                     {
                         List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true).OrderBy(ej => ej.IdPedido).ToList();
+                        return pedidos;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<Pedido> ListadoPedidosUsuario(int idUser)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.UserId == idUser).OrderBy(ej => ej.IdPedido).ToList();
+                        return pedidos;
+                    }
+                    catch
+                    {
+                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.UserId == idUser).OrderBy(ej => ej.IdPedido).ToList();
                         return pedidos;
                     }
                 }

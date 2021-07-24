@@ -11,14 +11,14 @@
         <form class="form-control">
         <div class="form-row">
 
-        <asp:TextBox ID="txtId" class="col-lg-9 col-md-9 col-9" placeholder="Ingrese id" runat="server" Width="100px"></asp:TextBox>
+        <asp:TextBox ID="txtId" class="col-lg-9 col-md-9 col-9" placeholder="Ingrese id" runat="server" Width="100px" Visible ="false"></asp:TextBox>
 
         <asp:Button ID="btnBuscar" class="col-lg-3 col-md-3 col-3 btn btn-info" runat="server" Text="Buscar" OnClick="btnBuscar_Click" Font-Bold="True" />
 
         </div>
         <asp:Label ID="lblInformativo" Visible="false" runat="server" class="alert-danger col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
-        <asp:Label ID="Label3" runat="server" Text="Fecha de pedido:" class="col-12 col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
-        <asp:TextBox ID="txtFechaPedido" runat="server"  ReadOnly="True" class="col-12 col-md-12 col-lg-12"></asp:TextBox>
+        <asp:Label ID="Label3" runat="server" Text="Fecha de entrega:" class="col-12 col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
+        <asp:TextBox ID="txtFechaEntregaPedido" runat="server"  ReadOnly="True" class="col-12 col-md-12 col-lg-12"></asp:TextBox>
         <asp:Label ID="Label5" runat="server" Text="Descripción:" class="col-12 col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
         <textarea id="txtDescripcion" class="col-12 col-md-12 col-lg-12" placeholder="Ingrese descripción" runat="server" name="S1" cols="20"></textarea><br />
         <div class="form-row mt-2">
@@ -31,7 +31,7 @@
             <asp:GridView ID="GridViewProductos" EmptyDataText="No hay registros."
                 AllowPaging="True" runat="server">
                 <Columns>
-                     
+                     <asp:CommandField />
                 </Columns>
             </asp:GridView>
         <asp:Label ID="Label9" runat="server" Text="Envío a domicilo" class="col-12 col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
@@ -42,7 +42,39 @@
         <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" class="btn btn-info col-5 col-md-5 col-lg-5" Text="Generar pedido" Font-Bold="True" />
         <asp:Button ID="btnModificar" runat="server" Text="Modificar" class="btn btn-info col-5 col-md-5 col-lg-5" Font-Bold="True" OnClick="btnModificar_Click" />
         <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick" />
-       </form>
+        <asp:GridView ID="GridViewPedidos" AutoGenerateColumns="false" EmptyDataText="No hay registros."
+                AllowPaging="True" runat="server" DataKeyNames="IdPedido">
+                <Columns>
+                     <asp:TemplateField HeaderText="IdPedido" ItemStyle-Width="150" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="IdPedido" runat="server" Text='<%# Eval("IdPedido") %>' ReadOnly="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Fecha Entrega" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblFechaEntrega" runat="server" Text='<%# Eval("FechaEntrega") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Descripción" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDescripcion" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Estado" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblEstado" runat="server" Text='<%# Eval("Estado") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Precio" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPrecio" runat="server" Text='<%# Eval("Precio") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        
+        
+        </form>
     </div>
     </ContentTemplate>
 </asp:UpdatePanel>
