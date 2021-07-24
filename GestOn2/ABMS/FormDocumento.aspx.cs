@@ -17,11 +17,11 @@ namespace GestOn2.ABMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*if (!IsPostBack)
+            if (!IsPostBack)
             {
                 GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
                 GridViewDocumentos.DataBind();
-            }*/
+            }
         }
 
         protected void btnUpload_Click(object sender, EventArgs e)
@@ -140,78 +140,6 @@ namespace GestOn2.ABMS
             return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
         }
 
-        protected void btnModificar_Click(object sender, EventArgs e)
-        {
-            //Validaciones que las caja de texto no estén vacias.
-            if (String.IsNullOrEmpty(txtIdDocumento.Text))
-            {
-                lblMensaje.Text = "Debe completar todos los campos";
-            }
-            //Si esta todo correcto, procedo a hacer la modificación.
-            else
-            {
-                lblMensaje.Visible = false;
-                lblMensaje.Text = "";
-                int id = Int32.Parse(txtIdDocumento.Text);
-                string nombreDocumento = txtNombre.Text;
-                string descripcion = txtDescripcion.Text;
-                string ruta = lblrutaarchivo.Text;
-                string Formato = lblTipoDoc.Text;
-                string gradoliceal = ddlGradoLiceal.SelectedValue;
-                string direccion = "";
-                string nroPractico = "";
-                bool esEnvio = false;
-                bool EsPractico = false;
-                bool EsDobleFaz = false;
-                bool AColor = false;
-
-                if (chkEsEnvio.Checked)
-                {
-                    direccion = txtDireccion.Text;
-                    esEnvio = true;
-                }
-                if (chkEsPractico.Checked)
-                {
-                    nroPractico = txtNroPractico.Text;
-                    EsPractico = true;
-                }
-                if (chkDobleFaz.Checked)
-                    EsDobleFaz = true;
-                if (chkColor.Checked)
-                    AColor = true;
-                int UserId = 2;
-
-                Documento d = new Documento();
-                d.IdDocumento = id;
-                d.AColor = AColor;
-                d.Descripcion = descripcion;
-                d.Direccion = direccion;
-                d.EsDobleFaz = EsDobleFaz;
-                d.esEnvio = esEnvio;
-                d.EsPractico = EsPractico;
-                d.FechaIngreso = DateTime.Today;
-                d.Formato = Formato;
-                d.gradoLiceal = gradoliceal;
-                d.NombreDocumento = nombreDocumento;
-                d.NroPractico = nroPractico;
-                d.ruta = ruta;
-                d.UserId = UserId;
-
-
-                bool exito = Sistema.GetInstancia().ModificarDocumento(d);
-                if (exito)
-                {
-                    lblMensaje.Text = "Se modificó con éxito";
-                    //Elimino campos luego que se modifico con éxito
-                    VaciarCampos();
-                }
-                else
-                {
-                    lblMensaje.Text = "No se pudo modificar ";
-                }
-            }
-        }
-
         protected void chkEsEnvio_CheckedChanged(object sender, EventArgs e)
         {
             if (chkEsEnvio.Checked)
@@ -281,104 +209,13 @@ namespace GestOn2.ABMS
             btnUpload.Enabled = true;
         }
 
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (!String.IsNullOrEmpty(txtIdDocumento.Text))
-            {
-                int id = int.Parse(txtIdDocumento.Text);
-                bool exito = Sistema.GetInstancia().EliminarDocumento(id);
-                if (exito)
-                {
-                    lblMensaje.Text = "Se elimino con éxito";
-                    //Elimino campos luego que se modifico con éxito
-                    VaciarCampos();
-                }
-                else
-                {
-                    lblMensaje.Text = "No se pudo eliminar ";
-                }
-            }
-            else
-            {
-                lblMensaje.Text = "Complete id del docuemnto que desea eliminar";
-            }
-        }
-
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            if (!String.IsNullOrEmpty(txtIdDocumento.Text))
-            {
-                int id = int.Parse(txtIdDocumento.Text);
-                Documento d = Sistema.GetInstancia().BuscarDocumento(id);
-                if (d != null)
-                {
-                    if (d.Activo == true)
-                    {
-                        
-                        txtDescripcion.Text = d.Descripcion;
-                        txtNombre.Text = d.NombreDocumento;
-                        ddlGradoLiceal.SelectedValue = d.gradoLiceal;
-                        if (d.AColor == true)
-                            chkColor.Checked = true;
-                        else chkColor.Checked = false;
-                        if (d.EsDobleFaz)
-                            chkDobleFaz.Checked = true;
-                        else chkDobleFaz.Checked = false;
-                        if (d.esEnvio == true)
-                        {
-                            chkEsEnvio.Checked = true;
-                            txtDireccion.Text = d.Direccion;
-                            txtDireccion.Visible = true;
-                        }
-                        else
-                        {
-                            chkEsEnvio.Checked = false;
-                            txtDireccion.Text = string.Empty;
-                            txtDireccion.Visible = false;
-                        }
-                        if (d.EsPractico == true)
-                        {
-                            chkEsPractico.Checked = true;
-                            txtNroPractico.Text = d.NroPractico;
-                            txtNroPractico.Visible = true;
-                        }
-                        else
-                        {
-                            chkEsPractico.Checked = false;
-                            txtNroPractico.Text = string.Empty;
-                            txtNroPractico.Visible = false;
-                        }
-                    }
-                    else
-                    {
-                        lblMensaje.Text = "El documento fue dado de baja";
-                        VaciarCampos();
-                    }
-                }
-                else
-                {
-                    lblMensaje.Text = "El documento buscado no éxiste en el sistema";
-                    VaciarCampos();
-                }
-            }
-            else
-            {
-                lblMensaje.Text = "Debe completar id del pedido";
-                VaciarCampos();
-            }
-        }
-
         protected void GridViewDocumento_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 if (e.Row.RowState == DataControlRowState.Edit)
                 {
-                    GridViewRow row = GridViewDocumentos.Rows[e.Row.RowIndex];
-                    LinkButton btnEditar = row.FindControl("btnEditar") as LinkButton;
-                    btnEditar.Visible = false;
-                    LinkButton btnBorrar = row.FindControl("btnBorrar") as LinkButton;
-                    btnBorrar.Visible = false;
+                    
                 }
             }
         }
@@ -464,5 +301,155 @@ namespace GestOn2.ABMS
 }
 
 
-        
-    
+
+
+/*Modificar documento
+//Validaciones que las caja de texto no estén vacias.
+if (String.IsNullOrEmpty(txtIdDocumento.Text))
+{
+    lblMensaje.Text = "Debe completar todos los campos";
+}
+//Si esta todo correcto, procedo a hacer la modificación.
+else
+{
+    lblMensaje.Visible = false;
+    lblMensaje.Text = "";
+    int id = Int32.Parse(txtIdDocumento.Text);
+    string nombreDocumento = txtNombre.Text;
+    string descripcion = txtDescripcion.Text;
+    string ruta = lblrutaarchivo.Text;
+    string Formato = lblTipoDoc.Text;
+    string gradoliceal = ddlGradoLiceal.SelectedValue;
+    string direccion = "";
+    string nroPractico = "";
+    bool esEnvio = false;
+    bool EsPractico = false;
+    bool EsDobleFaz = false;
+    bool AColor = false;
+
+    if (chkEsEnvio.Checked)
+    {
+        direccion = txtDireccion.Text;
+        esEnvio = true;
+    }
+    if (chkEsPractico.Checked)
+    {
+        nroPractico = txtNroPractico.Text;
+        EsPractico = true;
+    }
+    if (chkDobleFaz.Checked)
+        EsDobleFaz = true;
+    if (chkColor.Checked)
+        AColor = true;
+    int UserId = 2;
+
+    Documento d = new Documento();
+    d.IdDocumento = id;
+    d.AColor = AColor;
+    d.Descripcion = descripcion;
+    d.Direccion = direccion;
+    d.EsDobleFaz = EsDobleFaz;
+    d.esEnvio = esEnvio;
+    d.EsPractico = EsPractico;
+    d.FechaIngreso = DateTime.Today;
+    d.Formato = Formato;
+    d.gradoLiceal = gradoliceal;
+    d.NombreDocumento = nombreDocumento;
+    d.NroPractico = nroPractico;
+    d.ruta = ruta;
+    d.UserId = UserId;
+
+
+    bool exito = Sistema.GetInstancia().ModificarDocumento(d);
+    if (exito)
+    {
+        lblMensaje.Text = "Se modificó con éxito";
+        //Elimino campos luego que se modifico con éxito
+        VaciarCampos();
+    }
+    else
+    {
+        lblMensaje.Text = "No se pudo modificar ";
+    }
+}*/
+/*Eliminar Documento
+            if (!String.IsNullOrEmpty(txtIdDocumento.Text))
+            {
+                int id = int.Parse(txtIdDocumento.Text);
+                bool exito = Sistema.GetInstancia().EliminarDocumento(id);
+                if (exito)
+                {
+                    lblMensaje.Text = "Se elimino con éxito";
+                    //Elimino campos luego que se modifico con éxito
+                    VaciarCampos();
+                }
+                else
+                {
+                    lblMensaje.Text = "No se pudo eliminar ";
+                }
+            }
+            else
+            {
+                lblMensaje.Text = "Complete id del docuemnto que desea eliminar";
+            }*/
+/*Buscar Documento
+if (!String.IsNullOrEmpty(txtIdDocumento.Text))
+{
+    int id = int.Parse(txtIdDocumento.Text);
+    Documento d = Sistema.GetInstancia().BuscarDocumento(id);
+    if (d != null)
+    {
+        if (d.Activo == true)
+        {
+
+            txtDescripcion.Text = d.Descripcion;
+            txtNombre.Text = d.NombreDocumento;
+            ddlGradoLiceal.SelectedValue = d.gradoLiceal;
+            if (d.AColor == true)
+                chkColor.Checked = true;
+            else chkColor.Checked = false;
+            if (d.EsDobleFaz)
+                chkDobleFaz.Checked = true;
+            else chkDobleFaz.Checked = false;
+            if (d.esEnvio == true)
+            {
+                chkEsEnvio.Checked = true;
+                txtDireccion.Text = d.Direccion;
+                txtDireccion.Visible = true;
+            }
+            else
+            {
+                chkEsEnvio.Checked = false;
+                txtDireccion.Text = string.Empty;
+                txtDireccion.Visible = false;
+            }
+            if (d.EsPractico == true)
+            {
+                chkEsPractico.Checked = true;
+                txtNroPractico.Text = d.NroPractico;
+                txtNroPractico.Visible = true;
+            }
+            else
+            {
+                chkEsPractico.Checked = false;
+                txtNroPractico.Text = string.Empty;
+                txtNroPractico.Visible = false;
+            }
+        }
+        else
+        {
+            lblMensaje.Text = "El documento fue dado de baja";
+            VaciarCampos();
+        }
+    }
+    else
+    {
+        lblMensaje.Text = "El documento buscado no éxiste en el sistema";
+        VaciarCampos();
+    }
+}
+else
+{
+    lblMensaje.Text = "Debe completar id del pedido";
+    VaciarCampos();
+}*/
