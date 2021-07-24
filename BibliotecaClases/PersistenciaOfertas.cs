@@ -17,7 +17,7 @@ using System.Net;
 namespace BibliotecaClases { 
     partial class Sistema
     {
-            public bool GuardarOferta(Oferta oferta, List<String> imagenes, String NombreBase)
+            public bool GuardarOferta(Oferta oferta, List<String> imagenes)
             {
                 try
                 {

@@ -180,6 +180,7 @@
     <Content Include="Styles\InicioCSS.css" />
     <Content Include="Styles\LoginCSS.css" />
     <Content Include="Styles\MasterCss.css" />
+    <Content Include="Styles\OfertaCss.css" />
     <Content Include="Styles\PedidoCSS.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

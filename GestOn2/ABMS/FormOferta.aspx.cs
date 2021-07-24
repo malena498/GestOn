@@ -19,8 +19,6 @@ namespace GestOn2.ABMS
             {
                 GridViewOferta.DataSource = Sistema.GetInstancia().ListadoOfertas();
                 GridViewOferta.DataBind();
-
-                divNuevaOferta.Visible = false;
             }
 
         }
@@ -32,7 +30,6 @@ namespace GestOn2.ABMS
                 if (CamposCompletos())
                 {
                     Oferta o = new Oferta();
-                    String nameDB = "GestOn";
                     o.OfertaTitulo = txtTituloOferta.Text;
                     o.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
                     o.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
@@ -43,62 +40,34 @@ namespace GestOn2.ABMS
                     {
                         imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
                     }
-                    bool exito = Sistema.GetInstancia().GuardarOferta(o, imagenes, nameDB);
+                    bool exito = Sistema.GetInstancia().GuardarOferta(o, imagenes);
                     if (exito)
                     {
+                        lblResultado.Visible = true;
                         lblResultado.Text = "Se guardo con éxito";
+                        llenarGrilla();
                         limpiar();
                     }
                 }
                 else
                 {
+                    lblResultado.Visible = true;
                     lblResultado.Text = "Complete los campos";
                 }
             }
             catch (Exception ex)
             {
+                lblResultado.Visible = true;
                 lblResultado.Text = "No se logro guardar";
             }
         }
-
-        protected void btnEiminar_Click(object sender, EventArgs e)
-        {
-            if (txtIdOferta.Text != "")
-            {
-                int id = Int32.Parse(txtIdOferta.Text);
-                bool exito = Sistema.GetInstancia().EliminarOferta(id);
-                if (exito)
-                {
-                    lblResultado.Text = "Se elimino con éxito";
-                    lblResultado.Visible = true;
-                    //TimerMensajes.Enabled = true;
-
-                    //Elimino campos luego que se modifico con éxito
-                    limpiar();
-                }
-                else
-                {
-                    lblResultado.Text = "No se pudo eliminar ";
-                    lblResultado.Visible = true;
-                    //TimerMensajes.Enabled = true;
-                }
-            }
-            else
-            {
-                lblResultado.Text = "Complete id de la oferta que desea eliminar";
-                lblResultado.Visible = true;
-                //TimerMensajes.Enabled = true;
-            }
-        }
-
         protected void btnModificar_Click(object sender, EventArgs e)
         {
 
-            if (CamposCompletos())
+            if (!CamposCompletos())
             {
                 lblResultado.Visible = true;
                 lblResultado.Text = "Debe completar todos los campos";
-                //TimerMensajes.Enabled = true;
             }
             //Si esta todo correcto, procedo a hacer la modificación.
             else
@@ -122,16 +91,13 @@ namespace GestOn2.ABMS
                 {
                     lblResultado.Text = "Se modificó con éxito";
                     lblResultado.Visible = true;
-                    //TimerMensajes.Enabled = true;
-
-                    //Elimino campos luego que se modifico con éxito
+                    llenarGrilla();
                     limpiar();
                 }
                 else
                 {
-                    lblResultado.Text = "No se guardo (Error)";
+                    lblResultado.Text = "Error al modificar";
                     lblResultado.Visible = true;
-                    //TimerMensajes.Enabled = true;
                 }
             }
         }
@@ -148,19 +114,11 @@ namespace GestOn2.ABMS
                 GridViewOferta.DataSource = ofertas;
                 GridViewOferta.DataBind();
             }
-            
-                else
-                {
-                    lblResultado.Text = "La oferta buscada no éxiste en el sistema";
-                    lblResultado.Visible = true;
-                    //TimerMensajes.Enabled = true;
-                }
-           
-        }
-
-        protected void btnNuevo_Click(object sender, EventArgs e)
-        {
-            divNuevaOferta.Visible = true;
+            else
+            {
+                lblResultadoBusqueda.Text = "La oferta buscada no éxiste en el sistema";
+                lblResultado.Visible = true;
+            }
         }
 
         protected void CargarImagenes(List<Imagen> imagenes)
@@ -285,6 +243,7 @@ namespace GestOn2.ABMS
             }
 
         }
+
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -294,6 +253,7 @@ namespace GestOn2.ABMS
                 img.Attributes.Add("onclick", "window.open('" + img.ImageUrl.Replace("~", "") + "', '_blank')");
             }
         }
+
         private bool EsImagen(HttpPostedFile archivo)
         {
             return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
@@ -344,7 +304,6 @@ namespace GestOn2.ABMS
             GridViewOferta.EditIndex = e.NewEditIndex;
             llenarGrilla();
         }
-
 
         protected void llenarGrilla()
         {
@@ -398,7 +357,7 @@ namespace GestOn2.ABMS
         {
             GridViewRow row = GridViewOferta.Rows[e.RowIndex];
             int Id = Convert.ToInt32(GridViewOferta.DataKeys[e.RowIndex].Values[0]);
-            bool exito = Sistema.GetInstancia().EliminarUsuario(Id);
+            bool exito = Sistema.GetInstancia().EliminarOferta(Id);
             if (exito)
             {
                 lblResultado.Visible = true;
@@ -424,11 +383,9 @@ namespace GestOn2.ABMS
             txtPrecio.Text = string.Empty;
         }
 
-       
-
         protected bool CamposCompletos()
         {
-            if (String.IsNullOrEmpty(txtIdOferta.Text) || String.IsNullOrEmpty(txtTituloOferta.Text) ||
+            if (String.IsNullOrEmpty(txtTituloOferta.Text) ||
                 String.IsNullOrEmpty(txtFechaHasta.Text) || String.IsNullOrEmpty(txtFechaDesde.Text) ||
                 String.IsNullOrEmpty(txtDescripcionOferta.Text) || String.IsNullOrEmpty(txtPrecio.Text))
             {
