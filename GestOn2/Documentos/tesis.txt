@@ -1,0 +1,7 @@
+crear tabla permisos
+
+id
+nombre
+url
+visible
+

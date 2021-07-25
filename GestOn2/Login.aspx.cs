@@ -6,6 +6,13 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BibliotecaClases;
 using BibliotecaClases.Clases;
+using System.Net.Mail;
+using System.Configuration;
+using System.Web.Configuration;
+using System.Net.Configuration;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace GestOn2
 {
@@ -59,6 +66,45 @@ namespace GestOn2
             byte[] encryted = System.Text.Encoding.Unicode.GetBytes(password);
             result = Convert.ToBase64String(encryted);
             return result;
+        }
+
+        protected void lnkRestablecerContraseña_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(txtEmail.Text))
+            {
+                lblResultado.Text = "Ingrese su e-mail";
+            }
+            else
+            {
+                Usuario user = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmail.Text);
+                if (user != null)
+                {
+                    EnviarMail("malenagonzalez098@gmail.com", user.UserEmail);
+                }
+                else
+                {
+                    lblResultado.Text = "No se encontró un usuario con el e-mail especificado";
+                }
+            }
+        }
+
+        protected void EnviarMail(String mailEmpresa, String mailDestino)
+        {
+            MailMessage correo = new MailMessage();
+            correo.From = new MailAddress(mailDestino, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
+            correo.To.Add(mailEmpresa); //Correo destino?
+            correo.Subject = "Restablecer contraseña."; //Asunto
+            correo.Body = "Para restablecer su contraseña dirijase al siguiente link:"; //Mensaje del correo
+            correo.IsBodyHtml = true;
+            correo.Priority = MailPriority.Normal;
+            SmtpClient smtp = new SmtpClient();
+            smtp.UseDefaultCredentials = false;
+            smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
+            smtp.Port = 25; //Puerto de salida
+            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "05296221mg");//Cuenta de correo
+            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+            smtp.EnableSsl = true;//True si el servidor de correo permite ssl
+            smtp.Send(correo);
         }
     }
 }

@@ -118,7 +118,7 @@
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:CheckBox ID="chkEsPractico1" runat="server" Checked='<%# Eval("EsPractico") %>'></asp:CheckBox>
-                                    <asp:TextBox ID="txtNumeroPracticoDoc" runat="server" Text='<%# Eval("NroPractico") %>'></asp:TextBox>
+                                    <asp:TextBox ID="txtNumeroPracticoDoc" runat="server" Text='<%# Eval("NroPractico") %>' Visible="false"></asp:TextBox>
                                 </EditItemTemplate>
                                 <ControlStyle />
                             </asp:TemplateField>
@@ -128,7 +128,7 @@
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:CheckBox ID="chkADomicilio1" runat="server" Checked='<%# Eval("esEnvio") %>'></asp:CheckBox>
-                                    <asp:TextBox ID="txtADomicilioDoc" runat="server" Text='<%# Eval("Direccion") %>'></asp:TextBox>
+                                    <asp:TextBox ID="txtADomicilioDoc" runat="server" Text='<%# Eval("Direccion") %>' Visible="false"></asp:TextBox>
                                 </EditItemTemplate>
                                 <ControlStyle />
                             </asp:TemplateField>

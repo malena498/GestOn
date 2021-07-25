@@ -82,6 +82,7 @@ namespace GestOn2.ABMS
                         {
                             lblMensaje.Text = "";
                             VaciarCampos();
+                            llenarGrillaDocumentos();
                         }
                         else
                         {
@@ -215,10 +216,22 @@ namespace GestOn2.ABMS
             {
                 if (e.Row.RowState == DataControlRowState.Edit)
                 {
-                    
+                    for (int i = 0; i < GridViewDocumentos.Rows.Count - 1; i++)
+                    {
+                        bool chkEsPractico1 = Convert.ToBoolean((GridViewDocumentos.Rows[i].Cells[i].FindControl("chkEsPractico1") as CheckBox).Checked);
+                        if (chkEsPractico1)
+                        {
+                            TextBox txtNumeroPracticoDoc = GridViewDocumentos.Rows[i].Cells[i].FindControl("txtNumeroPracticoDoc") as TextBox;
+                            txtNumeroPracticoDoc.Visible = true;
+                        }
+
+
+
+                    }
                 }
             }
         }
+                
 
         protected void GridViewDocumento_RowEditing(object sender, GridViewEditEventArgs e)
         {

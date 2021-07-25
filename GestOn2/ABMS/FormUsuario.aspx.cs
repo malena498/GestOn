@@ -41,24 +41,32 @@ namespace GestOn2
         {
             try
             {
-
-                bool ciValida = ValidarCI(txtCedulaUser.Text);
-                if (ciValida)
+                Usuario us = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmailUser.Text);
+                if (us != null)
+                {
+                    lblResultado.Text = "El mail ingreasdo ya posee un usuario.";
+                }
+                else
                 {
 
-                    Usuario u = new Usuario();
-                    u.UserNombre = txtNombreUser.Text;
-                    u.UserEmail = txtEmailUser.Text;
-                    u.UserCedula = txtCedulaUser.Text;
-                    u.UserTelefono = txtTelefonoUser.Text;
-                    u.UserContrasenia = txtPassUser.Text;
-                    u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
-
-                    bool exito = Sistema.GetInstancia().GuardarUsuario(u);
-                    if (exito)
+                    bool ciValida = ValidarCI(txtCedulaUser.Text);
+                    if (ciValida)
                     {
-                        lblResultado.Text = "Se guardo con éxito";
-                        limpiar();
+
+                        Usuario u = new Usuario();
+                        u.UserNombre = txtNombreUser.Text;
+                        u.UserEmail = txtEmailUser.Text;
+                        u.UserCedula = txtCedulaUser.Text;
+                        u.UserTelefono = txtTelefonoUser.Text;
+                        u.UserContrasenia = txtPassUser.Text;
+                        u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
+
+                        bool exito = Sistema.GetInstancia().GuardarUsuario(u);
+                        if (exito)
+                        {
+                            lblResultado.Text = "Se guardo con éxito";
+                            limpiar();
+                        }
                     }
                 }
             }
