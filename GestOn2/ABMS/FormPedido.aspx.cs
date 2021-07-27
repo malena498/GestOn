@@ -18,21 +18,19 @@ namespace GestOn2.ABMS
         {
             if(!IsPostBack)
             {
-                //if (Session["IdUsuario"] != null)
-                //{
-                //    String idUsuarioLogueado = Session["IdUsuario"].ToString();
-                //}
-                //else
-                //{
-                //    Response.Redirect("~/Login.aspx");
-                //}
+                if (Session["IdUsuario"] != null)
+                {
+                    String idUsuarioLogueado = Session["IdUsuario"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
                 ListProductos1.DataSource = Sistema.GetInstancia().ListadoProductos();
                 ListProductos1.DataTextField = "ProductoNombre";
                 ListProductos1.DataValueField = "ProductoId";
                 ListProductos1.DataBind();
-                txtFechaEntregaPedido.Text = DateTime.Now.ToShortDateString();
                 Session["Tabla"] = null;
-                Session["IdUsuario"] = 1;
                 llenarGrillaPedidos();
             }
         }
@@ -51,8 +49,7 @@ namespace GestOn2.ABMS
             {
                 lblInformativo.Visible = false;
                 lblInformativo.Text = "";
-                
-                DateTime fchEntrega = DateTime.Parse(txtFechaEntregaPedido.Text);
+                DateTime fchEntrega = DateTime.Today;
                 string Descripcion = txtDescripcion.InnerText;
                 string Direccion = txtDireccion.Text;
                 int user = int.Parse(Session["IdUsuario"].ToString());
@@ -176,8 +173,7 @@ namespace GestOn2.ABMS
         {
             if (RadioBtnSi.Checked == true)
             {
-                if (String.IsNullOrEmpty(txtFechaEntregaPedido.Text) ||
-                   String.IsNullOrEmpty(txtDireccion.Text) || String.IsNullOrEmpty(txtDescripcion.InnerText ))
+                if (String.IsNullOrEmpty(txtDireccion.Text) || String.IsNullOrEmpty(txtDescripcion.InnerText ))
                 {
                     return true;
                 }
@@ -185,8 +181,7 @@ namespace GestOn2.ABMS
             }
             else if (RadioBtnNo.Checked == false)
             {
-                if (String.IsNullOrEmpty(txtFechaEntregaPedido.Text)||
-                    String.IsNullOrEmpty(txtDescripcion.InnerText))
+                if (String.IsNullOrEmpty(txtDescripcion.InnerText))
                 {
                     return true;
                 }
@@ -196,8 +191,6 @@ namespace GestOn2.ABMS
         }
 
         public void VaciarCampos() {
-            txtId.Text = string.Empty;
-            txtFechaEntregaPedido.Text = string.Empty;
             txtDireccion.Text = string.Empty;
             txtDescripcion.InnerText = string.Empty;
             txtCantidadProducto.Text = string.Empty;
@@ -209,72 +202,11 @@ namespace GestOn2.ABMS
             TimerMensajes.Enabled = false;
         }
 
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            if (txtId.Text != "")
-            {
-                int id = int.Parse(txtId.Text);
-                Pedido p = Sistema.GetInstancia().BuscarPedido(id);
-                if (p != null)
-                {
-                    if (p.Activo == true)
-                    {
-                        txtDescripcion.InnerText = p.Descripcion.ToString();
-                        txtDireccion.Text = p.Direccion.ToString();
-                        if (txtDireccion.Text == "")
-                        {
-                            txtDireccion.Visible = false;
-                            RadioBtnNo.Checked = true;
-                            lblDireccion.Visible = false;
-                        }
-                        else
-                        {
-                            RadioBtnSi.Checked = true;
-                            lblDireccion.Visible = true;
-                            txtDireccion.Visible = true;
-                        }
-                        txtFechaEntregaPedido.Text = p.FechaPedido.ToString();
-                    }
-                    else
-                    {
-                        lblInformativo.Text = "El pedido fue dada de baja";
-                        txtDescripcion.InnerText = "";
-                        txtDireccion.Text = "";
-                        RadioBtnNo.Checked = true;
-                        txtDireccion.Visible = false;
-                        lblDireccion.Visible = false;
-                        lblInformativo.Visible = true;
-                        TimerMensajes.Enabled = true;
-                    }
-                }
-                else
-                {
-                    lblInformativo.Text = "El pedido buscado no éxiste en el sistema";
-                    txtDescripcion.InnerText = "";
-                    txtDireccion.Visible = false;
-                    lblDireccion.Visible = false;
-                    RadioBtnNo.Checked = true;
-                    lblInformativo.Visible = true;
-                    TimerMensajes.Enabled = true;
-                }
-            }
-            else
-            {
-                lblInformativo.Text = "Debe completar id del pedido";
-                RadioBtnNo.Checked = true;
-                lblDireccion.Visible = false;
-                txtDireccion.Text = "";
-                lblInformativo.Visible = true;
-                TimerMensajes.Enabled = true;
-            }
-        }
-
         protected void RadioBtnSi_CheckedChanged(object sender, EventArgs e)
         {
             if (RadioBtnSi.Checked) { 
                 txtDireccion.Enabled = true;
                 txtDireccion.Visible = true;
-                lblDireccion.Visible = true;
             }
         }
 
@@ -283,7 +215,6 @@ namespace GestOn2.ABMS
             txtDireccion.Enabled = false;
             txtDireccion.Text = "";
             txtDireccion.Visible = false;
-            lblDireccion.Visible = false;
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
@@ -300,8 +231,7 @@ namespace GestOn2.ABMS
             {
                 lblInformativo.Visible = false;
                 lblInformativo.Text = "";
-                int id = int.Parse(txtId.Text);
-                DateTime fchEntrega = DateTime.Parse(txtFechaEntregaPedido.Text);
+                DateTime fchEntrega = DateTime.Today;
                 string Descripcion = txtDescripcion.InnerText;
                 string Direccion = txtDireccion.Text;
                 int user = 1;
@@ -313,7 +243,6 @@ namespace GestOn2.ABMS
                 p.Descripcion = Descripcion;
                 p.Direccion = Direccion;
                 p.FechaEntrega = fchEntrega;
-                p.IdPedido = id;
                 p.UserId = user;
 
                 bool exito = Sistema.GetInstancia().ModificarPedido(p, lstitems);
@@ -418,5 +347,71 @@ namespace GestOn2.ABMS
                 return;
             }
         }
+
+        protected void GridViewPedidos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewPedidos.PageIndex = e.NewPageIndex;
+            llenarGrillaPedidos();
+        }
     }
 }
+
+/* protected void btnBuscar_Click(object sender, EventArgs e)
+ {
+     if (txtId.Text != "")
+     {
+         int id = int.Parse(txtId.Text);
+         Pedido p = Sistema.GetInstancia().BuscarPedido(id);
+         if (p != null)
+         {
+             if (p.Activo == true)
+             {
+                 txtDescripcion.InnerText = p.Descripcion.ToString();
+                 txtDireccion.Text = p.Direccion.ToString();
+                 if (txtDireccion.Text == "")
+                 {
+                     txtDireccion.Visible = false;
+                     RadioBtnNo.Checked = true;
+                     lblDireccion.Visible = false;
+                 }
+                 else
+                 {
+                     RadioBtnSi.Checked = true;
+                     lblDireccion.Visible = true;
+                     txtDireccion.Visible = true;
+                 }
+                 txtFechaEntregaPedido.Text = p.FechaPedido.ToString();
+             }
+             else
+             {
+                 lblInformativo.Text = "El pedido fue dada de baja";
+                 txtDescripcion.InnerText = "";
+                 txtDireccion.Text = "";
+                 RadioBtnNo.Checked = true;
+                 txtDireccion.Visible = false;
+                 lblDireccion.Visible = false;
+                 lblInformativo.Visible = true;
+                 TimerMensajes.Enabled = true;
+             }
+         }
+         else
+         {
+             lblInformativo.Text = "El pedido buscado no éxiste en el sistema";
+             txtDescripcion.InnerText = "";
+             txtDireccion.Visible = false;
+             lblDireccion.Visible = false;
+             RadioBtnNo.Checked = true;
+             lblInformativo.Visible = true;
+             TimerMensajes.Enabled = true;
+         }
+     }
+     else
+     {
+         lblInformativo.Text = "Debe completar id del pedido";
+         RadioBtnNo.Checked = true;
+         lblDireccion.Visible = false;
+         txtDireccion.Text = "";
+         lblInformativo.Visible = true;
+         TimerMensajes.Enabled = true;
+     }
+ }*/

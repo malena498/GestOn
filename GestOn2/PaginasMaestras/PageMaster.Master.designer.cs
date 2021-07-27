@@ -40,6 +40,15 @@ namespace GestOn2.PaginasMaestras {
         protected global::System.Web.UI.WebControls.HyperLink formInicio;
         
         /// <summary>
+        /// Control Docente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Docente;
+        
+        /// <summary>
         /// Control my_navbarDropdown.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,24 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink formProductos;
+        
+        /// <summary>
+        /// Control formPedidosAdmin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink formPedidosAdmin;
+        
+        /// <summary>
+        /// Control fromDocAdmin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink fromDocAdmin;
         
         /// <summary>
         /// Control my_navbarDropdown2.

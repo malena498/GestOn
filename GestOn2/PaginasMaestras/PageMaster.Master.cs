@@ -15,11 +15,9 @@ namespace GestOn2.PaginasMaestras
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           if (!IsPostBack) {
-
-                CargarMenues();
-           }
+             CargarMenues();
         }
+
         protected void btnSalir_Click(object sender, EventArgs e)
         {
             Session.Remove("IdUsuario");
@@ -32,7 +30,7 @@ namespace GestOn2.PaginasMaestras
             if(Session["IdUsuario"] != null)
             { 
                 String id = Session["IdUsuario"].ToString();
-                if (id.Equals("0"))
+                if (id.Equals("0") || String.IsNullOrEmpty(id))
                 {
                     Session["IdUsuario"] = "";
                     Server.Transfer("~/Login.aspx");
@@ -40,14 +38,20 @@ namespace GestOn2.PaginasMaestras
                 else
                 {
                     Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
-                    if (u.nivel.UserEstandar || u.nivel.NombreNivel.Equals("Docente"))
+                    if (u.nivel.NombreNivel.Equals("Docente"))
                     {
+                        Docente.Visible = true;
                         Admin.Visible = false;
+                    }
+                    else if (u.nivel.UserEstandar) {
+                        Admin.Visible = false;
+                        formDoc.Visible = false;
+                        Docente.Visible = true;
                     }
                     else if (u.nivel.UserAdmin)
                     {
+                        Docente.Visible = false;
                         Admin.Visible = true;
-
                     }
                 }
              }

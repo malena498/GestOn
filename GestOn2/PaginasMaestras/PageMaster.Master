@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                    <li class="nav-item dropdown">
+                    <li id="Docente" runat="server" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="my_navbarDropdown" runat="server" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ingresos
                         </a>
@@ -46,6 +46,8 @@
                             <asp:HyperLink ID="formUser" class="dropdown-item" NavigateUrl="~/ABMS/FormUsuario.aspx" runat="server">Usuarios</asp:HyperLink>
                             <asp:HyperLink ID="formOfertas" class="dropdown-item" NavigateUrl="~/ABMS/FormOferta.aspx" runat="server">Ofertas</asp:HyperLink>
                             <asp:HyperLink ID="formProductos" class="dropdown-item" NavigateUrl="~/ABMS/FromProductos.aspx" runat="server">Productos</asp:HyperLink>
+                            <asp:HyperLink ID="formPedidosAdmin" class="dropdown-item" NavigateUrl="~/ABMS/FormPedidoAdmin.aspx" runat="server">Pedidos</asp:HyperLink>
+                            <asp:HyperLink ID="fromDocAdmin" class="dropdown-item" NavigateUrl="~/ABMS/FormDocumento.aspx" runat="server">Documentos</asp:HyperLink>
                         </div>
                     </li>
                 </ul>

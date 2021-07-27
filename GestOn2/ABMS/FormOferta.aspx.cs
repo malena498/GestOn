@@ -15,6 +15,7 @@ namespace GestOn2.ABMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            txtFechaDesde.Text = DateTime.Today.ToString();
             if (!IsPostBack)
             {
                 GridViewOferta.DataSource = Sistema.GetInstancia().ListadoOfertas();
@@ -106,7 +107,7 @@ namespace GestOn2.ABMS
         {
             DateTime fechaDesde = DateTime.Parse(txtFchDesde.Text);
             DateTime fechaHasta = DateTime.Parse(txtFchHasta.Text);
-            string titulo = txtTituloOferta.Text;
+            string titulo = txtTitulo.Text;
             List<Oferta> ofertas = Sistema.GetInstancia().BuscarOfertaFiltros(fechaDesde, fechaHasta, titulo);
             if (ofertas != null)
             {
@@ -282,20 +283,8 @@ namespace GestOn2.ABMS
             {
                 if (e.Row.RowState == DataControlRowState.Edit)
                 {
-                    
-
-                    GridViewRow row = GridViewOferta.Rows[e.Row.RowIndex];
-                    LinkButton btnEditar = row.FindControl("btnEditar") as LinkButton;
-                    btnEditar.Visible = false;
-                    LinkButton btnBorrar = row.FindControl("btnBorrar") as LinkButton;
-                    btnBorrar.Visible = false;
-                    LinkButton btnCancelar = row.FindControl("btnCancelar") as LinkButton;
-                    btnCancelar.Visible = true;
-                    LinkButton btnUpdate = row.FindControl("btnUpdate") as LinkButton;
-                    btnUpdate.Visible = true;
+                   
                 }
-
-
             }
         }
 
@@ -327,7 +316,7 @@ namespace GestOn2.ABMS
             Oferta of = null;
             of = Sistema.GetInstancia().BuscarOferta(Id);
             of.OfertaTitulo = titulo;
-            of.OfertaDescripcion = txtDescripcionOferta.Text;
+            of.OfertaDescripcion = descripcion;
             of.OfertaFechaDesde = fechadesde;
             of.OfertaFechaHasta = fechahasta;
             of.OfertaPrecio = precio;
@@ -341,10 +330,7 @@ namespace GestOn2.ABMS
                 lblResultado.Text = "Se modificó con éxito";
                 GridViewOferta.EditIndex = -1;
                 llenarGrilla();
-            }
-            
-
-            
+            }   
         }
 
         protected void GridViewOferta_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)

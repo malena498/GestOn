@@ -42,90 +42,97 @@
                         <asp:Button ID="btnModificar" runat="server" OnClick="btnModificar_Click" class="btn btn-info  col-md-5 col-lg-5 col-sm-5 col-5 ml-1" Text="Modificar" />
                     </div>
                     <div class="col-md-8 col-lg-8 col-sm-8 col-8 col-xl-8 ml-4" runat="server" id="div1">
-                            <asp:TextBox ID="txtFchDesde" placeholder="Fecha desde" class="col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-3" runat="server" TextMode="DateTime"></asp:TextBox>
-                            <asp:TextBox ID="txtFchHasta" placeholder="Fecha hasta" class="col-3 col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-2" runat="server" TextMode="DateTime"></asp:TextBox>
-                            <asp:TextBox ID="txtTitulo" placeholder="Nombre del titulo" class="col-3 col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-2" runat="server"></asp:TextBox>
-                            <asp:Button ID="btnBuscar" runat="server" class="btn btn-info col-md-2 col-lg-2 col-sm-2  ml-2" Text="Buscar" OnClick="btnBuscar_Click" />
-
-                            <asp:Label ID="lblResultadoBusqueda" Visible="false" class="alert alert-danger col-md-8 col-lg-8 col-sm-8 col-xl-8" runat="server"></asp:Label>
-                            <hr />
-                            <asp:GridView ID="GridViewOferta" AutoGenerateColumns="False" EmptyDataText="No hay ofertas ingresadas."
-                                AllowPaging="True" runat="server" DataKeyNames="IdOferta" OnRowDataBound="GridViewOferta_RowDataBound"
-                                OnRowEditing="GridViewOferta_RowEditing" OnRowUpdating="GridViewOferta_RowUpdated"
-                                OnRowCancelingEdit="GridViewOferta_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3" OnRowDeleting="GridViewOferta_OnRowDeleting" HorizontalAlign="Center">
-                                <Columns>
-                                    <asp:TemplateField HeaderText="IdOferta" Visible="false">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblIdOferta" runat="server" Text='<%# Eval("IdOferta") %>' ReadOnly="True"></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Título" ControlStyle-CssClass="col-md-2 col-xl-2 col-lg-2 col-sm-2 align-content-center">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblTitulo" runat="server" Text='<%# Eval("OfertaTitulo") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="txtTitulo" runat="server" Text='<%# Eval("OfertaTitulo") %>' Width="140"></asp:TextBox>
-                                        </EditItemTemplate>
-                                        <controlstyle cssclass="col-md-2 col-xl-2 col-lg-2 col-sm-2 align-content-center" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Fecha desde" >
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblFechaDesde" runat="server" Text='<%# Eval("OfertaFechaDesde") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="txtFechaDesde" runat="server" Text='<%# Eval("OfertaFechaDesde") %>' Width="140"></asp:TextBox>
-                                        </EditItemTemplate>
-                                        <controlstyle  />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Fecha hasta" >
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblFechaHasta" runat="server" Text='<%# Eval("OfertaFechaHasta") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="txtFechaHasta" runat="server" Text='<%# Eval("OfertaFechaHasta") %>' Width="140"></asp:TextBox>
-                                        </EditItemTemplate>
-                                        <controlstyle />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Descripción" ItemStyle-Width="150">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblDescripcion" runat="server" Text='<%# Eval("OfertaDescripcion") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="txtDescripcion" runat="server" Text='<%# Eval("OfertaDescripcion") %>' Width="140"></asp:TextBox>
-                                        </EditItemTemplate>
-                                        <ItemStyle Width="150px" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Activo">
-                                        <ItemTemplate>
-                                            <asp:CheckBox ID="chkActivo" runat="server" Checked='<%# Eval("Activo") %>'></asp:CheckBox>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:CheckBox ID="chkActivo1" runat="server" Checked='<%# Eval("Activo") %>' Width="140"></asp:CheckBox>
-                                        </EditItemTemplate>
-                                        <controlstyle />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Precio">
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblPrecio" runat="server" Text='<%# Eval("OfertaPrecio") %>'></asp:Label>
-                                        </ItemTemplate>
-                                        <EditItemTemplate>
-                                            <asp:TextBox ID="txtPrecio" runat="server" Text='<%# Eval("OfertaPrecio") %>' ></asp:TextBox>
-                                        </EditItemTemplate>
-                                        <controlstyle />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Accion">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="btnEditar" runat="server" class="btn btn-outline-success col-md-5 col-xl-5 col-lg-5 col-sm-5 m-0 text-center" CommandName="Edit"><i class="fas fa-edit"></i></asp:LinkButton>
-                                            <%--<asp:Button ID="btnEditar" runat="server" class="btn btn-outline-success col-md-3 col-xl-3 col-lg-3 col-sm-3" CommandName="Edit" Text="Editar"></asp:Button>--%>
-                                            <asp:Button ID="btnBorrar" runat="server" class="btn btn-outline-danger col-md-5 col-xl-5 col-lg-5 col-sm-5 m-0 text-center" CommandName="Delete" Text="X"
-                                                OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
-                                            <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Visible="false" Width="45px"></asp:Button>
-                                            <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" Text="Cancelar" Visible="false" Width="45px"></asp:Button>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                                <HeaderStyle HorizontalAlign="Center" />
-                            </asp:GridView>
+                        <asp:TextBox ID="txtFchDesde" type="datetime" placeholder="Fecha desde" class="col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-3" runat="server" TextMode="DateTime"></asp:TextBox>
+                        <asp:TextBox ID="txtFchHasta" type="datetime" placeholder="Fecha hasta" class="col-3 col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-2" runat="server" TextMode="DateTime"></asp:TextBox>
+                        <div class="input-groupdate" id="datetimepicker1" data-target-input="nearest">
+                            <input type="text" class="form-controldatetimepicker-input" data-target="#datetimepicker1" />
+                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                        <asp:TextBox ID="txtTitulo" placeholder="Nombre del titulo" class="col-3 col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-2" runat="server"></asp:TextBox>
+                        <asp:Button ID="btnBuscar" runat="server" class="btn btn-info col-md-2 col-lg-2 col-sm-2  ml-2" Text="Buscar" OnClick="btnBuscar_Click" />
+                        <asp:Label ID="lblResultadoBusqueda" Visible="false" class="alert alert-danger col-md-8 col-lg-8 col-sm-8 col-xl-8" runat="server"></asp:Label>
+                        <hr />
+                        <asp:GridView ID="GridViewOferta" AutoGenerateColumns="False" EmptyDataText="No hay ofertas ingresadas."
+                            AllowPaging="True" runat="server" DataKeyNames="IdOferta" OnRowDataBound="GridViewOferta_RowDataBound"
+                            OnRowEditing="GridViewOferta_RowEditing" OnRowUpdating="GridViewOferta_RowUpdated"
+                            OnRowCancelingEdit="GridViewOferta_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3" OnRowDeleting="GridViewOferta_OnRowDeleting" HorizontalAlign="Center">
+                            <Columns>
+                                <asp:TemplateField HeaderText="IdOferta" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblIdOferta" runat="server" Text='<%# Eval("IdOferta") %>' ReadOnly="True"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Título" ControlStyle-CssClass="col-md-2 col-xl-2 col-lg-2 col-sm-2 align-content-center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblTitulo" runat="server" Text='<%# Eval("OfertaTitulo") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtTitulo" runat="server" Text='<%# Eval("OfertaTitulo") %>' Width="140"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ControlStyle CssClass="col-md-2 col-xl-2 col-lg-2 col-sm-2 align-content-center" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Fecha desde">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblFechaDesde" runat="server" Text='<%# Eval("OfertaFechaDesde") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtFechaDesde" runat="server" Text='<%# Eval("OfertaFechaDesde") %>' Width="140"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ControlStyle />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Fecha hasta">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblFechaHasta" runat="server" Text='<%# Eval("OfertaFechaHasta") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtFechaHasta" runat="server" Text='<%# Eval("OfertaFechaHasta") %>' Width="140"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ControlStyle />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Descripción" ItemStyle-Width="150">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblDescripcion" runat="server" Text='<%# Eval("OfertaDescripcion") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtDescripcion" runat="server" Text='<%# Eval("OfertaDescripcion") %>' Width="140"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ItemStyle Width="150px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Activo">
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="chkActivo" runat="server" Checked='<%# Eval("Activo") %>'></asp:CheckBox>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:CheckBox ID="chkActivo1" runat="server" Checked='<%# Eval("Activo") %>' Width="140"></asp:CheckBox>
+                                    </EditItemTemplate>
+                                    <ControlStyle />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Precio">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblPrecio" runat="server" Text='<%# Eval("OfertaPrecio") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtPrecio" runat="server" Text='<%# Eval("OfertaPrecio") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ControlStyle />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Accion">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="btnEditar" runat="server" class="btn btn-outline-success col-md-5 col-xl-5 col-lg-5 col-sm-5 m-0 text-center" CommandName="Edit"><i class="fas fa-edit"></i></asp:LinkButton>
+                                        <%--<asp:Button ID="btnEditar" runat="server" class="btn btn-outline-success col-md-3 col-xl-3 col-lg-3 col-sm-3" CommandName="Edit" Text="Editar"></asp:Button>--%>
+                                        <asp:Button ID="btnBorrar" runat="server" class="btn btn-outline-danger col-md-5 col-xl-5 col-lg-5 col-sm-5 m-0 text-center" CommandName="Delete" Text="X"
+                                            OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" class="btn btn-outline-success col-md-5 col-xl-5 col-lg-5 col-sm-5 m-0 text-center"></asp:Button>
+                                        <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" Text="Cancelar" class="btn btn-outline-danger col-md-5 col-xl-5 col-lg-5 col-sm-5 m-0 text-center"></asp:Button>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <HeaderStyle HorizontalAlign="Center" />
+                        </asp:GridView>
                     </div>
                 </div>
             </div>

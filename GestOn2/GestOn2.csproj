@@ -16,10 +16,9 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44327</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -87,6 +86,7 @@
     <Content Include="ABMS\FormDocumento.aspx" />
     <Content Include="ABMS\FormOferta.aspx" />
     <Content Include="ABMS\FormPedido.aspx" />
+    <Content Include="ABMS\FormPedidoAdmin.aspx" />
     <Content Include="ABMS\FromProductos.aspx" />
     <Content Include="ABMS\FormUsuario.aspx" />
     <Content Include="CambiarContraseña.aspx" />
@@ -183,6 +183,7 @@
     <Content Include="Styles\LoginCSS.css" />
     <Content Include="Styles\MasterCss.css" />
     <Content Include="Styles\OfertaCss.css" />
+    <Content Include="Styles\PedidoAdminCss.css" />
     <Content Include="Styles\PedidoCSS.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -209,6 +210,13 @@
     </Compile>
     <Compile Include="ABMS\FormPedido.aspx.designer.cs">
       <DependentUpon>FormPedido.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ABMS\FormPedidoAdmin.aspx.cs">
+      <DependentUpon>FormPedidoAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABMS\FormPedidoAdmin.aspx.designer.cs">
+      <DependentUpon>FormPedidoAdmin.aspx</DependentUpon>
     </Compile>
     <Compile Include="ABMS\FromProductos.aspx.cs">
       <DependentUpon>FromProductos.aspx</DependentUpon>

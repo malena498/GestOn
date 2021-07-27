@@ -154,12 +154,12 @@ namespace BibliotecaClases
                 {
                     try
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true).OrderBy(ej => ej.IdPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                     catch
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true).OrderBy(ej => ej.IdPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                 }
@@ -178,12 +178,12 @@ namespace BibliotecaClases
                 {
                     try
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.UserId == idUser).OrderBy(ej => ej.IdPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.UserId == idUser).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                     catch
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.UserId == idUser).OrderBy(ej => ej.IdPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.UserId == idUser).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                 }
@@ -193,6 +193,31 @@ namespace BibliotecaClases
                 return null;
             }
         }
+
+        public List<Pedido> ListadoPedidosEstado(string Estado)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.Estado == Estado).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
+                        return pedidos;
+                    }
+                    catch
+                    {
+                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.Estado == Estado).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
+                        return pedidos;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
 
         //public bool eliminar()
         //{

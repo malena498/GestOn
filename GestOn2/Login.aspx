@@ -23,7 +23,7 @@
                                     <asp:Button ID="btnIngresar" runat="server" class="btn btn-primary offset-1 col-md-10 col-lg-10 col-10 col-sm-10 mt-3" Text="Ingresar" OnClick="btnIngresar_Click" />
                                     <asp:LinkButton ID="lnkRestablecerContraseña" class="btn btn-link offset-1 col-md-10 col-lg-10 col-10 col-sm-10 mt-2" runat="server" OnClick="lnkRestablecerContraseña_Click"> ¿ Olvidaste tu contraseña ?</asp:LinkButton>
                                     <br />
-                                    <asp:Label ID="Label3" class="offset-1 col-md-6 col-lg-6 col-xl-6 col-sm-6 mt-2" runat="server" Text="No posee una cuenta?"></asp:Label>
+                                    <asp:Label ID="Label3" class="offset-2 col-md-6 col-lg-6 col-xl-6 col-sm-6 mt-2" runat="server" Text="No posee una cuenta?"></asp:Label>
                                     &nbsp;<asp:LinkButton ID="lnkRegistrarse" class="btn btn-link" runat="server" OnClick="lnkRegistrarse_Click">Registrarse</asp:LinkButton>
                                 </div>
                             </div>
