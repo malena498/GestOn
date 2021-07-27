@@ -15,7 +15,7 @@ namespace GestOn2
         {
             if (!IsPostBack)
             {
-                ddlCategoriaUsuario.DataSource = Sistema.GetInstancia().ListadoNiveles();
+                ddlCategoriaUsuario.DataSource = Sistema.GetInstancia().ListadoNivelesRegistro();
                 ddlCategoriaUsuario.DataTextField = "NombreNivel";
                 ddlCategoriaUsuario.DataValueField = "IdNivel";
                 ddlCategoriaUsuario.DataBind();
@@ -33,28 +33,41 @@ namespace GestOn2
                         bool exito = false;
                         if (confirmar())
                         {
-                            if (txtConfirmarContrasenia.Text.Equals(txtContrasenia.Text))
+                            Usuario us = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmail.Text);
+                            if (us != null)
                             {
-                                string contraseña = Encriptar(txtContrasenia.Text);
-                                Usuario u = new Usuario();
-                                u.UserNombre = txtNombre.Text;
-                                u.UserEmail = txtEmail.Text;
-                                u.UserCedula = txtDocumento.Text;
-                                u.UserTelefono = txtTelefono.Text;
-                                u.UserContrasenia = contraseña;
-                                u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
-                                exito = Sistema.GetInstancia().GuardarUsuario(u);
+                                lblResultado.Text = "El mail ingreasdo ya posee un usuario.";
+                            }
+                            Usuario user = Sistema.GetInstancia().BuscarUsuarioCedula(txtDocumento.Text);
+                            if(user != null)
+                            {
+                                lblResultado.Text = "El documento ingreasdo ya posee un usuario.";
                             }
                             else
                             {
-                                lblResultado.Visible = true;
-                                lblResultado.Text = "Las contraseñas no coinciden";
-                            }
-                            if (exito)
-                            {
-                                lblResultado.Visible = true;
-                                lblResultado.Text = "Registrado con éxito";
-                                limpiar();
+                                if (txtConfirmarContrasenia.Text.Equals(txtContrasenia.Text))
+                                {
+                                    string contraseña = Encriptar(txtContrasenia.Text);
+                                    Usuario u = new Usuario();
+                                    u.UserNombre = txtNombre.Text;
+                                    u.UserEmail = txtEmail.Text;
+                                    u.UserCedula = txtDocumento.Text;
+                                    u.UserTelefono = txtTelefono.Text;
+                                    u.UserContrasenia = contraseña;
+                                    u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
+                                    exito = Sistema.GetInstancia().GuardarUsuario(u);
+                                }
+                                else
+                                {
+                                    lblResultado.Visible = true;
+                                    lblResultado.Text = "Las contraseñas no coinciden";
+                                }
+                                if (exito)
+                                {
+                                    lblResultado.Visible = true;
+                                    lblResultado.Text = "Registrado con éxito";
+                                    limpiar();
+                                }
                             }
                         }
                     }

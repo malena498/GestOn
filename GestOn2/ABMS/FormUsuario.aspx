@@ -12,7 +12,8 @@
                     <asp:Label runat="server">Id</asp:Label>
                     <asp:TextBox ID="txtIdUsuario" runat="server"></asp:TextBox>
                     <asp:Label runat="server">Nombre</asp:Label>
-                    <asp:TextBox ID="txtNomUsuario" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtNomUsuario" runat="server"></asp:TextBox>                            
+                    <asp:CheckBox ID="chkEliminados" runat="server" Autopostback="true" OnCheckedChanged="chkEliminados_CheckedChanged" Text="Mostrar eliminados"></asp:CheckBox>
                     <asp:Button ID="btnBuscar" runat="server" class="btn btn-info" Style="margin-left: 14px" Text="Buscar" OnClick="btnBuscar_Click" />
                     <asp:Button ID="btnNuevo" runat="server" class="btn btn-primary" Style="margin-left: 14px" Text="Nuevo" OnClick="btnNuevo_Click" />
                 </form>
@@ -21,7 +22,7 @@
             <asp:GridView ID="GridViewUsuarios" AutoGenerateColumns="False" EmptyDataText="No hay registros."
                 AllowPaging="True" runat="server" DataKeyNames="UserId" OnRowDataBound="GridViewUsuarios_RowDataBound"
                 OnRowEditing="GridViewUsuarios_RowEditing" OnRowUpdating="GridViewUsuarios_RowUpdated"
-                OnRowCancelingEdit="GridViewUsuarios_RowCancelingEdit" OnRowDeleting="GridViewUsuarios_OnRowDeleting" OnPageIndexChanging="OnPaging">
+                OnRowCancelingEdit="GridViewUsuarios_RowCancelingEdit" OnRowDeleting="GridViewUsuarios_OnRowDeleting" OnPageIndexChanging="GridViewUsuarios_PageIndexChanging">
                 <Columns>
                     <asp:TemplateField HeaderText="IdUsuario" ItemStyle-Width="150" Visible="false">
                         <ItemTemplate>
@@ -128,8 +129,6 @@
                 <br />
                 <br />
                 <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" Text="Guardar" />
-                <asp:Button ID="btnModificar" runat="server" OnClick="btnModificar_Click" Text="Modificar" />
-                <asp:Button ID="btnEliminar" runat="server" OnClick="btnEliminar_Click" Text="Eliminar" />
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

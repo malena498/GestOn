@@ -177,17 +177,18 @@ namespace BibliotecaClases {
                 using (var baseDatos = new Context())
                 {
 
-                    if (fechaDesde != null && fechaHasta != null)
+                    if (fechaDesde != null && fechaHasta != null)/*Convert(DATE, OfertaFechaDesde)*/
                     {
-                        ofertas = baseDatos.Ofertas.Include("Imagenes").Where(ej => ej.OfertaFechaDesde == fechaDesde && ej.OfertaFechaHasta == fechaHasta).OrderBy(ej => ej.OfertaTitulo).ToList();
+                        ofertas = baseDatos.Ofertas.SqlQuery("select * from Oferta where Convert(DATE,OfertaFechaDesde) >= '" + fechaDesde+ "' and Convert(DATE,OfertaFechaDesde) <= '" + fechaHasta +"'").ToList();
+                        //ofertas = baseDatos.Ofertas.Include("Imagenes").Where(ej => ej.OfertaFechaDesde == fechaDesde && ej.OfertaFechaHasta == fechaHasta).OrderBy(ej => ej.OfertaTitulo).ToList();
                     }
-                    else if (!String.IsNullOrWhiteSpace(titulo))
+                    else if (!String.IsNullOrEmpty(titulo))
                     {
-                        ofertas = baseDatos.Ofertas.Include("Imagenes").Where(ej => ej.OfertaTitulo.Contains(titulo)).OrderBy(ej => ej.OfertaTitulo).ToList();
+                        ofertas = baseDatos.Ofertas.SqlQuery("select * from Oferta where OfertaTitulo like '%"+titulo+" %'").ToList();
                     }
                     else if ((fechaDesde != null && fechaHasta != null) && (!String.IsNullOrWhiteSpace(titulo)))
                     {
-                        ofertas = baseDatos.Ofertas.Include("Imagenes").Where(ej => ej.OfertaTitulo.Contains(titulo) && ej.OfertaFechaDesde == fechaDesde && ej.OfertaFechaHasta == fechaHasta).OrderBy(ej => ej.OfertaTitulo).ToList();
+                        ofertas = baseDatos.Ofertas.SqlQuery("select * from Oferta where (Convert(DATE,OfertaFechaDesde) >= '" + fechaDesde + "' and Convert(DATE,OfertaFechaDesde) <= '" + fechaHasta + "'" + ") and OfertaTitulo like '%" + titulo + " %'").ToList();
 
                     }
                     return ofertas;
@@ -203,3 +204,12 @@ namespace BibliotecaClases {
     }
 }
 
+/*
+ else
+                    {
+                        if ((id != 0) && (!String.IsNullOrWhiteSpace(nombre)))
+                        {
+                            usuarios = baseDatos.Usuarios.SqlQuery("select * from Usuario where UserId = " + id + "and UserNombre like '%" + nombre + "%'").ToList();
+                        }
+                    }
+     */

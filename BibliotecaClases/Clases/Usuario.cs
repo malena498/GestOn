@@ -14,7 +14,7 @@ namespace BibliotecaClases.Clases
         public int UserId { get; set; }
         [Required]
         public String UserNombre { get; set; }
-        [Required]
+        [Required ]
         public String UserEmail { get; set; }
         [Required]
         public String UserCedula { get; set; }

@@ -6,6 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
+
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container-fluid col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 mt-3">
@@ -39,7 +40,6 @@
                         </asp:GridView>
                         <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 col-12 mt-2"></div>
                         <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" class="btn btn-info offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 col-md-5 col-lg-5 col-sm-5 col-5" Text="Guardar" />
-                        <asp:Button ID="btnModificar" runat="server" OnClick="btnModificar_Click" class="btn btn-info  col-md-5 col-lg-5 col-sm-5 col-5 ml-1" Text="Modificar" />
                     </div>
                     <div class="col-md-8 col-lg-8 col-sm-8 col-8 col-xl-8 ml-4" runat="server" id="div1">
                         <asp:TextBox ID="txtFchDesde" type="datetime" placeholder="Fecha desde" class="col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-3" runat="server" TextMode="DateTime"></asp:TextBox>
@@ -57,7 +57,7 @@
                         <asp:GridView ID="GridViewOferta" AutoGenerateColumns="False" EmptyDataText="No hay ofertas ingresadas."
                             AllowPaging="True" runat="server" DataKeyNames="IdOferta" OnRowDataBound="GridViewOferta_RowDataBound"
                             OnRowEditing="GridViewOferta_RowEditing" OnRowUpdating="GridViewOferta_RowUpdated"
-                            OnRowCancelingEdit="GridViewOferta_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3" OnRowDeleting="GridViewOferta_OnRowDeleting" HorizontalAlign="Center">
+                            OnRowCancelingEdit="GridViewOferta_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3" OnRowDeleting="GridViewOferta_OnRowDeleting" HorizontalAlign="Center" OnPageIndexChanging="GridViewOferta_PageIndexChanging">
                             <Columns>
                                 <asp:TemplateField HeaderText="IdOferta" Visible="false">
                                     <ItemTemplate>

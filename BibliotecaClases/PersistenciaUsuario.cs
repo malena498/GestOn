@@ -110,15 +110,16 @@ namespace BibliotecaClases
                 List<Usuario> usuarios = new List<Usuario>();
                 using (var baseDatos = new Context())
                 {
-                    
                     if (id != 0)
                     {
-                        usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.UserId == id).OrderBy(ej => ej.UserId).ToList();
+                        usuarios = baseDatos.Usuarios.SqlQuery("select * from Usuario where Activo = 1 and UserId = " +id + "order by UserId").ToList();
+                        //usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.UserId == id).OrderBy(ej => ej.UserId).ToList();
                     }
-                    else if (!String.IsNullOrWhiteSpace(nombre))
+                    if (!String.IsNullOrWhiteSpace(nombre))
                     {
-                         usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.UserNombre.Contains(nombre)).OrderBy(ej => ej.UserNombre).ToList();
+                        usuarios = baseDatos.Usuarios.SqlQuery("select * from Usuario where Activo = 1 and UserNombre like '%" + nombre + "%'").ToList();
                     }
+                    
                     return usuarios;
 
                 }
@@ -130,6 +131,27 @@ namespace BibliotecaClases
             }
         }
 
+        /*
+         * string query = "";
+
+            if (datosInput.Nombre != "")
+            {
+                query = "Nombre.Contains(" + datosInput.Nombre + ")";
+            }
+
+            if (datosInput.Apellido1 != "")
+            {
+                query = query + "&& Apellido1.Contains(" + datosInput.Apellido1 + ")";
+            }
+
+            if (datosInput.Apellido2 != "")
+            {
+                query = query + "&& Apellido2.Contains(" + datosInput.Apellido2 + ")";
+            }
+
+            var resultado = _personaRepositorio.GetAllList().AsQueryable().Where(query);
+         */
+
         public Usuario BuscarUsuarioEmail(string email)
         {
             try
@@ -137,6 +159,20 @@ namespace BibliotecaClases
                 using (var baseDatos = new Context())
                 {
                     return baseDatos.Usuarios.FirstOrDefault(prop => prop.UserEmail == email && prop.Activo == true);
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public Usuario BuscarUsuarioCedula(string cedula)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    return baseDatos.Usuarios.FirstOrDefault(prop => prop.UserCedula == cedula && prop.Activo == true);
                 }
             }
             catch (Exception ex)
@@ -160,6 +196,54 @@ namespace BibliotecaClases
                     {
                         List<Usuario> usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.Activo == true).OrderBy(ej => ej.UserNombre).ToList();
                         return usuarios;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<Usuario> ListadoUsuariosEliminados()
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<Usuario> usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.Activo == false).OrderBy(ej => ej.UserId).ToList();
+                        return usuarios;
+                    }
+                    catch
+                    {
+                        List<Usuario> usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.Activo == false).OrderBy(ej => ej.UserNombre).ToList();
+                        return usuarios;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<Nivel> ListadoNivelesRegistro()
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<Nivel> niveles = baseDatos.Niveles.Where(ej => ej.Activo == true && ej.UserAdmin != true).OrderBy(ej => ej.IdNivel).ToList();
+                        return niveles;
+                    }
+                    catch
+                    {
+                        List<Nivel> niveles = baseDatos.Niveles.Where(ej => ej.Activo == true && ej.UserAdmin != true).OrderBy(ej => ej.NombreNivel).ToList();
+                        return niveles;
                     }
                 }
             }

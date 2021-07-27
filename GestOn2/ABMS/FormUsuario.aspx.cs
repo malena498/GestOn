@@ -153,9 +153,12 @@ namespace GestOn2
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-
-
-            int id = Int32.Parse(txtIdUsuario.Text);
+            int id;
+            if (String.IsNullOrEmpty(txtIdUsuario.Text))
+                id = 0;
+            else
+            id= Int32.Parse(txtIdUsuario.Text);
+            
             string nombre = txtNomUsuario.Text;
             List<Usuario> users = Sistema.GetInstancia().BuscarUsuarioFiltros(id, nombre);
             if (users != null)
@@ -178,6 +181,12 @@ namespace GestOn2
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
             divNuevoUsuario.Visible = true;
+        }
+
+        protected void GridViewUsuarios_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewUsuarios.PageIndex = e.NewPageIndex;
+            llenarGrilla();
         }
 
         protected bool CamposCompletos()
@@ -286,11 +295,6 @@ namespace GestOn2
             }
         }
 
-        protected void OnPaging(object sender, GridViewPageEventArgs e)
-        {
-            GridViewUsuarios.PageIndex = e.NewPageIndex;
-            this.llenarGrilla();
-        }
 
         protected void limpiar()
         {
@@ -365,6 +369,19 @@ namespace GestOn2
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+        protected void chkEliminados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkEliminados.Checked)
+            {
+                GridViewUsuarios.DataSource = Sistema.GetInstancia().ListadoUsuariosEliminados();
+                GridViewUsuarios.DataBind();
+            }
+            else
+            {
+                llenarGrilla();
             }
         }
     }

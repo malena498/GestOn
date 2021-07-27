@@ -20,6 +20,7 @@ namespace GestOn2.ABMS
             {
                 GridViewOferta.DataSource = Sistema.GetInstancia().ListadoOfertas();
                 GridViewOferta.DataBind();
+                btnGuardar.Enabled = false;
             }
 
         }
@@ -103,11 +104,17 @@ namespace GestOn2.ABMS
             }
         }
 
+        
+
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             DateTime fechaDesde = DateTime.Parse(txtFchDesde.Text);
             DateTime fechaHasta = DateTime.Parse(txtFchHasta.Text);
-            string titulo = txtTitulo.Text;
+            string titulo;
+            if (String.IsNullOrEmpty(txtTituloOferta.Text))
+                titulo = "";
+            else
+                titulo = txtTituloOferta.Text;
             List<Oferta> ofertas = Sistema.GetInstancia().BuscarOfertaFiltros(fechaDesde, fechaHasta, titulo);
             if (ofertas != null)
             {
@@ -235,6 +242,7 @@ namespace GestOn2.ABMS
                         txtURLs.Text = txtURLs.Text + "," + nombrearchivo;
                     }
                     CargarImagenes(imagenes);
+                    btnGuardar.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -353,6 +361,12 @@ namespace GestOn2.ABMS
             }
         }
 
+        protected void GridViewOferta_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewOferta.PageIndex = e.NewPageIndex;
+            llenarGrilla();
+        }
+
         protected void OnPaging(object sender, GridViewPageEventArgs e)
         {
             GridViewOferta.PageIndex = e.NewPageIndex;
@@ -382,5 +396,7 @@ namespace GestOn2.ABMS
                 return true;
             }
         }
+
+
     }
 }
