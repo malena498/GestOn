@@ -129,6 +129,38 @@ namespace BibliotecaClases
             }
         }
 
+        public bool ModificarPedidoAdministrador(Pedido pedido)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    Pedido pe = baseDatos.Pedidos.SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
+                    if (pe != null)
+                    {
+                        pe.IdPedido = pedido.IdPedido;
+                        pe.Activo = pedido.Activo;
+                        pe.Descripcion = pedido.Descripcion;
+                        pe.Direccion = pedido.Direccion;
+                        pe.FechaEntrega = pedido.FechaEntrega;
+                        pe.FechaPedido = DateTime.Now;
+                        pe.productos = pedido.productos;
+                        pe.UserId = pedido.UserId;
+                        baseDatos.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public Pedido BuscarPedido(int id)
         {
             try

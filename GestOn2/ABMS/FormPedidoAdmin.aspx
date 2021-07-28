@@ -24,7 +24,7 @@
                     </asp:DropDownList>
                 </div>
                 <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 ml-0 ml--15 mt-3">
-                    <div class="col-md-7 col-lg-7 col-sm-7 col-xl-7  ">
+                    <div runat="server"  id="DivVisualizarPedidos" class="col-md-7 col-lg-7 col-sm-7 col-xl-7  " visible="true">
                         <asp:Label ID="lblInformativo" runat="server" Visible="false" Text="" CssClass="alert alert-danger"></asp:Label>
                         <asp:GridView ID="GridViewPedidos" AutoGenerateColumns="false" EmptyDataText="No hay registros."
                             AllowPaging="True" runat="server" DataKeyNames="IdPedido" class="table table-light table-striped table-hover col-md-8 col-lg-8 col-sm-8 col-xl-8"
@@ -76,13 +76,13 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Accion" ItemStyle-Width="90">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="btnEditar" runat="server" class="btn btn-outline-success col-md-12 col-xl-12 col-lg-12 col-sm-12 text-center" CommandName="Edit">EDITAR</asp:LinkButton>
-                                        <%--<asp:Button ID="btnEditar" runat="server" class="btn btn-outline-success col-md-3 col-xl-3 col-lg-3 col-sm-3" CommandName="Edit" Text="Editar"></asp:Button>--%>
+                                        <asp:LinkButton ID="btnEditar" runat="server" class="btn btn-outline-success col-md-12 col-xl-12 col-lg-12 col-sm-12 text-center" Visible="false" CommandName="Edit">EDITAR</asp:LinkButton>
                                         <asp:Button ID="btnBorrar" runat="server" class="btn btn-outline-danger col-md-4 col-xl-4 col-lg-4 col-sm-4 text-center" Visible="false" CommandName="Delete" Text="X"
                                             OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
-                                        <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Visible="false"></asp:Button>
+                                        <asp:LinkButton ID="btnActualizar" runat="server" class="btn btn-outline-success col-md-12 col-xl-12 col-lg-12 col-sm-12 text-center" CommandName="Update">EDITAR</asp:LinkButton>
                                         <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" Text="Cancelar" Visible="false"></asp:Button>
-                                    </ItemTemplate>
+                                         </ItemTemplate>
+
                                     <ItemStyle Width="90px" />
                                 </asp:TemplateField>
                             </Columns>
@@ -98,36 +98,47 @@
                             <asp:TextBox ID="txtFechaEntrega" class="col-12 col-md-12 col-lg-12 mt-3" ReadOnly="true" runat="server"></asp:TextBox>
                             <asp:TextBox ID="txtNombreUsuarioA" class="col-12 col-md-12 col-lg-12 mt-3" ReadOnly="true" runat="server"></asp:TextBox>
                             <asp:TextBox ID="txtPrecioA" class="col-12 col-md-12 col-lg-12 mt-3" ReadOnly="true" runat="server"></asp:TextBox>
-                            <asp:DropDownList ID="ddlEstado" class="col-12 col-md-12 col-lg-12 mt-3" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlEstado" class="col-12 col-md-12 col-lg-12 mt-3" runat="server">
+                                <asp:ListItem>Realizado</asp:ListItem>
+                                <asp:ListItem Selected="True">Pendiente</asp:ListItem>
+                                <asp:ListItem>Cancelado</asp:ListItem>
+                            </asp:DropDownList>
                             <div class="container-fluid col-12 col-md-12 col-lg-12 mt-3 ">
                                 <asp:LinkButton ID="lnkProductos" class="col-12 col-md-12 col-lg-12 align-content-center " runat="server" OnClick="lnkProductos_Click">Ver Productos Seleccionados</asp:LinkButton>
                             </div>
-                            <asp:Button ID="btnActualizarPedido" CssClass="btn btn-info col-lg-12 col-xl-12 col-xs-12 col-md-12 col-sm-12 mt-3" runat="server" Text="Actualizar" />
+                            <asp:Button ID="btnActualizarPedido" Enabled="false" CssClass="btn btn-info col-lg-12 col-xl-12 col-xs-12 col-md-12 col-sm-12 mt-3" runat="server" Text="Actualizar" OnClick="btnActualizarPedido_Click" />
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <asp:UpdatePanel ID="upModal" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
-                        <ContentTemplate>
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title">
-                                        <asp:Label ID="lblModalTitle" runat="server" Text=""></asp:Label></h4>
-                                </div>
-                                <div class="modal-body">
-                                    <asp:Label ID="lblModalBody" runat="server" Text=""></asp:Label>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</button>
-                                </div>
-                            </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                </div>
-            </div>
+        <div id="DivVisualizarProductos" visible="false" runat="server" class="table table-bordered col-md-7 col-lg-7 col-sm-7 col-xl-7 mt-3">
+        <asp:Label ID="Label7" runat="server" class="col-6 col-md-6 col-lg-6" Font-Bold="True" Text="Productos seleccionados"></asp:Label>
+            <asp:GridView ID="GridViewProductos" EmptyDataText="No hay productos" 
+                AllowPaging="True" runat="server" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12" AutoGenerateColumns="False">
+                <Columns>
+                     <asp:TemplateField HeaderText="IdProducto" ItemStyle-Width="150" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("producto.ProductoNombre") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Precio venta" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPrecioVenta" runat="server" Text='<%# Eval("producto.ProductoPrecioVenta") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblCantidad" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </div>
             <div ID="ListaProductosPedido" cssClass="container custom-control col-lg-4 col-xl-4 col-md-4 col-sm-4 col-xs-4" runat="server" Visible="False" style="position:absolute;align-content:flex-start;">
             </div>
         </ContentTemplate>

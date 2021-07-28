@@ -38,6 +38,25 @@ namespace GestOn2.ABMS
             GridViewPedidos.DataBind();
         }
 
+        protected void llenarDatosPedido(int idPedido) {
+            Pedido p = Sistema.GetInstancia().BuscarPedido(idPedido);
+            if (p != null) { 
+                txtDescripcionPedidoA.Text = p.Descripcion;
+                txtDireccionPedidoA.Text = p.Direccion;
+                int idUser = p.UserId;
+                txtIdPedidoA.Text = idPedido.ToString();
+                txtPrecioA.Text = p.Precio.ToString();
+                if (p.Estado.Equals("Realizado"))
+                    ddlEstado.SelectedIndex = 0;
+                if (p.Estado.Equals("Pendiente"))
+                    ddlEstado.SelectedIndex = 1;
+                if (p.Estado.Equals("Cancelado"))
+                    ddlEstado.SelectedIndex = 2;
+                Usuario u = Sistema.GetInstancia().BuscarUsuario(1);
+                txtNombreUsuarioA.Text = u.UserNombre;
+            }
+        }
+
         protected void GridViewPedidos_RowEditing(object sender, GridViewEditEventArgs e)
         {
             GridViewPedidos.EditIndex = e.NewEditIndex;
@@ -47,19 +66,9 @@ namespace GestOn2.ABMS
         protected void GridViewPedidos_RowUpdated(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = GridViewPedidos.Rows[e.RowIndex];
-            DataTable dt = Session["Tabla"] as DataTable;
-            DataRow row1;
-            row1 = dt.NewRow();
-            row1["IdProducto"] = (row.FindControl("lblIdProducto") as Label).Text;
-            row1["Nombre"] = (row.FindControl("txtNombre") as TextBox).Text;
-            row1["Cantidad"] = (row.FindControl("txtCantidad") as TextBox).Text;
-            dt.Rows.Add(row1);
-            dt.Rows[e.RowIndex].Delete();
-            Session["Tabla"] = dt;
-
-            lblInformativo.Visible = true;
-            lblInformativo.Text = "Se modificó con éxito";
-            GridViewPedidos.EditIndex = -1;
+            int Id = Convert.ToInt32((row.FindControl("IdPedido") as Label).Text);
+            btnActualizarPedido.Enabled = true;
+            llenarDatosPedido(Id);
         }
 
         protected void GridViewPedidos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -70,21 +79,6 @@ namespace GestOn2.ABMS
 
         protected void GridViewPedidos_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            try
-            {
-                GridViewRow row = GridViewPedidos.Rows[e.RowIndex];
-                DataTable dt = Session["Tabla"] as DataTable;
-                dt.Rows[e.RowIndex].Delete();
-                Session["Tabla"] = dt;
-                lblInformativo.Visible = true;
-                lblInformativo.Text = "Se elimino con éxito";
-                GridViewPedidos.EditIndex = -1;
-                llenarGrillaPedidos();
-            }
-            catch (Exception ex)
-            {
-                return;
-            }
         }
 
         protected void GridViewPedidos_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -120,18 +114,42 @@ namespace GestOn2.ABMS
 
         protected void ListPedidoUsuario_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int usuario = Convert.ToInt32(ListPedidoUsuario.SelectedItem.Value);
-            List<Pedido> lista = Sistema.GetInstancia().ListadoPedidosUsuario(usuario);
-            GridViewPedidos.DataSource = lista;
-            GridViewPedidos.DataBind();
+            llenarGrillaProductos();
+        }
+
+        protected void llenarGrillaProductos()
+        {
+            int Id = int.Parse(txtIdPedidoA.Text);
+            List<ProductoPedidoCantidad> list = Sistema.GetInstancia().ListadoProductosPedido(Id);
+            GridViewProductos.DataSource = list;
+            GridViewProductos.DataBind();
+            DivVisualizarPedidos.Visible = false;
+            DivVisualizarProductos.Visible = true;
         }
 
         protected void lnkProductos_Click(object sender, EventArgs e)
         {
-            lblModalTitle.Text = "Valido que el model se muestre con éxito";
-            lblModalBody.Text = "Cuerpo del modal";
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "myModal", "$('#myModal').modal();", true);
-            upModal.Update();
+            llenarGrillaProductos();
+        }
+
+        protected void btnActualizarPedido_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(txtIdPedidoA.Text);
+            Pedido p = Sistema.GetInstancia().BuscarPedido(id);
+            p.Estado = ddlEstado.SelectedValue;
+            if (ddlEstado.SelectedItem.Value == "Cancelado")
+            p.Activo = false;
+            bool exito = Sistema.GetInstancia().ModificarPedidoAdministrador(p);
+            if (exito)
+            {
+                lblInformativo.Text = "Se modificó con éxito";
+                lblInformativo.Visible = true;
+            }
+            else
+            {
+                lblInformativo.Text = "No se pudo modifiar ";
+                lblInformativo.Visible = true;
+            }
         }
     }
 }

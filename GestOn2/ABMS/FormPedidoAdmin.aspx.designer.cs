@@ -67,6 +67,15 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.WebControls.DropDownList ListPedidoEstado;
         
         /// <summary>
+        /// Control DivVisualizarPedidos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivVisualizarPedidos;
+        
+        /// <summary>
         /// Control lblInformativo.
         /// </summary>
         /// <remarks>
@@ -175,31 +184,31 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.WebControls.Button btnActualizarPedido;
         
         /// <summary>
-        /// Control upModal.
+        /// Control DivVisualizarProductos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upModal;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivVisualizarProductos;
         
         /// <summary>
-        /// Control lblModalTitle.
+        /// Control Label7.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblModalTitle;
+        protected global::System.Web.UI.WebControls.Label Label7;
         
         /// <summary>
-        /// Control lblModalBody.
+        /// Control GridViewProductos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblModalBody;
+        protected global::System.Web.UI.WebControls.GridView GridViewProductos;
         
         /// <summary>
         /// Control ListaProductosPedido.

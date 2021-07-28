@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using BibliotecaClases.Clases;
@@ -122,6 +123,36 @@ namespace BibliotecaClases
                         List<Producto> productos = baseDatos.Productos.Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoNombre).ToList();
                         return productos;
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<ProductoPedidoCantidad> ListadoProductosPedido(int idPedido)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    List<ProductoPedidoCantidad> objeto = new List<ProductoPedidoCantidad>();
+                    try
+                    {
+                         objeto = baseDatos.CanttidadProductos.Include("producto").Where(ej => ej.IdPedido == idPedido).OrderBy(ej => ej.IdPedido).ToList();
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        /*SqlParameter parameter = new SqlParameter("@IdPedido", idPedido);
+                        objeto = baseDatos.Database.SqlQuery<Object>("SP_Producto_Pedido @IdPedido", parameter).ToList();
+                         * SqlParameter categoryParam = new SqlParameter("@IdPedido", idPedido);
+                        List<Producto> productos = baseDatos.Database.SqlQuery<Producto>("exec SP_Producto_Pedido @IdPedido", categoryParam).ToList();
+                        return productos;*/
+                    }
+                    return objeto;
                 }
             }
             catch (Exception ex)

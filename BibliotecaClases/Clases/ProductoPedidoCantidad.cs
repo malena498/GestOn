@@ -14,5 +14,7 @@ namespace BibliotecaClases.Clases
         public int IdPedido { get; set; }
         public int ProductoId { get; set; }
         public int Cantidad { get; set; }
+        [ForeignKey("ProductoId")]
+        public Producto producto{ get; set; }
     }
 }
