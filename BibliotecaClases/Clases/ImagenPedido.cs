@@ -8,13 +8,12 @@ using System.IO;
 
 namespace BibliotecaClases.Clases
 {
-    public class Imagen
+    public class ImagenPedido
     {
         [Key]
-        public int ImagenId { get; set; }
+        public int ImagenPedidoId { get; set; }
         [Required]
-        public String ImagenURL { get; set; }
-        public int IdOferta { get; set; }
-
+        public String ImagenPedidoURL { get; set; }
+        public int IdPedido { get; set; }
     }
 }

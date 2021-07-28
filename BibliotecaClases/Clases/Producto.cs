@@ -23,6 +23,8 @@ namespace BibliotecaClases
         public decimal ProductoPrecioCompra { get; set; }
 
         public int IdCategoria { get; set; }
+        [ForeignKey("IdCategoria")]
+        public CategoriaProducto Categoria { get; set; }
 
         public string ProductoMarca { get; set; }
 

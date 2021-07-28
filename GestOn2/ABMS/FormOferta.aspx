@@ -28,7 +28,7 @@
                         <asp:TextBox ID="txtDescripcionOferta" class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 mt-3" placeholder="Descripción" runat="server" TextMode="MultiLine"></asp:TextBox>
 
                         <asp:TextBox ID="txtPrecio" class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 mt-3" placeholder="Precio" runat="server"></asp:TextBox>
-
+                       
                         <asp:FileUpload ID="fuImagenes" class="custom-file bg-light mt-3 bg-light border border-dark" runat="server" AllowMultiple="false" />
                         <asp:Button ID="btnUpload" class="btn btn-outline-danger  col-md-12 col-lg-12 col-sm-12 col-12 mt-3" runat="server" OnClick="btnUpload_Click" Text="Subir" />
 
@@ -38,6 +38,7 @@
                                 <asp:ImageField DataImageUrlField="Value" ControlStyle-Width="40%" />
                             </Columns>
                         </asp:GridView>
+                            
                         <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 col-12 mt-2"></div>
                         <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" class="btn btn-info offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 col-md-5 col-lg-5 col-sm-5 col-5" Text="Guardar" />
                     </div>

@@ -24,9 +24,6 @@
                 <br />
             </asp:Panel>
             <asp:Panel ID="Panel2" runat="server" style="position:absolute;align-content:flex-start; margin-left:10px; left: 55%; top: 24%; height: 492px; width:100%;" BackColor="#999999">
-                <asp:Label ID="Label1" runat="server" Font-Size="13pt" ForeColor="Black" Text="Id:" Width="140px" Font-Bold="True"></asp:Label>
-                <asp:TextBox ID="txtIdProducto" runat="server" Width="70px"></asp:TextBox>
-                <asp:Button ID="btnBuscar" runat="server" OnClick="btnBuscar_Click" Text="Buscar" Width="130px" />
                 <br />
                 <asp:Label ID="lblInformativo" runat="server" Font-Size="14pt" ForeColor="#FF3300" style="margin-left: 0px" Visible="False" CssClass="alert-danger" Width="40%"></asp:Label>
                 <br />
@@ -58,32 +55,81 @@
                 <br />
                 <br />
                 <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" style="margin-left: 120px" Text="Guardar" Width="100px" />
-                <asp:Button ID="btnModificar" runat="server" Enabled="False" OnClick="btnModificar_Click" Text="Modificar" Width="100px" />
-                <asp:Button ID="btnEliminar" runat="server" Enabled="False" OnClick="btnEliminar_Click" Text="Eliminar" Width="100px" />
                 <br />
                 <br />
             </asp:Panel>
-            <asp:GridView  ID="gridProductos" runat="server" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" Height="100px" Width="650px">
+            </hr>
+            <asp:GridView ID="GridViewProductos" AutoGenerateColumns="False" EmptyDataText="No hay registros."
+                AllowPaging="True" runat="server" DataKeyNames="ProductoId" OnRowDataBound="GridViewProductos_RowDataBound"
+                OnRowEditing="GridViewProductos_RowEditing" OnRowUpdating="GridViewProductos_RowUpdated"
+                OnRowCancelingEdit="GridViewProductos_RowCancelingEdit" OnRowDeleting="GridViewProductos_OnRowDeleting" OnPageIndexChanging="GridViewProductos_PageIndexChanging">
                 <Columns>
-                    <asp:BoundField DataField="ProductoId" HeaderText="ID" HeaderStyle-Width ="10%" >
-                        <HeaderStyle Width="50px" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="ProductoNombre" HeaderText="NOMBRE" />
-                    <asp:BoundField DataField="ProductoMarca" HeaderText="MARCA" />
-                    <asp:BoundField DataField="IdCategoria" HeaderText="CATEGORÍA" />
-                    <asp:BoundField DataField="Cantidad" HeaderText="CANTIDAD" />
-                    <asp:BoundField DataField="ProductoPrecioCompra" HeaderText="PRECIO COMPRA" >
-                        <ItemStyle HorizontalAlign="Right" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="ProductoPrecioVenta" HeaderText="PRECIO VENTA" >
-                        <ItemStyle HorizontalAlign="Right" />
-                    </asp:BoundField>
+                    <asp:TemplateField HeaderText="IdProducto" ItemStyle-Width="150" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("ProductoNombre") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtNombre" runat="server" Text='<%# Eval("ProductoNombre") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Marca" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblMarca" runat="server" Text='<%# Eval("ProductoMarca") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtMarca" runat="server" Text='<%# Eval("ProductoMarca") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Categoria" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblCategoria" runat="server" Text='<%# Eval("Categoria.NombreCategoria") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:DropdownList ID="ddlCategoria" runat="server"  Width="140"></asp:DropdownList>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblCantidad" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Precio Compra" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPrecioCompra" runat="server" Text='<%# Eval("ProductoPrecioCompra") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtPrecioCompra" runat="server" Text='<%# Eval("ProductoPrecioCompra") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Precio Venta" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Label ID="lbloPrecioVenta" runat="server" Text='<%# Eval("ProductoPrecioVenta") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtoPrecioVenta" runat="server" Text='<%# Eval("ProductoPrecioVenta") %>' Width="140"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Accion" ItemStyle-Width="150">
+                        <ItemTemplate>
+                            <asp:Button ID="btnEditar" runat="server" CommandName="Edit" Text="Editar" ></asp:Button>
+                            <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" Text="Borrar" Width="50px"
+                                OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Width="45px"></asp:Button>
+                            <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" Text="Cancelar"  Width="45px"></asp:Button>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
-                <HeaderStyle CssClass="bg-danger" Height="30px" BorderColor="Black" BorderStyle="Solid" BorderWidth="3px" />
-                <PagerStyle BorderColor="Black" BorderStyle="Solid" BorderWidth="3px" />
-                <RowStyle Cssclass="alert-danger" BorderColor="Black" BorderStyle="Solid" BorderWidth="3px" />
             </asp:GridView>
-<br />
             <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick">
             </asp:Timer>
             <br />

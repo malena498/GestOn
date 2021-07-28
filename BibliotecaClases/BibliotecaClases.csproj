@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Clases\CategoriaProducto.cs" />
     <Compile Include="Clases\Imagen.cs" />
+    <Compile Include="Clases\ImagenPedido.cs" />
     <Compile Include="Clases\Permiso.cs" />
     <Compile Include="Clases\ProductoPedidoCantidad.cs" />
     <Compile Include="Context.cs" />

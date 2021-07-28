@@ -16,10 +16,8 @@ namespace BibliotecaClases
                 {
                     categoria.Activo = true;
                     baseDatos.Categorias.Add(categoria);
-                    if (categoria.IdCategoria != 0)
-                    {
-                        baseDatos.SaveChanges();
-                    }
+                    baseDatos.SaveChanges();
+                    
                 }
                 return true;
             }

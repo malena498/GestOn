@@ -10,7 +10,7 @@ namespace BibliotecaClases
     partial class Sistema
     {
 
-        public int GuardarPedido(Pedido pedido, List<int> lista)
+        public int GuardarPedido(Pedido pedido, List<int> lista, List<String> imagenes)
         {
             try
             {
@@ -29,7 +29,21 @@ namespace BibliotecaClases
                     pedido.Estado = "Pendiente";
                     baseDatos.Pedidos.Add(pedido);
                     baseDatos.SaveChanges();
-                    
+                    if (pedido.IdPedido != 0)
+                    {
+                        if (imagenes != null)
+                        {
+                            foreach (String url in imagenes)
+                            {
+                                ImagenPedido img = new ImagenPedido();
+                                img.ImagenPedidoURL = url;
+                                img.IdPedido = pedido.IdPedido;
+                                baseDatos.ImagenesPedidos.Add(img);
+                            }
+                        }
+                    }
+                    baseDatos.SaveChanges();
+
                 }
                 return pedido.IdPedido;
             }

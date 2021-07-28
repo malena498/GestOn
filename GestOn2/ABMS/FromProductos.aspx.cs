@@ -29,8 +29,8 @@ namespace GestOn2.ABMS
         }
 
         public void ListarProductos() {
-            gridProductos.DataSource = Sistema.GetInstancia().ListadoProductos();
-            gridProductos.DataBind();
+            GridViewProductos.DataSource = Sistema.GetInstancia().ListadoProductos();
+            GridViewProductos.DataBind();
         }
 
         //Listo categorias de productos en el ListBox
@@ -57,7 +57,6 @@ namespace GestOn2.ABMS
             {
                 lblInformativo.Visible = false;
                 lblInformativo.Text = "";
-                int id = Int32.Parse(txtIdProducto.Text);
                 int cantidad = Int32.Parse(txtCantidad.Text);
                 String marca = txtMarca.Text;
                 String nombre = txtNombreProducto.Text;
@@ -67,7 +66,6 @@ namespace GestOn2.ABMS
                 CategoriaProducto cat = Sistema.GetInstancia().BuscarCategorias(categoria);
                 Producto p = new Producto();
                 p.Cantidad = cantidad;
-                p.ProductoId = id;
                 p.ProductoMarca = marca;
                 p.ProductoNombre = nombre;
                 p.ProductoPrecioCompra = precioCompra;
@@ -93,134 +91,135 @@ namespace GestOn2.ABMS
             ListarProductos();
         }
 
-        //Modifico el producto a traves de la ID
-        protected void btnModificar_Click(object sender, EventArgs e)
-        {
-            //Validaciones que las caja de texto no estén vacias.
-            if (CompleteCampos())
-            {
-                lblInformativo.Visible = true;
-                lblInformativo.Text = "Debe completar todos los campos";
-                TimerMensajes.Enabled = true;
-            }
-            //Si esta todo correcto, procedo a hacer la modificación.
-            else
-            {
-                lblInformativo.Visible = false;
-                lblInformativo.Text = "";
-                int id = Int32.Parse(txtIdProducto.Text);
-                int cantidad = Int32.Parse(txtCantidad.Text);
-                int categoria = int.Parse(lstCategorias.SelectedValue);
-                String marca = txtMarca.Text;
-                String nombre = txtNombreProducto.Text;
-                decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
-                //CalculoPrecioVenta(precioCompra);
-                decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
-                Producto p = new Producto();
-                p.Activo = true;
-                p.Cantidad = cantidad;
-                p.IdCategoria = categoria;
-                p.ProductoId = id;
-                p.ProductoMarca = marca;
-                p.ProductoNombre = nombre;
-                p.ProductoPrecioCompra = precioCompra;
-                p.ProductoPrecioVenta = PrecioVenta;
+        ////Modifico el producto a traves de la ID
+        //protected void btnModificar_Click(object sender, EventArgs e)
+        //{
+        //    //Validaciones que las caja de texto no estén vacias.
+        //    if (CompleteCampos())
+        //    {
+        //        lblInformativo.Visible = true;
+        //        lblInformativo.Text = "Debe completar todos los campos";
+        //        TimerMensajes.Enabled = true;
+        //    }
+        //    //Si esta todo correcto, procedo a hacer la modificación.
+        //    else
+        //    {
+        //        lblInformativo.Visible = false;
+        //        lblInformativo.Text = "";
 
-                bool exito = Sistema.GetInstancia().ModificarProducto(p);
-                if (exito)
-                {
-                    ListarProductos();
-                    lblInformativo.Text = "Se modificó con éxito";
-                    lblInformativo.Visible = true;
-                    TimerMensajes.Enabled = true;
+        //        int cantidad = Int32.Parse(txtCantidad.Text);
+        //        int categoria = int.Parse(lstCategorias.SelectedValue);
+        //        String marca = txtMarca.Text;
+        //        String nombre = txtNombreProducto.Text;
+        //        decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
+        //        //CalculoPrecioVenta(precioCompra);
+        //        decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
+        //        Producto p = new Producto();
+        //        p.Activo = true;
+        //        p.Cantidad = cantidad;
+        //        p.IdCategoria = categoria;
+        //        p.ProductoId = id;
+        //        p.ProductoMarca = marca;
+        //        p.ProductoNombre = nombre;
+        //        p.ProductoPrecioCompra = precioCompra;
+        //        p.ProductoPrecioVenta = PrecioVenta;
 
-                    //Elimino campos luego que se modifico con éxito
-                    VaciarCampos();
-                }
-                else
-                {
-                    lblInformativo.Text = "No se pudo modificó ";
-                    lblInformativo.Visible = true;
-                    TimerMensajes.Enabled = true;
-                }
-            }
-        }
+        //        bool exito = Sistema.GetInstancia().ModificarProducto(p);
+        //        if (exito)
+        //        {
+        //            ListarProductos();
+        //            lblInformativo.Text = "Se modificó con éxito";
+        //            lblInformativo.Visible = true;
+        //            TimerMensajes.Enabled = true;
+
+        //            //Elimino campos luego que se modifico con éxito
+        //            VaciarCampos();
+        //        }
+        //        else
+        //        {
+        //            lblInformativo.Text = "No se pudo modificó ";
+        //            lblInformativo.Visible = true;
+        //            TimerMensajes.Enabled = true;
+        //        }
+        //    }
+        //}
 
         //Busco producto a  través de la ID
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (txtIdProducto.Text != "")
-            {
-                int id = int.Parse(txtIdProducto.Text);
-                Producto p = Sistema.GetInstancia().BuscarProducto(id);
-                if (p != null)
-                {
-                    if (p.Activo == true)
-                    {
-                        ListarCategorias();
-                        txtCantidad.Text = p.Cantidad.ToString();
-                        txtMarca.Text = p.ProductoMarca.ToString();
-                        txtNombreProducto.Text = p.ProductoNombre.ToString();
-                        txtPrecioCompra.Text = p.ProductoPrecioCompra.ToString();
-                        txtPrecioVenta.Text = p.ProductoPrecioVenta.ToString();
-                        lstCategorias.Items.FindByValue(p.IdCategoria.ToString()).Selected = true;
-                        btnModificar.Enabled = true;
-                        btnEliminar.Enabled = true;
-                    }
-                    else
-                    {
-                        lblInformativo.Text = "El producto fue dado de baja";
-                        lblInformativo.Visible = true;
-                        TimerMensajes.Enabled = true;
-                        VaciarCampos();
-                    }
-                }
-                else
-                {
-                    lblInformativo.Text = "El producto buscado no éxiste en el sistema";
-                    lblInformativo.Visible = true;
-                    TimerMensajes.Enabled = true;
-                    VaciarCampos();
-                }
-            }
-            else {
-                lblInformativo.Text = "Debe completar id del producto";
-                lblInformativo.Visible = true;
-                TimerMensajes.Enabled = true;
-            }
+            //if (txtIdProducto.Text != "")
+            //{
+            //    int id = int.Parse(txtIdProducto.Text);
+            //    Producto p = Sistema.GetInstancia().BuscarProducto(id);
+            //    if (p != null)
+            //    {
+            //        if (p.Activo == true)
+            //        {
+            //            ListarCategorias();
+            //            txtCantidad.Text = p.Cantidad.ToString();
+            //            txtMarca.Text = p.ProductoMarca.ToString();
+            //            txtNombreProducto.Text = p.ProductoNombre.ToString();
+            //            txtPrecioCompra.Text = p.ProductoPrecioCompra.ToString();
+            //            txtPrecioVenta.Text = p.ProductoPrecioVenta.ToString();
+            //            lstCategorias.Items.FindByValue(p.IdCategoria.ToString()).Selected = true;
+            //            btnModificar.Enabled = true;
+            //            btnEliminar.Enabled = true;
+            //        }
+            //        else
+            //        {
+            //            lblInformativo.Text = "El producto fue dado de baja";
+            //            lblInformativo.Visible = true;
+            //            TimerMensajes.Enabled = true;
+            //            VaciarCampos();
+            //        }
+            //    }
+            //    else
+            //    {
+            //        lblInformativo.Text = "El producto buscado no éxiste en el sistema";
+            //        lblInformativo.Visible = true;
+            //        TimerMensajes.Enabled = true;
+            //        VaciarCampos();
+            //    }
+            //}
+            //else
+            //{
+            //    lblInformativo.Text = "Debe completar id del producto";
+            //    lblInformativo.Visible = true;
+            //    TimerMensajes.Enabled = true;
+            //}
         }
 
-        //Elimino el producto a través de la ID
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (txtIdProducto.Text != "")
-            {
-                int id = int.Parse(txtIdProducto.Text);
-                bool exito = Sistema.GetInstancia().EliminarProducto(id);
-                if (exito)
-                {
-                    lblInformativo.Text = "Se elimino con éxito";
-                    lblInformativo.Visible = true;
-                    TimerMensajes.Enabled = true;
+        ////Elimino el producto a través de la ID
+        //protected void btnEliminar_Click(object sender, EventArgs e)
+        //{
+        //    if (txtIdProducto.Text != "")
+        //    {
+        //        int id = int.Parse(txtIdProducto.Text);
+        //        bool exito = Sistema.GetInstancia().EliminarProducto(id);
+        //        if (exito)
+        //        {
+        //            lblInformativo.Text = "Se elimino con éxito";
+        //            lblInformativo.Visible = true;
+        //            TimerMensajes.Enabled = true;
 
-                    //Elimino campos luego que se modifico con éxito
-                    VaciarCampos();
-                    ListarProductos();
-                }
-                else
-                {
-                    lblInformativo.Text = "No se pudo eliminar ";
-                    lblInformativo.Visible = true;
-                    TimerMensajes.Enabled = true;
-                }
-            }
-            else {
-                lblInformativo.Text = "Complete id del poducto que desea eliminar";
-                lblInformativo.Visible = true;
-                TimerMensajes.Enabled = true;
-            }
+        //            //Elimino campos luego que se modifico con éxito
+        //            VaciarCampos();
+        //            ListarProductos();
+        //        }
+        //        else
+        //        {
+        //            lblInformativo.Text = "No se pudo eliminar ";
+        //            lblInformativo.Visible = true;
+        //            TimerMensajes.Enabled = true;
+        //        }
+        //    }
+        //    else {
+        //        lblInformativo.Text = "Complete id del poducto que desea eliminar";
+        //        lblInformativo.Visible = true;
+        //        TimerMensajes.Enabled = true;
+        //    }
             
-        }
+        //}
 
         //Timer usado para mostrar o ocultar mensajes
         protected void TimerMensajes_Tick(object sender, EventArgs e)
@@ -232,20 +231,22 @@ namespace GestOn2.ABMS
 
         //Valida si falta poner algun dato (retorna true en caso que falte alguno)
         public bool CompleteCampos() {
-            if (txtIdProducto.Text == "" || txtCantidad.Text == "" || 
-                txtMarca.Text == "" || txtNombreProducto.Text == "" || 
-                txtPrecioCompra.Text == "" || txtPrecioVenta.Text == "")
+            if (String.IsNullOrEmpty(txtCantidad.Text) ||
+                String.IsNullOrEmpty(txtMarca.Text )||
+                String.IsNullOrEmpty(txtNombreProducto.Text) ||
+                String.IsNullOrEmpty(txtPrecioCompra.Text) ||
+                String.IsNullOrEmpty(txtPrecioVenta.Text))
                 return true;
             else return false;
         }
 
         //Vacia los campos de la pantalla excepto el id y los mensajes
         protected void VaciarCampos() {
-            txtCantidad.Text = "";
-            txtMarca.Text = "";
-            txtNombreProducto.Text = "";
-            txtPrecioCompra.Text = "";
-            txtPrecioVenta.Text = "";
+            txtCantidad.Text = string.Empty;
+            txtMarca.Text = string.Empty;
+            txtNombreProducto.Text = string.Empty;
+            txtPrecioCompra.Text = string.Empty;
+            txtPrecioVenta.Text = string.Empty;
         }
 
         //Calcula el precio de venta a traves de un porcentaje dado y el precio de compra
@@ -305,7 +306,7 @@ namespace GestOn2.ABMS
         {
             //Validaciones que las caja de texto no estén vacias.
 
-            if (txtIdCat.Text == "" || txtNomCat.Text == "")
+            if (txtNomCat.Text == "")
             {
                 lblCategoriasMsj.Text = "Debe completar todos los campos";
                 lblCategoriasMsj.Visible = true;
@@ -316,12 +317,12 @@ namespace GestOn2.ABMS
             {
                 lblCategoriasMsj.Visible = false;
                 lblCategoriasMsj.Text = "";
-                int id = Int32.Parse(txtIdCat.Text);
+                
                 String nombre = txtNomCat.Text;
 
                 CategoriaProducto cat = new CategoriaProducto();
                 cat.NombreCategoria = nombre;
-                cat.IdCategoria = id;
+                
 
                 bool existe = Sistema.GetInstancia().GuardarCategoria(cat);
                 if (existe)
@@ -382,6 +383,88 @@ namespace GestOn2.ABMS
             pnlNuevaCat.Visible = false;
             txtIdCat.Text = "";
             txtNomCat.Text = "";
+        }
+
+        protected void GridViewProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewProductos.PageIndex = e.NewPageIndex;
+            ListarProductos();
+        }
+
+        protected void GridViewProductos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (e.Row.RowState == DataControlRowState.Edit)
+                {
+
+                    DropDownList ddlCategoria = (DropDownList)e.Row.FindControl("ddlCategoria");
+                    ddlCategoria.DataSource = Sistema.GetInstancia().ListadoCategorias();
+                    ddlCategoria.DataTextField = "NombreCategoria";
+                    ddlCategoria.DataValueField = "IdCategoria";
+                    ddlCategoria.DataBind();
+
+                }
+            }
+        }
+
+        protected void GridViewProductos_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridViewProductos.EditIndex = e.NewEditIndex;
+            ListarProductos();
+        }
+
+        
+        protected void GridViewProductos_RowUpdated(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = GridViewProductos.Rows[e.RowIndex];
+            int Id = Convert.ToInt32((row.FindControl("lblIdProducto") as Label).Text);
+            string nombre = (row.FindControl("txtNombre") as TextBox).Text;
+            string marca = (row.FindControl("txtMarca") as TextBox).Text;
+            string cantidad = (row.FindControl("txtCantidad") as TextBox).Text;
+            decimal preciocompra = decimal.Parse((row.FindControl("txtPrecioCompra") as TextBox).Text);
+            decimal precioventa = decimal.Parse((row.FindControl("txtoPrecioVenta") as TextBox).Text);
+            int IdCategoria = Convert.ToInt32((row.FindControl("ddlCategoria") as DropDownList).SelectedValue);
+
+
+            lblInformativo.Visible = false;
+            lblInformativo.Text = string.Empty;
+                Producto p = null;
+                p = Sistema.GetInstancia().BuscarProducto(Id);
+                p.ProductoNombre = nombre;
+                p.ProductoMarca = marca;
+                p.ProductoPrecioCompra = preciocompra;
+                p.ProductoPrecioVenta = precioventa;
+                p.IdCategoria = IdCategoria;
+
+                bool exito = Sistema.GetInstancia().ModificarProducto(p);
+                if (exito)
+                {
+                    lblInformativo.Visible = true;
+                    lblInformativo.Text = "Se modificó con éxito";
+                    GridViewProductos.EditIndex = -1;
+                    ListarProductos();
+                }
+        }
+
+        protected void GridViewProductos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridViewProductos.EditIndex = -1;
+            ListarProductos();
+        }
+
+        protected void GridViewProductos_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = GridViewProductos.Rows[e.RowIndex];
+            int Id = Convert.ToInt32((row.FindControl("lblIdProducto") as Label).Text);
+            bool exito = Sistema.GetInstancia().EliminarProducto(Id);
+            if (exito)
+            {
+                lblInformativo.Visible = true;
+                lblInformativo.Text = "Se elimino con éxito";
+                GridViewProductos.EditIndex = -1;
+                ListarProductos();
+            }
         }
     }
 }

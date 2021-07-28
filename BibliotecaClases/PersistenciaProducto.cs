@@ -19,10 +19,8 @@ namespace BibliotecaClases
                     producto.Activo = true;
                     producto.IdCategoria = cat;
                     baseDatos.Productos.Add(producto);
-                    if (producto.ProductoId!= 0)
-                    {
-                        baseDatos.SaveChanges();
-                    }
+                    baseDatos.SaveChanges();
+                    
                 }
                 return true;
             }
@@ -64,7 +62,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    Producto pr = baseDatos.Productos.SingleOrDefault(cl => cl.ProductoId == producto.ProductoId);
+                    Producto pr = baseDatos.Productos.Include("Categoria").SingleOrDefault(cl => cl.ProductoId == producto.ProductoId);
                     if (pr != null)
                     {
                         pr.ProductoId = producto.ProductoId;
@@ -96,7 +94,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Productos.FirstOrDefault(prop => prop.ProductoId == id);
+                    return baseDatos.Productos.Include("Categoria").FirstOrDefault(prop => prop.ProductoId == id);
                 }
             }
             catch (Exception ex)
@@ -115,12 +113,12 @@ namespace BibliotecaClases
                 {
                     try
                     {
-                        List<Producto> productos = baseDatos.Productos.Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoId).ToList();
+                        List<Producto> productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoId).ToList();
                         return productos;
                     }
                     catch
                     {
-                        List<Producto> productos = baseDatos.Productos.Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoNombre).ToList();
+                        List<Producto> productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoNombre).ToList();
                         return productos;
                     }
                 }
