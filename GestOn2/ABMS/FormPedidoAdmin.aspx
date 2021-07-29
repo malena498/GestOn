@@ -24,8 +24,8 @@
                     </asp:DropDownList>
                     
                 </div>
-                <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 ml-0 ml--15 mt-3">
-                    <div runat="server"  id="DivVisualizarPedidos" class="col-md-7 col-lg-7 col-sm-7 col-xl-7  " visible="true">
+                <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 ml-0 ml-15 mt-3">
+                    <div runat="server" id="DivVisualizarPedidos" class="col-md-7 col-lg-7 col-sm-7 col-xl-7  " visible="true">
                         <asp:Label ID="lblInformativo" runat="server" Visible="false" Text="" CssClass="alert alert-danger"></asp:Label>
                         <asp:GridView ID="GridViewPedidos" AutoGenerateColumns="false" EmptyDataText="No hay registros."
                             AllowPaging="True" runat="server" DataKeyNames="IdPedido" class="table table-light table-striped table-hover col-md-8 col-lg-8 col-sm-8 col-xl-8"
@@ -82,12 +82,41 @@
                                             OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
                                         <asp:LinkButton ID="btnActualizar" runat="server" class="btn btn-outline-success col-md-12 col-xl-12 col-lg-12 col-sm-12 text-center" CommandName="Update">EDITAR</asp:LinkButton>
                                         <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" Text="Cancelar" Visible="false"></asp:Button>
-                                         </ItemTemplate>
+                                    </ItemTemplate>
 
                                     <ItemStyle Width="90px" />
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
+                    </div>
+                    <div id="DivVisualizarProductos" visible="false" runat="server" class="table table-bordered col-md-7 col-lg-7 col-sm-7 col-xl-7 mt-3">
+                        <asp:Label ID="Label7" runat="server" class="col-6 col-md-6 col-lg-6" Font-Bold="True" Text="Productos seleccionados"></asp:Label>
+                        <asp:GridView ID="GridViewProductos" EmptyDataText="No hay productos"
+                            AllowPaging="True" runat="server" Css="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12" AutoGenerateColumns="False">
+                            <Columns>
+                                <asp:TemplateField HeaderText="IdProducto" ItemStyle-Width="150" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("producto.ProductoNombre") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Precio venta" ItemStyle-Width="150">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblPrecioVenta" runat="server" Text='<%# Eval("producto.ProductoPrecioVenta") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="150">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblCantidad" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                        <asp:Button ID="btnCerrarDivProductos" CssClass="btn btn-outline-info col-lg-3 col-md-3 col-xl-3 col-sm-3" Text="Cerrar" runat="server" OnClick="btnCerrarDivProductos_Click"/>
                     </div>
                     <div class="offset-md-1 offset-xl-1 offset-lg-1 offset-sm-1 col-lg-4 col-sm-4 col-md-4 border bg-dark">
                         <form>
@@ -111,36 +140,6 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        <div id="DivVisualizarProductos" visible="false" runat="server" class="table table-bordered col-md-7 col-lg-7 col-sm-7 col-xl-7 mt-3">
-        <asp:Label ID="Label7" runat="server" class="col-6 col-md-6 col-lg-6" Font-Bold="True" Text="Productos seleccionados"></asp:Label>
-            <asp:GridView ID="GridViewProductos" EmptyDataText="No hay productos" 
-                AllowPaging="True" runat="server" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12" AutoGenerateColumns="False">
-                <Columns>
-                     <asp:TemplateField HeaderText="IdProducto" ItemStyle-Width="150" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
-                        <ItemTemplate>
-                            <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("producto.ProductoNombre") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Precio venta" ItemStyle-Width="150">
-                        <ItemTemplate>
-                            <asp:Label ID="lblPrecioVenta" runat="server" Text='<%# Eval("producto.ProductoPrecioVenta") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="150">
-                        <ItemTemplate>
-                            <asp:Label ID="lblCantidad" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                </Columns>
-            </asp:GridView>
-        </div>
-            <div ID="ListaProductosPedido" cssClass="container custom-control col-lg-4 col-xl-4 col-md-4 col-sm-4 col-xs-4" runat="server" Visible="False" style="position:absolute;align-content:flex-start;">
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

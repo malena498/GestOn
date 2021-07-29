@@ -158,5 +158,44 @@ namespace BibliotecaClases
                 return null;
             }
         }
+
+        public List<Producto> ListadoProductoMarca(string marca)
+        {
+            try
+            {
+                List<Producto> productos = new List<Producto>();
+                using (var baseDatos = new Context())
+                {
+                    productos = baseDatos.Productos.SqlQuery("select * from Producto where Activo = 1 and ProductoMarca like '%" + marca + "%'").ToList();
+                    return productos;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                List<Producto> productos = null;
+                return productos;
+            }
+        }
+
+        public List<Producto> ListadoProductoCategoria(int categoria)
+        {
+            try
+            {
+                List<Producto> productos = new List<Producto>();
+                using (var baseDatos = new Context())
+                {
+                    productos = baseDatos.Productos.SqlQuery("select * from Producto where Activo = 1 and IdCategoria like '%" + categoria + "%'").ToList();
+                    return productos;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                List<Producto> productos = null;
+                return productos;
+            }
+        }
+
     }
 }

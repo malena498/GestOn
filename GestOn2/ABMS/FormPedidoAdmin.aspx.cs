@@ -151,5 +151,11 @@ namespace GestOn2.ABMS
                 lblInformativo.Visible = true;
             }
         }
+
+        protected void btnCerrarDivProductos_Click(object sender, EventArgs e)
+        {
+            DivVisualizarPedidos.Visible = true;
+            DivVisualizarProductos.Visible = false;
+        }
     }
 }
