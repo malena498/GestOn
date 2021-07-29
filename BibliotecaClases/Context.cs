@@ -23,6 +23,7 @@ namespace BibliotecaClases
         public DbSet<CategoriaProducto> Categorias { get; set; }
         public DbSet<ProductoPedidoCantidad> CanttidadProductos { get; set; }
         public DbSet<ImagenPedido> ImagenesPedidos { get; set; }
+        public DbSet<Configuracion> Configuraciones { get; set; }
 
 
 

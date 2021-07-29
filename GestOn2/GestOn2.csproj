@@ -16,9 +16,10 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44327</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -83,6 +84,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ABMS\FormConfiguraciones.aspx" />
     <Content Include="ABMS\FormDocumento.aspx" />
     <Content Include="ABMS\FormOferta.aspx" />
     <Content Include="ABMS\FormPedido.aspx" />
@@ -190,6 +192,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABMS\FormConfiguraciones.aspx.cs">
+      <DependentUpon>FormConfiguraciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ABMS\FormConfiguraciones.aspx.designer.cs">
+      <DependentUpon>FormConfiguraciones.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ABMS\FormDocumento.aspx.cs">
       <DependentUpon>FormDocumento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -20,7 +20,7 @@ namespace BibliotecaClases
         public String Descripcion { get; set; }
         public virtual List<Producto> productos { get; set; }
         public int UserId { get; set; }
-        public int Precio { get; set; }
+        public decimal Precio { get; set; }
         public String Estado { get; set; }
         public int idDocumento { get; set; }
 

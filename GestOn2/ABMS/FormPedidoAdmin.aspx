@@ -22,6 +22,7 @@
                         <asp:ListItem>Realizado</asp:ListItem>
                         <asp:ListItem>Cancelado</asp:ListItem>
                     </asp:DropDownList>
+                    
                 </div>
                 <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 ml-0 ml--15 mt-3">
                     <div runat="server"  id="DivVisualizarPedidos" class="col-md-7 col-lg-7 col-sm-7 col-xl-7  " visible="true">

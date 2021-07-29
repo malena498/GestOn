@@ -23,6 +23,8 @@ namespace GestOn2.ABMS
                 if (Session["IdUsuario"] != null)
                 {
                     String idUsuarioLogueado = Session["IdUsuario"].ToString();
+
+
                     ListProductos1.DataSource = Sistema.GetInstancia().ListadoProductos();
                     ListProductos1.DataTextField = "ProductoNombre";
                     ListProductos1.DataValueField = "ProductoId";
@@ -70,6 +72,7 @@ namespace GestOn2.ABMS
                 p.Direccion = Direccion;
                 p.FechaEntrega = fchEntrega;
                 p.UserId = user;
+                p.Precio = decimal.Parse(txtPrecioPedido.Text);
                 DataTable dt = new DataTable();
                 if (rdbPedidoProductos.Checked) { 
                    dt = Session["Tabla"] as DataTable;
@@ -103,6 +106,7 @@ namespace GestOn2.ABMS
                         TimerMensajes.Enabled = true;
                         Session["Tabla"] = null;
 
+                        llenarGrillaPedidos();
                         //Elimino campos luego que se inserto con éxito
                         VaciarCampos();
                     }
@@ -143,6 +147,9 @@ namespace GestOn2.ABMS
                     ListProductos1.Items.Remove(ListProductos1.Items.FindByValue(idProducto.ToString()));
                     txtCantidadProducto.Text = string.Empty;
 
+
+                   
+
                 }
                 else
                 {
@@ -179,6 +186,14 @@ namespace GestOn2.ABMS
 
                 }
 
+                decimal precioProductos = CalcularPrecioProductos(p.ProductoPrecioVenta, cantidad);
+                decimal precio = 0;
+                if (Session["precioTotal"] != null) {
+                    precio = decimal.Parse(Session["precioTotal"].ToString());
+                }
+                precio = precio + precioProductos;
+                txtPrecioPedido.Text = precio.ToString();
+                Session["precioTotal"] = precioProductos;
             }
         }
 
@@ -222,6 +237,10 @@ namespace GestOn2.ABMS
             {
                 txtDireccion.Enabled = true;
                 txtDireccion.Visible = true;
+                Configuracion conf = Sistema.GetInstancia().BuscarConfiguracion("CostoEnvio");
+                decimal  precio = decimal.Parse(txtPrecioPedido.Text) + int.Parse(conf.Valor);
+
+                txtPrecioPedido.Text = precio.ToString();
             }
         }
 
@@ -550,7 +569,18 @@ namespace GestOn2.ABMS
             }
             return squareImage;
         }
+
+        protected decimal CalcularPrecioProductos(decimal precio, int cantidad)
+        {
+            decimal precioTotal = 0;
+            precioTotal = precio * cantidad;
+
+           
+            return precioTotal;
+        }
     }
+
+    
 }
 
 /* protected void btnBuscar_Click(object sender, EventArgs e)
