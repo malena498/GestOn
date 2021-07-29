@@ -1,12 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PaginasMaestras/PageMaster.Master" AutoEventWireup="true" CodeBehind="FormDocumento.aspx.cs" Inherits="GestOn2.ABMS.FormDocumento" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
-        .auto-style1 {
-            font-weight: bold;
-            font-size: medium;
-        }
-    </style>
     <link href="../Content/font-awesome.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -14,8 +8,17 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <div class="row">
-                <div class="col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4 ml-3 mt-3" runat="server" id="divNuevaOferta">
+               <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 ml-0 ml--15 mt-3">
+                <div id="DivFiltros" runat="server" class="container border border-info col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-2">
+                    <h1 class="col-md-12 col-lg-12 col-sm-12 col-xl-12">Selección de Filtros</h1>
+                    <asp:Label ID="Label1" runat="server" Text="Nombre Producto" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
+                    <asp:TextBox ID="txtNombreProductoFiltro"  class="col-3 col-md-3 col-lg-3 col-sm-3 mb-3" runat="server"></asp:TextBox>
+                    <asp:LinkButton ID="btnBuscarFiltro" CssClass="btn btn-outline-success col-xl-1 col-xs-1 col-sm-1 col-md-1 col-lg-1" runat="server" OnClick="btnBuscarFiltro_Click">Bu</asp:LinkButton>
+                    <asp:Label ID="Label6" runat="server" Text="Practico" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
+                    <asp:CheckBox ID="chkEsPracticoFiltro" runat="server" AutoPostBack="True" OnCheckedChanged="chkEsPracticoFiltro_CheckedChanged"/><br />
+                    <asp:LinkButton ID="lnkNuevoProducto" CssClass="btn btn-outline-success" runat="server" OnClick="lnkNuevoProducto_Click">Agregar Producto</asp:LinkButton>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4 ml-3 mt-3" runat="server" visible="false" id="divNuevaOferta">
                         <form id="form1">
                             <div class="row bg-light col-md-12 col-lg-12 col-sm-12 col-xl-12 ">
                                 <asp:TextBox ID="txtNombre" runat="server" placeholder="Nombre del documento" class="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
@@ -51,30 +54,33 @@
                                 <!-- Estos label son para guardar ruta y tipo de archivo del documento que selecciona el cliente-->
                                 <asp:Label ID="lblrutaarchivo" runat="server" Visible="False"></asp:Label>
                                 <asp:Label ID="lblTipoDoc" runat="server" Visible="False"></asp:Label>
+
+                                <asp:LinkButton ID="lnkVerDocumentos" CssClass="btn btn-outline-danger col-lg-3 col-xl-3 col-md-3 col-xs-3 col-sm-3 mt-3" runat="server" OnClick="lnkVerDocumentos_Click"> Listar documentos</asp:LinkButton>
                             </div>
                         </form>
                 </div>
-                <div class="col-md-8 col-lg-8 col-sm-8 col-8 col-xl-8 ml-1" runat="server">
+                <div  id="DivGridDocumentos" class="col-md-12 col-lg-12 col-sm-12 col-12 col-xl-12" runat="server">
                     <asp:Label ID="lblResultado" class="alert alert-danger col-lg-12 col-xl-12 col-md-12 col-sm-12" Visible="false" runat="server" Text=""></asp:Label>
                     <asp:GridView ID="GridViewDocumentos" AutoGenerateColumns="False" EmptyDataText="No tiene documentos ingresados."
                         AllowPaging="True" runat="server" DataKeyNames="IdDocumento" OnRowDataBound="GridViewDocumento_RowDataBound"
                         OnRowUpdating="GridViewDocumento_RowUpdated"
                         OnRowCancelingEdit="GridViewDocumento_RowCancelingEdit" OnRowEditing="GridViewDocumento_RowEditing" OnRowDeleting="GridViewDocumento_OnRowDeleting"
-                        class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3" HorizontalAlign="Center">
+                        class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3" HorizontalAlign="Center" OnPageIndexChanging="GridViewDocumentos_PageIndexChanging" PageSize="5">
                         <Columns>
                             <asp:TemplateField HeaderText="IdDocumento" Visible="false">
                                 <ItemTemplate>
                                     <asp:Label ID="lblIdDocumento" runat="server" Text='<%# Eval("IdDocumento") %>' ReadOnly="True"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Nombre">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblNombreDoc" ControlStyle-CssClass="col-md-1 col-xl-1 col-lg-1 col-sm-1" runat="server" Text='<%# Eval("NombreDocumento") %>'></asp:Label>
+                            <asp:TemplateField HeaderText="Nombre" >
+                                <ItemTemplate  >
+                                    <asp:Label ID="lblNombreDoc" runat="server" Text='<%# Eval("NombreDocumento") %>'></asp:Label>
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:TextBox ID="txtNombreDoc" runat="server" Text='<%# Eval("NombreDocumento") %>'></asp:TextBox>
                                 </EditItemTemplate>
-                                <ControlStyle CssClass="col-md-2 col-xl-2 col-lg-2 col-sm-2 align-content-center" />
+                                <ControlStyle/>
+                                <ItemStyle HorizontalAlign="Left" Wrap="True" />
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Descripción">
                                 <ItemTemplate>
@@ -132,15 +138,15 @@
                                 </EditItemTemplate>
                                 <ControlStyle />
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Accion" ItemStyle-Width="150">
+                            <asp:TemplateField HeaderText="Accion">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEditar" runat="server" CommandName="Edit" Text="Editar"></asp:Button>
-                                    <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" Text="Borrar" Width="50px"
+                                    <asp:Button ID="btnEditar" runat="server" CssClass="btn btn-outline-success col-md-5 col-xl-5 col-lg-5 col-sm-5" CommandName="Edit" Text="E"></asp:Button>
+                                    <asp:Button ID="btnBorrar" runat="server" CssClass="btn btn-outline-danger col-md-5 col-xl-5 col-lg-5 col-sm-5" CommandName="Delete" Text="X"
                                         OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:Button ID="btnActualizar" runat="server" CommandName="Update" Text="Actualizar" Width="45px"></asp:Button>
-                                    <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" Text="Cancelar" Width="45px"></asp:Button>
+                                    <asp:Button ID="btnActualizar" runat="server" CssClass="btn btn-outline-success col-md-5 col-xl-5 col-lg-5 col-sm-5" CommandName="Update" Text="Actualizar"></asp:Button>
+                                    <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-outline-danger col-md-5 col-xl-5 col-lg-5 col-sm-5" CommandName="Cancel" Text="Cancelar"></asp:Button>
                                 </EditItemTemplate>
                                 <ItemStyle Width="150px" />
                             </asp:TemplateField>

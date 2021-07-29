@@ -231,7 +231,6 @@ namespace GestOn2.ABMS
                 }
             }
         }
-                
 
         protected void GridViewDocumento_RowEditing(object sender, GridViewEditEventArgs e)
         {
@@ -310,159 +309,52 @@ namespace GestOn2.ABMS
             GridViewDocumentos.PageIndex = e.NewPageIndex;
             this.llenarGrillaDocumentos();
         }
-    }
-}
 
-
-
-
-/*Modificar documento
-//Validaciones que las caja de texto no estén vacias.
-if (String.IsNullOrEmpty(txtIdDocumento.Text))
-{
-    lblMensaje.Text = "Debe completar todos los campos";
-}
-//Si esta todo correcto, procedo a hacer la modificación.
-else
-{
-    lblMensaje.Visible = false;
-    lblMensaje.Text = "";
-    int id = Int32.Parse(txtIdDocumento.Text);
-    string nombreDocumento = txtNombre.Text;
-    string descripcion = txtDescripcion.Text;
-    string ruta = lblrutaarchivo.Text;
-    string Formato = lblTipoDoc.Text;
-    string gradoliceal = ddlGradoLiceal.SelectedValue;
-    string direccion = "";
-    string nroPractico = "";
-    bool esEnvio = false;
-    bool EsPractico = false;
-    bool EsDobleFaz = false;
-    bool AColor = false;
-
-    if (chkEsEnvio.Checked)
-    {
-        direccion = txtDireccion.Text;
-        esEnvio = true;
-    }
-    if (chkEsPractico.Checked)
-    {
-        nroPractico = txtNroPractico.Text;
-        EsPractico = true;
-    }
-    if (chkDobleFaz.Checked)
-        EsDobleFaz = true;
-    if (chkColor.Checked)
-        AColor = true;
-    int UserId = 2;
-
-    Documento d = new Documento();
-    d.IdDocumento = id;
-    d.AColor = AColor;
-    d.Descripcion = descripcion;
-    d.Direccion = direccion;
-    d.EsDobleFaz = EsDobleFaz;
-    d.esEnvio = esEnvio;
-    d.EsPractico = EsPractico;
-    d.FechaIngreso = DateTime.Today;
-    d.Formato = Formato;
-    d.gradoLiceal = gradoliceal;
-    d.NombreDocumento = nombreDocumento;
-    d.NroPractico = nroPractico;
-    d.ruta = ruta;
-    d.UserId = UserId;
-
-
-    bool exito = Sistema.GetInstancia().ModificarDocumento(d);
-    if (exito)
-    {
-        lblMensaje.Text = "Se modificó con éxito";
-        //Elimino campos luego que se modifico con éxito
-        VaciarCampos();
-    }
-    else
-    {
-        lblMensaje.Text = "No se pudo modificar ";
-    }
-}*/
-/*Eliminar Documento
-            if (!String.IsNullOrEmpty(txtIdDocumento.Text))
-            {
-                int id = int.Parse(txtIdDocumento.Text);
-                bool exito = Sistema.GetInstancia().EliminarDocumento(id);
-                if (exito)
-                {
-                    lblMensaje.Text = "Se elimino con éxito";
-                    //Elimino campos luego que se modifico con éxito
-                    VaciarCampos();
-                }
-                else
-                {
-                    lblMensaje.Text = "No se pudo eliminar ";
-                }
-            }
-            else
-            {
-                lblMensaje.Text = "Complete id del docuemnto que desea eliminar";
-            }*/
-/*Buscar Documento
-if (!String.IsNullOrEmpty(txtIdDocumento.Text))
-{
-    int id = int.Parse(txtIdDocumento.Text);
-    Documento d = Sistema.GetInstancia().BuscarDocumento(id);
-    if (d != null)
-    {
-        if (d.Activo == true)
+        protected void GridViewDocumentos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            GridViewDocumentos.PageIndex = e.NewPageIndex;
+            llenarGrillaDocumentos();
+        }
 
-            txtDescripcion.Text = d.Descripcion;
-            txtNombre.Text = d.NombreDocumento;
-            ddlGradoLiceal.SelectedValue = d.gradoLiceal;
-            if (d.AColor == true)
-                chkColor.Checked = true;
-            else chkColor.Checked = false;
-            if (d.EsDobleFaz)
-                chkDobleFaz.Checked = true;
-            else chkDobleFaz.Checked = false;
-            if (d.esEnvio == true)
+        protected void btnBuscarFiltro_Click(object sender, EventArgs e)
+        {
+            string nombreP = txtNombreProductoFiltro.Text;
+            List<Documento> lista = Sistema.GetInstancia().ListadoDocumentoNombre(nombreP);
+            GridViewDocumentos.DataSource = lista;
+            GridViewDocumentos.DataBind();
+
+        }
+
+        protected void chkEsPracticoFiltro_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkEsPracticoFiltro.Checked)
             {
-                chkEsEnvio.Checked = true;
-                txtDireccion.Text = d.Direccion;
-                txtDireccion.Visible = true;
+                bool EsPractico = true;
+                List<Documento> lista = Sistema.GetInstancia().ListadoDocumentoPractico(EsPractico);
+                GridViewDocumentos.DataSource = lista;
+                GridViewDocumentos.DataBind();
             }
             else
             {
-                chkEsEnvio.Checked = false;
-                txtDireccion.Text = string.Empty;
-                txtDireccion.Visible = false;
-            }
-            if (d.EsPractico == true)
-            {
-                chkEsPractico.Checked = true;
-                txtNroPractico.Text = d.NroPractico;
-                txtNroPractico.Visible = true;
-            }
-            else
-            {
-                chkEsPractico.Checked = false;
-                txtNroPractico.Text = string.Empty;
-                txtNroPractico.Visible = false;
+                bool EsPractico = false;
+                List<Documento> lista = Sistema.GetInstancia().ListadoDocumentoPractico(EsPractico);
+                GridViewDocumentos.DataSource = lista;
+                GridViewDocumentos.DataBind();
             }
         }
-        else
+
+        protected void lnkNuevoProducto_Click(object sender, EventArgs e)
         {
-            lblMensaje.Text = "El documento fue dado de baja";
-            VaciarCampos();
+            DivGridDocumentos.Visible = false;
+            DivFiltros.Visible = false;
+            divNuevaOferta.Visible = true;
+        }
+
+        protected void lnkVerDocumentos_Click(object sender, EventArgs e)
+        {
+            divNuevaOferta.Visible = false;
+            DivGridDocumentos.Visible = true;
+            DivFiltros.Visible = true;
         }
     }
-    else
-    {
-        lblMensaje.Text = "El documento buscado no éxiste en el sistema";
-        VaciarCampos();
-    }
 }
-else
-{
-    lblMensaje.Text = "Debe completar id del pedido";
-    VaciarCampos();
-}*/

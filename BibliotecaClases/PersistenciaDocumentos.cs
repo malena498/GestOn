@@ -131,5 +131,56 @@ namespace BibliotecaClases
                 return null;
             }
         }
+
+        public List<Documento> ListadoDocumentoNombre(String name)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    List<Documento> documentos = new List<Documento>();
+                    try
+                    {
+
+                        documentos = baseDatos.Documentos.SqlQuery("select * from Documento where NombreDocumento like '%" + name + "%' and Activo = 1").ToList();
+                        return documentos;
+                    }
+                    catch
+                    {
+                        documentos = baseDatos.Documentos.SqlQuery("select * from Documento where NombreDocumento like '%" + name + "%' and Activo = 1").ToList();
+                        return documentos;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<Documento> ListadoDocumentoPractico(bool esPractico)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    List<Documento> documentos = new List<Documento>();
+                    try
+                    {
+                        documentos = baseDatos.Documentos.Where(ej => ej.Activo == true && ej.EsPractico == esPractico).Distinct().OrderByDescending(ej => ej.FechaIngreso).ToList();
+                        return documentos;
+                    }
+                    catch
+                    {
+                        documentos = baseDatos.Documentos.Where(ej => ej.Activo == true && ej.EsPractico == esPractico).Distinct().OrderByDescending(ej => ej.FechaIngreso).ToList();
+                        return documentos;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }
