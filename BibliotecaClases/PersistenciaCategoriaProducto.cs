@@ -120,5 +120,21 @@ namespace BibliotecaClases
                 return null;
             }
         }
+
+        public CategoriaProducto BuscarIdCategoria(string nombre)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    return baseDatos.Categorias.FirstOrDefault(prop => prop.NombreCategoria == nombre);
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+        }
     }
-}

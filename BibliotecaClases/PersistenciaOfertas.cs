@@ -204,12 +204,3 @@ namespace BibliotecaClases {
     }
 }
 
-/*
- else
-                    {
-                        if ((id != 0) && (!String.IsNullOrWhiteSpace(nombre)))
-                        {
-                            usuarios = baseDatos.Usuarios.SqlQuery("select * from Usuario where UserId = " + id + "and UserNombre like '%" + nombre + "%'").ToList();
-                        }
-                    }
-     */

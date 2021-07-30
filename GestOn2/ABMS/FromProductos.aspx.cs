@@ -466,5 +466,38 @@ namespace GestOn2.ABMS
                 ListarProductos();
             }
         }
+
+        protected void btnBuscarXMarca_Click(object sender, EventArgs e)
+        {
+            string marca = txtMarcaProductoFiltro.Text;
+            List<Producto> productos = Sistema.GetInstancia().ListadoProductoMarca(marca);
+            if (productos != null)
+            {
+                GridViewProductos.DataSource = productos;
+                GridViewProductos.DataBind();
+            }
+        }
+
+        protected void btnBuscarXCategoria_Click(object sender, EventArgs e)
+        {
+
+            string categoria = txtCategoriaFiltro.Text;
+            CategoriaProducto idCat = Sistema.GetInstancia().BuscarIdCategoria(categoria);
+            if (idCat != null)
+            {
+                int cat = idCat.IdCategoria;
+                List<Producto> productos = Sistema.GetInstancia().ListadoProductoCategoria(cat);
+                if (productos != null)
+                {
+                    GridViewProductos.DataSource = productos;
+                    GridViewProductos.DataBind();
+                }
+            }
+            else {
+                List<Producto> productos = null;
+                GridViewProductos.DataSource = productos;
+                GridViewProductos.DataBind();
+            }
+        }
     }
 }

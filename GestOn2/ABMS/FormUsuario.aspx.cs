@@ -25,10 +25,6 @@ namespace GestOn2
                     ddlCategoriaUsuario.DataTextField = "NombreNivel";
                     ddlCategoriaUsuario.DataValueField = "IdNivel";
                     ddlCategoriaUsuario.DataBind();
-
-                    divNuevoUsuario.Visible = false;
-                    txtIdUsuario.Text = "0";
-
                 }
                 else
                 {
@@ -77,110 +73,26 @@ namespace GestOn2
 
         }
 
-        protected void btnModificar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!CamposCompletos())
-                {
-                    lblResultado.Visible = true;
-                    lblResultado.Text = "Debe completar todos los campos";
-                    //TimerMensajes.Enabled = true;
-                }
-                //Si esta todo correcto, procedo a hacer la modificación.
-                else
-                {
-                    bool ciValida = ValidarCI(txtCedulaUser.Text);
-                    if (ciValida)
-                    {
-                        lblResultado.Visible = false;
-                        lblResultado.Text = "";
-                        Usuario us = null;
-                        us = Sistema.GetInstancia().BuscarUsuario(int.Parse(txtIdUsuario.Text));
-                        us.UserNombre = txtNombreUser.Text;
-                        us.UserEmail = txtEmailUser.Text;
-                        us.UserTelefono = txtTelefonoUser.Text;
-                        us.UserCedula = txtCedulaUser.Text;
-                        us.UserContrasenia = txtPassUser.Text;
-                        us.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
-
-                        bool exito = Sistema.GetInstancia().ModificarUsuario(us);
-                        if (exito)
-                        {
-                            lblResultado.Text = "Se modificó con éxito";
-                            lblResultado.Visible = true;
-                            //TimerMensajes.Enabled = true;
-
-                            //Elimino campos luego que se modifico con éxito
-                            limpiar();
-                        }
-                    }
-                    else
-                    {
-                        lblResultado.Text = "No se logro modificar.";
-                        lblResultado.Visible = true;
-                        //TimerMensajes.Enabled = true;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                lblResultado.Text = "No se logro modificar.";
-                lblResultado.Visible = true;
-            }
-        }
-
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            int id = Int32.Parse(txtIdUsuario.Text);
-            bool exito = Sistema.GetInstancia().EliminarUsuario(id);
-            if (exito)
-            {
-                lblResultado.Text = "Se elimino con éxito";
-                lblResultado.Visible = true;
-                //TimerMensajes.Enabled = true;
-
-                //Elimino campos luego que se modifico con éxito
-                limpiar();
-            }
-            else
-            {
-                lblResultado.Text = "No se pudo eliminar ";
-                lblResultado.Visible = true;
-                //TimerMensajes.Enabled = true;
-            }
-        }
-
+        // Busca listado de usuarios filtrado por nombre
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            int id;
-            if (String.IsNullOrEmpty(txtIdUsuario.Text))
-                id = 0;
-            else
-            id= Int32.Parse(txtIdUsuario.Text);
-            
             string nombre = txtNomUsuario.Text;
-            List<Usuario> users = Sistema.GetInstancia().BuscarUsuarioFiltros(id, nombre);
-            if (users != null)
+            if (nombre != "")
             {
+                List<Usuario> users = Sistema.GetInstancia().BuscarUsuarioFiltros(nombre);
+                if (users != null)
+                {
 
-                GridViewUsuarios.DataSource = users;
-                GridViewUsuarios.DataBind();
+                    GridViewUsuarios.DataSource = users;
+                    GridViewUsuarios.DataBind();
+                }
+                else
+                {
+                    lblResultado.Text = "El usuario buscado no éxiste en el sistema";
+                    lblResultado.Visible = true;
+                }
             }
-            else
-            {
-                lblResultado.Text = "El usuario buscado no éxiste en el sistema";
-                lblResultado.Visible = true;
-                //TimerMensajes.Enabled = true;
-            }
 
-
-
-        }
-
-        protected void btnNuevo_Click(object sender, EventArgs e)
-        {
-            divNuevoUsuario.Visible = true;
         }
 
         protected void GridViewUsuarios_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -295,7 +207,6 @@ namespace GestOn2
             }
         }
 
-
         protected void limpiar()
         {
             txtNombreUser.Text = string.Empty;
@@ -374,7 +285,7 @@ namespace GestOn2
 
         protected void chkEliminados_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkEliminados.Checked)
+            /*if (chkEliminados.Checked)
             {
                 GridViewUsuarios.DataSource = Sistema.GetInstancia().ListadoUsuariosEliminados();
                 GridViewUsuarios.DataBind();
@@ -382,7 +293,40 @@ namespace GestOn2
             else
             {
                 llenarGrilla();
+            }*/
+        }
+
+        protected void btnBuscarCedula_Click(object sender, EventArgs e)
+        {
+            string cedula = txtCedulaFiltro.Text;
+            if (cedula != "")
+            {
+                List<Usuario> users = Sistema.GetInstancia().ListadoUsuariosCedula(cedula);
+                if (users != null)
+                {
+
+                    GridViewUsuarios.DataSource = users;
+                    GridViewUsuarios.DataBind();
+                }
+                else
+                {
+                    lblResultado.Text = "El usuario buscado no éxiste en el sistema";
+                    lblResultado.Visible = true;
+                }
             }
+        }
+
+        protected void lnkNuevoUsuario_Click(object sender, EventArgs e)
+        {
+            DivGridUsuario.Visible = false;
+            divNuevoUsuario.Visible = true;
+        }
+
+        protected void btnCerrar_Click(object sender, EventArgs e)
+        {
+            divNuevoUsuario.Visible = false;
+            DivGridUsuario.Visible = true;
+            limpiar();
         }
     }
 }

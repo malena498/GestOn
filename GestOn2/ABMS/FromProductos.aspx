@@ -8,6 +8,15 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="container col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3">
+                <div id="DivFiltros" runat="server" class="container border border-info col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-2">
+                    <h1 class="col-md-12 col-lg-12 col-sm-12 col-xl-12">Selección de Filtros</h1>
+                    <asp:Label ID="Label1" runat="server" Text="Marca Producto" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
+                    <asp:TextBox ID="txtMarcaProductoFiltro"  placeholder="Ingrese marca del producto" class="col-lg-2 col-md-2 col-sm-2 col-xl-2 ml-3" runat="server"></asp:TextBox>
+                    <asp:LinkButton ID="btnBuscarXMarca"  CssClass="btn btn-outline-success col-lg-2 col-sm-2 col-md-2" runat="server" OnClick="btnBuscarXMarca_Click">Buscar</asp:LinkButton>
+                    <asp:Label ID="Label8" runat="server" Text="Categoría Producto" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
+                    <asp:TextBox ID="txtCategoriaFiltro"  placeholder="Ingrese categoría del producto" class="col-lg-2 col-md-2 col-sm-2 col-xl-2 ml-3" runat="server"></asp:TextBox>
+                    <asp:LinkButton ID="btnBuscarXCategoria" CssClass="btn btn-outline-success col-xl-2 col-lg-2 col-sm-2 col-md-2" runat="server" OnClick="btnBuscarXCategoria_Click">Buscar</asp:LinkButton>
+                 </div>
                 <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3">
                     <div class="col-lg-4 col-sm-4 col-md-4 border bg-info">
                         <asp:Label ID="lblInformativo" runat="server" Visible="False" CssClass="alert alert-danger col-md-12 col-sm-12 col-xl-12 col-xs-12 col-lg-12"></asp:Label>

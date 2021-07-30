@@ -21,6 +21,7 @@ namespace GestOn2.ABMS
             {
                 GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
                 GridViewDocumentos.DataBind();
+                ListarDropUsuarios();
             }
         }
 
@@ -355,6 +356,42 @@ namespace GestOn2.ABMS
             divNuevaOferta.Visible = false;
             DivGridDocumentos.Visible = true;
             DivFiltros.Visible = true;
+        }
+
+        protected void btnBuscarFecha_Click(object sender, EventArgs e)
+        {
+            DateTime fechaDesde = DateTime.Parse(txtFchDesde.Text);
+            DateTime fechaHasta = DateTime.Parse(txtFchHasta.Text);
+            List<Documento> documentos = Sistema.GetInstancia().ListadoDocumentosFechas(fechaDesde, fechaHasta);
+            if (documentos != null)
+            {
+                GridViewDocumentos.DataSource = documentos;
+                GridViewDocumentos.DataBind();
+            }
+        }
+
+        protected void ListPedidoUsuario_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idUser = Convert.ToInt32(ddlDocumentoNombreUsuario.SelectedItem.Value);
+            List<Documento> documentos = Sistema.GetInstancia().ListadoDocumentoUser(idUser);
+            if (documentos != null)
+            {
+                GridViewDocumentos.DataSource = documentos;
+                GridViewDocumentos.DataBind();
+            }
+        }
+        protected void ListarDropUsuarios()
+        {
+
+            List<Usuario> datos = Sistema.GetInstancia().ListadoUsuarios();
+
+            ddlDocumentoNombreUsuario.DataSource = datos;
+            //Definimos el campo que contendrá los valores para el control
+            ddlDocumentoNombreUsuario.DataValueField = "UserId";
+            //Definimos el campo que contendrá los textos que se verán en el control
+            ddlDocumentoNombreUsuario.DataTextField = "UserNombre";
+            //Enlazamos los valores de los datos con el contenido del Control
+            ddlDocumentoNombreUsuario.DataBind();
         }
     }
 }
