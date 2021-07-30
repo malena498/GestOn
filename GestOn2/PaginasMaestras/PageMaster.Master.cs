@@ -42,27 +42,40 @@ namespace GestOn2.PaginasMaestras
                     {
                         Docente.Visible = true;
                         Admin.Visible = false;
+                        hlConfiguraciones.Visible = false;
+                        hlAdministrarCuenta.Visible = true;
                     }
                     if (u.nivel.NombreNivel.Equals("Personal"))
                     {
                         Docente.Visible = false;
                         Admin.Visible = true;
+                        hlConfiguraciones.Visible = false;
+                        hlAdministrarCuenta.Visible = true;
                     }
                     else if (u.nivel.NombreNivel.Equals("Estudiante"))
                     {
                         Admin.Visible = false;
                         formDoc.Visible = false;
                         Docente.Visible = true;
+                        hlConfiguraciones.Visible = false;
+                        hlAdministrarCuenta.Visible = true;
                     }
                     else if (u.nivel.UserEstandar) {
                         Admin.Visible = false;
                         formDoc.Visible = false;
                         Docente.Visible = true;
+                        hlConfiguraciones.Visible = false;
+                        hlAdministrarCuenta.Visible = true;
+
                     }
                     else if (u.nivel.UserAdmin)
                     {
                         Docente.Visible = false;
                         Admin.Visible = true;
+                        hlAdministrarCuenta.Visible = false;
+                        hlConfiguraciones.Visible = true;
+
+
                     }
                 }
              }

@@ -62,7 +62,8 @@
                             <i class="fa fa-cog fa-2x"></i>
                         </a>
                         <div runat="server" class="dropdown-menu" aria-labelledby="my_navbarDropdown2" id="Div2">
-                            <asp:HyperLink ID="HyperLink2" class="dropdown-item" NavigateUrl="~/CambiarContraseña.aspx" runat="server">Cambiar contraseña</asp:HyperLink>
+                            <asp:HyperLink ID="hlAdministrarCuenta" class="dropdown-item" NavigateUrl="~/AdministrarCuenta.aspx" runat="server">Administrar cuenta</asp:HyperLink>
+                             <asp:HyperLink ID="hlConfiguraciones" class="dropdown-item" NavigateUrl="~/Configuraciones.aspx" runat="server">Configuraciones</asp:HyperLink>
                             <asp:Button ID="btnCerrarSesion" class="dropdown-item" Text="Cerrar sesión" OnClick="Salir_Click" runat="server"></asp:Button>
                         </div>
                     </li>
