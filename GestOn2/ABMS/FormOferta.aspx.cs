@@ -118,7 +118,6 @@ namespace GestOn2.ABMS
             List<Oferta> ofertas = Sistema.GetInstancia().BuscarOfertaFiltros(fechaDesde, fechaHasta, titulo);
             if (ofertas != null)
             {
-
                 GridViewOferta.DataSource = ofertas;
                 GridViewOferta.DataBind();
             }

@@ -18,6 +18,7 @@ namespace BibliotecaClases.Clases
         public String UserEmail { get; set; }
         [Required]
         public String UserCedula { get; set; }
+        public int NroCarpeta { get; set; }
         public String UserTelefono { get; set; }
         public int IdNivel { get; set; }
         [ForeignKey("IdNivel")]

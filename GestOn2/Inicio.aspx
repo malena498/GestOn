@@ -12,7 +12,7 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <div runat="server" id="myCarousel" class="carousel slide vertical m-0 p-0" data-ride="carousel" style="overflow: hidden">
+            <div runat="server" id="myCarousel" class="carousel slide vertical mt-0 p-0" data-ride="carousel" style="overflow: hidden">
                 <ol class="carousel-indicators">
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                     <li data-target="#myCarousel" data-slide-to="1"></li>

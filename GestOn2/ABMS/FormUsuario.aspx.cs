@@ -51,6 +51,7 @@ namespace GestOn2
 
                         Usuario u = new Usuario();
                         u.UserNombre = txtNombreUser.Text;
+                        u.NroCarpeta = Convert.ToInt32(txtNroCarpeta.Text);
                         u.UserEmail = txtEmailUser.Text;
                         u.UserCedula = txtCedulaUser.Text;
                         u.UserTelefono = txtTelefonoUser.Text;

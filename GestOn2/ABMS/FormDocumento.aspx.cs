@@ -19,12 +19,14 @@ namespace GestOn2.ABMS
         {
             if (!IsPostBack)
             {
+                //Lleno listados cuando la pagina inicia por primera vez.
                 GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
                 GridViewDocumentos.DataBind();
                 ListarDropUsuarios();
             }
         }
 
+        //Ingreso un nuevo documento, dejandolo en estado pendiente para que sea gestionado.
         protected void btnUpload_Click(object sender, EventArgs e)
         {
             try
@@ -98,50 +100,7 @@ namespace GestOn2.ABMS
             }
         }
 
-        protected bool CamposCompletos()
-        {
-            if (chkEsPractico.Checked && String.IsNullOrEmpty(txtNroPractico.Text))
-                return false;
-            if (chkEsEnvio.Checked && String.IsNullOrEmpty(txtDireccion.Text))
-                return false;
-            if (String.IsNullOrEmpty(txtDescripcion.Text) || String.IsNullOrEmpty(txtNombre.Text))
-                return false;
-            else
-                return true;
-        }
-
-        protected void VaciarCampos() {
-            txtDescripcion.Text = string.Empty;
-            txtDireccion.Text = string.Empty;
-            txtNombre.Text = string.Empty;
-            txtNroPractico.Text = string.Empty;
-            chkColor.Checked = false;
-            chkDobleFaz.Checked = false;
-            chkEsEnvio.Checked = false;
-            chkEsPractico.Checked = false;
-            ddlGradoLiceal.SelectedIndex = 0;
-        }
-
-        private bool EsDoc(HttpPostedFile archivo)
-        {
-            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
-        }
-
-        private bool EsPDF(HttpPostedFile archivo)
-        {
-            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
-        }
-
-        private bool EsExcel(HttpPostedFile archivo)
-        {
-            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
-        }
-
-        private bool EsImagen(HttpPostedFile archivo)
-        {
-            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
-        }
-
+        //Chequea si el documento va a requerir envío en caso que si, se le permitira ingresar una dirección
         protected void chkEsEnvio_CheckedChanged(object sender, EventArgs e)
         {
             if (chkEsEnvio.Checked)
@@ -155,6 +114,7 @@ namespace GestOn2.ABMS
             }
         }
 
+        //Chequea si el documento es práctico en caso que si, se le permitira ingresar el número del mismo
         protected void chkEsPractico_CheckedChanged(object sender, EventArgs e)
         {
             if (chkEsPractico.Checked)
@@ -168,6 +128,16 @@ namespace GestOn2.ABMS
             }
         }
 
+
+
+        //Una vez el usuario selecciono el archivo, deberá darle al botón subir archivo para que se guarde correctamente
+        protected void btnSubir_Click(object sender, EventArgs e)
+        {
+            string rrr = GuardarArchivo();
+            btnUpload.Enabled = true;
+        }
+
+        //Aqui se guarda la informacion relacionada al archivo seleccinado
         protected String GuardarArchivo()
         {
             try
@@ -188,7 +158,7 @@ namespace GestOn2.ABMS
                     }
                     filePath = Path.Combine(Server.MapPath("~/Documentos/"), NombreArchivo);
                     archivo.SaveAs(filePath);
-                    lblTipoDoc.Text =  extencion;
+                    lblTipoDoc.Text = extencion;
                     lblrutaarchivo.Text = filePath;
                     txtNombre.Text = Path.GetFileNameWithoutExtension(fuDocs.PostedFile.FileName);
                 }
@@ -205,12 +175,9 @@ namespace GestOn2.ABMS
 
         }
 
-        protected void btnSubir_Click(object sender, EventArgs e)
-        {
-            string rrr = GuardarArchivo();
-            btnUpload.Enabled = true;
-        }
 
+
+        //Aquí se hace lo orrespondiente a la gestión de documentos (delete y update)
         protected void GridViewDocumento_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -225,9 +192,6 @@ namespace GestOn2.ABMS
                             TextBox txtNumeroPracticoDoc = GridViewDocumentos.Rows[i].Cells[i].FindControl("txtNumeroPracticoDoc") as TextBox;
                             txtNumeroPracticoDoc.Visible = true;
                         }
-
-
-
                     }
                 }
             }
@@ -237,12 +201,6 @@ namespace GestOn2.ABMS
         {
             GridViewDocumentos.EditIndex = e.NewEditIndex;
             llenarGrillaDocumentos();
-        }
-
-        protected void llenarGrillaDocumentos()
-        {
-            GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
-            GridViewDocumentos.DataBind();
         }
 
         protected void GridViewDocumento_RowUpdated(object sender, GridViewUpdateEventArgs e)
@@ -305,27 +263,112 @@ namespace GestOn2.ABMS
             }
         }
 
-        protected void OnPaging(object sender, GridViewPageEventArgs e)
-        {
-            GridViewDocumentos.PageIndex = e.NewPageIndex;
-            this.llenarGrillaDocumentos();
-        }
-
+        //Se cambia de pagina en el listado
         protected void GridViewDocumentos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridViewDocumentos.PageIndex = e.NewPageIndex;
             llenarGrillaDocumentos();
         }
 
+
+
+        //Esta funcion se llama al inicio del programa, listando todos los documentos activos en el sistema.
+        protected void llenarGrillaDocumentos()
+        {
+            GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
+            GridViewDocumentos.DataBind();
+        }
+
+
+
+        //Sección de filtros para los listados
+        //Selecciona el filtro a aplicar al listado
+        protected void ddlSeleccionaFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("Fecha")) {
+                DivFiltroPorDocumento.Visible = false;
+                DivFiltroPorPractico.Visible = false;
+                DivFiltroPorUsuario.Visible = false;
+                DivFiltroPorNroCarpeta.Visible = false;
+                DivFiltroPorFecha.Visible = true;
+            }
+            else if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("NombreDocumento"))
+            {
+                DivFiltroPorPractico.Visible = false;
+                DivFiltroPorUsuario.Visible = false;
+                DivFiltroPorFecha.Visible = false;
+                DivFiltroPorNroCarpeta.Visible = false;
+                DivFiltroPorDocumento.Visible = true;
+            }
+            else if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("Practico"))
+            {
+                DivFiltroPorDocumento.Visible = false;
+                DivFiltroPorUsuario.Visible = false;
+                DivFiltroPorFecha.Visible = false;
+                DivFiltroPorNroCarpeta.Visible = false;
+                DivFiltroPorPractico.Visible = true;
+            }
+            else if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("NombreUsuario"))
+            {
+                DivFiltroPorDocumento.Visible = false;
+                DivFiltroPorPractico.Visible = false;
+                DivFiltroPorFecha.Visible = false;
+                DivFiltroPorNroCarpeta.Visible = false;
+                DivFiltroPorUsuario.Visible = true;
+            }
+            else if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("NumeroCarpeta"))
+            {
+                DivFiltroPorDocumento.Visible = false;
+                DivFiltroPorPractico.Visible = false;
+                DivFiltroPorFecha.Visible = false;
+                DivFiltroPorUsuario.Visible = false;
+                DivFiltroPorNroCarpeta.Visible = true;
+            }
+        }
+
+        //Filtra la grilla a través del número de carpeta asignado al usuario (Docente)
+        protected void btnBuscarNroCarpeta_Click(object sender, EventArgs e)
+        {
+            int nroCarpeta = Convert.ToInt32(txtNroCarpeta.Text);
+            Usuario u = Sistema.GetInstancia().BuscarUsuarioPorCarpeta(nroCarpeta);
+            int idUser = u.UserId;
+            if (idUser != 0)
+            {
+                List<Documento> documentos = Sistema.GetInstancia().ListadoDocumentoUser(nroCarpeta);
+                if (documentos != null)
+                {
+                    GridViewDocumentos.DataSource = documentos;
+                    GridViewDocumentos.DataBind();
+                }
+            }
+            else {
+                lblResultado.Text = "El numero de carpeta indicado no exíste o fue dado de baja";
+            }
+        }
+
+        //Filtra la grilla a través de nombre de usuario seleccionado
+        protected void ListPedidoUsuario_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idUser = Convert.ToInt32(ddlDocumentoNombreUsuario.SelectedItem.Value);
+            List<Documento> documentos = Sistema.GetInstancia().ListadoDocumentoUser(idUser);
+            if (documentos != null)
+            {
+                GridViewDocumentos.DataSource = documentos;
+                GridViewDocumentos.DataBind();
+            }
+        }
+
+        //Filtra los documentos por nombre del mismo
         protected void btnBuscarFiltro_Click(object sender, EventArgs e)
         {
-            string nombreP = txtNombreProductoFiltro.Text;
-            List<Documento> lista = Sistema.GetInstancia().ListadoDocumentoNombre(nombreP);
+            string nombreDoc = txtNombreDocumentoFiltro.Text;
+            List<Documento> lista = Sistema.GetInstancia().ListadoDocumentoNombre(nombreDoc);
             GridViewDocumentos.DataSource = lista;
             GridViewDocumentos.DataBind();
 
         }
 
+        //Filtra los documentos tanto si son práctico como cuándo no lo son
         protected void chkEsPracticoFiltro_CheckedChanged(object sender, EventArgs e)
         {
             if (chkEsPracticoFiltro.Checked)
@@ -344,20 +387,7 @@ namespace GestOn2.ABMS
             }
         }
 
-        protected void lnkNuevoProducto_Click(object sender, EventArgs e)
-        {
-            DivGridDocumentos.Visible = false;
-            DivFiltros.Visible = false;
-            divNuevaOferta.Visible = true;
-        }
-
-        protected void lnkVerDocumentos_Click(object sender, EventArgs e)
-        {
-            divNuevaOferta.Visible = false;
-            DivGridDocumentos.Visible = true;
-            DivFiltros.Visible = true;
-        }
-
+        //Filtra los documentos según las fechas seleccionadas  (Desde y Hasta)
         protected void btnBuscarFecha_Click(object sender, EventArgs e)
         {
             DateTime fechaDesde = DateTime.Parse(txtFchDesde.Text);
@@ -370,28 +400,87 @@ namespace GestOn2.ABMS
             }
         }
 
-        protected void ListPedidoUsuario_SelectedIndexChanged(object sender, EventArgs e)
+
+
+        //Valida que tipo de archivo selecciono el usuario para subir al sistema.
+        private bool EsDoc(HttpPostedFile archivo)
         {
-            int idUser = Convert.ToInt32(ddlDocumentoNombreUsuario.SelectedItem.Value);
-            List<Documento> documentos = Sistema.GetInstancia().ListadoDocumentoUser(idUser);
-            if (documentos != null)
-            {
-                GridViewDocumentos.DataSource = documentos;
-                GridViewDocumentos.DataBind();
-            }
+            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
         }
+
+        private bool EsPDF(HttpPostedFile archivo)
+        {
+            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
+        }
+
+        private bool EsExcel(HttpPostedFile archivo)
+        {
+            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
+        }
+
+        private bool EsImagen(HttpPostedFile archivo)
+        {
+            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
+        }
+
+
+        //Muestra Div con formulario para ingresar un nuevo documento
+        protected void lnkNuevoProducto_Click(object sender, EventArgs e)
+        {
+            DivGridDocumentos.Visible = false;
+            DivFiltros.Visible = false;
+            divNuevaOferta.Visible = true;
+        }
+
+        //Muestra Div con el listado de todos los documentos y los filtros a aplicar
+        protected void lnkVerDocumentos_Click(object sender, EventArgs e)
+        {
+            divNuevaOferta.Visible = false;
+            DivGridDocumentos.Visible = true;
+            DivFiltros.Visible = true;
+        }
+
+
+
+        //Lista el dropDown del filtro con nombre de los usuarios para su posterior uso
         protected void ListarDropUsuarios()
         {
-
             List<Usuario> datos = Sistema.GetInstancia().ListadoUsuarios();
-
             ddlDocumentoNombreUsuario.DataSource = datos;
-            //Definimos el campo que contendrá los valores para el control
             ddlDocumentoNombreUsuario.DataValueField = "UserId";
-            //Definimos el campo que contendrá los textos que se verán en el control
             ddlDocumentoNombreUsuario.DataTextField = "UserNombre";
-            //Enlazamos los valores de los datos con el contenido del Control
             ddlDocumentoNombreUsuario.DataBind();
+        }
+
+
+
+        //Valido que no falten datos a la hora de realizar un Insert o Update en la base de datos
+        protected bool CamposCompletos()
+        {
+            if (chkEsPractico.Checked && String.IsNullOrEmpty(txtNroPractico.Text))
+                return false;
+            if (chkEsEnvio.Checked && String.IsNullOrEmpty(txtDireccion.Text))
+                return false;
+            if (String.IsNullOrEmpty(txtDescripcion.Text) || String.IsNullOrEmpty(txtNombre.Text))
+                return false;
+            else
+                return true;
+        }
+
+
+
+        //Vacia todos los campos del formulario
+        protected void VaciarCampos()
+        {
+            txtDescripcion.Text = string.Empty;
+            txtDireccion.Text = string.Empty;
+            txtNombre.Text = string.Empty;
+            txtNroPractico.Text = string.Empty;
+            chkColor.Checked = false;
+            chkDobleFaz.Checked = false;
+            chkEsEnvio.Checked = false;
+            chkEsPractico.Checked = false;
+            ddlGradoLiceal.SelectedIndex = 0;
         }
     }
 }

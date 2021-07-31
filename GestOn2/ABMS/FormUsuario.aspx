@@ -98,6 +98,8 @@
             <div id="divNuevoUsuario" visible="false" class="container-fluid col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4" runat="server">
                 <asp:Label ID="Label7" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Id"></asp:Label>
                 <asp:TextBox ID="txtIdUsuario" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
+                <asp:Label ID="Label10" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Id"></asp:Label>
+                <asp:TextBox ID="txtNroCarpeta" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" TextMode="number"></asp:TextBox>
                 <asp:Label ID="Label1" runat="server" Text="Nombre" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:Label>
                 <asp:TextBox ID="txtNombreUser" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
                 <asp:Label ID="Label2" runat="server" Text="E-Mail" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:Label>
@@ -113,7 +115,6 @@
                 </asp:DropDownList>
                 <asp:Label ID="lblResultado" CssClass="alert alert-danger col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Visible="false" runat="server"></asp:Label>
                 <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" OnClick="btnGuardar_Click" Text="Guardar" />
-
                 <asp:Button ID="btnCerrar" runat="server" CssClass="btn btn-outline-danger offset-4 col-md-3 col-lg-4 col-sm-4 col-md-4 col-xl-4 mt-3" OnClick="btnCerrar_Click" Text="Ver listado" />
             </div>
         </ContentTemplate>

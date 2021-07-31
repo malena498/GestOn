@@ -48,6 +48,12 @@ namespace GestOn2.PaginasMaestras
                         Docente.Visible = false;
                         Admin.Visible = true;
                     }
+                    else if (u.nivel.NombreNivel.Equals("Estudiante"))
+                    {
+                        Admin.Visible = false;
+                        formDoc.Visible = false;
+                        Docente.Visible = true;
+                    }
                     else if (u.nivel.UserEstandar) {
                         Admin.Visible = false;
                         formDoc.Visible = false;

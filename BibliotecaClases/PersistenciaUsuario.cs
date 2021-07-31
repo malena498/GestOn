@@ -86,21 +86,17 @@ namespace BibliotecaClases
 
         public Usuario BuscarUsuario(int id)
         {
-
             try
             {
                 using (var baseDatos = new Context())
                 {
                     return baseDatos.Usuarios.Include("nivel").FirstOrDefault(prop => prop.UserId == id);
                 }
-
             }
             catch (Exception ex)
             {
                 return null;
             }
-
-
         }
 
         public List<Usuario> BuscarUsuarioFiltros(string nombre)
@@ -263,6 +259,40 @@ namespace BibliotecaClases
                         List<Usuario> usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.Activo == true && ej.UserCedula == cedula).OrderBy(ej => ej.UserId).ToList();
                         return usuarios;
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public Usuario BuscarUsuarioxNombre(string nombre)
+        {
+
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    return baseDatos.Usuarios.FirstOrDefault(prop => prop.UserNombre == nombre);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+
+        }
+
+        public Usuario BuscarUsuarioPorCarpeta(int nroCarpeta)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    return baseDatos.Usuarios.FirstOrDefault(prop => prop.NroCarpeta == nroCarpeta);
                 }
             }
             catch (Exception ex)

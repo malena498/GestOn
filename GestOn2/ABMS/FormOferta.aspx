@@ -30,7 +30,7 @@
                         <asp:TextBox ID="txtPrecio" class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 mt-3" placeholder="Precio" runat="server"></asp:TextBox>
                        
                         <asp:FileUpload ID="fuImagenes" class="custom-file bg-light mt-3 bg-light border border-dark" runat="server" AllowMultiple="false" />
-                        <asp:Button ID="btnUpload" class="btn btn-outline-danger  col-md-12 col-lg-12 col-sm-12 col-12 mt-3" runat="server" OnClick="btnUpload_Click" Text="Subir" />
+                        <asp:Button ID="btnUpload" class="btn btn-outline-danger  col-md-12 col-lg-12 col-sm-12 col-12 mt-1" runat="server" OnClick="btnUpload_Click" Text="Subir" />
 
                         <asp:TextBox ID="txtURLs" Style="display: none;" runat="server"></asp:TextBox>
                         <asp:GridView ID="GridView1" runat="server" Width="100%" RowStyle-HorizontalAlign="Center" RowStyle-CssClass="col-6 p-0" AutoGenerateColumns="false" ShowHeader="false" OnRowDataBound="GridView1_RowDataBound">
@@ -40,17 +40,11 @@
                         </asp:GridView>
                             
                         <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 col-12 mt-2"></div>
-                        <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" class="btn btn-info offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 col-md-5 col-lg-5 col-sm-5 col-5" Text="Guardar" />
+                        <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" CssClass="btn btn-info  col-md-12 col-lg-12 col-sm-12 col-xl-12 col-xs-12 mt-3" Text="Guardar" />
                     </div>
                     <div class="col-md-8 col-lg-8 col-sm-8 col-8 col-xl-8 ml-4" runat="server" id="div1">
                         <asp:TextBox ID="txtFchDesde" type="datetime" placeholder="Fecha desde" class="col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-3" runat="server" TextMode="DateTime"></asp:TextBox>
                         <asp:TextBox ID="txtFchHasta" type="datetime" placeholder="Fecha hasta" class="col-3 col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-2" runat="server" TextMode="DateTime"></asp:TextBox>
-                        <div class="input-groupdate" id="datetimepicker1" data-target-input="nearest">
-                            <input type="text" class="form-controldatetimepicker-input" data-target="#datetimepicker1" />
-                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                        </div>
                         <asp:TextBox ID="txtTitulo" placeholder="Nombre del titulo" class="col-3 col-lg-3 col-md-3 col-sm-3 col-xl-3 ml-2" runat="server"></asp:TextBox>
                         <asp:Button ID="btnBuscar" runat="server" class="btn btn-info col-md-2 col-lg-2 col-sm-2  ml-2" Text="Buscar" OnClick="btnBuscar_Click" />
                         <asp:Label ID="lblResultadoBusqueda" Visible="false" class="alert alert-danger col-md-8 col-lg-8 col-sm-8 col-xl-8" runat="server"></asp:Label>

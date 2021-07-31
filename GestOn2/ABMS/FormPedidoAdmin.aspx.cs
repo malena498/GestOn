@@ -21,6 +21,7 @@ namespace GestOn2.ABMS
                 if (Session["IdUsuario"] != null)
                 {
                     String idUsuarioLogueado = Session["IdUsuario"].ToString();
+                    
                 }
                 else
                 {
@@ -30,6 +31,7 @@ namespace GestOn2.ABMS
                 llenarGrillaPedidos();
             }
         }
+        
 
         protected void llenarGrillaPedidos()
         {
@@ -114,7 +116,10 @@ namespace GestOn2.ABMS
 
         protected void ListPedidoUsuario_SelectedIndexChanged(object sender, EventArgs e)
         {
-            llenarGrillaProductos();
+            int id = Convert.ToInt32(ListPedidoUsuario.SelectedItem.Value);
+            List<Pedido> ped = Sistema.GetInstancia().ListadoPedidosUsuario(id);
+            GridViewPedidos.DataSource = ped;
+            GridViewPedidos.DataBind();
         }
 
         protected void llenarGrillaProductos()

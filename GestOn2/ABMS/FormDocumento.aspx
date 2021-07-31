@@ -8,23 +8,45 @@
     </asp:ScriptManager>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 ml-0 ml--15 mt-3">
-                <div id="DivFiltros" runat="server" class="container border border-info col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-2">
+            <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 ml-0 ml-15 ">
+                <div id="DivFiltros" runat="server" class="form-row border border-info col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-2">
                     <h1 class="col-md-12 col-lg-12 col-sm-12 col-xl-12">Selección de Filtros</h1>
+                    <asp:Label ID="Label3" runat="server" Text="Filtrar por: " class="col-1 col-md-1 col-lg-1" Font-Bold="True"></asp:Label>
+                    <asp:DropDownList ID="ddlSeleccionaFiltro" CssClass="form-select col-2 col-md-2 col-lg-2 col-sm-2 mb-3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlSeleccionaFiltro_SelectedIndexChanged">
+
+                        <asp:ListItem Value="Fecha">Por Fecha</asp:ListItem>
+                        <asp:ListItem Value="NombreDocumento">Nombre de documento</asp:ListItem>
+                        <asp:ListItem>Practico</asp:ListItem>
+                        <asp:ListItem Value="NombreUsuario">Nombre de usuario</asp:ListItem>
+
+                        <asp:ListItem Value="NumeroCarpeta">Numero de Carpeta</asp:ListItem>
+
+                    </asp:DropDownList>
+                    <div id="DivFiltroPorUsuario" class="col-xl-7 col-lg-7 col-md-7 col-xs-7 col-xs-7" runat="server" visible ="false">
                     <asp:Label ID="Label2" runat="server" Text="Nombre Cliente" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
                     <asp:DropDownList ID="ddlDocumentoNombreUsuario" runat="server" AutoPostBack="True" class="form-select col-3 col-md-3 col-lg-3 col-sm-3 mb-3" OnSelectedIndexChanged="ListPedidoUsuario_SelectedIndexChanged">
                         <asp:ListItem>Todos</asp:ListItem>
                     </asp:DropDownList>
-                    <asp:Label ID="Label1" runat="server" Text="Nombre Producto" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
-                    <asp:TextBox ID="txtNombreProductoFiltro" class="col-3 col-md-3 col-lg-3 col-sm-3 mb-3" runat="server"></asp:TextBox>
-                    <asp:LinkButton ID="btnBuscarFiltro" CssClass="btn btn-outline-success col-xl-1 col-xs-1 col-sm-1 col-md-1 col-lg-1" runat="server" OnClick="btnBuscarFiltro_Click">Bu</asp:LinkButton>
+                    </div>
+                    <div id="DivFiltroPorDocumento" runat="server" class="col-xl-8 col-lg-8 col-md-8 col-xs-8 col-xs-8" visible ="false">
+                    <asp:Label ID="Label1" runat="server" Text="Nombre Documento" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
+                    <asp:TextBox ID="txtNombreDocumentoFiltro" class="col-3 col-md-3 col-lg-3 col-sm-3 mb-3" runat="server"></asp:TextBox>
+                    <asp:LinkButton ID="btnBuscarFiltro" CssClass="btn btn-outline-success col-xl-1 col-xs-1 col-sm-1 col-md-1 col-lg-1" runat="server" OnClick="btnBuscarFiltro_Click">Buscar</asp:LinkButton>
+                    </div>
+                    <div id="DivFiltroPorPractico" runat="server" class="col-xl-8 col-lg-8 col-md-8 col-xs-8 col-xs-8" visible ="false">
                     <asp:Label ID="Label6" runat="server" Text="Practico" class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
-                    <asp:CheckBox ID="chkEsPracticoFiltro" runat="server" AutoPostBack="True" OnCheckedChanged="chkEsPracticoFiltro_CheckedChanged" /><br />
-                    <asp:TextBox ID="txtFchDesde" type="datetime" placeholder="14/07/2021" class="col-lg-2 col-md-2 col-sm-2 col-xl-2 ml-3" runat="server" TextMode="DateTime"></asp:TextBox>
-                    <asp:TextBox ID="txtFchHasta" type="datetime" placeholder="14/08/2021" class="col-2 col-lg-2 col-md-2 col-sm-2 col-xl-2 ml-2" runat="server" TextMode="DateTime"></asp:TextBox>
-                    <asp:LinkButton ID="btnBuscarFecha" CssClass="btn btn-outline-success col-lg-2 col-xl-2 col-md-2 col-sm-2" runat="server" OnClick="btnBuscarFecha_Click">Filtrar por fecha</asp:LinkButton>
-                    <br />
-                    <asp:LinkButton ID="lnkNuevoProducto" CssClass="btn btn-outline-success" runat="server" OnClick="lnkNuevoProducto_Click">Agregar Producto</asp:LinkButton>
+                    <asp:CheckBox ID="chkEsPracticoFiltro" runat="server" AutoPostBack="True" OnCheckedChanged="chkEsPracticoFiltro_CheckedChanged" />
+                    </div>
+                    <div id="DivFiltroPorNroCarpeta" runat="server" class="col-xl-8 col-lg-8 col-md-8 col-xs-8 col-xs-8" visible ="false">
+                    <asp:TextBox ID="txtNroCarpeta" placeholder="Numero de carpeta" TextMode="number" class="col-3 col-md-3 col-lg-3 col-sm-3 mb-3" runat="server"></asp:TextBox>
+                    <asp:LinkButton ID="lnkPorNroCarpeta" CssClass="btn btn-outline-success col-lg-3 col-xl-3 col-md-3 col-sm-3" runat="server" OnClick="btnBuscarNroCarpeta_Click">Buscar</asp:LinkButton>
+                    </div>
+                    <div id="DivFiltroPorFecha" runat="server" class="col-xl-4 col-lg-4 col-md-4 col-xs-4 col-xs-4">
+                    <asp:TextBox ID="txtFchDesde" type="datetime" placeholder="14/07/2021" class="col-lg-4 col-md-4 col-sm-4 col-xl-4 ml-3" runat="server" TextMode="DateTime"></asp:TextBox>
+                    <asp:TextBox ID="txtFchHasta" type="datetime" placeholder="14/08/2021" class="col-4 col-lg-4 col-md-4 col-sm-4 col-xl-4 ml-2" runat="server" TextMode="DateTime"></asp:TextBox>
+                    <asp:LinkButton ID="btnBuscarFecha" CssClass="btn btn-outline-success col-lg-3 col-xl-3 col-md-3 col-sm-3" runat="server" OnClick="btnBuscarFecha_Click">Buscar</asp:LinkButton>
+                    </div>
+                    <asp:LinkButton ID="lnkNuevoProducto" CssClass="btn btn-outline-danger col-lg-2 col-xl-2 col-md-2 col-sm-2" runat="server" OnClick="lnkNuevoProducto_Click">Agregar Producto</asp:LinkButton>
                  </div>
             <div class="col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4 ml-3 mt-3" runat="server" visible="false" id="divNuevaOferta">
                 <form id="form1">
