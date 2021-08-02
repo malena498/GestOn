@@ -16,6 +16,6 @@ namespace BibliotecaClases.Clases
         public String ImagenPedidoURL { get; set; }
         public int IdPedido { get; set; }
         [ForeignKey("IdPedido")]
-        public Pedido pedido { get; set; }
+        public Pedido Pedido { get; set; }
     }
 }

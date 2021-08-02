@@ -48,7 +48,7 @@ namespace BibliotecaClases
 
         public Context(String baseDatos) : base(baseDatos) { }
 
-        //Mapeo de relacion entre *  a  * ( Producto con Pedido)
+        //Mapeo de relacion entre *  a  * ( Producto con Pedido),
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
