@@ -18,6 +18,7 @@ namespace GestOn2
                 if (Session["IdUsuario"] != null)
                 {
                     String idUsuarioLogueado = Session["IdUsuario"].ToString();
+                    CargarDatos(int.Parse(idUsuarioLogueado));
                 }
                 else
                 {
@@ -25,7 +26,7 @@ namespace GestOn2
                 }
             }
         }
-        protected void btnCambiarContraseña_Click(object sender, EventArgs e)
+        protected void btnGuardar_Click(object sender, EventArgs e)
         {
             int id = int.Parse(Session["IdUsuario"].ToString());
             if (txtConfirmarContraseña.Text.Equals(txtContraseña.Text))
@@ -33,16 +34,20 @@ namespace GestOn2
                 string encriptada = Encriptar(txtConfirmarContraseña.Text);
                 Usuario user = Sistema.GetInstancia().BuscarUsuario(id);
                 user.UserContrasenia = encriptada;
-
+                user.UserCedula = txtCedulaUser.Text;
+                user.UserEmail = txtEmailUser.Text;
+                user.UserNombre= txtNombreUser.Text;
+                user.UserTelefono= txtTelefonoUser.Text;
+                user.UserContrasenia= txtContraseña.Text;
                 bool exito = Sistema.GetInstancia().ModificarUsuario(user);
                 if (exito)
                 {
-                    lblResultado.Text = "La contraseña se modificó con éxito";
+                    lblResultado.Text = "Su cuenta se modificó con éxito";
                     lblResultado.Visible = true;
                 }
                 else
                 {
-                    lblResultado.Text = "Error al modificar la contraseña";
+                    lblResultado.Text = "Error al modificar su cuenta";
                     lblResultado.Visible = true;
                 }
             }
@@ -59,6 +64,16 @@ namespace GestOn2
             byte[] encryted = System.Text.Encoding.Unicode.GetBytes(password);
             result = Convert.ToBase64String(encryted);
             return result;
+        }
+
+        protected void CargarDatos(int id)
+        {
+            Usuario user = Sistema.GetInstancia().BuscarUsuario(id);
+            txtCedulaUser.Text = user.UserCedula;
+            txtEmailUser.Text = user.UserEmail;
+            txtNombreUser.Text = user.UserNombre;
+            txtTelefonoUser.Text = user.UserTelefono;
+            txtContraseña.Text = user.UserContrasenia;
         }
 
     }

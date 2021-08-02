@@ -9,16 +9,20 @@ namespace BibliotecaClases
 {
     partial class Sistema
     {
-        public bool GuardarConfiguracion(String nombre, String valor)
+        public bool GuardarConfiguraciones(List<Configuracion> configuraciones)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    Configuracion conf = new Configuracion();
-                    conf.Nombre = nombre;
-                    conf.Valor = valor;
-                    baseDatos.Configuraciones.Add(conf);
+                    foreach (Configuracion c in configuraciones)
+                    {
+                        Configuracion conf = new Configuracion();
+                        conf.Nombre = c.Nombre;
+                        conf.Valor = c.Valor;
+                        baseDatos.Configuraciones.Add(conf);
+                    }
+                   
                     baseDatos.SaveChanges();
 
                 }
