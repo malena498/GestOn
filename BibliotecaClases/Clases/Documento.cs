@@ -25,6 +25,8 @@ namespace BibliotecaClases.Clases
         public DateTime FechaIngreso { get; set; }
         public bool Activo { get; set; }
         public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public Usuario usuario { get; set; }
         public String ruta { get; set; }
         public bool EsImagen { get; set; }
         public String estado { get; set; }

@@ -91,135 +91,10 @@ namespace GestOn2.ABMS
             ListarProductos();
         }
 
-        ////Modifico el producto a traves de la ID
-        //protected void btnModificar_Click(object sender, EventArgs e)
-        //{
-        //    //Validaciones que las caja de texto no estén vacias.
-        //    if (CompleteCampos())
-        //    {
-        //        lblInformativo.Visible = true;
-        //        lblInformativo.Text = "Debe completar todos los campos";
-        //        TimerMensajes.Enabled = true;
-        //    }
-        //    //Si esta todo correcto, procedo a hacer la modificación.
-        //    else
-        //    {
-        //        lblInformativo.Visible = false;
-        //        lblInformativo.Text = "";
-
-        //        int cantidad = Int32.Parse(txtCantidad.Text);
-        //        int categoria = int.Parse(lstCategorias.SelectedValue);
-        //        String marca = txtMarca.Text;
-        //        String nombre = txtNombreProducto.Text;
-        //        decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
-        //        //CalculoPrecioVenta(precioCompra);
-        //        decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
-        //        Producto p = new Producto();
-        //        p.Activo = true;
-        //        p.Cantidad = cantidad;
-        //        p.IdCategoria = categoria;
-        //        p.ProductoId = id;
-        //        p.ProductoMarca = marca;
-        //        p.ProductoNombre = nombre;
-        //        p.ProductoPrecioCompra = precioCompra;
-        //        p.ProductoPrecioVenta = PrecioVenta;
-
-        //        bool exito = Sistema.GetInstancia().ModificarProducto(p);
-        //        if (exito)
-        //        {
-        //            ListarProductos();
-        //            lblInformativo.Text = "Se modificó con éxito";
-        //            lblInformativo.Visible = true;
-        //            TimerMensajes.Enabled = true;
-
-        //            //Elimino campos luego que se modifico con éxito
-        //            VaciarCampos();
-        //        }
-        //        else
-        //        {
-        //            lblInformativo.Text = "No se pudo modificó ";
-        //            lblInformativo.Visible = true;
-        //            TimerMensajes.Enabled = true;
-        //        }
-        //    }
-        //}
-
         //Busco producto a  través de la ID
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            //if (txtIdProducto.Text != "")
-            //{
-            //    int id = int.Parse(txtIdProducto.Text);
-            //    Producto p = Sistema.GetInstancia().BuscarProducto(id);
-            //    if (p != null)
-            //    {
-            //        if (p.Activo == true)
-            //        {
-            //            ListarCategorias();
-            //            txtCantidad.Text = p.Cantidad.ToString();
-            //            txtMarca.Text = p.ProductoMarca.ToString();
-            //            txtNombreProducto.Text = p.ProductoNombre.ToString();
-            //            txtPrecioCompra.Text = p.ProductoPrecioCompra.ToString();
-            //            txtPrecioVenta.Text = p.ProductoPrecioVenta.ToString();
-            //            lstCategorias.Items.FindByValue(p.IdCategoria.ToString()).Selected = true;
-            //            btnModificar.Enabled = true;
-            //            btnEliminar.Enabled = true;
-            //        }
-            //        else
-            //        {
-            //            lblInformativo.Text = "El producto fue dado de baja";
-            //            lblInformativo.Visible = true;
-            //            TimerMensajes.Enabled = true;
-            //            VaciarCampos();
-            //        }
-            //    }
-            //    else
-            //    {
-            //        lblInformativo.Text = "El producto buscado no éxiste en el sistema";
-            //        lblInformativo.Visible = true;
-            //        TimerMensajes.Enabled = true;
-            //        VaciarCampos();
-            //    }
-            //}
-            //else
-            //{
-            //    lblInformativo.Text = "Debe completar id del producto";
-            //    lblInformativo.Visible = true;
-            //    TimerMensajes.Enabled = true;
-            //}
         }
-
-        ////Elimino el producto a través de la ID
-        //protected void btnEliminar_Click(object sender, EventArgs e)
-        //{
-        //    if (txtIdProducto.Text != "")
-        //    {
-        //        int id = int.Parse(txtIdProducto.Text);
-        //        bool exito = Sistema.GetInstancia().EliminarProducto(id);
-        //        if (exito)
-        //        {
-        //            lblInformativo.Text = "Se elimino con éxito";
-        //            lblInformativo.Visible = true;
-        //            TimerMensajes.Enabled = true;
-
-        //            //Elimino campos luego que se modifico con éxito
-        //            VaciarCampos();
-        //            ListarProductos();
-        //        }
-        //        else
-        //        {
-        //            lblInformativo.Text = "No se pudo eliminar ";
-        //            lblInformativo.Visible = true;
-        //            TimerMensajes.Enabled = true;
-        //        }
-        //    }
-        //    else {
-        //        lblInformativo.Text = "Complete id del poducto que desea eliminar";
-        //        lblInformativo.Visible = true;
-        //        TimerMensajes.Enabled = true;
-        //    }
-            
-        //}
 
         //Timer usado para mostrar o ocultar mensajes
         protected void TimerMensajes_Tick(object sender, EventArgs e)
@@ -248,15 +123,6 @@ namespace GestOn2.ABMS
             txtPrecioCompra.Text = string.Empty;
             txtPrecioVenta.Text = string.Empty;
         }
-
-        //Calcula el precio de venta a traves de un porcentaje dado y el precio de compra
-        /*protected void CalculoPrecioVenta(decimal precioCompra)
-        {
-            decimal pventa = precioCompra + ((precioCompra * 025) / 100);
-            string resultado = pventa.ToString();
-            String substring = resultado.Substring(0, 5);
-            lblprice.Text = substring;
-        }*/
 
         //Muestro el panel de edicion de categoria de productos
         protected void linkNewCategoria_Click(object sender, EventArgs e)
@@ -498,6 +364,34 @@ namespace GestOn2.ABMS
                 GridViewProductos.DataSource = productos;
                 GridViewProductos.DataBind();
             }
+        }
+
+        protected void ddlSeleccionaFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("MarcaProducto"))
+            {
+                DivFiltroXCategoria.Visible = false;
+                DivFiltroXMarca.Visible = true;
+            }
+            else if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("CategoriaProducto"))
+            {
+                DivFiltroXMarca.Visible = false;
+                DivFiltroXCategoria.Visible = true;
+            }
+        }
+
+        protected void btnAgregarProducto_Click(object sender, EventArgs e)
+        {
+            DivFiltros.Visible = false;
+            GVProductos.Visible = false;
+            DivNuevoProducto.Visible = true;
+        }
+
+        protected void btnListadoProductos_Click(object sender, EventArgs e)
+        {
+            DivNuevoProducto.Visible = false;
+            DivFiltros.Visible = true;
+            GVProductos.Visible = true;
         }
     }
 }
