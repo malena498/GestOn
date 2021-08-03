@@ -15,5 +15,9 @@ namespace BibliotecaClases.Clases
         public String NombrePermiso { get; set; }
         public String URL { get; set; }
         public bool esVisible { get; set; }
+        public int IdNivel { get; set; }
+        [ForeignKey("IdNivel")]
+        public Nivel nivel { get; set; }
+
     }
 }
