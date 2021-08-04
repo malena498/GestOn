@@ -18,7 +18,9 @@ namespace BibliotecaClases.Clases
         public bool Activo { get; set; }
         public DateTime OfertaFechaDesde { get; set; }
         public DateTime OfertaFechaHasta { get; set; }
-
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public Usuario usuario { get; set;}
         public virtual List<Imagen> Imagenes { get; set; }
         public String OfertaDescripcion { get; set; }
         [Required]

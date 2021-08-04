@@ -264,27 +264,6 @@ namespace BibliotecaClases
             }
         }
 
-
-        //public bool eliminar()
-        //{
-        //    try
-        //    {
-        //        using (Context baseDatos = new Context())
-        //        {
-        //            var query = (from p in baseDatos.ProductoPedido
-        //                         where p.Id == id
-        //                         select p).Single();
-
-        //            baseDatos.(query);
-        //            baseDatos.SaveChanges();
-        //        }
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //}
     }
     
 }

@@ -20,9 +20,14 @@ namespace BibliotecaClases
         public String Descripcion { get; set; }
         public virtual List<Producto> productos { get; set; }
         public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public Usuario usuario { get; set; }
         public decimal Precio { get; set; }
         public String Estado { get; set; }
         public int idDocumento { get; set; }
+        [ForeignKey("idDocumento")]
+        public Documento documento { get; set; }
+
 
     }
 }
