@@ -17,5 +17,6 @@ namespace BibliotecaClases.Clases
         public int IdPedido { get; set; }
         [ForeignKey("IdPedido")]
         public Pedido pedido { get; set; }
+        public bool Activo { get; set; }
     }
 }

@@ -15,6 +15,6 @@ namespace BibliotecaClases.Clases
         [Required]
         public String ImagenURL { get; set; }
         public int IdOferta { get; set; }
-
+        public bool Activo { get; set; }
     }
 }

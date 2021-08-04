@@ -14,5 +14,6 @@ namespace BibliotecaClases.Clases
         public int IdConfiguracion { get; set; }
         public String Nombre { get; set; }
         public String Valor { get; set; }
+        public bool Activo { get; set; }
     }
 }

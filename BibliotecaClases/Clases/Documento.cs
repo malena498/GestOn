@@ -18,15 +18,13 @@ namespace BibliotecaClases.Clases
         public String Descripcion { get; set; }
         public bool esEnvio { get; set; }
         public String Direccion { get; set; }
-        public String gradoLiceal { get; set; }
+        public int gradoLiceal { get; set; }
         public bool EsPractico { get; set; }
-        public String NroPractico { get; set; }
+        public int NroPractico { get; set; }
         public String NombreDocumento { get; set; }
         public DateTime FechaIngreso { get; set; }
         public bool Activo { get; set; }
         public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public Usuario usuario { get; set; }
         public String ruta { get; set; }
         public bool EsImagen { get; set; }
         public String estado { get; set; }
