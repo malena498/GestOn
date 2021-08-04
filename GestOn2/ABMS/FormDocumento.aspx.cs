@@ -44,7 +44,7 @@ namespace GestOn2.ABMS
                     doc.Formato = lblTipoDoc.Text;
                     doc.NombreDocumento = txtNombre.Text;
                     doc.Descripcion = txtDescripcion.Text;
-                    doc.gradoLiceal = ddlGradoLiceal.SelectedValue;
+                    doc.gradoLiceal = int.Parse(ddlGradoLiceal.SelectedValue);
                     doc.esEnvio = false;
                     doc.EsPractico = false;
                     if (chkEsEnvio.Checked)
@@ -54,7 +54,7 @@ namespace GestOn2.ABMS
                     }
                     if (chkEsPractico.Checked)
                     {
-                        doc.NroPractico = txtNroPractico.Text;
+                        doc.NroPractico = int.Parse(txtNroPractico.Text);
                         doc.EsPractico = true;
                     }
                     if (chkDobleFaz.Checked)
@@ -229,7 +229,7 @@ namespace GestOn2.ABMS
             doc.EsPractico = EsPractico;
             doc.esEnvio = Adomicilio;
             if (EsPractico)
-                doc.NroPractico = NroPractico;
+                doc.NroPractico = int.Parse(NroPractico);
             if (Adomicilio)
                 doc.Direccion = Dire;
 
