@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 
-namespace BibliotecaClases
+namespace BibliotecaClases.Clases
 {
     public class Nivel
     {

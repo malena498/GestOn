@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using BibliotecaClases.Clases;
 
-namespace BibliotecaClases
+namespace BibliotecaClases.Clases
 {
     public class Producto
     {
