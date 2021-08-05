@@ -50,7 +50,7 @@ namespace Testing
             Assert.AreEqual(true, result);
         }
 
-        /*BUSQUEDA DE OFERTA  !*!   */
+        /*BUSQUEDA DE OFERTA*/
         [TestMethod]
         public void BuscarOfertaTest()
         {
@@ -65,7 +65,7 @@ namespace Testing
             Assert.AreEqual(true, result);
         }
 
-        /*LISTADOS DE OFERTAS  !*!  */
+        /*LISTADOS DE OFERTAS */
         [TestMethod]
         public void ListadoOfertasTest()
         {
