@@ -30,13 +30,13 @@ namespace Testing
         [TestMethod]
         public void ModificarUsuarioTest()
         {
-            BibliotecaClases.Clases.Usuario u = new BibliotecaClases.Clases.Usuario();
+            BibliotecaClases.Clases.Usuario u = null;
+            u = BibliotecaClases.Sistema.GetInstancia().BuscarUsuario(3);
             u.Activo = true;
             u.IdNivel = 1;
             u.UserCedula = "50306210";
             u.UserContrasenia = "Pepe";
             u.UserEmail = "alan@alan";
-            u.UserId = 3;
             u.UserNombre = "Susana Gomez";
             u.UserTelefono = "098123123";
 

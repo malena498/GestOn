@@ -15,6 +15,7 @@ using System.Net.Mail;
 using System.Net;
 
 namespace BibliotecaClases { 
+
     partial class Sistema
     {
             public bool GuardarOferta(Oferta oferta, List<String> imagenes)
@@ -75,8 +76,6 @@ namespace BibliotecaClases {
                 }
             }
 
-
-
             public bool ModificarOferta(Oferta oferta, List<String> listaImagenes)
             {
                 try
@@ -133,6 +132,7 @@ namespace BibliotecaClases {
 
 
             }
+
             public List<Oferta> ListadoOfertas()
             {
                 try
@@ -157,8 +157,8 @@ namespace BibliotecaClases {
                 }
             }
 
-        public List<Imagen> BuscarImagenesOferta(int idOferta)
-        {
+            public List<Imagen> BuscarImagenesOferta(int idOferta)
+            {
             try
             {
                 using (var baseDatos = new Context())
@@ -167,9 +167,9 @@ namespace BibliotecaClases {
                 }
             }
             catch { return null; }
-        }
+            }
 
-        public List<Oferta> BuscarOfertaFiltros(DateTime fechaDesde, DateTime fechaHasta, string titulo)
+            public List<Oferta> BuscarOfertaFiltros(DateTime fechaDesde, DateTime fechaHasta, string titulo)
         {
             try
             {
