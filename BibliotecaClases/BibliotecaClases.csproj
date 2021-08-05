@@ -114,10 +114,13 @@
     <None Include="Content\bootstrap\helpers\_colored-links.scss" />
     <None Include="Content\bootstrap\helpers\_position.scss" />
     <None Include="Content\bootstrap\helpers\_ratio.scss" />
+    <None Include="Content\bootstrap\helpers\_stacks.scss" />
     <None Include="Content\bootstrap\helpers\_stretched-link.scss" />
     <None Include="Content\bootstrap\helpers\_text-truncation.scss" />
     <None Include="Content\bootstrap\helpers\_visually-hidden.scss" />
+    <None Include="Content\bootstrap\helpers\_vr.scss" />
     <None Include="Content\bootstrap\mixins\_alert.scss" />
+    <None Include="Content\bootstrap\mixins\_backdrop.scss" />
     <None Include="Content\bootstrap\mixins\_border-radius.scss" />
     <None Include="Content\bootstrap\mixins\_box-shadow.scss" />
     <None Include="Content\bootstrap\mixins\_breakpoints.scss" />
@@ -166,6 +169,7 @@
     <None Include="Content\bootstrap\_navbar.scss" />
     <None Include="Content\bootstrap\_offcanvas.scss" />
     <None Include="Content\bootstrap\_pagination.scss" />
+    <None Include="Content\bootstrap\_placeholders.scss" />
     <None Include="Content\bootstrap\_popover.scss" />
     <None Include="Content\bootstrap\_progress.scss" />
     <None Include="Content\bootstrap\_reboot.scss" />
