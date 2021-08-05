@@ -7,20 +7,7 @@ namespace Testing
     [TestClass]
     public class UnitTest1
     {
-        [TestMethod]
-        public void BuscarUsuarioEmailTest()
-        {
-           
-                bool result = false;
-                BibliotecaClases.Clases.Usuario u = BibliotecaClases.Sistema.GetInstancia().BuscarUsuarioEmail("frederick@frederick");
-                if (u != null)
-                {
-                    result = true;
-                }
-                Assert.AreEqual(true, result);
-            
-        }
-
+        /* GUARDO USUARIO */
         [TestMethod]
         public void GuardarUsuarioTest()
         {
@@ -30,13 +17,16 @@ namespace Testing
             u.UserCedula = "50306210";
             u.UserContrasenia = "Hola";
             u.UserEmail = "alan@alan";
-            u.UserId = 1;
+            u.UserId = 2;
             u.UserNombre = "Susana Gomez";
             u.UserTelefono = "098123123";
+
             bool result = BibliotecaClases.Sistema.GetInstancia().GuardarUsuario(u);
+
             Assert.AreEqual(true, result);
         }
 
+        /* MODIFICO USUARIO */
         [TestMethod]
         public void ModificarUsuarioTest()
         {
@@ -49,16 +39,25 @@ namespace Testing
             u.UserId = 2;
             u.UserNombre = "Susana Gomez";
             u.UserTelefono = "098123123";
+
             bool result = BibliotecaClases.Sistema.GetInstancia().ModificarUsuario(u);
+
             Assert.AreEqual(true, result);
         }
 
+        /* BUSCO USUARIOS CON Y SIN FILTROS */
         [TestMethod]
-        public void EliminarUsuarioTest()
+        public void BuscarUsuarioEmailTest()
         {
-            int id = 2;
-            bool result = BibliotecaClases.Sistema.GetInstancia().EliminarUsuario(id);
+            bool result = false;
+            String email = "frederick@frederick";
+            BibliotecaClases.Clases.Usuario u = BibliotecaClases.Sistema.GetInstancia().BuscarUsuarioEmail(email);
+
+            if (u != null)
+                result = true;
+
             Assert.AreEqual(true, result);
+            
         }
 
         [TestMethod]
@@ -67,24 +66,10 @@ namespace Testing
 
             bool result = false;
             BibliotecaClases.Clases.Usuario u = BibliotecaClases.Sistema.GetInstancia().BuscarUsuario(1);
-            if (u != null)
-            {
-                result = true;
-            }
-            Assert.AreEqual(true, result);
-        }
 
-        [TestMethod]
-        public void BuscarUsuarioFiltroTest()
-        {
-            bool result = false;
-            List<BibliotecaClases.Clases.Usuario> user;
-            string nombre = "al";
-            user = BibliotecaClases.Sistema.GetInstancia().BuscarUsuarioFiltros(nombre);
-            if (user != null)
-            {
+            if (u != null)
                 result = true;
-            }
+
             Assert.AreEqual(true, result);
         }
 
@@ -92,7 +77,9 @@ namespace Testing
         public void BuscarUsuarioCedulaTest()
         {
             bool result = false;
-            BibliotecaClases.Clases.Usuario u = BibliotecaClases.Sistema.GetInstancia().BuscarUsuarioCedula("50306210");
+            string cedula = "50306210";
+
+            BibliotecaClases.Clases.Usuario u = BibliotecaClases.Sistema.GetInstancia().BuscarUsuarioCedula(cedula);
 
             if (u != null)
                 result = true;
@@ -101,10 +88,39 @@ namespace Testing
         }
 
         [TestMethod]
+        public void BuscarUsuarioXNombreTest()
+        {
+            bool result = false;
+            string nombre = "Susana Gomez";
+            BibliotecaClases.Clases.Usuario u = BibliotecaClases.Sistema.GetInstancia().BuscarUsuarioxNombre(nombre);
+
+            if (u != null)
+                result = true;
+
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod]
+        public void BuscarUsuarioPorCarpetaTest()
+        {
+            bool result = false;
+            int carpeta = 1;
+
+            BibliotecaClases.Clases.Usuario u = BibliotecaClases.Sistema.GetInstancia().BuscarUsuarioPorCarpeta(carpeta);
+
+            if (u != null)
+                result = true;
+
+            Assert.AreEqual(true, result);
+        }
+
+        /* LISTADOS DE USUARIOS CON Y SIN FILTROS */
+        [TestMethod]
         public void ListadoUsuariosTest()
         {
             bool result = false;
             List<BibliotecaClases.Clases.Usuario> user;
+
             user = BibliotecaClases.Sistema.GetInstancia().ListadoUsuarios();
 
             if (user != null)
@@ -127,6 +143,20 @@ namespace Testing
         }
 
         [TestMethod]
+        public void ListadoUsuariosCedulaTest()
+        {
+            bool result = false;
+            String cedula = "50306210";
+            List<BibliotecaClases.Clases.Usuario> user;
+            user = BibliotecaClases.Sistema.GetInstancia().ListadoUsuariosCedula(cedula);
+
+            if (user != null)
+                result = true;
+
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod]
         public void ListadoNivelesRegistroTest()
         {
             bool result = false;
@@ -138,5 +168,45 @@ namespace Testing
 
             Assert.AreEqual(true, result);
         }
+
+        [TestMethod]
+        public void ListadoNivelesTest()
+        {
+            bool result = false;
+            List<BibliotecaClases.Clases.Nivel> nivel;
+            nivel = BibliotecaClases.Sistema.GetInstancia().ListadoNiveles();
+
+            if (nivel != null)
+                result = true;
+
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod]
+        public void BuscarUsuarioFiltroTest()
+        {
+            bool result = false;
+            List<BibliotecaClases.Clases.Usuario> user;
+            string nombre = "al";
+
+            user = BibliotecaClases.Sistema.GetInstancia().BuscarUsuarioFiltros(nombre);
+
+            if (user != null)
+                result = true;
+
+            Assert.AreEqual(true, result);
+        }
+
+        /* ELIMINACIÓN DE USUARIOS*/
+        [TestMethod]
+        public void EliminarUsuarioTest()
+        {
+            int id = 2;
+
+            bool result = BibliotecaClases.Sistema.GetInstancia().EliminarUsuario(id);
+
+            Assert.AreEqual(true, result);
+        }
+
     }
 }
