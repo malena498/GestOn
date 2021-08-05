@@ -63,6 +63,7 @@ namespace GestOn2.ABMS
                 lblResultado.Text = "No se logro guardar";
             }
         }
+
         protected void btnModificar_Click(object sender, EventArgs e)
         {
 
