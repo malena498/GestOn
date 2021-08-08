@@ -15,6 +15,7 @@ namespace GestOn2
         {
             if (!IsPostBack)
             {
+                /* LLENA EL DROPDOWNLIST DE NIVELES PARA QUE EL USUARIO SELECCIONE SU CATEGORÍA, EXCLUYENDO EL TIPO ADMINISTRADOR */
                 ddlCategoriaUsuario.DataSource = Sistema.GetInstancia().ListadoNivelesRegistro();
                 ddlCategoriaUsuario.DataTextField = "NombreNivel";
                 ddlCategoriaUsuario.DataValueField = "IdNivel";
@@ -22,6 +23,7 @@ namespace GestOn2
             }
         }
 
+        /* REGISTRA UN NUEVO USUARIO AL SISTEMA, VÁLIDANDO  CADA UNO DE SUS DATOS */
         protected void btnRegistrarse_Click(object sender, EventArgs e)
         {
             if (confirmar()) { 
@@ -31,17 +33,19 @@ namespace GestOn2
                     try
                     {
                         bool exito = false;
-                        if (confirmar())
+                        Usuario us = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmail.Text);
+                        if (us != null)
                         {
-                            Usuario us = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmail.Text);
-                            if (us != null)
-                            {
-                                lblResultado.Text = "El mail ingreasdo ya posee un usuario.";
-                            }
+                            lblResultado.Visible = true;
+                            lblResultado.Text = "Ya existe un usuario ingresado con este E-mail.";
+                        }
+                        else
+                        {
                             Usuario user = Sistema.GetInstancia().BuscarUsuarioCedula(txtDocumento.Text);
-                            if(user != null)
+                            if (user != null)
                             {
-                                lblResultado.Text = "El documento ingreasdo ya posee un usuario.";
+                                lblResultado.Visible = true;
+                                lblResultado.Text = "La cédula ingresada ya existe en el sistema.";
                             }
                             else
                             {
@@ -80,7 +84,7 @@ namespace GestOn2
                 else
                 {
                     lblResultado.Visible = true;
-                    lblResultado.Text = "La cédula ingresada no es válida";
+                    lblResultado.Text = "Cédula inválida";
                 }
             }
             else
@@ -90,6 +94,7 @@ namespace GestOn2
             }
         }
 
+        /* VÁLIDA LA CÉDULA DE IDENTIDAD URUGUAYA, CON LOS ÉSTANDARES QUE LA MISMA TIENE, DEVOLVIENDO TRUE EN CASO QUE SEA VÁLIDA */
         public bool ValidarCI(String ci)
         {
             try
@@ -156,6 +161,7 @@ namespace GestOn2
             }
         }
 
+        /* LIMPIA TODOS LOS CAMPOS DE LA PANTALLA REGISTRO*/
         protected void limpiar()
         {
             txtNombre.Text = string.Empty;
@@ -167,6 +173,7 @@ namespace GestOn2
             ddlCategoriaUsuario.ClearSelection();
         }
 
+        /*  VÁLIDA QUE TODOS LOS CAMPOS DEL REGISTRO ESTÉN COMPLETOS, RETORNANDO TRUE EN CASO QUE ASI LO ESTÉN*/
         protected bool confirmar()
         {
             bool res = false;
@@ -183,12 +190,13 @@ namespace GestOn2
             return res;
         }
 
+        /* REDIRIGE AL USUARIO A LOGUEARSE EN EL SISTEMA, EN EL CASO QUE EL MISMO YA TENGA UNA CUENTA*/
         protected void lnkLogin_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Login.aspx");
         }
 
-        // Encripta la contraseña para compararla con la guardada en BD
+        // ENCRIPTA LA CONTRASEÑA PASADA COMO PARÁMETRO PARA HACER POSTERIORMENTE VALIDACIONES O GUARDARLA EN BD
         private static string Encriptar(string password)
         {
             string result = string.Empty;

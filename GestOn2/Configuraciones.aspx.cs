@@ -58,7 +58,11 @@ namespace GestOn2
             bool exito = Sistema.GetInstancia().GuardarConfiguraciones(configuraciones);
             if (exito)
             {
+                string script = @"<script type='text/javascript'>
+                            alerta(Configuraciónes guardadas con éxito.);
+                        </script>";
 
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
             }
             else
             {

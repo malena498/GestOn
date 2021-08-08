@@ -15,9 +15,9 @@ namespace GestOn2.ABMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            txtFechaDesde.Text = DateTime.Today.ToString();
             if (!IsPostBack)
             {
+                /* AL INICIAR POR PRIMERA VEZ LA PAGINA, CARGA EL LISTADO DE OFERTAS ACTIVAS*/
                 GridViewOferta.DataSource = Sistema.GetInstancia().ListadoOfertas();
                 GridViewOferta.DataBind();
                 btnGuardar.Enabled = false;
@@ -25,90 +25,78 @@ namespace GestOn2.ABMS
 
         }
 
+        /* Guarda una nueva oferta*/
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             try
             {
+                DateTime fch1 = DateTime.Parse(txtFechaDesde.Text);
+                DateTime fch2 = DateTime.Parse(txtFechaHasta.Text);
+                DateTime fchHoy = DateTime.Today;
+
                 if (CamposCompletos())
                 {
-                    Oferta o = new Oferta();
-                    o.OfertaTitulo = txtTituloOferta.Text;
-                    o.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
-                    o.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
-                    o.OfertaDescripcion = txtDescripcionOferta.Text;
-                    o.OfertaPrecio = decimal.Parse(txtPrecio.Text);
-                    List<String> imagenes = new List<String>();
-                    if (!String.IsNullOrEmpty(txtURLs.Text))
+                    if (fch1 < fchHoy)
                     {
-                        imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
+                        DivMensajeFormulario.Visible = true;
+                        lblResultado.Text = "Fecha inicio no puede ser menor a la de hoy";
                     }
-                    bool exito = Sistema.GetInstancia().GuardarOferta(o, imagenes);
-                    if (exito)
-                    {
-                        lblResultado.Visible = true;
-                        lblResultado.Text = "Se guardo con éxito";
-                        llenarGrilla();
-                        limpiar();
+                    else {
+                        if (fch1 <= fch2) {
+                            List<String> imagenes = new List<String>();
+                            if (!String.IsNullOrEmpty(txtURLs.Text))
+                            {
+                                imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
+                                string user = Session["IdUsuario"].ToString();
+                                Oferta o = new Oferta();
+                                o.OfertaTitulo = txtTituloOferta.Text;
+                                o.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
+                                o.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
+                                o.OfertaDescripcion = txtDescripcionOferta.Text;
+                                o.OfertaPrecio = decimal.Parse(txtPrecio.Text);
+                                o.UserId = int.Parse(user);
+                                bool exito = Sistema.GetInstancia().GuardarOferta(o, imagenes);
+                                if (exito)
+                                {
+                                    DivMensajeFormulario.Visible = true;
+                                    lblResultado.Text = "Oferta ingresada con éxito";
+                                    llenarGrilla();
+                                    limpiar();
+                                }
+                            }
+                            else
+                            {
+                                DivMensajeFormulario.Visible = true;
+                                lblResultado.Text = "Debe seleccionar una imágen";
+                            }
+                        }
+                        else
+                        {
+                            DivMensajeFormulario.Visible = true;
+                            lblResultado.Text = "Fecha inválida corrobore";
+                        }
                     }
                 }
                 else
                 {
-                    lblResultado.Visible = true;
-                    lblResultado.Text = "Complete los campos";
+                    DivMensajeFormulario.Visible = true;
+                    lblResultado.Text = "Debe completar todos los campos";
                 }
             }
             catch (Exception ex)
             {
-                lblResultado.Visible = true;
+                DivMensajeFormulario.Visible = true;
                 lblResultado.Text = "No se logro guardar";
             }
         }
 
-        protected void btnModificar_Click(object sender, EventArgs e)
-        {
-
-            if (!CamposCompletos())
-            {
-                lblResultado.Visible = true;
-                lblResultado.Text = "Debe completar todos los campos";
-            }
-            //Si esta todo correcto, procedo a hacer la modificación.
-            else
-            {
-                lblResultado.Visible = false;
-                lblResultado.Text = "";
-                Oferta of = null;
-                of = Sistema.GetInstancia().BuscarOferta(int.Parse(txtIdOferta.Text));
-                of.OfertaTitulo = txtTituloOferta.Text;
-                of.OfertaDescripcion = txtDescripcionOferta.Text;
-                of.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);
-                of.OfertaFechaHasta = DateTime.Parse(txtFechaHasta.Text);
-                of.OfertaPrecio = decimal.Parse(txtPrecio.Text);
-                List<String> imagenes = new List<String>();
-                if (!String.IsNullOrEmpty(txtURLs.Text))
-                {
-                    imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
-                }
-                bool exito = Sistema.GetInstancia().ModificarOferta(of, imagenes);
-                if (exito)
-                {
-                    lblResultado.Text = "Se modificó con éxito";
-                    lblResultado.Visible = true;
-                    llenarGrilla();
-                    limpiar();
-                }
-                else
-                {
-                    lblResultado.Text = "Error al modificar";
-                    lblResultado.Visible = true;
-                }
-            }
-        }
-
-        
-
+        /* Busca ofertas a través de filtros, trayendo todas las que se encuentren activas*/
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            if (txtFchDesde.Text.Equals(""))
+                txtFechaDesde.Text = null;
+            if (txtFchHasta.Text.Equals(""))
+                txtFchHasta.Text = null;
             DateTime fechaDesde = DateTime.Parse(txtFchDesde.Text);
             DateTime fechaHasta = DateTime.Parse(txtFchHasta.Text);
             string titulo;
@@ -129,6 +117,164 @@ namespace GestOn2.ABMS
             }
         }
 
+        /* Aca va todo lo referido a la grilla, en la cuál se pueden observar las ofertas asi como modificar u eliminar la que se desee*/
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                //0 represents first column
+                System.Web.UI.WebControls.Image img = e.Row.Cells[0].Controls[0] as System.Web.UI.WebControls.Image;
+                img.Attributes.Add("onclick", "window.open('" + img.ImageUrl.Replace("~", "") + "', '_blank')");
+            }
+        }
+
+        protected void GridViewOferta_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (e.Row.RowState == DataControlRowState.Edit)
+                {
+                   
+                }
+            }
+        }
+
+        protected void GridViewOferta_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridViewOferta.EditIndex = e.NewEditIndex;
+            llenarGrilla();
+        }
+
+        protected void GridViewOferta_RowUpdated(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = GridViewOferta.Rows[e.RowIndex];
+            int Id = Convert.ToInt32((row.FindControl("lblIdOferta") as Label).Text);
+            string titulo = (row.FindControl("txtTitulo") as TextBox).Text;
+            DateTime fechadesde = DateTime.Parse((row.FindControl("txtFechaDesde") as TextBox).Text);
+            DateTime fechahasta = DateTime.Parse((row.FindControl("txtFechaHasta") as TextBox).Text);
+            string descripcion = (row.FindControl("txtDescripcion") as TextBox).Text;
+            bool activo = Convert.ToBoolean((row.FindControl("chkActivo1") as CheckBox).Checked);
+            decimal precio = decimal.Parse((row.FindControl("txtPrecio") as TextBox).Text);
+            
+            lblResultado.Visible = false;
+            lblResultado.Text = string.Empty;
+
+            if (Id == 0 || titulo.Equals("") || fechadesde.Equals("") || fechahasta.Equals("") 
+                || descripcion.Equals("") || precio == 0)
+            {
+                lblResultadoGrilla.Visible = true;
+                lblResultadoGrilla.Text = "Debe completar todos los campos";
+            }
+            else {
+                DateTime fchhoy = DateTime.Today;
+                if (fechadesde < fchhoy)
+                {
+                    lblResultadoGrilla.Visible = true;
+                    lblResultadoGrilla.Text = "Fecha inicio no puede ser menor a la de hoy";
+                }
+                else
+                {
+                    if (fechadesde > fechahasta)
+                    {
+                        lblResultadoGrilla.Visible = true;
+                        lblResultadoGrilla.Text = "Fecha inválida corrobore";
+                    }
+                    else
+                    {
+                        Oferta of = null;
+                        of = Sistema.GetInstancia().BuscarOferta(Id);
+                        of.OfertaTitulo = titulo;
+                        of.OfertaDescripcion = descripcion;
+                        of.OfertaFechaDesde = fechadesde;
+                        of.OfertaFechaHasta = fechahasta;
+                        of.OfertaPrecio = precio;
+                        of.Activo = activo;
+                        List<String> imagenes = new List<string>();
+
+                        bool exito = Sistema.GetInstancia().ModificarOferta(of, imagenes);
+                        if (exito)
+                        {
+                            lblResultadoGrilla.Visible = true;
+                            lblResultadoGrilla.Text = "Oferta modificada con éxito";
+                            GridViewOferta.EditIndex = -1;
+                            llenarGrilla();
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void GridViewOferta_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridViewOferta.EditIndex = -1;
+            llenarGrilla();
+        }
+
+        protected void GridViewOferta_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row = GridViewOferta.Rows[e.RowIndex];
+            int Id = Convert.ToInt32(GridViewOferta.DataKeys[e.RowIndex].Values[0]);
+            bool exito = Sistema.GetInstancia().EliminarOferta(Id);
+            if (exito)
+            {
+                lblResultadoGrilla.Visible = true;
+                lblResultadoGrilla.Text = "Se elimino con éxito";
+                GridViewOferta.EditIndex = -1;
+                llenarGrilla();
+            }
+        }
+
+        protected void GridViewOferta_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewOferta.PageIndex = e.NewPageIndex;
+            llenarGrilla();
+        }
+
+        /* Permite cambiar de página en la grilla, siempre que existan registros para mostrar en la siguiente pagina*/
+        protected void OnPaging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewOferta.PageIndex = e.NewPageIndex;
+            this.llenarGrilla();
+        }
+
+        /* LLena la grilla con todas las ofertas activas*/
+        protected void llenarGrilla()
+        {
+            GridViewOferta.DataSource = Sistema.GetInstancia().ListadoOfertas();
+            GridViewOferta.DataBind();
+        }
+
+        /*Limpia todos los campos del formulario dónde se agregan las ofertas*/
+        protected void limpiar()
+        {
+            txtIdOferta.Text = string.Empty;
+            txtTituloOferta.Text = string.Empty;
+            txtFechaDesde.Text = string.Empty;
+            txtFechaHasta.Text = string.Empty;
+            txtDescripcionOferta.Text = string.Empty;
+            txtPrecio.Text = string.Empty;
+            btnGuardar.Enabled = false;
+        }
+
+        /* Válida que todos los campos del formulario estén completos, retornando true en caso que lo estén*/
+        protected bool CamposCompletos()
+        {
+            if (String.IsNullOrEmpty(txtTituloOferta.Text) ||
+                String.IsNullOrEmpty(txtFechaHasta.Text) || String.IsNullOrEmpty(txtFechaDesde.Text) ||
+                String.IsNullOrEmpty(txtDescripcionOferta.Text) || String.IsNullOrEmpty(txtPrecio.Text))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+        /* SE HACE LA GESTIÓN DE LAS IMAGENES TANTO SUBIRLA COMO MOSTRARLA EN EL FORMULARIO*/
+
+        /* Carga la imagen que el usuario seleccionó para la oferta.*/
         protected void CargarImagenes(List<Imagen> imagenes)
         {
             try
@@ -149,26 +295,22 @@ namespace GestOn2.ABMS
                         string pathImg = "~/Imagenes/" + filePath;
                         archivos.Add(new System.Web.UI.WebControls.ListItem(filePath, pathImg));
                     }
-
-
                 }
-
-
                 GridView1.DataSource = archivos;
                 GridView1.DataBind();
-
             }
             catch (Exception ex)
             {
             }
         }
 
+        /* Luego que se selecciona la imagen acá se confirma y se carga para posteriormente ingresarla en dicha oferta.*/
         protected void btnUpload_Click(object sender, EventArgs e)
         {
             try
             {
 
-                List<Imagen> imagenes= new List<Imagen>();
+                List<Imagen> imagenes = new List<Imagen>();
                 if (fuImagenes.HasFile)
                 {
                     HttpPostedFile archivo = fuImagenes.PostedFile;
@@ -197,7 +339,6 @@ namespace GestOn2.ABMS
                         switch (orientation)
                         {
                             case 1:
-                                // No rotation required.
                                 break;
                             case 2:
                                 imagen.RotateFlip(RotateFlipType.RotateNoneFlipX);
@@ -221,7 +362,6 @@ namespace GestOn2.ABMS
                                 imagen.RotateFlip(RotateFlipType.Rotate270FlipNone);
                                 break;
                         }
-                        // This EXIF data is now invalid and should be removed.
                         imagen.RemovePropertyItem(274);
                     }
 
@@ -253,16 +393,6 @@ namespace GestOn2.ABMS
 
         }
 
-        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                //0 represents first column
-                System.Web.UI.WebControls.Image img = e.Row.Cells[0].Controls[0] as System.Web.UI.WebControls.Image;
-                img.Attributes.Add("onclick", "window.open('" + img.ImageUrl.Replace("~", "") + "', '_blank')");
-            }
-        }
-
         private bool EsImagen(HttpPostedFile archivo)
         {
             return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
@@ -285,117 +415,39 @@ namespace GestOn2.ABMS
             return squareImage;
         }
 
-        protected void GridViewOferta_RowDataBound(object sender, GridViewRowEventArgs e)
+        /* FIN DE LA GESTIÓN DE IMAGENES ****************************************************/
+
+        /* Muestra u oculta el campo del filtro que el usuario desee para filtrar la grilla*/
+        protected void ddlSeleccionaFiltro_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("Fechas"))
             {
-                if (e.Row.RowState == DataControlRowState.Edit)
-                {
-                   
-                }
-            }
-        }
-
-        protected void GridViewOferta_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GridViewOferta.EditIndex = e.NewEditIndex;
-            llenarGrilla();
-        }
-
-        protected void llenarGrilla()
-        {
-            GridViewOferta.DataSource = Sistema.GetInstancia().ListadoOfertas();
-            GridViewOferta.DataBind();
-        }
-
-        protected void GridViewOferta_RowUpdated(object sender, GridViewUpdateEventArgs e)
-        {
-            GridViewRow row = GridViewOferta.Rows[e.RowIndex];
-            int Id = Convert.ToInt32((row.FindControl("lblIdOferta") as Label).Text);
-            string titulo = (row.FindControl("txtTitulo") as TextBox).Text;
-            DateTime fechadesde = DateTime.Parse((row.FindControl("txtFechaDesde") as TextBox).Text);
-            DateTime fechahasta = DateTime.Parse((row.FindControl("txtFechaHasta") as TextBox).Text);
-            string descripcion = (row.FindControl("txtDescripcion") as TextBox).Text;
-            bool activo = Convert.ToBoolean((row.FindControl("chkActivo1") as CheckBox).Checked);
-            decimal precio = decimal.Parse((row.FindControl("txtPrecio") as TextBox).Text);
-           
-            lblResultado.Visible = false;
-            lblResultado.Text = string.Empty;
-            Oferta of = null;
-            of = Sistema.GetInstancia().BuscarOferta(Id);
-            of.OfertaTitulo = titulo;
-            of.OfertaDescripcion = descripcion;
-            of.OfertaFechaDesde = fechadesde;
-            of.OfertaFechaHasta = fechahasta;
-            of.OfertaPrecio = precio;
-            of.Activo = activo;
-            List<String> imagenes = new List<string>(); 
-
-            bool exito = Sistema.GetInstancia().ModificarOferta(of, imagenes);
-            if (exito)
-            {
-                lblResultado.Visible = true;
-                lblResultado.Text = "Se modificó con éxito";
-                GridViewOferta.EditIndex = -1;
-                llenarGrilla();
-            }   
-        }
-
-        protected void GridViewOferta_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GridViewOferta.EditIndex = -1;
-            llenarGrilla();
-        }
-
-        protected void GridViewOferta_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            GridViewRow row = GridViewOferta.Rows[e.RowIndex];
-            int Id = Convert.ToInt32(GridViewOferta.DataKeys[e.RowIndex].Values[0]);
-            bool exito = Sistema.GetInstancia().EliminarOferta(Id);
-            if (exito)
-            {
-                lblResultado.Visible = true;
-                lblResultado.Text = "Se elimino con éxito";
-                GridViewOferta.EditIndex = -1;
-                llenarGrilla();
-            }
-        }
-
-        protected void GridViewOferta_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GridViewOferta.PageIndex = e.NewPageIndex;
-            llenarGrilla();
-        }
-
-        protected void OnPaging(object sender, GridViewPageEventArgs e)
-        {
-            GridViewOferta.PageIndex = e.NewPageIndex;
-            this.llenarGrilla();
-        }
-
-        protected void limpiar()
-        {
-            txtIdOferta.Text = string.Empty;
-            txtTituloOferta.Text = string.Empty;
-            txtFechaDesde.Text = string.Empty;
-            txtFechaHasta.Text = string.Empty;
-            txtDescripcionOferta.Text = string.Empty;
-            txtPrecio.Text = string.Empty;
-        }
-
-        protected bool CamposCompletos()
-        {
-            if (String.IsNullOrEmpty(txtTituloOferta.Text) ||
-                String.IsNullOrEmpty(txtFechaHasta.Text) || String.IsNullOrEmpty(txtFechaDesde.Text) ||
-                String.IsNullOrEmpty(txtDescripcionOferta.Text) || String.IsNullOrEmpty(txtPrecio.Text))
-            {
-                return false;
+                DivFiltroXTitulo.Visible = false;
+                DivFiltroXFechas.Visible = true;
             }
             else
             {
-                return true;
+                DivFiltroXFechas.Visible = false;
+                DivFiltroXTitulo.Visible = true;
             }
         }
+
+        /* Muestra el formulario para ingresar una nueva oferta, ocultando la grilla y los filtros de la misma*/
+        protected void lnkNuevaOferta_Click(object sender, EventArgs e)
+        {
+            div1.Visible = false;
+            DivFiltros.Visible = false;
+            DivNewOferta.Visible = true;
+        }
+
+        /* Muestra la grilla y los filtros a aplicarle, ocultando el formulario de ingreso de nueva oferta*/
+        protected void btnVerListado_Click(object sender, EventArgs e)
+        {
+            DivNewOferta.Visible = false;
+            DivFiltros.Visible = true;
+            div1.Visible = true;
+        }
+
 
 
     }

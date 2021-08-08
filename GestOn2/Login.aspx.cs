@@ -18,10 +18,13 @@ namespace GestOn2
 {
     public partial class Login : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
          
         }
+
+        /* Función para loguearse y acceder a las distintas funcionalidades que brinda el sistema pidiendo email y contraseña*/
         protected void btnIngresar_Click(object sender, EventArgs e)
         {
             Usuario u = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmail.Text);
@@ -30,30 +33,32 @@ namespace GestOn2
                 lblResultado.Visible = true;
                 lblResultado.Text = "Debe completar todos los campos.";
             }
-            else if (u == null)
-            {
-                lblResultado.Visible = true;
-                lblResultado.Text = "Este usuario no existe en el sistema.";
-            }
             else
             {
-                //HttpCookie userIdCookie = new HttpCookie("UserID");
-                //userIdCookie.Value = u.UserId.ToString();
-                //Response.Cookies.Add(userIdCookie);
-                string encriptada = Encriptar(txtPassUser.Text);
-                if (u.UserContrasenia.Equals(encriptada))
+                if (u == null)
                 {
-                    Session["IdUsuario"] = u.UserId;
-                    System.Web.Security.FormsAuthentication.RedirectFromLoginPage(u.UserNombre.ToString(), false);
-                    Response.Redirect("~/Inicio.aspx");
-                }
-                else {
                     lblResultado.Visible = true;
-                    lblResultado.Text = "Contraseña incorrecta";
+                    lblResultado.Text = "Este usuario no existe en el sistema.";
+                }
+                else
+                {
+                    string encriptada = Encriptar(txtPassUser.Text);
+                    if (u.UserContrasenia.Equals(encriptada))
+                    {
+                        Session["IdUsuario"] = u.UserId;
+                        System.Web.Security.FormsAuthentication.RedirectFromLoginPage(u.UserNombre.ToString(), false);
+                        Response.Redirect("~/Inicio.aspx");
+                    }
+                    else
+                    {
+                        lblResultado.Visible = true;
+                        lblResultado.Text = "Contraseña incorrecta";
+                    }
                 }
             }
         }
 
+        /* Redirige al usuario a la pantalla de registro de usuarios*/
         protected void lnkRegistrarse_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Registrarse.aspx");
@@ -68,6 +73,7 @@ namespace GestOn2
             return result;
         }
 
+        /* Permite al usuario cambiar su contraseña */
         protected void lnkRestablecerContraseña_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(txtEmail.Text))
@@ -88,6 +94,7 @@ namespace GestOn2
             }
         }
 
+        /* Envío de Email utilizado para restablecer la contraseña */
         protected void EnviarMail(String mailEmpresa, String mailDestino)
         {
             MailMessage correo = new MailMessage();
@@ -108,30 +115,4 @@ namespace GestOn2
         }
     }
 }
-/*
-  Usuario usu = Sistema.GetInstancia().BuscarUsuarioId(int.Parse(txtIdUsuario.Text), Session["NombreBase"].ToString());
-            if (usu == null)
-            {
-                lbMensaje.Text = "Error al iniciar sesión, inténtelo nuevamente";
-            }
-            else
-            {
-                if (String.IsNullOrEmpty(ddlEmisores.SelectedValue))
-                {
-                    lbMensaje.Text = "Debe seleccionar un emisor";
-                }
-                else if (String.IsNullOrEmpty(ddlSucursales.SelectedValue))
-                {
-                    lbMensaje.Text = "Debe seleccionar una sucursal";
-                }
-                else
-                {
-                    EmpresaGeneral empresa = Sistema.GetInstancia().ObtenerDatosEmisorId(int.Parse(ddlEmisores.SelectedValue));
-                    Session["rut"] = empresa.ruc;
-                    Session["NombreBase"] = empresa.NombreBaseDatos;
-                    Session["idSucursal"] = ddlSucursales.SelectedValue;
-                    Session["IdUsuario"] = usu.IdUsuario;
-                    System.Web.Security.FormsAuthentication.RedirectFromLoginPage(usu.Nombre.ToString(), false);
-                }
-            }
-     */
+
