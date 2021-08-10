@@ -32,17 +32,18 @@ namespace GestOn2.ABMS
             try
             {
                 Documento doc = new Documento();
-                string ruta = lblrutaarchivo.Text;
-                if (ruta.Equals("Error"))
+                string ruta = Session["RutaDocumento"].ToString();
+                if (ruta.Equals("Error") || ruta.Equals(""))
                 {
+                    lblMensaje.Visible = true;
                     lblMensaje.Text = "Error al cargar el archivo";
                     return;
                 }
                 else
                 {
                     doc.ruta = ruta;
-                    doc.Formato = lblTipoDoc.Text;
-                    doc.NombreDocumento = txtNombre.Text;
+                    doc.Formato = Session["TipoDoc"].ToString();
+                    doc.NombreDocumento = Session["NombreDoc"].ToString();
                     doc.Descripcion = txtDescripcion.Text;
                     doc.gradoLiceal = int.Parse(ddlGradoLiceal.SelectedValue);
                     doc.esEnvio = false;
@@ -73,9 +74,12 @@ namespace GestOn2.ABMS
                     {
                         doc.AColor = false;
                     }
-                    doc.UserId = 1;
+                    string user = Session["IdUsuario"].ToString();
+                    doc.UserId = int.Parse(user);
+                    doc.estado = "Pendiente";
                     if (!CamposCompletos())
                     {
+                        lblMensaje.Visible = true;
                         lblMensaje.Text = "Debe completar todos los campos";
                     }
                     else
@@ -83,20 +87,23 @@ namespace GestOn2.ABMS
                         bool exito = Sistema.GetInstancia().GuardarDocumento(doc);
                         if (exito)
                         {
+                            lblMensaje.Visible = false;
                             lblMensaje.Text = "";
                             VaciarCampos();
                             llenarGrillaDocumentos();
                         }
                         else
                         {
-                            lblMensaje.Text = "No anduvo";
+                            lblMensaje.Visible = true;
+                            lblMensaje.Text = "No se pudo guardar";
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-
+                lblMensaje.Visible = true;
+                lblMensaje.Text = "ERROR EN LA CARGA DEL ARCHIVO";
             }
         }
 
@@ -129,7 +136,6 @@ namespace GestOn2.ABMS
         }
 
 
-
         //Una vez el usuario selecciono el archivo, deberá darle al botón subir archivo para que se guarde correctamente
         protected void btnSubir_Click(object sender, EventArgs e)
         {
@@ -158,9 +164,10 @@ namespace GestOn2.ABMS
                     }
                     filePath = Path.Combine(Server.MapPath("~/Documentos/"), NombreArchivo);
                     archivo.SaveAs(filePath);
-                    lblTipoDoc.Text = extencion;
-                    lblrutaarchivo.Text = filePath;
                     txtNombre.Text = Path.GetFileNameWithoutExtension(fuDocs.PostedFile.FileName);
+                    Session["NombreDoc"] = txtNombre.Text;
+                    Session["RutaDocumento"] = filePath;
+                    Session["TipoDoc"] = extencion;
                 }
                 else
                 {
@@ -174,7 +181,6 @@ namespace GestOn2.ABMS
             }
 
         }
-
 
 
         //Aquí se hace lo orrespondiente a la gestión de documentos (delete y update)
@@ -205,41 +211,57 @@ namespace GestOn2.ABMS
 
         protected void GridViewDocumento_RowUpdated(object sender, GridViewUpdateEventArgs e)
         {
-            GridViewRow row = GridViewDocumentos.Rows[e.RowIndex];
-            int Id = Convert.ToInt32((row.FindControl("lblIdDocumento") as Label).Text);
-            string nombre = (row.FindControl("txtNombreDoc") as TextBox).Text;
-            string descripcion = (row.FindControl("txtDescripcionDoc") as TextBox).Text;
-            DateTime FechaIngreso = DateTime.Parse((row.FindControl("txtFechaIngresoDoc") as TextBox).Text);
-            bool AColor = Convert.ToBoolean((row.FindControl("chkAColorDoc1") as CheckBox).Checked);
-            bool DobleFaz = Convert.ToBoolean((row.FindControl("chkDobleFazDoc1") as CheckBox).Checked);
-            bool EsPractico = Convert.ToBoolean((row.FindControl("chkEsPractico1") as CheckBox).Checked);
-            bool Adomicilio = Convert.ToBoolean((row.FindControl("chkADomicilio1") as CheckBox).Checked);
-            string NroPractico = (row.FindControl("txtNumeroPracticoDoc") as TextBox).Text;
-            string Dire = (row.FindControl("txtADomicilioDoc") as TextBox).Text;
-
-            lblResultado.Visible = false;
-            lblResultado.Text = string.Empty;
-            Documento doc = null;
-            doc = Sistema.GetInstancia().BuscarDocumento(Id);
-            doc.NombreDocumento = nombre;
-            doc.Descripcion = descripcion;
-            doc.FechaIngreso = FechaIngreso;
-            doc.AColor = AColor;
-            doc.EsDobleFaz = DobleFaz;
-            doc.EsPractico = EsPractico;
-            doc.esEnvio = Adomicilio;
-            if (EsPractico)
-                doc.NroPractico = int.Parse(NroPractico);
-            if (Adomicilio)
-                doc.Direccion = Dire;
-
-            bool exito = Sistema.GetInstancia().ModificarDocumento(doc);
-            if (exito)
+            try
             {
+                GridViewRow row = GridViewDocumentos.Rows[e.RowIndex];
+                int Id = Convert.ToInt32((row.FindControl("lblIdDocumento") as Label).Text);
+                string nombre = (row.FindControl("txtNombreDoc") as TextBox).Text;
+                string descripcion = (row.FindControl("txtDescripcionDoc") as TextBox).Text;
+                DateTime FechaIngreso = DateTime.Parse((row.FindControl("txtFechaIngresoDoc") as TextBox).Text);
+                bool AColor = Convert.ToBoolean((row.FindControl("chkAColorDoc1") as CheckBox).Checked);
+                bool DobleFaz = Convert.ToBoolean((row.FindControl("chkDobleFazDoc1") as CheckBox).Checked);
+                bool EsPractico = Convert.ToBoolean((row.FindControl("chkEsPractico1") as CheckBox).Checked);
+                bool Adomicilio = Convert.ToBoolean((row.FindControl("chkADomicilio1") as CheckBox).Checked);
+                string NroPractico = (row.FindControl("txtNumeroPracticoDoc") as TextBox).Text;
+                string Dire = (row.FindControl("txtADomicilioDoc") as TextBox).Text;
+
+                lblResultado.Visible = false;
+                lblResultado.Text = string.Empty;
+
+                if (Id.Equals(0) || nombre.Equals("") || descripcion.Equals("") || FechaIngreso.Equals(null) || Dire.Equals(""))
+                {
+                    lblResultado.Visible = true;
+                    lblResultado.Text = "Debe completar todos los campos";
+                }
+                else
+                {
+                    Documento doc = null;
+                    doc = Sistema.GetInstancia().BuscarDocumento(Id);
+                    doc.NombreDocumento = nombre;
+                    doc.Descripcion = descripcion;
+                    doc.FechaIngreso = FechaIngreso;
+                    doc.AColor = AColor;
+                    doc.EsDobleFaz = DobleFaz;
+                    doc.EsPractico = EsPractico;
+                    doc.esEnvio = Adomicilio;
+                    if (EsPractico)
+                        doc.NroPractico = int.Parse(NroPractico);
+                    if (Adomicilio)
+                        doc.Direccion = Dire;
+
+                    bool exito = Sistema.GetInstancia().ModificarDocumento(doc);
+                    if (exito)
+                    {
+                        lblResultado.Visible = true;
+                        lblResultado.Text = "Modificado con éxito";
+                        GridViewDocumentos.EditIndex = -1;
+                        llenarGrillaDocumentos();
+                    }
+                }
+            }
+            catch (Exception ex) {
                 lblResultado.Visible = true;
-                lblResultado.Text = "Modificado con éxito";
-                GridViewDocumentos.EditIndex = -1;
-                llenarGrillaDocumentos();
+                lblResultado.Text = "Excepción no controlada";
             }
         }
 

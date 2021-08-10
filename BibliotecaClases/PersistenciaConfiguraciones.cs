@@ -17,14 +17,11 @@ namespace BibliotecaClases
                 {
                     foreach (Configuracion c in configuraciones)
                     {
-                        Configuracion conf = new Configuracion();
-                        conf.Nombre = c.Nombre;
+                        Configuracion conf = baseDatos.Configuraciones.SingleOrDefault(cl => cl.IdConfiguracion == c.IdConfiguracion);
+                        conf.IdConfiguracion = c.IdConfiguracion;
                         conf.Valor = c.Valor;
-                        baseDatos.Configuraciones.Add(conf);
+                        baseDatos.SaveChanges();
                     }
-                   
-                    baseDatos.SaveChanges();
-
                 }
                 return true;
             }

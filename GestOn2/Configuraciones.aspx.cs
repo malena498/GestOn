@@ -31,46 +31,63 @@ namespace GestOn2
         {
             List<Configuracion> configuraciones = new List<Configuracion>();
             Configuracion conf1 = new Configuracion();
+            conf1.IdConfiguracion = 1;
             conf1.Nombre = "EmailEmpresa";
             conf1.Valor = txtEmail.Text;
             configuraciones.Add(conf1);
 
             Configuracion conf2 = new Configuracion();
+            conf2.IdConfiguracion = 2;
             conf2.Nombre = "TelefonoEmpresa";
             conf2.Valor = txtTelefono.Text;
             configuraciones.Add(conf2);
 
             Configuracion conf3 = new Configuracion();
+            conf3.IdConfiguracion = 3;
             conf3.Nombre = "LinkIG";
             conf3.Valor = txtLinkIG.Text;
             configuraciones.Add(conf3);
 
             Configuracion conf4 = new Configuracion();
+            conf4.IdConfiguracion = 4;
             conf4.Nombre = "LinkFB";
             conf4.Valor = txtLinkFB.Text;
             configuraciones.Add(conf4);
 
             Configuracion conf5 = new Configuracion();
+            conf5.IdConfiguracion = 5;
             conf5.Nombre = "CostoEnvio";
             conf5.Valor = txtCostoEnvio.Text;
             configuraciones.Add(conf5);
 
-            bool exito = Sistema.GetInstancia().GuardarConfiguraciones(configuraciones);
-            if (exito)
+            if (txtCostoEnvio.Text.Equals("") || txtLinkFB.Text.Equals("") || txtLinkIG.Text.Equals("") ||
+                txtEmail.Text.Equals("") || txtTelefono.Text.Equals(""))
             {
                 string script = @"<script type='text/javascript'>
-                            alerta(Configuraciónes guardadas con éxito.);
+                            alert('Debe completar todos los campos.');
                         </script>";
 
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
             }
             else
             {
-                string script = @"<script type='text/javascript'>
-                            alerta(No se logro guardar.);
+                bool exito = Sistema.GetInstancia().GuardarConfiguraciones(configuraciones);
+                if (exito)
+                {
+                    string script = @"<script type='text/javascript'>
+                            alert('Configuraciónes moddificadas con éxito.');
                         </script>";
 
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
+                }
+                else
+                {
+                    string script = @"<script type='text/javascript'>
+                            alert('No se logró modificar.');
+                        </script>";
+
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
+                }
             }
 
         }
