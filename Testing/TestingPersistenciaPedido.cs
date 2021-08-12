@@ -23,13 +23,12 @@ namespace Testing
             pedido.UserId = 3;
             pedido.Precio = 400;
             pedido.Estado =  "Pendiente";
-            pedido.idDocumento =1;
             List<int> lista = new List<int>();
             lista.Add(1);
             lista.Add(3);
             List<String> imagenes = null;
             bool result = false;
-            int id = BibliotecaClases.Sistema.GetInstancia().GuardarPedido(pedido, lista, imagenes);
+            int id = BibliotecaClases.Sistema.GetInstancia().GuardarPedido(pedido, lista, imagenes, lista);
             if (id > 0) { result = true; }
             Assert.AreEqual(true, result);
         }
@@ -42,10 +41,10 @@ namespace Testing
             BibliotecaClases.Clases.ProductoPedidoCantidad ppc2 = new BibliotecaClases.Clases.ProductoPedidoCantidad();
             ppc.IdPedido = 4;
             ppc.ProductoId = 1;
-            ppc.Cantidad = 2;
+            ppc.Cantidad = 8;
             ppc2.IdPedido = 4;
             ppc2.ProductoId = 3;
-            ppc2.Cantidad = 4;
+            ppc2.Cantidad = 6;
             productoPedidoCantidad.Add(ppc);
             productoPedidoCantidad.Add(ppc2);
             bool result = BibliotecaClases.Sistema.GetInstancia().GuardarProductoPedidoCantidad(productoPedidoCantidad);
@@ -66,15 +65,14 @@ namespace Testing
             pedido.UserId = 3;
             pedido.Precio = 400;
             pedido.Estado = "Pendiente";
-            pedido.idDocumento = 1;
             List<int> lista = new List<int>();
             lista.Add(1);
             lista.Add(3);
             List<String> imagenes = null;
-            
 
-            bool result = BibliotecaClases.Sistema.GetInstancia().ModificarPedido(pedido, lista);
-
+            bool result = false;
+            int id = BibliotecaClases.Sistema.GetInstancia().ModificarPedido(pedido, lista);
+            if (id > 0) result = true;
             Assert.AreEqual(true, result);
         }
         public void ModificarPedidoAdministradorTest()
@@ -89,7 +87,6 @@ namespace Testing
             pedido.UserId = 3;
             pedido.Precio = 400;
             pedido.Estado = "Pendiente";
-            pedido.idDocumento = 1;
 
             bool result = BibliotecaClases.Sistema.GetInstancia().ModificarPedidoAdministrador(pedido);
 

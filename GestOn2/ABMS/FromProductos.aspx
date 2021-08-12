@@ -28,6 +28,7 @@
                 <asp:LinkButton ID="btnNuevoProducto" CssClass="btn btn-outline-danger col-xl-2 col-lg-2 col-sm-2 col-md-2" runat="server" OnClick="btnAgregarProducto_Click">Nuevo producto</asp:LinkButton>
                 </div>
                 <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-1"  >
+                   <asp:Label ID="lblInformativo" runat="server" Visible="False" CssClass="alert alert-danger col-md-12 col-sm-12 col-xl-12 col-xs-12 col-lg-12"></asp:Label>
                     <div id="GVProductos" class="col-lg-12 col-sm-12 col-md-12" runat="server">
                         <asp:GridView ID="GridViewProductos" AutoGenerateColumns="False" EmptyDataText="No hay registros."
                             AllowPaging="True" runat="server" DataKeyNames="ProductoId" OnRowDataBound="GridViewProductos_RowDataBound"
@@ -106,7 +107,6 @@
                     </div>
                     <div class="col-lg-12 col-sm-12 col-md-12" runat="server" id="DivNuevoProducto" visible="false">
                     <div class="container-fluid col-lg-4 col-sm-4 col-md-4 ">
-                        <asp:Label ID="lblInformativo" runat="server" Visible="False" CssClass="alert alert-danger col-md-12 col-sm-12 col-xl-12 col-xs-12 col-lg-12"></asp:Label>
                         <asp:Label ID="Label2" runat="server" Text="Nombre:" CssClass="col-md-12 col-sm-12 col-xl-12 col-xs-12 col-lg-12"></asp:Label>
                         <asp:TextBox ID="txtNombreProducto" runat="server" CssClass="col-12 col-md-12 col-lg-12 mt-3"></asp:TextBox>
                         <asp:Label ID="Label3" runat="server" Text="Precio compra:" CssClass="col-12 col-md-12 col-lg-12 mt-3"></asp:Label>

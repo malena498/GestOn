@@ -8,7 +8,7 @@ namespace BibliotecaClases
 {
     partial class Sistema
     {
-        public bool GuardarDocumento(Documento documento)
+        public int GuardarDocumento(Documento documento)
         {
             try
             {
@@ -19,11 +19,11 @@ namespace BibliotecaClases
                     baseDatos.Documentos.Add(documento);
                     baseDatos.SaveChanges();
                 }
-                return true;
+                return documento.IdDocumento;
             }
             catch (Exception ex)
             {
-                return false;
+                return 0;
             }
         }
 

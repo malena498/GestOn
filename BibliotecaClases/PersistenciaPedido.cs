@@ -10,21 +10,14 @@ namespace BibliotecaClases
     partial class Sistema
     {
 
-        public int GuardarPedido(Pedido pedido, List<int> lista, List<String> imagenes)
+        public int GuardarPedido(Pedido pedido, List<String> imagenes, List<int> listadocs)
         {
             try
             {
-                List<Producto> productos = new List<Producto>();
                 using (var baseDatos = new Context())
                 {
-                    for (int i = 0; i < lista.Count; i++)
-                    {
-                        int idprod = lista[i];
-                        Producto pe = baseDatos.Productos.FirstOrDefault(p => p.ProductoId == idprod);
-                        productos.Add(pe);
-                    }
+                  
                     pedido.FechaPedido = DateTime.Now;
-                    pedido.productos = productos;
                     pedido.Activo = true;
                     pedido.Estado = "Pendiente";
                     baseDatos.Pedidos.Add(pedido);
@@ -41,6 +34,17 @@ namespace BibliotecaClases
                                 baseDatos.ImagenesPedidos.Add(img);
                             }
                         }
+                        if (listadocs != null)
+                        {
+                            foreach (int id in listadocs)
+                            {
+                                PedidoDocumento pd = new PedidoDocumento();
+                                pd.idDocumento = id;
+                                pd.idPedido = pedido.IdPedido;
+                                baseDatos.PedidoDocumentos.Add(pd);
+                            }
+                        }
+
                     }
                     baseDatos.SaveChanges();
 
@@ -60,10 +64,38 @@ namespace BibliotecaClases
                 List<Producto> productos = new List<Producto>();
                 using (var baseDatos = new Context())
                 {
-                    foreach (ProductoPedidoCantidad p in productoPedidoCantidad)
+                    foreach (ProductoPedidoCantidad p in productoPedidoCantidad)//Find(,,);
                     {
-                        baseDatos.CanttidadProductos.Add(p);
+                        ProductoPedidoCantidad ppc = baseDatos.CanttidadProductos.Include("producto").SingleOrDefault(cl => cl.IdPedido == p.IdPedido && cl.ProductoId == p.ProductoId && cl.Cantidad == p.Cantidad); 
+                        if (ppc == null)
+                        {
+                            baseDatos.CanttidadProductos.Add(p);
+                        }
                     }
+                    baseDatos.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool GuardarProductoPedidoCantidad(ProductoPedidoCantidad productoPedidoCantidad)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+
+                    if (productoPedidoCantidad != null)
+                    {
+                        Producto p = baseDatos.Productos.Include("Categoria").SingleOrDefault(cl => cl.ProductoId == productoPedidoCantidad.ProductoId);
+                        productoPedidoCantidad.producto = p;
+                        baseDatos.CanttidadProductos.Add(productoPedidoCantidad);
+                    }
+
                     baseDatos.SaveChanges();
                 }
                 return true;
@@ -80,7 +112,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    Pedido p = baseDatos.Pedidos.FirstOrDefault(de => de.IdPedido == id);
+                    Pedido p = baseDatos.Pedidos.Include("productosCantidad").FirstOrDefault(de => de.IdPedido == id);
                     if (p != null)
                     {
                         p.Activo = false;
@@ -100,36 +132,27 @@ namespace BibliotecaClases
             }
         }
 
-        public bool ModificarPedido(Pedido pedido, List<int> lista)
+        public bool CancelarPedido(int id)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    pedido.productos = null;
-                    List<Producto> productos = new List<Producto>();
-                    for (int i = 0; i < lista.Count; i++)
+                    Pedido p = baseDatos.Pedidos.Include("productosCantidad").FirstOrDefault(de => de.IdPedido == id);
+                    if (p != null)
                     {
-                        int idprod = lista[i];
-                        Producto pr = baseDatos.Productos.FirstOrDefault(p => p.ProductoId == idprod);
-                        productos.Add(pr);
-                    }
-                    pedido.productos = productos;
-                    pedido.Activo = true;
-                    baseDatos.Pedidos.Add(pedido);
-                    Pedido pe = baseDatos.Pedidos.Include("productos").SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
-                    if (pe != null)
-                    {
-                        pe.IdPedido = pedido.IdPedido;
-                        pe.Activo = pedido.Activo;
-                        pe.Descripcion = pedido.Descripcion;
-                        pe.Direccion = pedido.Direccion;
-                        pe.FechaEntrega = pedido.FechaEntrega;
-                        pe.FechaPedido = DateTime.Now;
-                        pe.productos = pedido.productos;
-                        pe.UserId = pedido.UserId;
-                        baseDatos.SaveChanges();
-                        return true;
+                        if (!p.Estado.Equals("Entregado"))
+                        {
+                            p.Estado = "Cancelado";
+                            p.Activo = false;
+                            baseDatos.SaveChanges();
+
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
@@ -143,12 +166,14 @@ namespace BibliotecaClases
             }
         }
 
-        public bool ModificarPedidoAdministrador(Pedido pedido)
+        public int ModificarPedido(Pedido pedido)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
+                                     
+                    pedido.Activo = true;
                     Pedido pe = baseDatos.Pedidos.SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
                     if (pe != null)
                     {
@@ -158,7 +183,40 @@ namespace BibliotecaClases
                         pe.Direccion = pedido.Direccion;
                         pe.FechaEntrega = pedido.FechaEntrega;
                         pe.FechaPedido = DateTime.Now;
-                        pe.productos = pedido.productos;
+                        //pe.productosCantidad = pedido.productosCantidad;
+                        pe.UserId = pedido.UserId;
+                        pe.Precio = pedido.Precio;
+                        baseDatos.SaveChanges();
+                        return pe.IdPedido;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
+        public bool ModificarPedidoAdministrador(Pedido pedido)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    Pedido pe = baseDatos.Pedidos.Include("productosCantidad").SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
+                    if (pe != null)
+                    {
+                        pe.IdPedido = pedido.IdPedido;
+                        pe.Activo = pedido.Activo;
+                        pe.Descripcion = pedido.Descripcion;
+                        pe.Direccion = pedido.Direccion;
+                        pe.FechaEntrega = pedido.FechaEntrega;
+                        pe.FechaPedido = DateTime.Now;
+                        pe.productosCantidad = pedido.productosCantidad;
                         pe.UserId = pedido.UserId;
                         baseDatos.SaveChanges();
                         return true;
@@ -179,10 +237,17 @@ namespace BibliotecaClases
         {
             try
             {
-                using (var baseDatos = new Context())
+                Pedido p = new Pedido();
+                using (var baseDatos = new Context())//SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
                 {
-                    return baseDatos.Pedidos.Include("productos").FirstOrDefault(prop => prop.IdPedido == id);
+                    p = baseDatos.Pedidos.Include("productosCantidad").Include("usuario").SingleOrDefault(prop => prop.IdPedido == id);
                 }
+                if (p != null)
+                {
+                    return p;
+                }
+                else
+                    return null;
             }
             catch (Exception ex)
             {
@@ -200,12 +265,12 @@ namespace BibliotecaClases
                 {
                     try
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Include("productosCantidad").Where(ej => ej.Activo == true).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                     catch
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Include("productosCantidad").Where(ej => ej.Activo == true).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                 }
@@ -224,12 +289,12 @@ namespace BibliotecaClases
                 {
                     try
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.UserId == idUser).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Include("productosCantidad").Where(ej => ej.Activo == true && ej.UserId == idUser && ej.Estado != "Cancelado").Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                     catch
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.UserId == idUser).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Include("productosCantidad").Where(ej => ej.Activo == true && ej.UserId == idUser).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                 }
@@ -248,12 +313,12 @@ namespace BibliotecaClases
                 {
                     try
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.Estado == Estado).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Include("productosCantidad").Where(ej => ej.Activo == true && ej.Estado == Estado).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                     catch
                     {
-                        List<Pedido> pedidos = baseDatos.Pedidos.Where(ej => ej.Activo == true && ej.Estado == Estado).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
+                        List<Pedido> pedidos = baseDatos.Pedidos.Include("productosCantidad").Where(ej => ej.Activo == true && ej.Estado == Estado).Distinct().OrderByDescending(ej => ej.FechaPedido).ToList();
                         return pedidos;
                     }
                 }
@@ -263,7 +328,83 @@ namespace BibliotecaClases
                 return null;
             }
         }
+        public List<ProductoPedidoCantidad> ListadoProductosPedidos(int id)
+        {
+            try
+            {
+                List<ProductoPedidoCantidad> productos = new List<ProductoPedidoCantidad>();
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        
+                        productos = baseDatos.CanttidadProductos.Include("producto").Where(prop =>  prop.IdPedido == id).ToList(); 
+                        return productos;
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
+        public bool EliminarProductoPedidoCant(int idPedido, int idProducto, int cant)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        ProductoPedidoCantidad p = baseDatos.CanttidadProductos.Include("producto").SingleOrDefault(cl => cl.IdPedido == idPedido && cl.ProductoId == idProducto && cl.Cantidad == cant);
+                        if (p != null)
+                        {
+                            baseDatos.CanttidadProductos.Remove(p);
+                            
+                        }
+                        baseDatos.SaveChanges();
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public ProductoPedidoCantidad BuscarPedidoProductoCantidad(int idPedido, int IdProducto, int cantidad)
+        {
+            try
+            {
+                ProductoPedidoCantidad p = new ProductoPedidoCantidad();
+                using (var baseDatos = new Context())//SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
+                {
+                    p = baseDatos.CanttidadProductos.Include("producto").SingleOrDefault(cl => cl.IdPedido == idPedido && cl.ProductoId == IdProducto && cl.Cantidad == cantidad);
+                }
+                if (p != null)
+                {
+                    return p;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+
+        }
     }
     
 }

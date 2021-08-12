@@ -54,7 +54,7 @@ namespace GestOn2.ABMS
                     ddlEstado.SelectedIndex = 1;
                 if (p.Estado.Equals("Cancelado"))
                     ddlEstado.SelectedIndex = 2;
-                Usuario u = Sistema.GetInstancia().BuscarUsuario(1);
+                Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(Session["IdUsuario"].ToString()));
                 txtNombreUsuarioA.Text = u.UserNombre;
             }
         }

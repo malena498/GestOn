@@ -139,6 +139,15 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.WebControls.LinkButton btnNuevoProducto;
         
         /// <summary>
+        /// Control lblInformativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInformativo;
+        
+        /// <summary>
         /// Control GVProductos.
         /// </summary>
         /// <remarks>
@@ -173,15 +182,6 @@ namespace GestOn2.ABMS {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivNuevoProducto;
-        
-        /// <summary>
-        /// Control lblInformativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInformativo;
         
         /// <summary>
         /// Control Label2.

@@ -308,7 +308,7 @@ namespace GestOn2.ABMS
                 {
                     lblInformativo.Visible = true;
                     lblInformativo.Text = "Se modificó con éxito";
-                    GridViewProductos.EditIndex = -1;
+                   GridViewProductos.EditIndex = -1;
                     ListarProductos();
                 }
         }

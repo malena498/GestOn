@@ -29,9 +29,10 @@ namespace Testing
             d.NombreDocumento = "Practico Matematicas Financieras";
             d.ruta = "C:,Users\alanb,Source,Repos,alena498,GestOn,GestOn2,Imagenes";
             d.UserId = 1;
-
-            bool result = BibliotecaClases.Sistema.GetInstancia().GuardarDocumento(d);
-
+            bool result = false;
+            int  id = BibliotecaClases.Sistema.GetInstancia().GuardarDocumento(d);
+            if (id > 0)
+                result = true;
             Assert.AreEqual(true, result);
         }
 

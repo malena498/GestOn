@@ -24,7 +24,7 @@ namespace BibliotecaClases
         public DbSet<ProductoPedidoCantidad> CanttidadProductos { get; set; }
         public DbSet<ImagenPedido> ImagenesPedidos { get; set; }
         public DbSet<Configuracion> Configuraciones { get; set; }
-
+        public DbSet<PedidoDocumento> PedidoDocumentos { get; set; }
 
 
         public Context()
@@ -52,13 +52,10 @@ namespace BibliotecaClases
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Entity<Pedido>().HasMany(p => p.productos).WithMany().Map(mc =>
-            {
-                mc.ToTable("ProductoPedido");
-                mc.MapLeftKey("IdPedido");
-                mc.MapRightKey("ProductoId");
-            });
+            
             modelBuilder.Entity<ProductoPedidoCantidad>().HasKey(c => new { c.IdPedido, c.ProductoId,c.Cantidad});
+            modelBuilder.Entity<PedidoDocumento>().HasKey(p => new {p.idDocumento, p.idPedido });
+
         }
 
         public class Initializer : IDatabaseInitializer<Context>

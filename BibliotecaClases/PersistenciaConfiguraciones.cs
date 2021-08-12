@@ -40,7 +40,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Configuraciones.FirstOrDefault(prop => prop.Nombre == nombre);
+                    return baseDatos.Configuraciones.FirstOrDefault(prop =>prop.Activo == true && prop.Nombre == nombre);
                 }
             }
             catch (Exception ex)

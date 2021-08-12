@@ -80,8 +80,8 @@ namespace GestOn2.ABMS
                     }
                     else
                     {
-                        bool exito = Sistema.GetInstancia().GuardarDocumento(doc);
-                        if (exito)
+                        int id = Sistema.GetInstancia().GuardarDocumento(doc);
+                        if (id > 0)
                         {
                             lblMensaje.Text = "";
                             VaciarCampos();
