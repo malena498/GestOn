@@ -24,7 +24,8 @@ namespace BibliotecaClases.Clases
         public Usuario usuario { get; set; }
         public decimal Precio { get; set; }
         public String Estado { get; set; }
-        
+        public String HoraEntrega { get; set; }
+
 
 
     }

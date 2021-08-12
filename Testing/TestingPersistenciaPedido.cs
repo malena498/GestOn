@@ -28,7 +28,7 @@ namespace Testing
             lista.Add(3);
             List<String> imagenes = null;
             bool result = false;
-            int id = BibliotecaClases.Sistema.GetInstancia().GuardarPedido(pedido, lista, imagenes, lista);
+            int id = BibliotecaClases.Sistema.GetInstancia().GuardarPedido(pedido,  imagenes, lista);
             if (id > 0) { result = true; }
             Assert.AreEqual(true, result);
         }
@@ -71,7 +71,7 @@ namespace Testing
             List<String> imagenes = null;
 
             bool result = false;
-            int id = BibliotecaClases.Sistema.GetInstancia().ModificarPedido(pedido, lista);
+            int id = BibliotecaClases.Sistema.GetInstancia().ModificarPedido(pedido);
             if (id > 0) result = true;
             Assert.AreEqual(true, result);
         }
