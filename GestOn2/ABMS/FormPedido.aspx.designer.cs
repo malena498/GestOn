@@ -100,7 +100,7 @@ namespace GestOn2.ABMS {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkPedidoProducto;
+        protected global::System.Web.UI.WebControls.RadioButton chkPedidoProducto;
         
         /// <summary>
         /// Control Label2.
@@ -118,7 +118,7 @@ namespace GestOn2.ABMS {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkPedidoImagen;
+        protected global::System.Web.UI.WebControls.RadioButton chkPedidoImagen;
         
         /// <summary>
         /// Control Label5.

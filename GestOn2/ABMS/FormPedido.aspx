@@ -59,7 +59,6 @@
                                     <asp:TemplateField HeaderText="Accion">
                                         <ItemTemplate>
                                             <asp:LinkButton ID="btnEditar" runat="server" CommandName="Update" class="btn btn-outline-success col-md-5 col-xl-5 col-lg-5 col-sm-5 ml-0 text-center"><i class="fas fa-edit"></i></asp:LinkButton>
-                                            <%--<asp:Button ID="btnEditar" runat="server" class="btn btn-outline-success col-md-3 col-xl-3 col-lg-3 col-sm-3" CommandName="Edit" Text="Editar"></asp:Button>--%>
                                             <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" class="btn btn-outline-danger col-md-5 col-xl-5 col-lg-5 col-sm-5 m-0 text-center" Text="X"
                                                 OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
                                         </ItemTemplate>
@@ -74,9 +73,9 @@
                         <div id="divConatiner" class="container-fluid col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4" runat="server">
                             <div id="divNuevoPedido" visible="false" runat="server">
                                 <asp:Label ID="Label1" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Pedido Productos"></asp:Label>
-                                <asp:CheckBox ID="chkPedidoProducto" runat="server" OnCheckedChanged="rdbPedidoProductos_CheckedChanged" AutoPostBack="True" Font-Bold="True" />
+                               <asp:RadioButton ID="chkPedidoProducto" runat="server" OnCheckedChanged="rdbPedidoProductos_CheckedChanged" GroupName="Radiosbtn2" AutoPostBack="True" Font-Bold="True" />
                                 <asp:Label ID="Label2" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Impresión de imagen"></asp:Label>
-                                <asp:CheckBox ID="chkPedidoImagen" runat="server" OnCheckedChanged="rdbPedidoImagen_CheckedChanged" Width="40px" AutoPostBack="True" Font-Bold="True" /><br />
+                               <asp:RadioButton ID="chkPedidoImagen" runat="server" OnCheckedChanged="rdbPedidoImagen_CheckedChanged" GroupName="Radiosbtn2" Width="40px" AutoPostBack="True" Font-Bold="True" /><br />
                                 <asp:Label ID="Label5" runat="server" Text="Descripción:" class="col-12 col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
                                 <textarea id="txtDescripcion" class="col-12 col-md-12 col-lg-12" placeholder="Ingrese descripción" runat="server" name="S1" cols="20"></textarea><br />
                                 <asp:Label ID="Label9" runat="server" Text="Envío a domicilo" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True"></asp:Label>
@@ -92,7 +91,7 @@
                                 <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Generar pedido" Font-Bold="True" />
 
                             </div>
-                            <div id="divProductos" runat="server" visible="false">
+                            <div id="divProductos" runat="server" visible="false" >
                                 <h5 class="col-md-12 col-lg-12 col-sm-12 col-xl-12">Agregar productos</h5>
                                 <div class="form-row mt-2">
                                     <asp:Label ID="Label6" runat="server" Text="Seleccionar producto" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True"></asp:Label>
@@ -134,8 +133,8 @@
                                         </Columns>
                                     </asp:GridView>
                                 </div>
-                                
-                               <div runat="server" id="divPedidoImagen">
+                            </div>
+                               <div runat="server" id="divPedidoImagen" visible="false">
                                     <asp:FileUpload ID="fuImagenes" class="custom-file bg-light mt-3 bg-light border border-dark" runat="server" AllowMultiple="false" />
                                     <asp:Button ID="btnUpload" class="btn btn-outline-danger  col-md-12 col-lg-12 col-sm-12 col-12 mt-3" runat="server" OnClick="btnUpload_Click" Text="Subir" />
 
@@ -150,8 +149,6 @@
                                 <asp:Button ID="btnAgregarProductos" runat="server" OnClick="btnAgregarProductos_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Agregar Productos" Font-Bold="True" Visible="false" />                                
                                 <asp:Button ID="btnCerrar" runat="server" CssClass="btn btn-outline-danger offset-4 col-md-3 col-lg-4 col-sm-4 col-md-4 col-xl-4 mt-3" OnClick="btnCerrar_Click" Text="Ver listado" />
                                 <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick" />
-                            </div>
-
                         </div>
                     </form>
                 </div>

@@ -23,22 +23,18 @@ namespace GestOn2.ABMS
                 if (Session["IdUsuario"] != null)
                 {
                     String idUsuarioLogueado = Session["IdUsuario"].ToString();
-
-
+                    chkPedidoProducto.Checked = true;
                     ListProductos1.DataSource = Sistema.GetInstancia().ListadoProductos();
                     ListProductos1.DataTextField = "ProductoNombre";
                     ListProductos1.DataValueField = "ProductoId";
                     ListProductos1.DataBind();
                     Session["Tabla"] = null;
-                   llenarGrillaPedidos();
-                    divPedidoImagen.Visible = false;
+                    llenarGrillaPedidos();
                 }
                 else
                 {
                     Response.Redirect("~/Login.aspx");
                 }
-                
-
             }
         }
 
@@ -464,7 +460,7 @@ namespace GestOn2.ABMS
             if (exito)
             {
                 int idP = Sistema.GetInstancia().ModificarPedido(p);
-                if (idP != null)
+                if (idP != 0)
                 {
                     lblInformativo.Text = "Se actualizo con éxito";
                     llenarGrillaProductosBase(idP);
@@ -472,8 +468,6 @@ namespace GestOn2.ABMS
                     divProductos.Visible = false;
                     llenarGrillaPedidos();
                     DivGridPedido.Visible = true;
-
-
                 }
             }
 
