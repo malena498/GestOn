@@ -88,7 +88,6 @@
                                 <br />
                                 <asp:RadioButton ID="RadioBtnNoche" runat="server" GroupName="RadiosbtnE" Text="Después de las 20 p.m."  AutoPostBack="True" Font-Bold="True" Visible ="false"/><br />
                                  <asp:Label ID="lblFechaEstimadaEntrega" runat="server" class="col-12 col-md-12 col-lg-12" Font-Bold="True" Visible ="false"></asp:Label>
-                                <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Generar pedido" Font-Bold="True" />
 
                             </div>
                             <div id="divProductos" runat="server" visible="false" >
@@ -145,9 +144,10 @@
                                         </Columns>
                                     </asp:GridView>
                                 </div>
+                                <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Generar pedido" Font-Bold="True" Visible="false" />
                                 <asp:Button ID="btnActualizar" runat="server" OnClick="btnActualizar_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Actualizar" Font-Bold="True" Visible="false" />
                                 <asp:Button ID="btnAgregarProductos" runat="server" OnClick="btnAgregarProductos_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Agregar Productos" Font-Bold="True" Visible="false" />                                
-                                <asp:Button ID="btnCerrar" runat="server" CssClass="btn btn-outline-danger offset-4 col-md-3 col-lg-4 col-sm-4 col-md-4 col-xl-4 mt-3" OnClick="btnCerrar_Click" Text="Ver listado" />
+                                <asp:Button ID="btnCerrar" runat="server" CssClass="btn btn-outline-danger offset-4 col-md-3 col-lg-4 col-sm-4 col-md-4 col-xl-4 mt-3" OnClick="btnCerrar_Click" Text="Ver listado" Visible="false" />
                                 <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick" />
                         </div>
                     </form>
