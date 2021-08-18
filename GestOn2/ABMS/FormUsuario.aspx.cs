@@ -152,17 +152,15 @@ namespace GestOn2
         /* GESTIÓN DE USUARIOS EN LA GRILLA - ELIMINA - EDITA*/
         protected void GridViewUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                if (e.Row.RowState == DataControlRowState.Edit)
-                {
-                    DropDownList ddlNivel = (DropDownList)e.Row.FindControl("ddlNivel");
+            if (e.Row.RowType == DataControlRowType.DataRow &&
+       (e.Row.RowState & DataControlRowState.Edit) == DataControlRowState.Edit) { 
+                DropDownList ddlNivel = (DropDownList)e.Row.FindControl("ddlNivel");
                     ddlNivel.DataSource = Sistema.GetInstancia().ListadoNiveles();
                     ddlNivel.DataTextField = "NombreNivel";
                     ddlNivel.DataValueField = "IdNivel";
                     ddlNivel.DataBind();
                 }
-            }
+            
         }
 
         protected void GridViewUsuarios_RowEditing(object sender, GridViewEditEventArgs e)

@@ -130,12 +130,11 @@ namespace GestOn2.ABMS
 
         protected void GridViewOferta_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (e.Row.RowType == DataControlRowType.DataRow &&
+       (e.Row.RowState & DataControlRowState.Edit) == DataControlRowState.Edit)
             {
-                if (e.Row.RowState == DataControlRowState.Edit)
-                {
-                   
-                }
+
+            
             }
         }
 

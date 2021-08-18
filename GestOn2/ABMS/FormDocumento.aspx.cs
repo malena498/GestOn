@@ -186,11 +186,10 @@ namespace GestOn2.ABMS
         //Aquí se hace lo orrespondiente a la gestión de documentos (delete y update)
         protected void GridViewDocumento_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (e.Row.RowType == DataControlRowType.DataRow &&
+       (e.Row.RowState & DataControlRowState.Edit) == DataControlRowState.Edit)
             {
-                if (e.Row.RowState == DataControlRowState.Edit)
-                {
-                    for (int i = 0; i < GridViewDocumentos.Rows.Count - 1; i++)
+                for (int i = 0; i < GridViewDocumentos.Rows.Count - 1; i++)
                     {
                         bool chkEsPractico1 = Convert.ToBoolean((GridViewDocumentos.Rows[i].Cells[i].FindControl("chkEsPractico1") as CheckBox).Checked);
                         if (chkEsPractico1)
@@ -199,7 +198,7 @@ namespace GestOn2.ABMS
                             txtNumeroPracticoDoc.Visible = true;
                         }
                     }
-                }
+                
             }
         }
 

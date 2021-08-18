@@ -154,7 +154,7 @@ namespace GestOn2.ABMS
        
         protected void btnAgregarTodo_Click(object sender, EventArgs e)
         {
-            if (ListProductos1.SelectedItem != null)
+            if (ListProductos1.SelectedItem != null && (!String.IsNullOrEmpty(txtCantidadProducto.Text)))
             {
                 int idPedido = int.Parse(Session["IdPedido"].ToString());
                 int idProducto = int.Parse(ListProductos1.SelectedValue);
@@ -172,8 +172,8 @@ namespace GestOn2.ABMS
                     txtCantidadProducto.Text = string.Empty;
                     decimal precioProductos = CalcularPrecioProductos(p.ProductoPrecioVenta, cantidad);
                     decimal precio = 0;
-                   
-                    if(!String.IsNullOrEmpty(txtPrecioPedido.Text))
+
+                    if (!String.IsNullOrEmpty(txtPrecioPedido.Text))
                     {
                         precio = decimal.Parse(txtPrecioPedido.Text);
                     }
@@ -183,6 +183,11 @@ namespace GestOn2.ABMS
                     Session["PrecioAnterior"] = txtPrecioPedido.Text;
                     llenarGrillaProductosBase(idPedido);
 
+                }
+                else
+                {
+                    lblInformativo.Visible = true;
+                    lblInformativo.Text = "Seleccione un producto e ingrese una cantidad";
                 }
                 
             }
