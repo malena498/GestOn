@@ -25,7 +25,17 @@ namespace BibliotecaClases
         public DbSet<ImagenPedido> ImagenesPedidos { get; set; }
         public DbSet<Configuracion> Configuraciones { get; set; }
         public DbSet<PedidoDocumento> PedidoDocumentos { get; set; }
-
+        public DbSet<Audit_Oferta> audit_Ofertas { get; set; }
+        public DbSet<Audit_OfertaImegen> audit_OfertaImegens { get; set; }
+        public DbSet<Audit_Pedidos> audit_Pedidos { get; set; }
+        public DbSet<Audit_Documentos> audit_Documentos { get; set; }
+        public DbSet<Audit_Productos> audit_Productos { get; set; }
+        public DbSet<Audit_Configuraciones> audit_Configuraciones { get; set; }
+        public DbSet<Audit_CategoriaProductos> audit_CategoriaProductos { get; set; }
+        public DbSet<Audit_Niveles> audit_Niveles { get; set; }
+        public DbSet<Audit_ImagenPedido> audit_ImagenPedidos { get; set; }
+        public DbSet<Audit_Usuarios> audit_Usuarios { get; set; }
+        public DbSet<Audit_ProdPedCantidad> audit_ProdPedCantidads { get; set; }
 
         public Context()
              : base("GestOn")
@@ -37,7 +47,7 @@ namespace BibliotecaClases
             try
             {
                 //Local 
-                String baseConnectionString = @"Data Source=TPZPC127\SQLEXPRESS;user id=sa;password=Alicia2206**;MultipleActiveResultSets=True";
+                String baseConnectionString = @"Data Source=TPZPC116;user id=sa;password=50983019Al;MultipleActiveResultSets=True";
 
                 Database.DefaultConnectionFactory = new System.Data.Entity.Infrastructure.SqlConnectionFactory(baseConnectionString);
             }

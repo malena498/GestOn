@@ -156,13 +156,11 @@ namespace GestOn2
             {
                 if (e.Row.RowState == DataControlRowState.Edit)
                 {
-                    
                     DropDownList ddlNivel = (DropDownList)e.Row.FindControl("ddlNivel");
                     ddlNivel.DataSource = Sistema.GetInstancia().ListadoNiveles();
                     ddlNivel.DataTextField = "NombreNivel";
                     ddlNivel.DataValueField = "IdNivel";
                     ddlNivel.DataBind();
-
                 }
             }
         }
@@ -170,6 +168,7 @@ namespace GestOn2
         protected void GridViewUsuarios_RowEditing(object sender, GridViewEditEventArgs e)
         {
             GridViewUsuarios.EditIndex = e.NewEditIndex;
+            //GridViewUsuarios.Rows[GridViewUsuarios.EditIndex].RowState =  DataControlRowState.Edit;
             llenarGrilla();
         }
 
