@@ -36,7 +36,7 @@
             <asp:GridView ID="GridViewUsuarios" AutoGenerateColumns="False" EmptyDataText="No hay registros."
                 AllowPaging="True" runat="server" DataKeyNames="UserId" OnRowDataBound="GridViewUsuarios_RowDataBound"
                 OnRowEditing="GridViewUsuarios_RowEditing" OnRowUpdating="GridViewUsuarios_RowUpdated" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3"
-                OnRowCancelingEdit="GridViewUsuarios_RowCancelingEdit" OnRowDeleting="GridViewUsuarios_OnRowDeleting" OnPageIndexChanging="GridViewUsuarios_PageIndexChanging">
+                OnRowCancelingEdit="GridViewUsuarios_RowCancelingEdit" OnRowDeleting="GridViewUsuarios_OnRowDeleting" OnPageIndexChanging="GridViewUsuarios_PageIndexChanging" >
                 <Columns>
                     <asp:TemplateField HeaderText="IdUsuario" Visible="false">
                         <ItemTemplate>

@@ -5,17 +5,19 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
-using BibliotecaClases.Clases;
 
 namespace BibliotecaClases.Clases
 {
-    public class ProductoPedidoCantidad
+    public class Audit_ProdPedCantidad
     {
+        [Key]
+        public int IdCategoriaProd_auditoria { get; set; }
+        public DateTime FechaModificacion { get; set; }
+        public String Accion { get; set; }
         public bool Activo { get; set; }
         public int IdPedido { get; set; }
         public int ProductoId { get; set; }
         public int Cantidad { get; set; }
-        [ForeignKey("ProductoId")]
-        public Producto producto{ get; set; }
+        public Producto producto { get; set; }
     }
 }
