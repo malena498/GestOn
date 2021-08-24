@@ -26,5 +26,7 @@ namespace BibliotecaClases.Clases
         public bool Activo { get; set; }
         [Required]
         public String UserContrasenia { get; set; }
+        public bool ReciveOfertas { get; set; }
+
     }
 }

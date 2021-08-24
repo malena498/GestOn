@@ -20,11 +20,11 @@
                                     <asp:Label ID="lblResultado" class="alert alert-danger col-md-12 col-lg-12 col-12 col-sm-12" runat="server" Text="" Visible="false"></asp:Label>
                                     </div>
 
-                                    <asp:TextBox ID="txtEmail" placeholder="Email" type="text" TextMode="Email" class="form-control mt-3" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtEmail" placeholder="Email" type="Email"  class="form-control mt-3" runat="server"></asp:TextBox>
 
-                                    <asp:TextBox ID="txtDocumento" placeholder="Cédula" type="number" TextMode="number" class="form-control mt-3" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtDocumento" placeholder="Cédula" type="number"  class="form-control mt-3" runat="server"></asp:TextBox>
 
-                                    <asp:TextBox ID="txtTelefono" placeholder="Número de celular" type="number" TextMode="number" class="form-control mt-3" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtTelefono" placeholder="Número de celular" type="number"  class="form-control mt-3" runat="server"></asp:TextBox>
 
                                     <asp:TextBox ID="txtContrasenia" placeholder="Contraseña" type="password" TextMode="Password" class="form-control mt-3" runat="server"></asp:TextBox>
 
