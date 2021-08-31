@@ -300,5 +300,28 @@ namespace BibliotecaClases
                 return null;
             }
         }
+
+        public List<Usuario> ListadoUsuariosOfertas()
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<Usuario> usuarios = baseDatos.Usuarios.Include("nivel").Where(ej => ej.Activo == true && ej.ReciveOfertas == true).OrderBy(ej => ej.UserId).ToList();
+                        return usuarios;
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

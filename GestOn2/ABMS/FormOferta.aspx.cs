@@ -8,6 +8,18 @@ using BibliotecaClases;
 using BibliotecaClases.Clases;
 using System.Drawing;
 using System.IO;
+using System.Drawing.Printing;
+using System.Diagnostics;
+using System.Data;
+using System.Web.UI.HtmlControls;
+using System.Net.Mail;
+using System.Configuration;
+using System.Web.Configuration;
+using System.Net.Configuration;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
+
 
 namespace GestOn2.ABMS
 {
@@ -60,6 +72,9 @@ namespace GestOn2.ABMS
                                 {
                                     DivMensajeFormulario.Visible = true;
                                     lblResultado.Text = "Oferta ingresada con éxito";
+                                    List<Usuario> u = Sistema.GetInstancia().ListadoUsuariosOfertas();
+                                    Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
+                                    EnviarMail(c.Valor, u, imagenes, o);
                                     llenarGrilla();
                                     limpiar();
                                 }
@@ -447,7 +462,43 @@ namespace GestOn2.ABMS
             div1.Visible = true;
         }
 
-
-
+        /* Envío de Email utilizado para notificar el ingreso de una oferta. */
+        protected void EnviarMail(String mailEmpresa, List<Usuario> usuariosDestino, List<string> archivos, Oferta o)
+        {
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);
+            if (usuariosDestino != null)
+            {
+                //agregado de archivo
+                foreach (Usuario u in usuariosDestino)
+                {//Correo de salida
+                    mail.To.Add(u.UserEmail); //Correo destino?
+                }
+            }
+            mail.IsBodyHtml = true;
+            mail.Subject = "¡La oferta " +o.OfertaTitulo+ " está disponible!"; //Asunto
+            if (archivos != null)
+            {
+                //agregado de archivo
+                foreach (string archivo in archivos)
+                {
+                    //comprobamos si existe el archivo y lo agregamos a los adjuntos
+                    if (System.IO.File.Exists(@archivo))
+                        mail.Attachments.Add(new Attachment(@archivo));
+                }
+            }
+            mail.Body = "Oferta valida desde el día " + o.OfertaFechaDesde.ToShortDateString()+" hasta el día "+o.OfertaFechaHasta.ToShortDateString()+ ". <br> Por más información y más ofertas ingrese a: https://bertinatpapeleria.com/ <br> Bertinat Papeleria."; //Mensaje del correomas ofertas en BertinatPapelería
+            mail.IsBodyHtml = true;
+            mail.Priority = MailPriority.Normal;
+            SmtpClient smtp = new SmtpClient();
+            smtp.UseDefaultCredentials = false;
+            smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
+            smtp.Port = 25; //Puerto de salida
+            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "");//Cuenta de correo
+            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+            smtp.EnableSsl = true;//True si el servidor de correo permite ssl
+            smtp.Send(mail);
+        }
+       
     }
 }

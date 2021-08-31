@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PaginasMaestras/PageMaster.Master" AutoEventWireup="true" CodeBehind="Registrarse.aspx.cs" Inherits="GestOn2.Registrarse" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PaginasMaestras/Account.Master" AutoEventWireup="true" CodeBehind="Registrarse.aspx.cs" Inherits="GestOn2.Registrarse" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -33,6 +33,8 @@
                                     <div class="form-row col-md-12 col-lg-12 col-12 col-sm-12 mt-3">
                                     <label class="col-5 col-md-5 col-lg-5 col-sm-5 mr-3" for="inputCity">Categoría de usuario</label>
                                     <asp:DropDownList ID="ddlCategoriaUsuario" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server"></asp:DropDownList>
+                                    <asp:CheckBox ID="chkReciveOfertas" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server" Text="Desea recibir emails detallando ofertas o promociones?"></asp:CheckBox>
+
                                     </div>
 
                                     <asp:Button ID="btnRegistrarse" runat="server" class="btn btn-primary col-md-12 col-lg-12 col-12 col-sm-12 mt-3" OnClick="btnRegistrarse_Click" Text="Registrarse" />

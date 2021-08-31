@@ -83,32 +83,34 @@ namespace GestOn2
             else
             {
                 Usuario user = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmail.Text);
+                Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
                 if (user != null)
                 {
-                    EnviarMail("malenagonzalez098@gmail.com", user.UserEmail);
+                    EnviarMail(c.Valor, user.UserEmail, user);
                 }
                 else
                 {
                     lblResultado.Text = "No se encontró un usuario con el e-mail especificado";
                 }
             }
+            
         }
 
         /* Envío de Email utilizado para restablecer la contraseña */
-        protected void EnviarMail(String mailEmpresa, String mailDestino)
+        protected void EnviarMail(String mailEmpresa, String mailDestino, Usuario u)
         {
             MailMessage correo = new MailMessage();
             correo.From = new MailAddress(mailDestino, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
             correo.To.Add(mailEmpresa); //Correo destino?
             correo.Subject = "Restablecer contraseña."; //Asunto
-            correo.Body = "Para restablecer su contraseña dirijase al siguiente link:"; //Mensaje del correo
+            correo.Body = "Para restablecer su contraseña dirijase al siguiente link:https://bertinatpapeleria.com/CambiarContraseña.aspx?Id="+ u.UserId; //Mensaje del correo
             correo.IsBodyHtml = true;
             correo.Priority = MailPriority.Normal;
             SmtpClient smtp = new SmtpClient();
             smtp.UseDefaultCredentials = false;
             smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
             smtp.Port = 25; //Puerto de salida
-            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "05296221mg");//Cuenta de correo
+            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "");//Cuenta de correo
             ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
             smtp.EnableSsl = true;//True si el servidor de correo permite ssl
             smtp.Send(correo);

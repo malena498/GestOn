@@ -91,6 +91,7 @@
     <Content Include="ABMS\FromProductos.aspx" />
     <Content Include="ABMS\FormUsuario.aspx" />
     <Content Include="AdministrarCuenta.aspx" />
+    <Content Include="CambiarContraseña.aspx" />
     <Content Include="Configuraciones.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -243,6 +244,13 @@
     </Compile>
     <Compile Include="AdministrarCuenta.aspx.designer.cs">
       <DependentUpon>AdministrarCuenta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CambiarContraseña.aspx.cs">
+      <DependentUpon>CambiarContraseña.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CambiarContraseña.aspx.designer.cs">
+      <DependentUpon>CambiarContraseña.aspx</DependentUpon>
     </Compile>
     <Compile Include="Configuraciones.aspx.cs">
       <DependentUpon>Configuraciones.aspx</DependentUpon>
