@@ -59,6 +59,10 @@ namespace GestOn2
                                     u.UserTelefono = txtTelefono.Text;
                                     u.UserContrasenia = contraseña;
                                     u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
+                                    if (chkReciveOfertas.Checked)
+                                        u.ReciveOfertas = true;
+                                    else
+                                        u.ReciveOfertas = false;
                                     exito = Sistema.GetInstancia().GuardarUsuario(u);
                                 }
                                 else

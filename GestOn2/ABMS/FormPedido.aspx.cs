@@ -768,13 +768,13 @@ namespace GestOn2.ABMS
         }
 
         /* Envío de Email utilizado para notificar el ingreso de un pedido */
-        protected void EnviarMail(String mailEmpresa, String mailDestino, String usuario)
+        protected void EnviarMailNuevoPedido(String mailEmpresa, String mailDestino, Usuario u)
         {
             MailMessage correo = new MailMessage();
             correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
             correo.To.Add(mailDestino); //Correo destino?
-            correo.Subject = "Restablecer contraseña."; //Asunto
-            correo.Body = "Para restablecer su contraseña dirijase al siguiente link:"; //Mensaje del correo
+            correo.Subject = "Se ha ingresado un nuevo pedido."; //Asunto
+            correo.Body = "E4l usuario: " +u.UserNombre + " ha realizado un nuevo pedido."; //Mensaje del correo
             correo.IsBodyHtml = true;
             correo.Priority = MailPriority.Normal;
             SmtpClient smtp = new SmtpClient();
@@ -782,6 +782,46 @@ namespace GestOn2.ABMS
             smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
             smtp.Port = 25; //Puerto de salida
             smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "05296221mg");//Cuenta de correo
+            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+            smtp.EnableSsl = true;//True si el servidor de correo permite ssl
+            smtp.Send(correo);
+        }
+
+        /* Envío de Email utilizado para notificar la modificación de un pedido */
+        protected void EnviarMailModificarPedido(String mailEmpresa, String mailDestino, Usuario u, Pedido p)
+        {
+            MailMessage correo = new MailMessage();
+            correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
+            correo.To.Add(mailDestino); //Correo destino?
+            correo.Subject = "Se ha modificado un pedido."; //Asunto
+            correo.Body = "El usuario: " + u.UserNombre + " ha modificado el pedido" + p.Descripcion; //Mensaje del correo
+            correo.IsBodyHtml = true;
+            correo.Priority = MailPriority.Normal;
+            SmtpClient smtp = new SmtpClient();
+            smtp.UseDefaultCredentials = false;
+            smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
+            smtp.Port = 25; //Puerto de salida
+            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "");//Cuenta de correo
+            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+            smtp.EnableSsl = true;//True si el servidor de correo permite ssl
+            smtp.Send(correo);
+        }
+
+        /* Envío de Email utilizado para notificar la modificación de un pedido */
+        protected void EnviarMailCancelarPedido(String mailEmpresa, String mailDestino, Usuario u, Pedido p)
+        {
+            MailMessage correo = new MailMessage();
+            correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
+            correo.To.Add(mailDestino); //Correo destino?
+            correo.Subject = "Restablecer contraseña."; //Asunto
+            correo.Body = "El usuario: " + u.UserNombre + " ha cancelado el pedido" + p.Descripcion; //Mensaje del correo
+            correo.IsBodyHtml = true;
+            correo.Priority = MailPriority.Normal;+
+            SmtpClient smtp = new SmtpClient();
+            smtp.UseDefaultCredentials = false;
+            smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
+            smtp.Port = 25; //Puerto de salida
+            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "");//Cuenta de correo
             ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
             smtp.EnableSsl = true;//True si el servidor de correo permite ssl
             smtp.Send(correo);
