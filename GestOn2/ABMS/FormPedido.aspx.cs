@@ -816,7 +816,7 @@ namespace GestOn2.ABMS
             correo.Subject = "Restablecer contraseña."; //Asunto
             correo.Body = "El usuario: " + u.UserNombre + " ha cancelado el pedido" + p.Descripcion; //Mensaje del correo
             correo.IsBodyHtml = true;
-            correo.Priority = MailPriority.Normal;+
+            correo.Priority = MailPriority.Normal;
             SmtpClient smtp = new SmtpClient();
             smtp.UseDefaultCredentials = false;
             smtp.Host = "smtp.gmail.com"; //Host del servidor de correo

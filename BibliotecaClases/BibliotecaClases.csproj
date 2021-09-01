@@ -68,6 +68,7 @@
     <Compile Include="Clases\Permiso.cs" />
     <Compile Include="Clases\ProductoPedidoCantidad.cs" />
     <Compile Include="Clases\Reporte.cs" />
+    <Compile Include="Clases\ReporteProductosMasVendidos.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Clases\Documento.cs" />
     <Compile Include="GestOnDataSet.Designer.cs">
@@ -87,6 +88,7 @@
     <Compile Include="PersistenciaPedido.cs" />
     <Compile Include="PersistenciaProducto.cs" />
     <Compile Include="PersistenciaOfertas.cs" />
+    <Compile Include="PersistenciaReporteProducto.cs" />
     <Compile Include="PersistenciaReportes.cs" />
     <Compile Include="PersistenciaUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
