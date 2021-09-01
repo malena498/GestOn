@@ -19,7 +19,7 @@
                         </asp:DropDownList>
                     </div>
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-xs-5 mt-3 mb-3"  id="DivFiltroXFechas" runat="server">
-                        <asp:TextBox ID="txtFchDesde" type="datetime" placeholder="Fecha desde" class="col-xs-5 col-lg-5 col-md-5 col-sm-5 col-xl-5 ml-3" runat="server" TextMode="DateTime"></asp:TextBox>
+                        <asp:TextBox ID="txtFchDesde" type="datetime" placeholder="Fecha desde" class="col-xs-5 col-lg-5 col-md-5 col-sm-5 col-xl-5 ml-3" runat="server" TextMode="Date"></asp:TextBox>
                         <asp:TextBox ID="txtFchHasta" type="datetime" placeholder="Fecha hasta" class="col-xs-5 col-lg-5 col-md-5 col-sm-5 col-xl-5 ml-2" runat="server" TextMode="DateTime"></asp:TextBox>  
                     </div>
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-xs-5 mt-3 mb-3" id="DivFiltroXTitulo" runat="server" visible="false">
