@@ -95,7 +95,7 @@ namespace GestOn2.ABMS
                     else
                     {
                         int id = Sistema.GetInstancia().GuardarDocumento(doc);
-                        if (id > 0)
+                        /*if (id > 0)
                         {
                             Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
                             Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
@@ -110,7 +110,7 @@ namespace GestOn2.ABMS
                         {
                             lblMensaje.Visible = true;
                             lblMensaje.Text = "No se pudo guardar";
-                        }
+                        }*/
                     }
                 }
             }

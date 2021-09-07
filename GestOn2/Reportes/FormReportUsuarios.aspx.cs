@@ -18,7 +18,14 @@ namespace GestOn2.Reportes
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack) {
-
+                if (Session["IdUsuario"] != null)
+                {
+                    String idUsuarioLogueado = Session["IdUsuario"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
                 // La primera vez que carga la pagina, dejo la gráfica cargada con unas fechas random
                 txtFecha1.Text = "2019-11-02";
                 txtFecha2.Text = "2021-11-02";

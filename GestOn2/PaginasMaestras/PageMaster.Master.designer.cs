@@ -7,11 +7,13 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace GestOn2.PaginasMaestras {
-    
-    
-    public partial class PageMaster {
-        
+namespace GestOn2.PaginasMaestras
+{
+
+
+    public partial class PageMaster
+    {
+
         /// <summary>
         /// Control head.
         /// </summary>
@@ -20,7 +22,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
-        
+
         /// <summary>
         /// Control form1.
         /// </summary>
@@ -29,7 +31,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// Control formInicio.
         /// </summary>
@@ -38,7 +40,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink formInicio;
-        
+
         /// <summary>
         /// Control Docente.
         /// </summary>
@@ -47,7 +49,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Docente;
-        
+
         /// <summary>
         /// Control my_navbarDropdown.
         /// </summary>
@@ -56,7 +58,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor my_navbarDropdown;
-        
+
         /// <summary>
         /// Control estandar.
         /// </summary>
@@ -65,7 +67,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl estandar;
-        
+
         /// <summary>
         /// Control formPedidos.
         /// </summary>
@@ -74,7 +76,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink formPedidos;
-        
+
         /// <summary>
         /// Control formDoc.
         /// </summary>
@@ -83,7 +85,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink formDoc;
-        
+
         /// <summary>
         /// Control Admin.
         /// </summary>
@@ -92,7 +94,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Admin;
-        
+
         /// <summary>
         /// Control my_navbarDropdown1.
         /// </summary>
@@ -101,7 +103,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor my_navbarDropdown1;
-        
+
         /// <summary>
         /// Control Div1.
         /// </summary>
@@ -110,7 +112,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
-        
+
         /// <summary>
         /// Control formUser.
         /// </summary>
@@ -119,7 +121,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink formUser;
-        
+
         /// <summary>
         /// Control formOfertas.
         /// </summary>
@@ -128,7 +130,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink formOfertas;
-        
+
         /// <summary>
         /// Control formProductos.
         /// </summary>
@@ -137,7 +139,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink formProductos;
-        
+
         /// <summary>
         /// Control formPedidosAdmin.
         /// </summary>
@@ -146,7 +148,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink formPedidosAdmin;
-        
+
         /// <summary>
         /// Control fromDocAdmin.
         /// </summary>
@@ -155,7 +157,16 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink fromDocAdmin;
-        
+
+        /// <summary>
+        /// Control formReportes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink formReportes;
+
         /// <summary>
         /// Control my_navbarDropdown2.
         /// </summary>
@@ -164,7 +175,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor my_navbarDropdown2;
-        
+
         /// <summary>
         /// Control Div2.
         /// </summary>
@@ -173,7 +184,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div2;
-        
+
         /// <summary>
         /// Control hlAdministrarCuenta.
         /// </summary>
@@ -182,7 +193,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink hlAdministrarCuenta;
-        
+
         /// <summary>
         /// Control hlConfiguraciones.
         /// </summary>
@@ -191,7 +202,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink hlConfiguraciones;
-        
+
         /// <summary>
         /// Control btnCerrarSesion.
         /// </summary>
@@ -200,7 +211,7 @@ namespace GestOn2.PaginasMaestras {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCerrarSesion;
-        
+
         /// <summary>
         /// Control ContentPlaceHolder1.
         /// </summary>
