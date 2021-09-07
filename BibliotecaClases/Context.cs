@@ -47,7 +47,7 @@ namespace BibliotecaClases
             try
             {
                 //Local 
-                String baseConnectionString = @"Data Source=TPZPC116;user id=sa;password=50983019Al;MultipleActiveResultSets=True";
+                String baseConnectionString = @"Data Source=LAPTOP-6V8GPDB3\SQLEXPRESS;user id=sa;password=50983019Al;MultipleActiveResultSets=True";
 
                 Database.DefaultConnectionFactory = new System.Data.Entity.Infrastructure.SqlConnectionFactory(baseConnectionString);
             }

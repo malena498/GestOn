@@ -7,11 +7,13 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace GestOn2.Reportes {
-    
-    
-    public partial class FormReportUsuarios {
-        
+namespace GestOn2.Reportes
+{
+
+
+    public partial class FormReportUsuarios
+    {
+
         /// <summary>
         /// Control ScriptManager1.
         /// </summary>
@@ -20,7 +22,7 @@ namespace GestOn2.Reportes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
+
         /// <summary>
         /// Control UpdatePanel1.
         /// </summary>
@@ -29,7 +31,7 @@ namespace GestOn2.Reportes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
+
         /// <summary>
         /// Control DivFiltros.
         /// </summary>
@@ -38,7 +40,7 @@ namespace GestOn2.Reportes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivFiltros;
-        
+
         /// <summary>
         /// Control Label12.
         /// </summary>
@@ -47,7 +49,7 @@ namespace GestOn2.Reportes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label12;
-        
+
         /// <summary>
         /// Control ddlSeleccionaFiltro.
         /// </summary>
@@ -56,7 +58,7 @@ namespace GestOn2.Reportes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSeleccionaFiltro;
-        
+
         /// <summary>
         /// Control txtFecha1.
         /// </summary>
@@ -65,7 +67,7 @@ namespace GestOn2.Reportes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFecha1;
-        
+
         /// <summary>
         /// Control txtFecha2.
         /// </summary>
@@ -74,7 +76,7 @@ namespace GestOn2.Reportes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFecha2;
-        
+
         /// <summary>
         /// Control btnGraficar.
         /// </summary>
@@ -83,7 +85,7 @@ namespace GestOn2.Reportes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnGraficar;
-        
+
         /// <summary>
         /// Control lblMensaje.
         /// </summary>
@@ -92,7 +94,7 @@ namespace GestOn2.Reportes {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
-        
+
         /// <summary>
         /// Control GraficaUsuariosPedidos.
         /// </summary>
