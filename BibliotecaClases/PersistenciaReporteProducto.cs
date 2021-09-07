@@ -8,7 +8,7 @@ using BibliotecaClases.Clases;
 
 namespace BibliotecaClases
 {
-    public class PersistenciaReporteProducto
+    partial class Sistema
     {
         public List<ReporteProductosMasVendidos> ReporteProductosMasVendidos(DateTime FechaDesde, DateTime FechaHasta)
         {

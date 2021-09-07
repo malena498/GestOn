@@ -29,11 +29,21 @@ namespace GestOn2.ABMS
         {
             if (!IsPostBack)
             {
-                //Lleno listados cuando la pagina inicia por primera vez.
-                GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
-                GridViewDocumentos.DataBind();
-                ListarDropUsuarios();
+                if (Session["IdUsuario"] != null)
+                {
+                    //Lleno listados cuando la pagina inicia por primera vez.
+                    GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
+                    GridViewDocumentos.DataBind();
+                    ListarDropUsuarios();
+                }
+                else
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
             }
+           
+
+        
         }
 
         //Ingreso un nuevo documento, dejandolo en estado pendiente para que sea gestionado.
@@ -102,6 +112,7 @@ namespace GestOn2.ABMS
                             Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
                             lblMensaje.Visible = false;
                             lblMensaje.Text = "";
+                            bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "NUEVO");
                             EnviarMailNuevoDoc(c.Valor, c2.Valor, u);
                             VaciarCampos();
                             llenarGrillaDocumentos();
@@ -272,6 +283,7 @@ namespace GestOn2.ABMS
                         Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
                         string user = Session["IdUsuario"].ToString();
                         Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
+                        bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "MODIFICACION");
                         EnviarMailModificarDoc(c.Valor, c2.Valor, u, doc);
                         llenarGrillaDocumentos();
                     }
@@ -294,11 +306,15 @@ namespace GestOn2.ABMS
             GridViewRow row = GridViewDocumentos.Rows[e.RowIndex];
             int Id = Convert.ToInt32(GridViewDocumentos.DataKeys[e.RowIndex].Values[0]);
             bool exito = Sistema.GetInstancia().EliminarDocumento(Id);
+            string user = Session["IdUsuario"].ToString();
+            Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
+
             if (exito)
             {
                 lblResultado.Visible = true;
                 lblResultado.Text = "Se elimino con éxito";
                 GridViewDocumentos.EditIndex = -1;
+                bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "CANCELACION");
                 llenarGrillaDocumentos();
             }
         }

@@ -57,6 +57,13 @@
                 <ul class="nav navbar-nav navbar-right">
                    
                     <li class="nav-item">
+                         <li class="nav-item dropdown" runat="server" id="linotificacion">
+                        <a class="btn btn-link"  id="A1" runat="server" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-comment-dots fa-2x"></i>
+                        </a>
+                        <div runat="server" class="dropdown-menu" aria-labelledby="my_navbarDropdown2" id="Div3">
+                        </div>
+                             </li>
                     <li class="nav-item dropdown">
                         <a class="btn btn-link"  id="my_navbarDropdown2" runat="server" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-cog fa-2x"></i>

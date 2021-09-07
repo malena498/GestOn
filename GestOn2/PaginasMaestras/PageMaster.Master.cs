@@ -15,7 +15,9 @@ namespace GestOn2.PaginasMaestras
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-             CargarMenues();
+            String id = Session["IdUsuario"].ToString();
+            CargarMenues();
+            MostrarNotificaciones(int.Parse(id));
         }
 
         protected void btnSalir_Click(object sender, EventArgs e)
@@ -88,6 +90,64 @@ namespace GestOn2.PaginasMaestras
             Response.Redirect("~/Login.aspx");
         }
 
+        protected void MostrarNotificaciones(int id) 
+        {
+            Usuario u = Sistema.GetInstancia().BuscarUsuario(id);
+            if (u.nivel.UserAdmin)
+            {
+                List<Notificaciones> notificaciones = Sistema.GetInstancia().UltimasNotificaciones();
+                String texto = "";
+                List<String> lista = new List<string>();
+                foreach (Notificaciones n in notificaciones)
+                {
 
+                    if (n.AccionUsuario.Equals("NUEVO"))
+                    {
+                        if (n.TipoNotificacion.Equals("Notificacion Pedido"))
+                        {
+                            texto = "El usuario" +n.NombreUsuario+ "ha ingresado un nuevo pedido";
+                        }
+                        else
+                        {
+                            texto = "El usuario" + n.NombreUsuario + "ha ingresado un nuevo documento";
+
+                        }
+                    }
+                    if (n.AccionUsuario.Equals("MODIFICACION"))
+                    {
+                        if (n.TipoNotificacion.Equals("Notificacion Pedido"))
+                        {
+                            texto = "El usuario" + n.NombreUsuario + "ha modificado un  pedido";
+
+                        }
+                        else
+                        {
+                            texto = "El usuario" + n.NombreUsuario + "ha modificado un documento";
+
+                        }
+
+                    }
+                    if (n.AccionUsuario.Equals("CANCELACION"))
+                    {
+                        if (n.TipoNotificacion.Equals("Notificacion Pedido"))
+                        {
+                            texto = "El usuario" + n.NombreUsuario + "ha cancelado un pedido";
+
+                        }
+                        else
+                        {
+                            texto = "El usuario" + n.NombreUsuario + "ha eliminado un documento";
+                        }
+                    }
+                    lista.Add(texto);
+
+                }
+                /*CARGAR ULTIMAS 10 N0TIFICACIONES SEGUN LA FECHA 
+                 * MOSTRAR 
+                 * CADA VEZ Q HAY NUEVAS*/
+                linotificacion.Visible = true;
+            }
+
+        }
     }
 }

@@ -138,6 +138,8 @@ namespace GestOn2.ABMS
                         lblInformativo.Visible = true;
                         TimerMensajes.Enabled = true;
                         Session["IdPedido"] = id;
+                    Usuario u = Sistema.GetInstancia().BuscarUsuario(user);
+                        bool exito = Sistema.GetInstancia().GuardarNotificacionPedido(user, u.UserNombre,"NUEVO");
                         llenarGrillaPedidos();
                         divProductos.Visible = true;
                         divNuevoPedido.Visible = false;
@@ -375,6 +377,9 @@ namespace GestOn2.ABMS
                     lblInformativo.Visible = true;
                     lblInformativo.Text = "Se elimino con éxito";
                     GridViewProductos.EditIndex = -1;
+                    int user = int.Parse(Session["IdUsuario"].ToString());
+                    Usuario u = Sistema.GetInstancia().BuscarUsuario(user);
+                    bool ex = Sistema.GetInstancia().GuardarNotificacionPedido(user, u.UserNombre,"CANCELACION");
                     llenarGrillaProductosBase(idPedido);
                     decimal precio = RecalcularPrecioPedido(idPedido);
                     txtPrecioPedido.Text = precio.ToString();
@@ -494,6 +499,8 @@ namespace GestOn2.ABMS
                 if (idP != 0)
                 {
                     lblInformativo.Text = "Se actualizo con éxito";
+                    Usuario u = Sistema.GetInstancia().BuscarUsuario(p.UserId);
+                    bool ex = Sistema.GetInstancia().GuardarNotificacionPedido(p.UserId, u.UserNombre,"MODIFICACION");
                     llenarGrillaProductosBase(idP);
                     divNuevoPedido.Visible = false;
                     divProductos.Visible = false;

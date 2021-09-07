@@ -65,6 +65,7 @@
     <Compile Include="Clases\Configuracion.cs" />
     <Compile Include="Clases\Imagen.cs" />
     <Compile Include="Clases\ImagenPedido.cs" />
+    <Compile Include="Clases\Notificaciones.cs" />
     <Compile Include="Clases\Permiso.cs" />
     <Compile Include="Clases\ProductoPedidoCantidad.cs" />
     <Compile Include="Clases\Reporte.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="PersistenciaCategoriaProducto.cs" />
     <Compile Include="PersistenciaConfiguraciones.cs" />
     <Compile Include="PersistenciaDocumentos.cs" />
+    <Compile Include="PersistenciaNotificaciones.cs" />
     <Compile Include="PersistenciaPedido.cs" />
     <Compile Include="PersistenciaProducto.cs" />
     <Compile Include="PersistenciaOfertas.cs" />

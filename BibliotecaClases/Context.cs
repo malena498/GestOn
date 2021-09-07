@@ -36,6 +36,7 @@ namespace BibliotecaClases
         public DbSet<Audit_ImagenPedido> audit_ImagenPedidos { get; set; }
         public DbSet<Audit_Usuarios> audit_Usuarios { get; set; }
         public DbSet<Audit_ProdPedCantidad> audit_ProdPedCantidads { get; set; }
+        public DbSet<Notificaciones> Notificaciones { get; set; }
 
         public Context()
              : base("GestOn")
@@ -47,7 +48,7 @@ namespace BibliotecaClases
             try
             {
                 //Local 
-                String baseConnectionString = @"Data Source=TPZPC116;user id=sa;password=50983019Al;MultipleActiveResultSets=True";
+                String baseConnectionString = @"Data Source=TPZPC127\SQLEXPRESS;user id=sa;password=Alicia2206**;MultipleActiveResultSets=True";
 
                 Database.DefaultConnectionFactory = new System.Data.Entity.Infrastructure.SqlConnectionFactory(baseConnectionString);
             }
