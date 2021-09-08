@@ -18,9 +18,19 @@ namespace GestOn2.Reportes
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack) {
+                if (Session["IdUsuario"] != null)
+                {
+                    String idUsuarioLogueado = Session["IdUsuario"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("~/Login.aspx");
+                }
                 // La primera vez que carga la pagina, dejo la gráfica cargada con unas fechas random
-                DateTime fch1 = Convert.ToDateTime("11/02/2019");
-                DateTime fch2 = Convert.ToDateTime("11/02/2022");
+                txtFecha1.Text = "2019-11-02";
+                txtFecha2.Text = "2021-11-02";
+                DateTime fch1 = Convert.ToDateTime("2019-11-02");
+                DateTime fch2 = Convert.ToDateTime("2021-11-02");
                 LlenarGrafica(fch1,fch2);
             }
         }
@@ -29,14 +39,35 @@ namespace GestOn2.Reportes
 
             int cont = 0;
 
-            List<Reporte> reportes = Sistema.GetInstancia().ReportBestClients(fch1, fch2);
+            String filtro = ddlSeleccionaFiltro.SelectedValue;
 
-            foreach (var r in reportes)
+            List<Reporte> reportes = null;
+
+            if (filtro == "Productos")
             {
-                int id = r.IdUser;
-                valores[cont] = r.CantPedidos;
-                nombres[cont] = r.NombreUser;
-                cont++;
+                reportes = Sistema.GetInstancia().ReportCliProducto(fch1, fch2);
+            }
+            else if (filtro == "Documentos") {
+                reportes = Sistema.GetInstancia().ReportCliDocumentos(fch1, fch2);
+            }
+            else if (filtro == "Ganancia")
+            {
+                reportes = Sistema.GetInstancia().ReportCliGastos(fch1, fch2);
+            }
+
+            if (reportes != null)
+            {
+                foreach (var r in reportes)
+                {
+                    int id = r.USERID;
+                    valores[cont] = r.CANTIDAD;
+                    nombres[cont] = r.USERNOMBRE;
+                    cont++;
+                }
+            }
+            else {
+                lblMensaje.Text = "No hay reporte para mostrar";
+                lblMensaje.Visible = true;
             }
 
             GraficaUsuariosPedidos.Series["Series"].Points.DataBindXY(nombres, valores);
@@ -49,16 +80,24 @@ namespace GestOn2.Reportes
 
         protected void btnGraficar_Click(object sender, EventArgs e)
         {
+            DateTime fch1 = Convert.ToDateTime(txtFecha1.Text);
+            DateTime fch2 = Convert.ToDateTime(txtFecha2.Text);
             if (txtFecha1.Text == "" || txtFecha1.Text == null || txtFecha2.Text == "" || txtFecha2.Text == null)
             {
                 lblMensaje.Text = "Ingrese fechas válidas";
                 lblMensaje.Visible = true;
             }
-            else {
+            else if (fch1 > fch2) {
+                lblMensaje.Text = "La fecha de inicio no puede ser mayor a la de fin";
+                lblMensaje.Visible = true;
+            }
+            else
+            {
                 DateTime FechaInicio = Convert.ToDateTime(txtFecha1.Text);
                 DateTime FechaFin = Convert.ToDateTime(txtFecha2.Text);
                 LlenarGrafica(FechaInicio, FechaFin);
             }
         }
+
     }
 }

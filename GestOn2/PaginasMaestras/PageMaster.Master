@@ -51,6 +51,7 @@
                             <asp:HyperLink ID="formProductos" class="dropdown-item" NavigateUrl="~/ABMS/FromProductos.aspx" runat="server">Productos</asp:HyperLink>
                             <asp:HyperLink ID="formPedidosAdmin" class="dropdown-item" NavigateUrl="~/ABMS/FormPedidoAdmin.aspx" runat="server">Pedidos</asp:HyperLink>
                             <asp:HyperLink ID="fromDocAdmin" class="dropdown-item" NavigateUrl="~/ABMS/FormDocumento.aspx" runat="server">Documentos</asp:HyperLink>
+                            <asp:HyperLink ID="formReportes" class="dropdown-item" NavigateUrl="~/Reportes/FormReportUsuarios.aspx" runat="server">Reportes</asp:HyperLink>
                         </div>
                     </li>
                 </ul>

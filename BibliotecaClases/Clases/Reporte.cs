@@ -10,8 +10,8 @@ namespace BibliotecaClases.Clases
 {
     public class Reporte
     {
-        public int IdUser { get; set; }
-        public string NombreUser { get; set; }
-        public int CantPedidos { get; set; }
+        public int USERID { get; set; }
+        public string USERNOMBRE { get; set; }
+        public int CANTIDAD { get; set; }
     }
 }

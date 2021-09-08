@@ -82,6 +82,37 @@ namespace GestOn2
 
             //}
         
-    }
+        }
+
+        private void DescargarDoc() {
+
+            Documento d = Sistema.GetInstancia().BuscarDocumento(27);
+            string filename = d.NombreDocumento + d.Formato;
+
+            if (filename != "")
+            {
+                string path = Server.MapPath(filename);
+                string ruta = d.ruta;
+                System.IO.FileInfo file = new System.IO.FileInfo(ruta);
+                if (file.Exists)
+                {
+                    Response.Clear();
+                    Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+                    Response.AddHeader("Content-Length", file.Length.ToString());
+                    Response.ContentType = "application/octet-stream";
+                    Response.WriteFile(file.FullName);
+                    Response.End();
+                }
+                else
+                {
+                    Response.Write("This file does not exist.");
+                }
+            }
+        }
+
+        protected void bntDescargar_Click(object sender, EventArgs e)
+        {
+            DescargarDoc();
+        }
     }
 }
