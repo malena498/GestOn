@@ -15,9 +15,13 @@ namespace GestOn2.PaginasMaestras
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            String id = Session["IdUsuario"].ToString();
             CargarMenues();
-            MostrarNotificaciones(int.Parse(id));
+            if (Session["IdUsuario"] != null)
+            {
+                String id = Session["IdUsuario"].ToString();
+
+                MostrarNotificaciones(int.Parse(id));
+            }
         }
 
         protected void btnSalir_Click(object sender, EventArgs e)

@@ -12,7 +12,7 @@
                 <div class="form-row border-top-0 col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-1">
                     <div class="container-fluid border border-primary p-3 col-md-10 col-lg-10 col-sm-10 col-xl-10 mt-1">
                         <asp:Label ID="Label12" runat="server" Text="Filtrar por: " class="col-2 col-md-2 col-lg-2 m-2" Font-Bold="True"></asp:Label>
-                        <asp:DropDownList ID="ddlSeleccionaFiltro" CssClass="form-select p-1 col-4 col-md-4 col-lg-4 col-sm-4" runat="server">
+                        <asp:DropDownList ID="ddlSeleccionaFiltro" CssClass="form-select p-1 col-4 col-md-4 col-lg-4 col-sm-4" runat="server" Autopostback="true" OnSelectedIndexChanged="ddlSeleccionaFiltro_SelectedIndexChanged">
                             <asp:ListItem Value="Documentos" Selected="True">Cliente que mas documentos envió</asp:ListItem>
                             <asp:ListItem Value="Productos">Usuario que realizó más pedidos</asp:ListItem>
                             <asp:ListItem Value="Ganancia">Usuarios que mas han gastado</asp:ListItem>

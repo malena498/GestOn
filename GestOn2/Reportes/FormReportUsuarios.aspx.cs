@@ -42,7 +42,7 @@ namespace GestOn2.Reportes
             String filtro = ddlSeleccionaFiltro.SelectedValue;
 
             List<Reporte> reportes = null;
-
+            List<ReporteProductosMasVendidos> reporte = null;
             if (filtro == "Productos")
             {
                 reportes = Sistema.GetInstancia().ReportCliProducto(fch1, fch2);
@@ -54,6 +54,10 @@ namespace GestOn2.Reportes
             {
                 reportes = Sistema.GetInstancia().ReportCliGastos(fch1, fch2);
             }
+            else if (filtro == "ProductoVendido")
+            {
+                reporte = Sistema.GetInstancia().ReporteProductosMasVendidos(fch1, fch2);
+            }
 
             if (reportes != null)
             {
@@ -62,6 +66,16 @@ namespace GestOn2.Reportes
                     int id = r.USERID;
                     valores[cont] = r.CANTIDAD;
                     nombres[cont] = r.USERNOMBRE;
+                    cont++;
+                }
+            }
+            else if (reporte != null)
+            {
+                foreach (var r in reporte)
+                {
+                    int id = r.ProductoId;
+                    valores[cont] = int.Parse(r.Cantidad.ToString());
+                    nombres[cont] = r.ProductoNombre;
                     cont++;
                 }
             }
@@ -98,6 +112,28 @@ namespace GestOn2.Reportes
                 LlenarGrafica(FechaInicio, FechaFin);
             }
         }
+        protected void ddlSeleccionaFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DateTime fch1 = Convert.ToDateTime(txtFecha1.Text);
+            DateTime fch2 = Convert.ToDateTime(txtFecha2.Text);
+            if (txtFecha1.Text == "" || txtFecha1.Text == null || txtFecha2.Text == "" || txtFecha2.Text == null)
+            {
+                lblMensaje.Text = "Ingrese fechas válidas";
+                lblMensaje.Visible = true;
+            }
+            else if (fch1 > fch2)
+            {
+                lblMensaje.Text = "La fecha de inicio no puede ser mayor a la de fin";
+                lblMensaje.Visible = true;
+            }
+            else
+            {
+                DateTime FechaInicio = Convert.ToDateTime(txtFecha1.Text);
+                DateTime FechaFin = Convert.ToDateTime(txtFecha2.Text);
+                LlenarGrafica(FechaInicio, FechaFin);
+            }
+        }
+            
 
     }
 }

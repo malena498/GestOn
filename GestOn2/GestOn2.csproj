@@ -116,7 +116,6 @@
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Registrarse.aspx" />
-    <Content Include="Reportes\FormReporteProductos.aspx" />
     <Content Include="Reportes\FormReportUsuarios.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -302,13 +301,6 @@
     </Compile>
     <Compile Include="Registrarse.aspx.designer.cs">
       <DependentUpon>Registrarse.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reportes\FormReporteProductos.aspx.cs">
-      <DependentUpon>FormReporteProductos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reportes\FormReporteProductos.aspx.designer.cs">
-      <DependentUpon>FormReporteProductos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reportes\FormReportUsuarios.aspx.cs">
       <DependentUpon>FormReportUsuarios.aspx</DependentUpon>
