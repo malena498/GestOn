@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -112,7 +113,29 @@ namespace GestOn2
 
         protected void bntDescargar_Click(object sender, EventArgs e)
         {
-            DescargarDoc();
+            try
+            {
+                Documento d = Sistema.GetInstancia().BuscarDocumento(27);
+                string strURL = d.ruta;
+                WebClient req = new WebClient();
+                HttpResponse response = HttpContext.Current.Response;
+                response.Clear();
+                response.ClearContent();
+                response.ClearHeaders();
+                response.Buffer = true;
+                response.AddHeader("Content-Disposition", "attachment;filename=\"" + Server.MapPath(strURL) + "\"");
+                byte[] data = req.DownloadData(Server.MapPath(strURL));
+                response.BinaryWrite(data);
+                response.End();
+                lblMensaje.Text = "Archivo descargado con éxito";
+                lblMensaje.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = ex.Message;
+                lblMensaje.Visible = true;
+            }
+            // DescargarDoc();
         }
     }
 }
