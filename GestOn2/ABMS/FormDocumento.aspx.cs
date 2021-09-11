@@ -31,6 +31,15 @@ namespace GestOn2.ABMS
             {
                 if (Session["IdUsuario"] != null)
                 {
+                    Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(Session["IdUsuario"].ToString()));
+                    if (!u.nivel.UserAdmin)
+                    {
+                        GridViewDocumentos.Columns[9].Visible = false;
+                    }
+                    else
+                    {
+                        GridViewDocumentos.Columns[9].Visible = true;
+                    }
                     //Lleno listados cuando la pagina inicia por primera vez.
                     GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
                     GridViewDocumentos.DataBind();

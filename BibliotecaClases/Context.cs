@@ -37,6 +37,10 @@ namespace BibliotecaClases
         public DbSet<Audit_Usuarios> audit_Usuarios { get; set; }
         public DbSet<Audit_ProdPedCantidad> audit_ProdPedCantidads { get; set; }
         public DbSet<Notificaciones> Notificaciones { get; set; }
+        public DbSet<Curso> Cursos { get; set; }
+        //public DbSet<Estudiante> Estudiantes { get; set; }
+        //public DbSet<Docente> Docentes { get; set; }
+
 
         public Context()
              : base("GestOn")

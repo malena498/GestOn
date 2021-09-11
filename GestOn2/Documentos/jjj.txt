@@ -1,0 +1,26 @@
+<asp:TemplateField HeaderText="Descargar" ItemStyle-HorizontalAlign="Center">
+       <ItemTemplate>
+        <asp:HyperLink ID="descarga" runat="server" NavigateUrl='<%# Eval("Name", "~/GuardarEnCarpeta/Download.aspx?filename={0}") %>'>
+               <img src="../imagenes/download.gif" alt="" width="30px" height="30px" style="border-width:0px;" />
+              </asp:HyperLink>
+       </ItemTemplate>
+</asp:TemplateField>
+
+
+public partial class Download : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        string filename = Request.QueryString["filename"].ToString(); 
+
+        Response.Clear();
+
+        Response.AddHeader("content-disposition", string.Format("attachment;filename={0}", filename));
+        Response.ContentType = "application/octet-stream";
+
+        Response.WriteFile(Server.MapPath(Path.Combine("~/files", filename)));
+
+        Response.End();
+
+    }
+}

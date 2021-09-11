@@ -7,13 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace GestOn2
-{
-
-
-    public partial class download
-    {
-
+namespace GestOn2 {
+    
+    
+    public partial class download {
+        
         /// <summary>
         /// Control UpdatePanel1.
         /// </summary>
@@ -22,7 +20,7 @@ namespace GestOn2
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-
+        
         /// <summary>
         /// Control ScriptManager1.
         /// </summary>
@@ -31,7 +29,7 @@ namespace GestOn2
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-
+        
         /// <summary>
         /// Control Label1.
         /// </summary>
@@ -40,7 +38,7 @@ namespace GestOn2
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-
+        
         /// <summary>
         /// Control bntDescargar.
         /// </summary>

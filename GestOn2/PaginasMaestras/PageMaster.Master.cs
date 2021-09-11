@@ -8,6 +8,7 @@ using BibliotecaClases;
 using BibliotecaClases.Clases;
 using System.Drawing;
 using System.IO;
+using System.Web.UI.HtmlControls;
 
 namespace GestOn2.PaginasMaestras
 {
@@ -107,51 +108,109 @@ namespace GestOn2.PaginasMaestras
 
                     if (n.AccionUsuario.Equals("NUEVO"))
                     {
-                        if (n.TipoNotificacion.Equals("Notificacion Pedido"))
+                        if (n.TipoNotificacion.Equals("Notificaciones Pedido"))
                         {
-                            texto = "El usuario" +n.NombreUsuario+ "ha ingresado un nuevo pedido";
+                            texto = "El usuario " +n.NombreUsuario+ " ha ingresado un nuevo pedido";
                         }
                         else
                         {
-                            texto = "El usuario" + n.NombreUsuario + "ha ingresado un nuevo documento";
+                            texto = "El usuario " + n.NombreUsuario + " ha ingresado un nuevo documento";
 
                         }
                     }
                     if (n.AccionUsuario.Equals("MODIFICACION"))
                     {
-                        if (n.TipoNotificacion.Equals("Notificacion Pedido"))
+                        if (n.TipoNotificacion.Equals("Notificaciones Pedido"))
                         {
-                            texto = "El usuario" + n.NombreUsuario + "ha modificado un  pedido";
+                            texto = "El usuario " + n.NombreUsuario + " ha modificado un  pedido";
 
                         }
                         else
                         {
-                            texto = "El usuario" + n.NombreUsuario + "ha modificado un documento";
+                            texto = "El usuario " + n.NombreUsuario + " ha modificado un documento";
 
                         }
 
                     }
                     if (n.AccionUsuario.Equals("CANCELACION"))
                     {
-                        if (n.TipoNotificacion.Equals("Notificacion Pedido"))
+                        if (n.TipoNotificacion.Equals("Notificaciones Pedido"))
                         {
-                            texto = "El usuario" + n.NombreUsuario + "ha cancelado un pedido";
+                            texto = "El usuario " + n.NombreUsuario + " ha cancelado un pedido";
 
                         }
                         else
                         {
-                            texto = "El usuario" + n.NombreUsuario + "ha eliminado un documento";
+                            texto = "El usuario " + n.NombreUsuario + " ha eliminado un documento";
                         }
                     }
                     lista.Add(texto);
 
+                }
+                foreach (string notif in lista)
+                {
+                    HtmlGenericControl label = new HtmlGenericControl("label");
+                    label.InnerText = notif;
+                    Div3.Controls.Add( label);
                 }
                 /*CARGAR ULTIMAS 10 N0TIFICACIONES SEGUN LA FECHA 
                  * MOSTRAR 
                  * CADA VEZ Q HAY NUEVAS*/
                 linotificacion.Visible = true;
             }
+            if (u.nivel.NombreNivel.Equals("Estudiante"))
+            {
+                List<Notificaciones> notificaciones = Sistema.GetInstancia().UltimasNotificaciones();
+                String texto = "";
+                List<String> lista = new List<string>();
+                foreach (Notificaciones n in notificaciones)
+                {
+                    if (n.AccionUsuario.Equals("NUEVO"))
+                    {
+                        if (n.TipoNotificacion.Equals("Notificaciones Documentos"))
+                        {
+                            texto = "El usuario " + n.NombreUsuario + " ha ingresado un nuevo pedido";
+                        }
+                        else
+                        {
+                            texto = "El usuario " + n.NombreUsuario + " ha ingresado un nuevo documento";
 
-        }
+                        }
+                    }
+                    if (n.AccionUsuario.Equals("MODIFICACION"))
+                    {
+                        if (n.TipoNotificacion.Equals("Notificaciones Documentos"))
+                        {
+                            texto = "El usuario " + n.NombreUsuario + " ha modificado un  pedido";
+
+                        }
+                        else
+                        {
+                            texto = "El usuario " + n.NombreUsuario + " ha modificado un documento";
+
+                        }
+
+                    }
+                    if (n.AccionUsuario.Equals("CANCELACION"))
+                    {
+                        if (n.TipoNotificacion.Equals("Notificaciones Documentos"))
+                        {
+                            texto = "El usuario " + n.NombreUsuario + " ha cancelado un pedido";
+
+                        }
+                        else
+                        {
+                            texto = "El usuario " + n.NombreUsuario + " ha eliminado un documento";
+                        }
+                    }
+                    lista.Add(texto);
+
+                }
+            }
     }
-}
+}/*                     
+    tabs
+    HtmlGenericControl anchor = new HtmlGenericControl("a");
+    anchor.Attributes.Add("href", "#");
+    anchor.InnerText = Convert.ToString(drOutput["ModuleGroup"]);
+    li.Controls.Add(anchor);*/

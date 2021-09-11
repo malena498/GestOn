@@ -179,6 +179,12 @@
                             </EditItemTemplate>
                             <ItemStyle Width="150px" />
                         </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Descargar" ItemStyle-HorizontalAlign="Center"  >
+                    <ItemTemplate>
+                        <asp:HyperLink ID="descarga" runat="server" NavigateUrl='<%# Eval("IdDocumento", "~/download.aspx?IdDoc={0}") %>'  Text ="Descargar">
+                        </asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
                     </Columns>
                     <HeaderStyle HorizontalAlign="Center" />
                 </asp:GridView>

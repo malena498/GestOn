@@ -63,6 +63,9 @@
     <Compile Include="Clases\Audit_Usuarios.cs" />
     <Compile Include="Clases\CategoriaProducto.cs" />
     <Compile Include="Clases\Configuracion.cs" />
+    <Compile Include="Clases\Curso.cs" />
+    <Compile Include="Clases\Docente.cs" />
+    <Compile Include="Clases\Estudiante.cs" />
     <Compile Include="Clases\Imagen.cs" />
     <Compile Include="Clases\ImagenPedido.cs" />
     <Compile Include="Clases\Notificaciones.cs" />
