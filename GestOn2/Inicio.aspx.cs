@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BibliotecaClases.Clases;
+using BibliotecaClases;
+using System.IO;
 
 namespace GestOn2
 {
@@ -11,16 +18,51 @@ namespace GestOn2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!IsPostBack)
             {
-                if (Session["IdUsuario"] != null)
-                {
-                    String idUsuarioLogueado = Session["IdUsuario"].ToString();             
+                string[] imgOfertas = new string[3];
+                int cont = 0;
+                List<Imagen> listIMG = new List<Imagen>();
+                listIMG = Sistema.GetInstancia().ListadoImagenesOferta();
+                foreach (Imagen ima in listIMG) {
+                    if (cont <= 3)
+                    {
+                        imgOfertas[cont] = ima.ImagenURL;
+                        cont++;
+                    }
+                    else break;
                 }
-                else
+                string[] filesindirectory = Directory.GetFiles(Server.MapPath("/Imagenes"));
+                List<String> images = new List<string>(imgOfertas.Count());
+
+                foreach (string item in imgOfertas)
                 {
-                    Response.Redirect("~/Login.aspx");
+                    if(item != null)
+                    images.Add(String.Format("/Imagenes/{0}", System.IO.Path.GetFileName(item)));
                 }
+
+                repetidor.DataSource = images;
+                repetidor.DataBind();
+                /* CargarImagenesOferta();
+                 if (Session["IdUsuario"] != null)
+                 {
+                     String idUsuarioLogueado = Session["IdUsuario"].ToString();             
+                 }
+                 else
+                 {
+                     Response.Redirect("~/Login.aspx");
+                 }*/
+            }
+        }
+        protected string iterarFotos(int ImageItem)
+        {
+            if (ImageItem == 0)
+            {
+                return "active";
+            }
+            else {
+                return "";
             }
         }
     }

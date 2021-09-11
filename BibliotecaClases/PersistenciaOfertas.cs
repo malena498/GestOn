@@ -35,6 +35,7 @@ namespace BibliotecaClases {
                                 {
                                     Imagen img = new Imagen();
                                     img.ImagenURL = url;
+                                    img.Activo = true;
                                     img.IdOferta = oferta.IdOferta;
                                     baseDatos.Imagenes.Add(img);
                                 }
@@ -199,6 +200,30 @@ namespace BibliotecaClases {
             {
                 List<Oferta> ofertas = null;
                 return ofertas;
+            }
+        }
+
+        public List<Imagen> ListadoImagenesOferta()
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<Imagen> img = baseDatos.Imagenes.Where(ej => ej.Activo == true).OrderBy(ej => ej.ImagenId).ToList();
+                        return img;
+                    }
+                    catch
+                    {
+                        List<Imagen> img = baseDatos.Imagenes.Where(ej => ej.Activo == true).OrderBy(ej => ej.ImagenId).ToList();
+                        return img;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
     }

@@ -3,11 +3,10 @@
 /*Usado para el Pie de pagina (footer)*/
 footer {
     background: #16222A;
-    height:30%;
+    height: 15%;
     background: -webkit-linear-gradient(59deg, #3A6073, #16222A);
-    background: linear-gradient(59deg, #3A6073, #16222A);
     color: white;
-    position: absolute;
+    position: fixed;
     bottom: 0;
 }
 
