@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Data.SqlClient;
 using System.Net.Mail;
 using System.Net;
+using System.Globalization;
 
 namespace BibliotecaClases { 
 
@@ -209,14 +210,17 @@ namespace BibliotecaClases {
             {
                 using (var baseDatos = new Context())
                 {
+                    List<Imagen> img = null;
                     try
                     {
-                        List<Imagen> img = baseDatos.Imagenes.Where(ej => ej.Activo == true).OrderBy(ej => ej.ImagenId).ToList();
+                        img = baseDatos.Database.SqlQuery<Imagen>("EXEC SP_IMAGENCARUOSEL")
+                                            .ToList();
                         return img;
                     }
-                    catch
+                    catch (Exception exx)
                     {
-                        List<Imagen> img = baseDatos.Imagenes.Where(ej => ej.Activo == true).OrderBy(ej => ej.ImagenId).ToList();
+                        img = baseDatos.Database.SqlQuery<Imagen>("EXEC SP_IMAGENCARUOSEL")
+                                            .ToList();
                         return img;
                     }
                 }

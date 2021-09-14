@@ -29,6 +29,10 @@ namespace GestOn2.ABMS
         {
             if (!IsPostBack)
             {
+                txtFchDesde.Text = "2021-10-02";
+                txtFchHasta.Text = "2021-11-02";
+                txtFechaDesde.Text = "2019-11-02";
+                txtFechaHasta.Text = "2021-11-02";
                 /* AL INICIAR POR PRIMERA VEZ LA PAGINA, CARGA EL LISTADO DE OFERTAS ACTIVAS*/
                 GridViewOferta.DataSource = Sistema.GetInstancia().ListadoOfertas();
                 GridViewOferta.DataBind();

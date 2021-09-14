@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BibliotecaClases;
 using BibliotecaClases.Clases;
-using System.Drawing;
+using System.Drawing; 
 using System.IO;
 using System.Web.UI.HtmlControls;
 
@@ -33,9 +33,9 @@ namespace GestOn2.PaginasMaestras
         }
 
         public void CargarMenues()
-         {
-            if(Session["IdUsuario"] != null)
-            { 
+        {
+            if (Session["IdUsuario"] != null)
+            {
                 String id = Session["IdUsuario"].ToString();
                 if (id.Equals("0") || String.IsNullOrEmpty(id))
                 {
@@ -67,7 +67,8 @@ namespace GestOn2.PaginasMaestras
                         hlConfiguraciones.Visible = false;
                         hlAdministrarCuenta.Visible = true;
                     }
-                    else if (u.nivel.UserEstandar) {
+                    else if (u.nivel.UserEstandar)
+                    {
                         Admin.Visible = false;
                         formDoc.Visible = false;
                         Docente.Visible = true;
@@ -85,7 +86,7 @@ namespace GestOn2.PaginasMaestras
 
                     }
                 }
-             }
+            }
         }
 
         protected void Salir_Click(object sender, EventArgs e)
@@ -95,7 +96,7 @@ namespace GestOn2.PaginasMaestras
             Response.Redirect("~/Login.aspx");
         }
 
-        protected void MostrarNotificaciones(int id) 
+        protected void MostrarNotificaciones(int id)
         {
             Usuario u = Sistema.GetInstancia().BuscarUsuario(id);
             if (u.nivel.UserAdmin)
@@ -110,7 +111,7 @@ namespace GestOn2.PaginasMaestras
                     {
                         if (n.TipoNotificacion.Equals("Notificaciones Pedido"))
                         {
-                            texto = "El usuario " +n.NombreUsuario+ " ha ingresado un nuevo pedido";
+                            texto = "El usuario " + n.NombreUsuario + " ha ingresado un nuevo pedido";
                         }
                         else
                         {
@@ -151,7 +152,7 @@ namespace GestOn2.PaginasMaestras
                 {
                     HtmlGenericControl label = new HtmlGenericControl("label");
                     label.InnerText = notif;
-                    Div3.Controls.Add( label);
+                    Div3.Controls.Add(label);
                 }
                 /*CARGAR ULTIMAS 10 N0TIFICACIONES SEGUN LA FECHA 
                  * MOSTRAR 
@@ -207,6 +208,7 @@ namespace GestOn2.PaginasMaestras
 
                 }
             }
+        }
     }
 }/*                     
     tabs

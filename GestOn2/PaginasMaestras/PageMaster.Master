@@ -76,7 +76,7 @@
                      <li class="nav-item">
                          <li class="nav-item dropdown" runat="server" id="linotificacion">
                         <a class="btn btn-link"  id="A1" runat="server" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-cog fa-2x"></i>
+                            <i class="fa fa-bell fa-2x"></i>
                         </a>
                         <div runat="server" class="dropdown-menu" aria-labelledby="my_navbarDropdown2" id="Div3">
                         </div>
