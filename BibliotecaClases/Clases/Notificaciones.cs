@@ -18,5 +18,7 @@ namespace BibliotecaClases.Clases
         public String AccionUsuario { get; set; }
         public String TipoNotificacion { get; set; }
         public DateTime Fecha { get; set; }
+        public int IdDocumento { get; set; }
+
     }
 }

@@ -53,25 +53,19 @@
                         <asp:TextBox ID="txtNombre" runat="server" placeholder="Nombre del documento" class="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
                         <asp:Label ID="lblMensaje" runat="server" class="alert alert-danger col-md-12 col-lg-12 col-md-12 col-sm-12 mt-3" Visible="false"></asp:Label>
                         <asp:TextBox ID="txtDescripcion" runat="server" placeholder="Descripción" class="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" TextMode="MultiLine"></asp:TextBox>
-                        <asp:Label ID="Label7" runat="server" class="col-md-4 col-lg-4 col-sm-4 col-md-4 col-xl-4 mt-3" Text="Grado Liceal:"></asp:Label>
-                        <asp:DropDownList ID="ddlGradoLiceal" runat="server" class="col-lg-8 col-sm-9 col-md-8 col-xl-8 mt-3">
-                            <asp:ListItem>1</asp:ListItem>
-                            <asp:ListItem>2</asp:ListItem>
-                            <asp:ListItem>3</asp:ListItem>
-                            <asp:ListItem>4</asp:ListItem>
-                            <asp:ListItem>5</asp:ListItem>
-                            <asp:ListItem>6</asp:ListItem>
-                        </asp:DropDownList>
-
-                        <asp:FileUpload ID="fuDocs" class="file col-md-12 col-lg-12 col-md-12 col-sm-12 mt-3" runat="server" AllowMultiple="false" />
-                        <asp:Button ID="btnSubir" class="btn btn-outline-danger col-md-12 col-lg-12 col-md-12 col-sm-12 mt-3" runat="server" Text="Subir" OnClick="btnSubir_Click" />
-
-                        <div class="form-row col-lg-12 col-sm-12 col-md-12 col-xl-12  mt-3">
+                       
+                        
+                        <div class="form-row col-lg-12 col-sm-12 col-md-12 col-xl-12  mt-3" runat="server" id="divDocente" visible="false">
+                             <asp:Label ID="Label7" runat="server" class="col-md-4 col-lg-4 col-sm-4 col-md-4 col-xl-4 mt-3" Text="Grado Liceal:"></asp:Label>
+                            <asp:DropDownList ID="ddlCurso" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server"></asp:DropDownList>
                             <asp:CheckBox ID="chkEsPractico" class="col-lg-4 col-sm-4 col-md-4 col-xl-4" runat="server" OnCheckedChanged="chkEsPractico_CheckedChanged" Text=" Es practico?" AutoPostBack="True" />
                             <asp:TextBox ID="txtNroPractico" placeholder="Número de práctico" class="col-md-8 col-lg-8 col-sm-8 col-md-8 col-xl-8" TextMode="number" runat="server" Visible="False"></asp:TextBox>
                         </div>
 
                         <div class="form-row col-lg-12 col-sm-12 col-md-12 col-xl-12  mt-3">
+                            <asp:FileUpload ID="fuDocs" class="file col-md-12 col-lg-12 col-md-12 col-sm-12 mt-3" runat="server" AllowMultiple="false" />
+                        <asp:Button ID="btnSubir" class="btn btn-outline-danger col-md-12 col-lg-12 col-md-12 col-sm-12 mt-3" runat="server" Text="Subir" OnClick="btnSubir_Click" />
+
                             <asp:CheckBox ID="chkEsEnvio" class="col-lg-4 col-sm-4 col-md-4 col-xl-4" runat="server" OnCheckedChanged="chkEsEnvio_CheckedChanged" Text=" Con envio?" AutoPostBack="True" />
                             <asp:TextBox ID="txtDireccion" placeholder="Dirección de envío" class="col-md-8 col-lg-8 col-sm-8 col-md-8 col-xl-8" runat="server" TextMode="MultiLine" Visible="False"></asp:TextBox>
                         </div>

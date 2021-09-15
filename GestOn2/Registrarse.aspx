@@ -32,8 +32,15 @@
 
                                     <div class="form-row col-md-12 col-lg-12 col-12 col-sm-12 mt-3">
                                     <label class="col-5 col-md-5 col-lg-5 col-sm-5 mr-3" for="inputCity">Categoría de usuario</label>
-                                    <asp:DropDownList ID="ddlCategoriaUsuario" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server"></asp:DropDownList>
-                                    <asp:CheckBox ID="chkReciveOfertas" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server" Text="Desea recibir emails detallando ofertas o promociones?"></asp:CheckBox>
+                                    <asp:DropDownList ID="ddlCategoriaUsuario" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCategoriaUsuario_SelectedIndexChanged"></asp:DropDownList>
+                                   <div class="form-row col-md-12 col-lg-12 col-12 col-sm-12 mt-3" runat="server" id="divCurso" visible="false">
+                                        <label class="col-5 col-md-5 col-lg-5 col-sm-5 mr-3" for="inputCity">Curso</label>
+                                     <asp:DropDownList ID="ddlCurso" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server"></asp:DropDownList>
+                                    <asp:TextBox ID="txtMateria" placeholder="Materia" type="text"  class="form-control mt-3" runat="server"></asp:TextBox>
+                                     <asp:Button ID="btnAgregar" runat="server" OnClick="btnAgregar_Click" Text="Agregar" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True"  />
+                                   </div>
+                                       <asp:CheckBox ID="chkReciveOfertas" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server" Text="Desea recibir emails detallando ofertas o promociones?"></asp:CheckBox>
+                                       <asp:DropDownList ID="ddlCursosAgregados" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" runat="server" Visible="false" ></asp:DropDownList>
 
                                     </div>
 
