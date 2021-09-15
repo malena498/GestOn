@@ -18,14 +18,22 @@ namespace GestOn2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            CarouselOferta();
+        }
 
-            if (!IsPostBack)
+        private void CarouselOferta(){
+
+            string[] imgOfertas = new string[3];
+            int cont = 0;
+
+            List<Imagen> listIMG = new List<Imagen>();
+
+            listIMG = Sistema.GetInstancia().ListadoImagenesOferta();
+
+            if (listIMG != null)
             {
-                string[] imgOfertas = new string[3];
-                int cont = 0;
-                List<Imagen> listIMG = new List<Imagen>();
-                listIMG = Sistema.GetInstancia().ListadoImagenesOferta();
-                foreach (Imagen ima in listIMG) {
+                foreach (Imagen ima in listIMG)
+                {
                     if (cont <= 3)
                     {
                         imgOfertas[cont] = ima.ImagenURL;
@@ -38,23 +46,16 @@ namespace GestOn2
 
                 foreach (string item in imgOfertas)
                 {
-                    if(item != null)
-                    images.Add(String.Format("/Imagenes/{0}", System.IO.Path.GetFileName(item)));
+                    if (item != null)
+                        images.Add(String.Format("/Imagenes/{0}", System.IO.Path.GetFileName(item)));
                 }
 
                 repetidor.DataSource = images;
                 repetidor.DataBind();
-                /* CargarImagenesOferta();
-                 if (Session["IdUsuario"] != null)
-                 {
-                     String idUsuarioLogueado = Session["IdUsuario"].ToString();             
-                 }
-                 else
-                 {
-                     Response.Redirect("~/Login.aspx");
-                 }*/
             }
         }
+
+        //Itera las fotos del slider 
         protected string iterarFotos(int ImageItem)
         {
             if (ImageItem == 0)

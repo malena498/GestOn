@@ -43,7 +43,7 @@
                             <div class="col-md-3 col-sm-6 offset-3 mb-2">
                                     <h4 class="text-center">Sobre nosotros</h4>
                                     <ul class="list-inline">
-                                        <li><a href="#">Pagina web</a></li>
+                                        <li><a href="#">Manual de uso</a></li>
                                         <li><a href="https://www.google.com.uy/maps/place/Calle+18+de+Julio+684,+60000+Paysand%C3%BA,+Departamento+de+Paysand%C3%BA/@-32.3161108,-58.0951473,17z/data=!3m1!4b1!4m5!3m4!1s0x95afcbfe98dfd89f:0xa1ff470573cf0d0a!8m2!3d-32.3161154!4d-58.0929586" target="_blank">Ubicación</a></li>
                                         <li><a href="#">Quienes Somos?</a></li>
                                     </ul>

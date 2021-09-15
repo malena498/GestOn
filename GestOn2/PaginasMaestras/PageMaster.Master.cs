@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BibliotecaClases;
 using BibliotecaClases.Clases;
-using System.Drawing;
+using System.Drawing; 
 using System.IO;
 using System.Web.UI.HtmlControls;
 
@@ -33,9 +33,9 @@ namespace GestOn2.PaginasMaestras
         }
 
         public void CargarMenues()
-         {
-            if(Session["IdUsuario"] != null)
-            { 
+        {
+            if (Session["IdUsuario"] != null)
+            {
                 String id = Session["IdUsuario"].ToString();
                 if (id.Equals("0") || String.IsNullOrEmpty(id))
                 {
@@ -67,7 +67,8 @@ namespace GestOn2.PaginasMaestras
                         hlConfiguraciones.Visible = false;
                         hlAdministrarCuenta.Visible = true;
                     }
-                    else if (u.nivel.UserEstandar) {
+                    else if (u.nivel.UserEstandar)
+                    {
                         Admin.Visible = false;
                         formDoc.Visible = false;
                         Docente.Visible = true;
@@ -85,7 +86,7 @@ namespace GestOn2.PaginasMaestras
 
                     }
                 }
-             }
+            }
         }
 
         protected void Salir_Click(object sender, EventArgs e)
