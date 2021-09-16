@@ -71,8 +71,8 @@ namespace GestOn2
                                     u.UserContrasenia = contraseña;
                                     u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
 
-                                    bool exito = Sistema.GetInstancia().GuardarUsuario(u);
-                                    if (exito)
+                                    int exito = Sistema.GetInstancia().GuardarUsuario(u);
+                                    if (exito>0)
                                     {
                                         divMensaje.Visible = true;
                                         lblResultado.Text = "Registrado con éxito";

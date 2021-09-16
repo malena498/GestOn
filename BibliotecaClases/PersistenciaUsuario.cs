@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using BibliotecaClases.Clases;
@@ -8,7 +9,7 @@ namespace BibliotecaClases
 {
     partial class Sistema
     {
-        public bool GuardarUsuario(Usuario usu)
+        public int GuardarUsuario(Usuario usu)
         {
             try
             {
@@ -19,11 +20,11 @@ namespace BibliotecaClases
                     baseDatos.SaveChanges();
                    
                 }
-                return true;
+                return usu.UserId;
             }
             catch (Exception ex)
             {
-                return false;
+                return 0;
             }
         }
 
@@ -316,6 +317,170 @@ namespace BibliotecaClases
                     {
                         return null;
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public Nivel BuscarNivel(int id)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    return baseDatos.Niveles.FirstOrDefault(prop => prop.IdNivel == id && prop.Activo == true);
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public Curso BuscarCurso(int id)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    return baseDatos.Cursos.FirstOrDefault(prop => prop.Id == id);
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public bool GuardarDocente(MateriaCursoDocente d)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+
+                    baseDatos.MateriaCursoDocentes.Add(d);
+                    baseDatos.SaveChanges();
+
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool GuardarEstudiante(CursoEstudiante e)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    baseDatos.CursoEstudiantes.Add(e);
+                    baseDatos.SaveChanges();
+
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public DataTable ListadoCursos()
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<Curso> cursos = baseDatos.Cursos.OrderBy(c => c.Grado).ToList();
+                        DataTable table = new DataTable();
+                        DataColumn c1 = new DataColumn();
+                        c1.ColumnName = "IDCURSO";
+                        table.Columns.Add(c1);
+                        DataColumn c2 = new DataColumn();
+                        c2.ColumnName = "CURSO";
+                        table.Columns.Add(c2);
+                        foreach (Curso c in cursos)
+                        {
+                            DataRow r = table.NewRow();
+                            r["IDCURSO"] = c.Id;
+                            r["CURSO"] = c.Grado + "-" + c.Grupo;
+                            table.Rows.Add(r);
+                        }
+                      
+                        return table;
+                    }
+                    catch(Exception ex)
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<MateriaCursoDocente> ListadoMateriaCursoDocente(int id)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<MateriaCursoDocente> MateriaCursoDocente = baseDatos.MateriaCursoDocentes.Where(ej => ej.idDocente== id).OrderBy(ej => ej.IdCurso).ToList();
+                        return MateriaCursoDocente;
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<MateriaCursoDocente> ListadoMateriaCursoDocentexGrado(int idGrado)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    try
+                    {
+                        List<MateriaCursoDocente> MateriaCursoDocente = baseDatos.MateriaCursoDocentes.Where(ej => ej.IdCurso == idGrado).OrderBy(ej => ej.IdCurso).ToList();
+                        return MateriaCursoDocente;
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public CursoEstudiante BuscarCursoEstudiante(Usuario u)
+        {
+            try
+            {
+                using (var baseDatos = new Context())
+                {
+                    return baseDatos.CursoEstudiantes.FirstOrDefault(prop => prop.idEstudiante == u.UserId);
                 }
             }
             catch (Exception ex)

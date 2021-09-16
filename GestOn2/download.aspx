@@ -7,9 +7,7 @@
             <asp:ScriptManager ID="ScriptManager1" runat="server">
             </asp:ScriptManager>
 <br />
-            <asp:Label ID="Label1" runat="server" Text="Seleccionar documento"></asp:Label>
-            <asp:Button ID="bntDescargar" runat="server" OnClick="bntDescargar_Click" Text="Dowland" />
-<br />
+         
             <asp:Label CssClass="alert alert-danger col-xl-5 col-md-5 col-lg-5 col-sm-5" ID="lblMensaje" runat="server" Visible="False"></asp:Label>
 <br />
         </ContentTemplate>

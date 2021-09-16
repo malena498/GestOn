@@ -1,0 +1,181 @@
+IdCategoria	Activo	NombreCategoria
+1	1	Papeleria
+2	1	Almacen
+[CategoriaProducto]
+
+Configuracion
+IdConfiguracion	Nombre	Valor	Activo
+1	CostoEnvio	50	1
+
+
+Curso
+Id	Grupo	Grado
+1	A	1
+2	B	1
+3	A	2
+4	B	2
+5	A	3
+6	B	3
+7	A	4
+8	B	4
+9	A	5
+11	A	6
+13	B	5
+14	B	6
+
+
+[CursoEstudiante]
+idEstudiante	IdCurso
+12	9
+
+Documento
+IdDocumento	Formato	EsDobleFaz	AColor	Descripcion	esEnvio	Direccion	gradoLiceal	EsPractico	NroPractico	NombreDocumento	FechaIngreso	Activo	UserId	ruta	EsImagen	estado
+1	txt	0	0	ff	1	urugua y 1982	1	0	0	jjj	2021-08-04 00:00:00.000	1	1	C:\Users\malenag\Source\Repos\malena498\GestOn\GestOn2\files\jjj.txt	0	pendiente
+2	png	0	0	PADIDO IMAGEM	1	uruguay 1234	0	0	0	image	2021-08-06 00:00:00.000	1	8	Captura2_20210806210534.jpg	1	Pendiente
+3	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2021-12-12 00:00:00.000	1	2	ESCRITORIO	0	PENDIENTE
+4	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2021-12-01 00:00:00.000	1	2	ESCRITORIO	0	PENDIENTE
+6	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2019-12-02 00:00:00.000	1	2	ESCRITORIO	0	PENDIENTE
+7	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2016-12-02 00:00:00.000	1	2	ESCRITORIO	0	PENDIENTE
+8	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2022-12-02 00:00:00.000	1	1	ESCRITORIO	0	PENDIENTE
+9	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2021-12-02 00:00:00.000	1	1	ESCRITORIO	0	PENDIENTE
+10	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2021-12-05 00:00:00.000	1	1	ESCRITORIO	0	PENDIENTE
+11	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2016-12-07 00:00:00.000	1	1	ESCRITORIO	0	PENDIENTE
+12	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2021-12-12 00:00:00.000	1	1	ESCRITORIO	0	PENDIENTE
+14	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2020-12-07 00:00:00.000	1	1	ESCRITORIO	0	PENDIENTE
+15	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2020-12-12 00:00:00.000	1	1	ESCRITORIO	0	PENDIENTE
+17	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2022-12-08 00:00:00.000	1	3	ESCRITORIO	0	PENDIENTE
+18	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2021-12-02 00:00:00.000	1	3	ESCRITORIO	0	PENDIENTE
+19	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	1999-12-05 00:00:00.000	1	3	ESCRITORIO	0	PENDIENTE
+20	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2020-12-07 00:00:00.000	1	3	ESCRITORIO	0	PENDIENTE
+21	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2021-12-09 00:00:00.000	1	3	ESCRITORIO	0	PENDIENTE
+24	png	1	1	Para grafica 1	1	Paysandu	2	0	1	EXAMEN	2020-12-01 00:00:00.000	1	3	ESCRITORIO	0	PENDIENTE
+
+
+
+Nivel
+IdNivel	Activo	NombreNivel	UserAdmin	UserEstandar
+1	1	Administrador	1	0
+2	1	Estandar	0	1
+3	1	Estudiante	0	0
+4	1	Docente	0	0
+
+
+notificaciones
+IdNotificacion	IdUsuario	AccionUsuario	TipoNotificacion	Fecha	NombreUsuario
+6	8	NUEVO	Notificaciones Pedido	2021-09-07 22:33:14.813	Malena Gonzalez
+
+
+pedido
+IdPedido	FechaEntrega	FechaPedido	Activo	Direccion	Descripcion	UserId	Precio	Estado	HoraEntrega
+51	2021-08-11 00:00:00.000	2021-08-11 20:40:16.973	1	uruguay 1234	Pedido productos varios	8	170.00	Cancelado	NULL
+52	2021-08-11 00:00:00.000	2021-08-11 20:49:55.323	1	uruguay 1234	Productos varios	8	210.00	Cancelado	NULL
+53	2021-08-11 00:00:00.000	2021-08-11 20:52:57.957	0	uruguay 1234	Productos varios	8	570.00	Cancelado	NULL
+54	2021-08-11 00:00:00.000	2021-08-11 22:44:39.853	0	uruguay 1234	prdou	8	250.00	Cancelado	Entre 14 y 16 p.m.
+56	2021-08-17 00:00:00.000	2021-08-16 21:21:56.573	0	uruguay 1234	pedido 	8	50.00	Cancelado	Después de las 20 p.m.
+57	2021-08-17 00:00:00.000	2021-08-16 21:22:59.800	0	ituzaingo 1238	pedido	8	210.00	Cancelado	Después de las 20 p.m.
+58	2021-08-17 00:00:00.000	2021-08-16 21:27:59.517	1	uruguay 1234	pedido	8	210.00	Pendiente	Después de las 20 p.m.
+59	2021-08-17 00:00:00.000	2021-08-16 21:33:22.763	0	ituzaingo 1238	pedidiii	8	50.00	Cancelado	Entre 14 y 16 p.m.
+60	2021-08-17 00:00:00.000	2021-08-16 21:39:34.570	0	uruguay 1234	pedido productos	8	50.00	Cancelado	Entre 14 y 16 p.m.
+61	2021-08-17 00:00:00.000	2021-08-16 21:51:20.833	0	uruguay 1234	pedido productos	8	50.00	Cancelado	Entre 14 y 16 p.m.
+62	2021-08-17 00:00:00.000	2021-08-16 22:09:03.177	0	ituzaingo 1238	pedido producto 
+	8	50.00	Cancelado	Después de las 20 p.m.
+63	2021-08-17 00:00:00.000	2021-08-16 22:13:52.683	0	ituzaingo 1238	pedido productos	8	50.00	Cancelado	Entre 14 y 16 p.m.
+64	2021-08-17 00:00:00.000	2021-08-16 22:19:03.197	0	ituzaingo 1238	pedido producto	8	50.00	Cancelado	Entre 14 y 16 p.m.
+65	2021-08-17 00:00:00.000	2021-08-16 22:25:23.467	0	uruguay 1234	pedido  producto	8	50.00	Cancelado	Entre 14 y 16 p.m.
+66	2021-08-17 00:00:00.000	2021-08-16 22:34:49.693	0	uruguay 1234	producto pedido	8	50.00	Cancelado	Entre 14 y 16 p.m.
+67	2021-08-17 00:00:00.000	2021-08-16 22:39:59.553	0	ituzaingo 1238	pediod producto	8	50.00	Cancelado	Entre 14 y 16 p.m.
+68	2021-08-17 00:00:00.000	2021-08-16 22:57:45.820	0	ituzaingo 1238	pedido productos	8	50.00	Cancelado	Entre 14 y 16 p.m.
+69	2021-08-17 00:00:00.000	2021-08-16 23:08:18.340	0	uruguay 1234	pedido producto	8	50.00	Cancelado	Entre 14 y 16 p.m.
+70	2021-08-17 00:00:00.000	2021-08-16 23:33:47.700	0	uruguay 1234	pedido prod	8	50.00	Cancelado	Entre 14 y 16 p.m.
+71	2021-08-17 00:00:00.000	2021-08-17 00:22:50.700	1	uruguay 1234	Pedido productod	8	170.00	Pendiente	Entre 14 y 16 p.m.
+72	2021-08-17 00:00:00.000	2021-08-17 18:15:55.987	0		pedido prueba 	8	0.00	Cancelado	Entre 14 y 16 p.m.
+73	2021-08-17 00:00:00.000	2021-08-17 18:20:27.510	0		pedido prueba
+	8	200.00	Cancelado	Entre 14 y 16 p.m.
+74	2021-08-17 00:00:00.000	2021-08-17 18:23:36.117	1		prueba	8	160.00	Pendiente	Entre 14 y 16 p.m.
+75	2021-08-17 00:00:00.000	2021-08-17 19:23:11.537	0		prueba 	8	360.00	Cancelado	Entre 14 y 16 p.m.
+76	2021-08-17 00:00:00.000	2021-08-17 19:31:36.433	0		prueba	8	160.00	Cancelado	Entre 14 y 16 p.m.
+77	2021-08-18 00:00:00.000	2021-08-17 22:42:34.207	0	uruguay 1234	prueba	8	50.00	Cancelado	Después de las 20 p.m.
+78	2021-08-18 00:00:00.000	2021-08-17 22:45:53.983	0		prueba	8	160.00	Cancelado	Entre 14 y 16 p.m.
+79	2021-09-04 00:00:00.000	2021-09-04 17:28:21.760	1		p rueba 	6	520.00	Pendiente	Entre 14 y 16 p.m.
+80	2021-09-04 00:00:00.000	2021-09-04 18:42:52.673	1	ituzaingo 1238	P rueba	8	730.00	Pendiente	Entre 14 y 16 p.m.
+81	2021-09-08 00:00:00.000	2021-09-07 22:33:28.713	1	uruguay 1234	qqq	8	570.00	Pendiente	Entre 14 y 16 p.m.
+
+
+
+pedido documento
+idDocumento	idPedido
+2	18
+
+producto
+ProductoId	ProductoNombre	ProductoPrecioVenta	Activo	ProductoPrecioCompra	IdCategoria	ProductoMarca	Cantidad
+36	Lapiz mecanico rojo	80.00	1	40.00	1	Faber castell	32
+37	goma	40.00	1	1.00	1	Faber Castell	43
+38	Resma Papel A4 500 Hojas	80.00	1	40.00	1	Fanacopy	20
+39	Papel Adhesivo Fotografico 20unidades	120.00	1	60.00	1	Insumax	140
+
+
+producto pedido cantidad
+IdPedido	ProductoId	Cantidad	Activo
+51	36	1	0
+51	37	1	0
+52	36	1	0
+52	38	1	0
+53	36	6	0
+53	37	1	0
+54	37	1	0
+54	38	2	0
+56	36	1	0
+56	36	2	0
+57	36	1	0
+57	38	1	0
+58	36	1	0
+58	37	2	0
+59	37	1	0
+63	37	1	0
+64	36	1	0
+65	36	1	0
+66	37	1	0
+67	36	1	0
+68	36	1	0
+68	37	1	0
+69	36	1	0
+69	37	1	0
+70	36	1	0
+71	36	1	0
+71	37	1	0
+72	36	2	0
+73	36	2	0
+74	36	1	0
+75	36	2	0
+76	36	1	0
+76	37	2	0
+77	36	1	0
+78	36	1	0
+78	37	2	0
+79	36	4	0
+79	37	5	0
+80	36	8	0
+80	37	1	0
+81	36	6	0
+81	37	1	0
+
+
+
+reporte producto mas vendido
+ProductoId	ProductoNombre	Cantidad
+36	Lapiz mecanico rojo	42
+37	goma	21
+38	Resma Papel A4 500 Hojas	4
+
+
+
+usuario
+UserId	UserNombre	UserEmail	UserCedula	NroCarpeta	UserTelefono	IdNivel	Activo	UserContrasenia	ReciveOfertas
+3	Susana Gomez	alan@alan	50306210	0	098123123	1	0	Pepe	0
+4	Susana Gomez	alan@alan	50306210	0	098123123	1	0	Hola	0
+5	Susana Gomez	alan@alan	50306210	0	098123123	1	1	Hola	0
+6	Malena Gonzalez	malenag245@gmail.com	50296221	0	099046460	1	1	MQAyADMANAA1ADYA	0
+8	Malena Gonzalez	male_111_gonzalez@hotmail.com	11053852	0	099045450	2	1	MQA0ADcAMQA0ADcA	0
+10	Gonzalez Malena	malenagonzalez098@gmail.com	72447341	8	478561478	2	1	NwA4ADkANAA1ADYA	0
+12	Pedro Perez	pedro@perez	26530299	0	098745123	3	1	MQAyADMANAA1ADYA	0
+14	Juan Lopez	juan@lopez	33442334	0	099456214	4	1	MQA0ADcAMQA0ADcA	0

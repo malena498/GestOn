@@ -40,6 +40,15 @@ namespace GestOn2.ABMS
                     {
                         GridViewDocumentos.Columns[9].Visible = true;
                     }
+                    if (u.nivel.NombreNivel.Equals("Docente"))
+                    {
+                        CargarCursos(u.UserId);
+                        divDocente.Visible = true;
+                    }
+                    else
+                    {
+                        divDocente.Visible = false;
+                    }
                     //Lleno listados cuando la pagina inicia por primera vez.
                     GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
                     GridViewDocumentos.DataBind();
@@ -50,9 +59,9 @@ namespace GestOn2.ABMS
                     Response.Redirect("~/Login.aspx");
                 }
             }
-           
 
-        
+
+
         }
 
         //Ingreso un nuevo documento, dejandolo en estado pendiente para que sea gestionado.
@@ -74,7 +83,7 @@ namespace GestOn2.ABMS
                     doc.Formato = Session["TipoDoc"].ToString();
                     doc.NombreDocumento = Session["NombreDoc"].ToString();
                     doc.Descripcion = txtDescripcion.Text;
-                    doc.gradoLiceal = int.Parse(ddlGradoLiceal.SelectedValue);
+                    doc.gradoLiceal = int.Parse(ddlCurso.SelectedValue);
                     doc.esEnvio = false;
                     doc.EsPractico = false;
                     if (chkEsEnvio.Checked)
@@ -114,23 +123,25 @@ namespace GestOn2.ABMS
                     else
                     {
                         int id = Sistema.GetInstancia().GuardarDocumento(doc);
-                        /*if (id > 0)
+                        if (id > 0)
                         {
-                            Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
-                            Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
+                            //Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
+                            //Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
                             Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
                             lblMensaje.Visible = false;
                             lblMensaje.Text = "";
-                            bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "NUEVO");
-                            EnviarMailNuevoDoc(c.Valor, c2.Valor, u);
+                            bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "NUEVO", id);
+                            //EnviarMailNuevoDoc(c.Valor, c2.Valor, u);
                             VaciarCampos();
                             llenarGrillaDocumentos();
+                            lblMensaje.Visible = true;
+                            lblMensaje.Text = "Guardado con exito";
                         }
                         else
                         {
                             lblMensaje.Visible = true;
                             lblMensaje.Text = "No se pudo guardar";
-                        }*/
+                        }
                     }
                 }
             }
@@ -224,15 +235,15 @@ namespace GestOn2.ABMS
        (e.Row.RowState & DataControlRowState.Edit) == DataControlRowState.Edit)
             {
                 for (int i = 0; i < GridViewDocumentos.Rows.Count - 1; i++)
+                {
+                    bool chkEsPractico1 = Convert.ToBoolean((GridViewDocumentos.Rows[i].Cells[i].FindControl("chkEsPractico1") as CheckBox).Checked);
+                    if (chkEsPractico1)
                     {
-                        bool chkEsPractico1 = Convert.ToBoolean((GridViewDocumentos.Rows[i].Cells[i].FindControl("chkEsPractico1") as CheckBox).Checked);
-                        if (chkEsPractico1)
-                        {
-                            TextBox txtNumeroPracticoDoc = GridViewDocumentos.Rows[i].Cells[i].FindControl("txtNumeroPracticoDoc") as TextBox;
-                            txtNumeroPracticoDoc.Visible = true;
-                        }
+                        TextBox txtNumeroPracticoDoc = GridViewDocumentos.Rows[i].Cells[i].FindControl("txtNumeroPracticoDoc") as TextBox;
+                        txtNumeroPracticoDoc.Visible = true;
                     }
-                
+                }
+
             }
         }
 
@@ -292,13 +303,14 @@ namespace GestOn2.ABMS
                         Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
                         string user = Session["IdUsuario"].ToString();
                         Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
-                        bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "MODIFICACION");
+                        bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user), u.UserNombre, "MODIFICACION", Id);
                         EnviarMailModificarDoc(c.Valor, c2.Valor, u, doc);
                         llenarGrillaDocumentos();
                     }
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 lblResultado.Visible = true;
                 lblResultado.Text = "Excepción no controlada";
             }
@@ -323,7 +335,7 @@ namespace GestOn2.ABMS
                 lblResultado.Visible = true;
                 lblResultado.Text = "Se elimino con éxito";
                 GridViewDocumentos.EditIndex = -1;
-                bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "CANCELACION");
+                bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user), u.UserNombre, "CANCELACION", Id);
                 llenarGrillaDocumentos();
             }
         }
@@ -350,7 +362,8 @@ namespace GestOn2.ABMS
         //Selecciona el filtro a aplicar al listado
         protected void ddlSeleccionaFiltro_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("Fecha")) {
+            if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("Fecha"))
+            {
                 DivFiltroPorDocumento.Visible = false;
                 DivFiltroPorPractico.Visible = false;
                 DivFiltroPorUsuario.Visible = false;
@@ -406,7 +419,8 @@ namespace GestOn2.ABMS
                     GridViewDocumentos.DataBind();
                 }
             }
-            else {
+            else
+            {
                 lblResultado.Text = "El numero de carpeta indicado no exíste o fue dado de baja";
             }
         }
@@ -545,7 +559,7 @@ namespace GestOn2.ABMS
             chkDobleFaz.Checked = false;
             chkEsEnvio.Checked = false;
             chkEsPractico.Checked = false;
-            ddlGradoLiceal.SelectedIndex = 0;
+            ddlCurso.SelectedIndex = 0;
         }
 
         /* Envío de Email utilizado para notificar el ingreso de un documento */
@@ -586,6 +600,31 @@ namespace GestOn2.ABMS
             ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
             smtp.EnableSsl = true;//True si el servidor de correo permite ssl
             smtp.Send(correo);
+        }
+
+        protected void CargarCursos(int idUsuario)
+        {
+            List<MateriaCursoDocente> cursosDocente = Sistema.GetInstancia().ListadoMateriaCursoDocente(idUsuario);
+            DataTable table = new DataTable();
+            DataColumn c1 = new DataColumn();
+            c1.ColumnName = "IDCURSO";
+            table.Columns.Add(c1);
+            DataColumn c2 = new DataColumn();
+            c2.ColumnName = "CURSO";
+            table.Columns.Add(c2);
+            foreach (MateriaCursoDocente c in cursosDocente)
+            {
+                Curso cu = Sistema.GetInstancia().BuscarCurso(c.IdCurso);
+                DataRow r = table.NewRow();
+                r["IDCURSO"] = cu.Id;
+                r["CURSO"] = cu.Grado + "-" + cu.Grupo;
+                table.Rows.Add(r);
+            }
+            ddlCurso.DataSource = table;
+            ddlCurso.DataTextField = "CURSO";
+            ddlCurso.DataValueField = "IDCURSO";
+            ddlCurso.DataBind();
+
         }
     }
 }

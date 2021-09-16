@@ -38,8 +38,8 @@ namespace BibliotecaClases
         public DbSet<Audit_ProdPedCantidad> audit_ProdPedCantidads { get; set; }
         public DbSet<Notificaciones> Notificaciones { get; set; }
         public DbSet<Curso> Cursos { get; set; }
-        //public DbSet<Estudiante> Estudiantes { get; set; }
-        //public DbSet<Docente> Docentes { get; set; }
+        public DbSet<CursoEstudiante> CursoEstudiantes { get; set; }
+        public DbSet<MateriaCursoDocente> MateriaCursoDocentes { get; set; }
 
 
         public Context()
@@ -52,7 +52,7 @@ namespace BibliotecaClases
             try
             {
                 //Local 
-                String baseConnectionString = @"Data Source=TPZPC116;user id=sa;password=50983019Al;MultipleActiveResultSets=True";
+                String baseConnectionString = @"Data Source=TPZPC127\SQLEXPRESS;user id=sa;password=Alicia2206**;MultipleActiveResultSets=True";
 
                 Database.DefaultConnectionFactory = new System.Data.Entity.Infrastructure.SqlConnectionFactory(baseConnectionString);
             }
@@ -70,6 +70,9 @@ namespace BibliotecaClases
             
             modelBuilder.Entity<ProductoPedidoCantidad>().HasKey(c => new { c.IdPedido, c.ProductoId,c.Cantidad});
             modelBuilder.Entity<PedidoDocumento>().HasKey(p => new {p.idDocumento, p.idPedido });
+            modelBuilder.Entity<MateriaCursoDocente>().HasKey(p => new { p.idDocente, p.materia, p.IdCurso });
+            modelBuilder.Entity<CursoEstudiante>().HasKey(p => new { p.idEstudiante, p.IdCurso });
+
 
         }
 

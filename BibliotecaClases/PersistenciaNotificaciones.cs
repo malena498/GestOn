@@ -35,22 +35,22 @@ namespace BibliotecaClases
             }
         }
 
-        public bool GuardarNotificacionDocumento(int idUsuario, String NombreUsuario,String Accion)
+        public bool GuardarNotificacionDocumento(int idUsuario, String NombreUsuario,String Accion, int idDocumento)
         {
             try
             {
                 using (var baseDatos = new Context())
                 {
-                    Notificaciones n = new Notificaciones();
-                    n.IdUsuario = idUsuario;
-                    n.AccionUsuario = Accion;
-                    n.TipoNotificacion = "Notificaciones Documentos";
-                    n.NombreUsuario = NombreUsuario;
-                    n.Fecha = DateTime.Now;
-                    baseDatos.Notificaciones.Add(n);
-                    baseDatos.SaveChanges();
-
-
+                    
+                        Notificaciones n = new Notificaciones();
+                        n.IdUsuario = idUsuario;
+                        n.AccionUsuario = Accion;
+                        n.TipoNotificacion = "Notificaciones Documentos";
+                        n.NombreUsuario = NombreUsuario;
+                        n.Fecha = DateTime.Now;
+                        n.IdDocumento = idDocumento;
+                        baseDatos.Notificaciones.Add(n);
+                        baseDatos.SaveChanges();
                     return true;
                 }
             }
@@ -59,6 +59,8 @@ namespace BibliotecaClases
                 return false;
             }
         }
+
+
 
         public List<Notificaciones> UltimasNotificaciones()
         {

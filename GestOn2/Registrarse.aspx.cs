@@ -20,6 +20,12 @@ namespace GestOn2
                 ddlCategoriaUsuario.DataTextField = "NombreNivel";
                 ddlCategoriaUsuario.DataValueField = "IdNivel";
                 ddlCategoriaUsuario.DataBind();
+
+
+                ddlCurso.DataSource = Sistema.GetInstancia().ListadoCursos();
+                ddlCurso.DataTextField = "CURSO";
+                ddlCurso.DataValueField = "IDCURSO";
+                ddlCurso.DataBind();
             }
         }
 
@@ -32,7 +38,7 @@ namespace GestOn2
                 {
                     try
                     {
-                        bool exito = false;
+                        int exito = 0;
                         Usuario us = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmail.Text);
                         if (us != null)
                         {
@@ -59,6 +65,7 @@ namespace GestOn2
                                     u.UserTelefono = txtTelefono.Text;
                                     u.UserContrasenia = contraseña;
                                     u.IdNivel = int.Parse(ddlCategoriaUsuario.SelectedValue);
+                                    
                                     if (chkReciveOfertas.Checked)
                                         u.ReciveOfertas = true;
                                     else
@@ -70,8 +77,32 @@ namespace GestOn2
                                     lblResultado.Visible = true;
                                     lblResultado.Text = "Las contraseñas no coinciden";
                                 }
-                                if (exito)
+                                if (exito>0)
                                 {
+                                    Nivel n = Sistema.GetInstancia().BuscarNivel(int.Parse(ddlCategoriaUsuario.SelectedValue));
+
+                                    if (n.NombreNivel.Equals("Estudiante"))
+                                    {
+                                        CursoEstudiante es = new CursoEstudiante();
+                                        es.idEstudiante = exito;
+                                        es.IdCurso = int.Parse(ddlCurso.SelectedValue);
+                                        bool r = Sistema.GetInstancia().GuardarEstudiante(es);
+                                    }
+                                    else if (n.NombreNivel.Equals("Docente"))
+                                    {
+                                       
+                                        for (int i = 0; i < ddlCursosAgregados.Items.Count; i++)
+                                        {
+                                            MateriaCursoDocente d = new MateriaCursoDocente();
+                                            d.idDocente =exito;
+                                            d.materia = txtMateria.Text;
+                                            int id = int.Parse(ddlCursosAgregados.Items[i].Value);
+                                            d.IdCurso = id;
+                                            bool res = Sistema.GetInstancia().GuardarDocente(d);
+                                        }
+                                        
+                                    }
+                                   
                                     lblResultado.Visible = true;
                                     lblResultado.Text = "Registrado con éxito";
                                     limpiar();
@@ -208,5 +239,37 @@ namespace GestOn2
             result = Convert.ToBase64String(encryted);
             return result;
         }
+
+        protected void ddlCategoriaUsuario_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string id = ddlCategoriaUsuario.SelectedValue;
+            Nivel n = Sistema.GetInstancia().BuscarNivel(int.Parse(id));
+            if (n.NombreNivel.Equals("Estudiante"))
+            {
+                divCurso.Visible = true;
+                txtMateria.Visible = false;
+                btnAgregar.Visible = false;
+            }
+            else if (n.NombreNivel.Equals("Docente"))
+            {
+                divCurso.Visible = true;
+
+            }
+            else
+            {
+                ddlCurso.Visible = false;
+                divCurso.Visible = false;
+
+            }
+        }
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            if (ddlCurso.SelectedItem != null)
+            {
+                ddlCursosAgregados.Items.Add(ddlCurso.SelectedItem);
+                ddlCurso.Items.Remove(ddlCurso.SelectedItem);
+ 
+                }
+            }
     }
 }
