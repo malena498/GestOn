@@ -100,7 +100,7 @@
                                 <asp:DropDownList ID="ListProductos1" runat="server" AutoPostBack="True" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" OnSelectedIndexChanged="ListProductos1_SelectedIndexChanged"></asp:DropDownList>
                             </div>
                             <asp:TextBox ID="txtCantidadProducto" runat="server" placeholder="Ingrese cantidad" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" AutoPostBack="True" OnTextChanged="txtCantidadProducto_TextChanged"></asp:TextBox>
-                            <asp:TextBox ID="txtPrecioPedido" runat="server" placeholder="Total" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
+                            <asp:TextBox ID="txtPrecioPedido" runat="server" placeholder="Total" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Enabled="False"></asp:TextBox>
                             <asp:Button ID="btnAgregarTodo" runat="server" OnClick="btnAgregarTodo_Click" Text="Agregar" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True" Enabled="False" />
                             <div class="table table-bordered mt-3">
                                 <asp:Label ID="Label7" runat="server" class="col-6 col-md-6 col-lg-6" Font-Bold="True" Text="Productos seleccionados"></asp:Label>

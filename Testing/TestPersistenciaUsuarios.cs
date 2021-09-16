@@ -11,6 +11,7 @@ namespace Testing
         [TestMethod]
         public void GuardarUsuarioTest()
         {
+            bool result = false;
             BibliotecaClases.Clases.Usuario u = new BibliotecaClases.Clases.Usuario();
             u.Activo = true;
             u.IdNivel = 1;
@@ -21,8 +22,9 @@ namespace Testing
             u.UserNombre = "Susana Gomez";
             u.UserTelefono = "098123123";
 
-            bool result = BibliotecaClases.Sistema.GetInstancia().GuardarUsuario(u);
-
+            int a = BibliotecaClases.Sistema.GetInstancia().GuardarUsuario(u);
+            if (a != 0)
+                result = true;
             Assert.AreEqual(true, result);
         }
 
