@@ -138,19 +138,16 @@ namespace GestOn2.ABMS
                         lblInformativo.Visible = true;
                         TimerMensajes.Enabled = true;
                         Session["IdPedido"] = id;
-                    Usuario u = Sistema.GetInstancia().BuscarUsuario(user);
+                        Usuario u = Sistema.GetInstancia().BuscarUsuario(user);
                         bool exito = Sistema.GetInstancia().GuardarNotificacionPedido(user, u.UserNombre,"NUEVO");
                         llenarGrillaPedidos();
-                        divProductos.Visible = true;
                         divNuevoPedido.Visible = false;
-                        btnAgregarProductos.Visible = true;
                         btnCerrar.Enabled = false;
                         btnNuevoPedido.Visible = false;
                         //Elimino campos luego que se inserto con éxito
                         VaciarCampos();
-                        
-
-
+                        divProductos.Visible = true;
+                        btnAgregarProductos.Visible = true;
                 }
                 else
                 {
@@ -201,16 +198,18 @@ namespace GestOn2.ABMS
                 
             }
         }
+
         protected void lnkNuevoPedido_Click(object sender, EventArgs e)
         {
             DivGridPedido.Visible = false;
-            divNuevoPedido.Visible = true;
             divProductos.Visible = false;
+            DivEncabezado.Visible = false;
+            divNuevoPedido.Visible = true;
+            divConatiner.Visible = true;
             btnNuevoPedido.Visible = true;
             btnCerrar.Visible = true;
             
         }
-        
         
         public bool CompleteCampos()
         {
@@ -287,10 +286,11 @@ namespace GestOn2.ABMS
             txtDireccion.Enabled = false;
             txtDireccion.Text = "";
             txtDireccion.Visible = false;
+            RadioBtnTarde.Visible = false;
+            Label3.Visible = false;
+            RadioBtnNoche.Visible = false;
         }
-
-        
-
+    
         protected void ListProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
             txtCantidadProducto.Focus();
@@ -329,13 +329,13 @@ namespace GestOn2.ABMS
             GridViewProductos.DataSource = dt;
             GridViewProductos.DataBind();
         }
+
         protected void llenarGrillaProductosBase(int idPedido)
         {
             GridViewProductos.DataSource = Sistema.GetInstancia().ListadoProductosPedidos(idPedido);
             GridViewProductos.DataBind();
         }
        
-
         protected void GridViewProductos_RowUpdated(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = GridViewProductos.Rows[e.RowIndex];
@@ -402,7 +402,6 @@ namespace GestOn2.ABMS
             llenarGrillaPedidos();
         }
        
-
         protected void GridViewPedidos_RowUpdated(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = GridViewPedidos.Rows[e.RowIndex];
@@ -417,6 +416,7 @@ namespace GestOn2.ABMS
             btnAgregarProductos.Visible = false;
             RadioBtnSi.Visible = true;
             RadioBtnNo.Visible = true;
+            divConatiner.Visible = true;
             Session["IdPedido"] = Id;
             llenarGrillaProductosBase(Id);
 
@@ -511,6 +511,7 @@ namespace GestOn2.ABMS
             }
 
         }
+
         protected void rdbPedidoProductos_CheckedChanged(object sender, EventArgs e)
         {
             if (chkPedidoProducto.Checked)
@@ -521,9 +522,9 @@ namespace GestOn2.ABMS
                 GridViewProductos.Visible = true;
                 divPedidoImagen.Visible = false;
                 chkPedidoImagen.Checked = false;
-
             }
         }
+
         protected void rdbPedidoImagen_CheckedChanged(object sender, EventArgs e)
         {
             if (chkPedidoImagen.Checked)
@@ -538,13 +539,18 @@ namespace GestOn2.ABMS
                 chkPedidoProducto.Checked = false;
             }
         }
+
         protected void btnCerrar_Click(object sender, EventArgs e)
         {
             divNuevoPedido.Visible = false;
             divProductos.Visible = false;
+            btnNuevoPedido.Visible = false;
+            btnCerrar.Visible = false;
+            divConatiner.Visible = false;
+            DivEncabezado.Visible = true;
             DivGridPedido.Visible = true;
-
         }
+
         protected void CargarImagenes(List<Imagen> imagenes)
         {
             try
@@ -711,22 +717,22 @@ namespace GestOn2.ABMS
         }
     
 
-    protected decimal RecalcularPrecioPedido(int idPedido)
-    {
-            Pedido p = Sistema.GetInstancia().BuscarPedido(idPedido);
-            decimal precioa = 0;
-            decimal precio = p.Precio;
-            foreach (GridViewRow row in GridViewProductos.Rows)
-            {
+        protected decimal RecalcularPrecioPedido(int idPedido)
+        {
+                Pedido p = Sistema.GetInstancia().BuscarPedido(idPedido);
+                decimal precioa = 0;
+                decimal precio = p.Precio;
+                foreach (GridViewRow row in GridViewProductos.Rows)
+                {
 
-                int idProducto = int.Parse((row.FindControl("lblIdProducto") as Label).Text);
-                int cantidad = int.Parse((row.FindControl("lblCantidad") as Label).Text);
-                ProductoPedidoCantidad ppc = Sistema.GetInstancia().BuscarPedidoProductoCantidad(idPedido,idProducto, cantidad);
-                precioa = precioa + ppc.producto.ProductoPrecioVenta * ppc.Cantidad;
-                precio = precio + precioa;
-            }
-        return precio;
-    }
+                    int idProducto = int.Parse((row.FindControl("lblIdProducto") as Label).Text);
+                    int cantidad = int.Parse((row.FindControl("lblCantidad") as Label).Text);
+                    ProductoPedidoCantidad ppc = Sistema.GetInstancia().BuscarPedidoProductoCantidad(idPedido,idProducto, cantidad);
+                    precioa = precioa + ppc.producto.ProductoPrecioVenta * ppc.Cantidad;
+                    precio = precio + precioa;
+                }
+            return precio;
+        }
 
         protected bool ActualizarStock(int idProducto, int cantidad)
         {

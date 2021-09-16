@@ -4,6 +4,7 @@
 footer {
     background: #16222A;
     height: 15%;
+    width:100%;
     background: -webkit-linear-gradient(59deg, #3A6073, #16222A);
     color: white;
     position: fixed;
