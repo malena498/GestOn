@@ -118,9 +118,9 @@
                         </asp:GridView>
                         <asp:Button ID="btnCerrarDivProductos" CssClass="btn btn-outline-info col-lg-3 col-md-3 col-xl-3 col-sm-3" Text="Cerrar" runat="server" OnClick="btnCerrarDivProductos_Click"/>
                     </div>
-                    <div class="offset-md-1 offset-xl-1 offset-lg-1 offset-sm-1 col-lg-4 col-sm-4 col-md-4 border bg-dark">
+                    <div class="offset-md-1 offset-xl-1 offset-lg-1 offset-sm-1 col-lg-4 col-sm-4 col-md-4 border border-dark bg-light">
                         <form>
-                            <h2>Datos del pedido</h2>
+                            <h3>Datos del pedido</h3>
                             <asp:TextBox ID="txtIdPedidoA" Visible="false" ReadOnly="true" class="col-12 col-md-12 col-lg-12" runat="server"></asp:TextBox>
                             <asp:TextBox ID="txtDescripcionPedidoA" class="col-12 col-md-12 col-lg-12" ReadOnly="true" runat="server"></asp:TextBox>
                             <asp:TextBox ID="txtDireccionPedidoA" class="col-12 col-md-12 col-lg-12 mt-3" ReadOnly="true" runat="server"></asp:TextBox>

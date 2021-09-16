@@ -31,6 +31,15 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
+        /// Control DivEncabezado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivEncabezado;
+        
+        /// <summary>
         /// Control lblInformativo.
         /// </summary>
         /// <remarks>
@@ -40,15 +49,6 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.WebControls.Label lblInformativo;
         
         /// <summary>
-        /// Control DivGridPedido.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivGridPedido;
-        
-        /// <summary>
         /// Control lnkNuevoPedido.
         /// </summary>
         /// <remarks>
@@ -56,6 +56,15 @@ namespace GestOn2.ABMS {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkNuevoPedido;
+        
+        /// <summary>
+        /// Control DivGridPedido.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivGridPedido;
         
         /// <summary>
         /// Control GridViewPedidos.

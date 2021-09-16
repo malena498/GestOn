@@ -167,37 +167,40 @@ namespace GestOn2.PaginasMaestras
                 List<String> lista = new List<string>();
                 foreach (Notificaciones n in notificaciones)
                 {
-                    Documento d = Sistema.GetInstancia().BuscarDocumento(n.IdDocumento);
-                    if (c.IdCurso == d.gradoLiceal)
+                    if (n.TipoNotificacion.Equals("Notificaciones Documentos"))
                     {
-                        List<MateriaCursoDocente> m = Sistema.GetInstancia().ListadoMateriaCursoDocentexGrado(d.gradoLiceal);
-                        foreach (MateriaCursoDocente mc in m)
+                        Documento d = Sistema.GetInstancia().BuscarDocumento(n.IdDocumento);
+                        if (c.IdCurso == d.gradoLiceal)
                         {
-                            if (n.AccionUsuario.Equals("NUEVO"))
+                            List<MateriaCursoDocente> m = Sistema.GetInstancia().ListadoMateriaCursoDocentexGrado(d.gradoLiceal);
+                            foreach (MateriaCursoDocente mc in m)
                             {
-                                if (d.EsPractico)
+                                if (n.AccionUsuario.Equals("NUEVO"))
                                 {
-                                    texto = "El docente " + n.NombreUsuario + " ha ingresado el practico N°: " + d.NroPractico + " de la materia "+ mc.materia +" para su impresión";
-                                }
-                                else
-                                {
-                                    texto = "El docente " + n.NombreUsuario + " ha ingresado el documento" + d.NombreDocumento + " de la materia " + mc.materia + " para su impresión";
+                                    if (d.EsPractico)
+                                    {
+                                        texto = "El docente " + n.NombreUsuario + " ha ingresado el practico N°: " + d.NroPractico + " de la materia " + mc.materia + " para su impresión";
+                                    }
+                                    else
+                                    {
+                                        texto = "El docente " + n.NombreUsuario + " ha ingresado el documento" + d.NombreDocumento + " de la materia " + mc.materia + " para su impresión";
 
+                                    }
                                 }
-                            }
-                            if (n.AccionUsuario.Equals("CANCELACION"))
-                            {
-                                if (d.EsPractico)
+                                if (n.AccionUsuario.Equals("CANCELACION"))
                                 {
-                                    texto = "El practico N°: " + d.NroPractico + " +de la materia " + mc.materia + " ya no esta disponible para impresión";
-                                }
-                                else
-                                {
-                                    texto = "El documento" + d.NombreDocumento + " +de la materia " + mc.materia + " ya no esta disponible para impresión";
+                                    if (d.EsPractico)
+                                    {
+                                        texto = "El practico N°: " + d.NroPractico + " +de la materia " + mc.materia + " ya no esta disponible para impresión";
+                                    }
+                                    else
+                                    {
+                                        texto = "El documento" + d.NombreDocumento + " +de la materia " + mc.materia + " ya no esta disponible para impresión";
 
+                                    }
                                 }
+                                lista.Add(texto);
                             }
-                            lista.Add(texto);
                         }
                     }
                 }

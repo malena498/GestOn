@@ -1,5 +1,8 @@
 ﻿body {
 }
+h1 {
+    text-align:center;
+}
 #TextArea1 {
     width: 200px;
     height: 54px;
