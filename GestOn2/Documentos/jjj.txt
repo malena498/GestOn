@@ -24,3 +24,20 @@ public partial class Download : System.Web.UI.Page
 
     }
 }
+/*Select(p => new { ProductId = p.ProductId, DisplayText = p.ProductId.ToString() + " " + p.Description });
+ 
+     
+      DataSetds3 = new DataSet();
+//se indica la consulta e sql donde se elige el ID_Profesor
+//y se concatenan los campos Nombre y Apellido_P
+//en una variable llamada Name_Full
+            SqlDataAdapter da3 = new SqlDataAdapter(“Select ID_Profesor,(Nombre + \’ \’ + Apellido_P) as Name_Full FROM Profesor WHERE Eliminado = ‘FALSE'”,conect);
+//se especifica la tabla
+            da3.Fill(ds3, “Profesor”);
+            cbProfesor.DataSource = ds3.Tables[0].DefaultView;
+//el valor real será el ID_Profesor
+            cbProfesor.ValueMember = “ID_Profesor”;
+//lo que mostrará sera la variable Name_Full la cual tiene concatenados los campos Nombre y Apellido_P
+            cbProfesor.DisplayMember = “Name_Full”;
+     
+     */
