@@ -93,20 +93,49 @@
                             <asp:Label ID="lblFechaEstimadaEntrega" runat="server" class="col-12 col-md-12 col-lg-12" Font-Bold="True" Visible="false"></asp:Label>
 
                         </div>
-                        <div id="divProductos" runat="server" visible="false">
-                            <h5 class="col-md-12 col-lg-12 col-sm-12 col-xl-12">Agregar productos</h5>
+                        <div id="divProductos" runat="server">
                             <div class="form-row mt-2">
                                 <asp:Label ID="Label6" runat="server" Text="Seleccionar producto" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True"></asp:Label>
                                 <asp:DropDownList ID="ListProductos1" runat="server" AutoPostBack="True" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" OnSelectedIndexChanged="ListProductos1_SelectedIndexChanged"></asp:DropDownList>
+                                 <asp:Label ID="Label4" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Precio producto:"></asp:Label>
+                                <asp:Label ID="lblPrecioproducto" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:Label>
                             </div>
+                             <asp:Label ID="Label8" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Cantidad:"></asp:Label>
                             <asp:TextBox ID="txtCantidadProducto" runat="server" placeholder="Ingrese cantidad" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" AutoPostBack="True" OnTextChanged="txtCantidadProducto_TextChanged"></asp:TextBox>
+                             <asp:Label ID="Label10" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Sub-total:"></asp:Label>
+                            <asp:TextBox ID="txtSubtotal" runat="server" placeholder="Subtotal" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Enabled="False"></asp:TextBox>
+                            <asp:Label ID="Label11" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Total:"></asp:Label>
                             <asp:TextBox ID="txtPrecioPedido" runat="server" placeholder="Total" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Enabled="False"></asp:TextBox>
                             <asp:Button ID="btnAgregarTodo" runat="server" OnClick="btnAgregarTodo_Click" Text="Agregar" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True" Enabled="False" />
                             <div class="table table-bordered mt-3">
                                 <asp:Label ID="Label7" runat="server" class="col-6 col-md-6 col-lg-6" Font-Bold="True" Text="Productos seleccionados"></asp:Label>
-                                <asp:GridView ID="GridViewProductos" EmptyDataText="No hay registros."
+                                <asp:GridView ID="GridViewProductosNuevo" EmptyDataText="No hay registros."
+                                    AllowPaging="True" runat="server" OnRowEditing="GridViewProductosNuevo_RowEditing" OnRowUpdating="GridViewProductosNuevo_RowUpdated"
+                                    OnRowCancelingEdit="GridViewProductosNuevo_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12" OnRowDeleting="GridViewProductosNuevo_OnRowDeleting" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="IdProducto" ItemStyle-Width="150" Visible="false">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("ProductoNombre") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="150">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblCantidad" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' Width="140"></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                <asp:GridView ID="GridViewProductosEditar" EmptyDataText="No hay registros."
                                     AllowPaging="True" runat="server" OnRowEditing="GridViewProductos_RowEditing" OnRowUpdating="GridViewProductos_RowUpdated"
-                                    OnRowCancelingEdit="GridViewProductos_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12" OnRowDeleting="GridViewProductos_OnRowDeleting" AutoGenerateColumns="False">
+                                    OnRowCancelingEdit="GridViewProductos_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12" OnRowDeleting="GridViewProductos_OnRowDeleting" AutoGenerateColumns="False" Visible="false">
                                     <Columns>
                                         <asp:TemplateField HeaderText="IdPedido" ItemStyle-Width="150" Visible="false">
                                             <ItemTemplate>
@@ -131,7 +160,17 @@
                                                 <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' Width="140"></asp:TextBox>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:CommandField HeaderText="Acción" ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true" ShowCancelButton="true" ControlStyle-Width="80" />
+                                         <asp:TemplateField HeaderText="Accion" ItemStyle-Width="200">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="btnEditar" runat="server" CommandName="Edit" class="btn btn-outline-success text-center">Editar</asp:LinkButton>
+                                        <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" class="btn btn-outline-danger text-center" Text="Borrar"
+                                            OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:LinkButton ID="btnUpdate" runat="server" CommandName="Update" class="btn btn-outline-success text-center">Modificar</asp:LinkButton>
+                                        <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" class="btn btn-outline-danger text-center" Text="Cancelar"></asp:Button>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
                                     </Columns>
                                 </asp:GridView>
                             </div>

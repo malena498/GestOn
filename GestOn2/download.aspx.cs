@@ -66,10 +66,7 @@ namespace GestOn2
             }
         }*/
 
-        protected void bntDescargar_Click(object sender, EventArgs e)
-        {
-            DescargarDoc();
-        }
+
       
     }
 
