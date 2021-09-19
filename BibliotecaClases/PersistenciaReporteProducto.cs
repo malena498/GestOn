@@ -25,7 +25,10 @@ namespace BibliotecaClases
                                                                    new SqlParameter("fchini", FechaDesde),
                                                                    new SqlParameter("fchfin", FechaHasta));
 
-                    lista = baseDatos.Database.SqlQuery<ReporteProductosMasVendidos>("SELECT PRODUCTOID,PRODUCTONOMBRE,CANTIDAD FROM ReporteProductosMasVendidos GROUP BY PRODUCTOID,PRODUCTONOMBRE,CANTIDAD ORDER BY Cantidad ASC ").ToList();
+                    lista = baseDatos.Database.SqlQuery<ReporteProductosMasVendidos>("SELECT TOP 5 PRODUCTOID,PRODUCTONOMBRE,CANTIDAD" +
+                                                                                    " FROM ReporteProductosMasVendidos" +
+                                                                                    " GROUP BY PRODUCTOID,PRODUCTONOMBRE,CANTIDAD" +
+                                                                                    " ORDER BY Cantidad DESC").ToList();
 
                     return lista;
                 }

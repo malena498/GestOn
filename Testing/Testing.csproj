@@ -65,6 +65,8 @@
     <Compile Include="TestPersistenciaUsuarios.cs" />
     <Compile Include="TestPersistenciaCategoriaProducto.cs" />
     <Compile Include="TestPersistenciaDocumento.cs" />
+    <Compile Include="TestPersistenciaReporte.cs" />
+    <Compile Include="TestPersistenciaReporteProducto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
