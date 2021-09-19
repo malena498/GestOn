@@ -164,7 +164,7 @@ namespace GestOn2.ABMS
                             p.productosCantidad.Add(ppc);
                         
 
-                        ActualizarStock(int.Parse((row.FindControl("lblIdPedido") as Label).Text), int.Parse((row.FindControl("lblCantidad") as Label).Text));
+                        ActualizarStock(int.Parse(Session["IdPedido"].ToString(), int.Parse((row.FindControl("lblCantidad") as Label).Text));
 
                         }
                         exito = Sistema.GetInstancia().GuardarProductoPedidoCantidad(lista);
