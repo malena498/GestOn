@@ -37,13 +37,10 @@ namespace GestOn2.PaginasMaestras
             if (Session["IdUsuario"] != null)
             {
                 String id = Session["IdUsuario"].ToString();
-                if (id.Equals("0") || String.IsNullOrEmpty(id))
+                if (!id.Equals("0") || String.IsNullOrEmpty(id))
                 {
-                    Session["IdUsuario"] = "";
-                    Server.Transfer("~/Login.aspx");
-                }
-                else
-                {
+                    lnkLogin.Visible = false;
+                    lnkRegistro.Visible =false;
                     Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
                     if (u.nivel.NombreNivel.Equals("Docente"))
                     {
@@ -87,6 +84,18 @@ namespace GestOn2.PaginasMaestras
                     }
                 }
             }
+            else
+            {
+                Docente.Visible = false;
+                Admin.Visible = false;
+                hlConfiguraciones.Visible = false;
+                hlAdministrarCuenta.Visible = false;
+                formDoc.Visible = false;
+                 liConfig.Visible = false;
+                linotificacion.Visible = false;
+
+            }
+
         }
 
         protected void Salir_Click(object sender, EventArgs e)

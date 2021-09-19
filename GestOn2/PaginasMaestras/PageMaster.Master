@@ -60,10 +60,11 @@
                         </div>
                     </li>
                 </ul>
+                <asp:HyperLink ID="lnkLogin" class="dropdown-item" NavigateUrl="~/Login.aspx" runat="server">Iniciar sesión</asp:HyperLink>
+                <asp:HyperLink ID="lnkRegistro" class="dropdown-item" NavigateUrl="~/Registrarse.aspx" runat="server">Registrarse</asp:HyperLink>
                 <ul class="nav navbar-nav navbar-right">
                    
-                    
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" runat="server" id="liConfig">
                         <a class="btn btn-link"  id="my_navbarDropdown2" runat="server" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-cog fa-1x"></i>
                         </a>
