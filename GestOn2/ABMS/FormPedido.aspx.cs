@@ -206,6 +206,7 @@ namespace GestOn2.ABMS
        
         protected void btnAgregarTodo_Click(object sender, EventArgs e)
         {
+            GridViewProductosNuevo.Visible = true;
             if (ListProductos1.SelectedItem != null && (!String.IsNullOrEmpty(txtCantidadProducto.Text)))
             {
                 int idProducto = int.Parse(ListProductos1.SelectedValue);
@@ -242,9 +243,9 @@ namespace GestOn2.ABMS
                     table.Columns.Add(c3);
 
                     DataRow row = table.NewRow();
-                    row["ProductoId"] = idProducto;
+                    row["ProductoId"] = idProducto.ToString();
                     row["ProductoNombre"] = p.ProductoNombre;
-                    row["Cantidad"] = cantidad;
+                    row["Cantidad"] = cantidad.ToString();
                     table.Rows.Add(row);
                     Session["PrecioAnterior"] = txtPrecioPedido.Text;
 
