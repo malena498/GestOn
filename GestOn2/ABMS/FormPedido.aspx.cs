@@ -157,14 +157,14 @@ namespace GestOn2.ABMS
 
                             ProductoPedidoCantidad ppc = new ProductoPedidoCantidad();
                             ppc.ProductoId = idProd;
-                            ppc.IdPedido = int.Parse(Session["IdPedido"].ToString());
+                            ppc.IdPedido = id;
                             ppc.Cantidad = int.Parse((row.FindControl("lblCantidad") as Label).Text);
 
                             lista.Add(ppc);
                             p.productosCantidad.Add(ppc);
                         
 
-                        ActualizarStock(int.Parse(Session["IdPedido"].ToString()), int.Parse((row.FindControl("lblCantidad") as Label).Text));
+                        ActualizarStock(id, int.Parse((row.FindControl("lblCantidad") as Label).Text));
 
                         }
                         exito = Sistema.GetInstancia().GuardarProductoPedidoCantidad(lista);
