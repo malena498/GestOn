@@ -148,9 +148,10 @@ namespace GestOn2.ABMS
                if (id > 0)
                {
                     bool exito = false;
+                    List<ProductoPedidoCantidad> lista = new List<ProductoPedidoCantidad>();
                     if (chkPedidoProducto.Checked)
                     {
-                        List<ProductoPedidoCantidad> lista = new List<ProductoPedidoCantidad>();
+                       
                         foreach (GridViewRow row in GridViewProductosNuevo.Rows)
                         {
                             int idProd = int.Parse((row.FindControl("lblIdProducto") as Label).Text);
@@ -161,32 +162,44 @@ namespace GestOn2.ABMS
                             ppc.Cantidad = int.Parse((row.FindControl("lblCantidad") as Label).Text);
 
                             lista.Add(ppc);
-                            p.productosCantidad.Add(ppc);
-                        
 
                         ActualizarStock(id, int.Parse((row.FindControl("lblCantidad") as Label).Text));
 
                         }
                         exito = Sistema.GetInstancia().GuardarProductoPedidoCantidad(lista);
                     }
-                    if (exito) {
-                        lblInformativo.Text = "Se guardo con éxito";
-                        lblInformativo.Visible = true;
-                        TimerMensajes.Enabled = true;
-                        Session["Tabla"] = null;
-                        Session["IdPedido"] = id;
-                        Usuario u = Sistema.GetInstancia().BuscarUsuario(user);
-                        bool ex = Sistema.GetInstancia().GuardarNotificacionPedido(user, u.UserNombre, "NUEVO");
-                        llenarGrillaPedidos();
-                        divNuevoPedido.Visible = false;
-                        btnCerrar.Enabled = false;
-                        btnNuevoPedido.Visible = false;
-                        //Elimino campos luego que se inserto con éxito
-                        VaciarCampos();
-                        lblPrecioproducto.Visible = true;
-                        divProductos.Visible = true;
-                        GridViewProductosNuevo.Visible = false;
-                        btnCerrar.Enabled = true;
+                    if (exito)
+                    {
+                        Pedido pe = Sistema.GetInstancia().BuscarPedido(id);
+                        pe.productosCantidad = lista;
+                        int exx = Sistema.GetInstancia().ModificarPedido(pe);
+                        if (exx)
+                        {
+                            lblInformativo.Text = "Se guardo con éxito";
+                            lblInformativo.Visible = true;
+                            TimerMensajes.Enabled = true;
+                            Session["Tabla"] = null;
+                            Session["IdPedido"] = id;
+                            Usuario u = Sistema.GetInstancia().BuscarUsuario(user);
+                            bool ex = Sistema.GetInstancia().GuardarNotificacionPedido(user, u.UserNombre, "NUEVO");
+
+                            llenarGrillaPedidos();
+                            divNuevoPedido.Visible = false;
+                            btnCerrar.Enabled = false;
+                            btnNuevoPedido.Visible = false;
+                            //Elimino campos luego que se inserto con éxito
+                            VaciarCampos();
+                            lblPrecioproducto.Visible = true;
+                            divProductos.Visible = true;
+                            GridViewProductosNuevo.Visible = false;
+                            btnCerrar.Enabled = true;
+                        }
+                        else
+                        {
+                            lblInformativo.Text = "No se guardo (Error)";
+                            lblInformativo.Visible = true;
+                            TimerMensajes.Enabled = true;
+                        }
                     }
                     else
                     {
