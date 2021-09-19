@@ -173,7 +173,7 @@ namespace GestOn2.ABMS
                         Pedido pe = Sistema.GetInstancia().BuscarPedido(id);
                         pe.productosCantidad = lista;
                         int exx = Sistema.GetInstancia().ModificarPedido(pe);
-                        if (exx)
+                        if (exx > 0)
                         {
                             lblInformativo.Text = "Se guardo con éxito";
                             lblInformativo.Visible = true;
