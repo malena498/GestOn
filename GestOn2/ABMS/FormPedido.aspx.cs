@@ -157,7 +157,7 @@ namespace GestOn2.ABMS
 
                             ProductoPedidoCantidad ppc = new ProductoPedidoCantidad();
                             ppc.ProductoId = idProd;
-                            ppc.IdPedido = int.Parse((row.FindControl("lblIdPedido") as Label).Text);
+                            ppc.IdPedido = int.Parse(Session["IdPedido"].ToString());
                             ppc.Cantidad = int.Parse((row.FindControl("lblCantidad") as Label).Text);
 
                             lista.Add(ppc);
