@@ -726,6 +726,7 @@ namespace GestOn2.ABMS
                 GridViewProductosNuevo.Visible = true;
                 divPedidoImagen.Visible = false;
                 chkPedidoImagen.Checked = false;
+                divProductos.Visible = true;
             }
         }
 
