@@ -346,15 +346,6 @@ namespace GestOn2.ABMS {
         protected global::System.Web.UI.WebControls.GridView GridViewProductosNuevo;
         
         /// <summary>
-        /// Control GridViewProductosEditar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewProductosEditar;
-        
-        /// <summary>
         /// Control divPedidoImagen.
         /// </summary>
         /// <remarks>
@@ -416,15 +407,6 @@ namespace GestOn2.ABMS {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnActualizar;
-        
-        /// <summary>
-        /// Control btnAgregarProductos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarProductos;
         
         /// <summary>
         /// Control btnCerrar.

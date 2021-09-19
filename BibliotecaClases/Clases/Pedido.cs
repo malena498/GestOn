@@ -25,6 +25,7 @@ namespace BibliotecaClases.Clases
         public decimal Precio { get; set; }
         public String Estado { get; set; }
         public String HoraEntrega { get; set; }
+        public bool esEnvio { get; set; }
 
 
 

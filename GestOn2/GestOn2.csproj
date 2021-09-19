@@ -152,6 +152,7 @@
     <None Include="packages.config" />
     <Content Include="PaginasMaestras\PageMaster.Master" />
     <Content Include="PaginasMaestras\Account.Master" />
+    <Content Include="PaginasMaestras\Inicio.Master" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml">
       <SubType>Designer</SubType>
     </None>
@@ -287,6 +288,13 @@
     </Compile>
     <Compile Include="PaginasMaestras\Account.Master.designer.cs">
       <DependentUpon>Account.Master</DependentUpon>
+    </Compile>
+    <Compile Include="PaginasMaestras\Inicio.Master.cs">
+      <DependentUpon>Inicio.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PaginasMaestras\Inicio.Master.designer.cs">
+      <DependentUpon>Inicio.Master</DependentUpon>
     </Compile>
     <Compile Include="PaginasMaestras\PageMaster.Master.cs">
       <DependentUpon>PageMaster.Master</DependentUpon>

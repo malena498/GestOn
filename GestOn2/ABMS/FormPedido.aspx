@@ -109,8 +109,8 @@
                             <asp:Button ID="btnAgregarTodo" runat="server" OnClick="btnAgregarTodo_Click" Text="Agregar" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True" Enabled="False" />
                             <div class="table table-bordered mt-3">
                                 <asp:Label ID="Label7" runat="server" class="col-6 col-md-6 col-lg-6" Font-Bold="True" Text="Productos seleccionados"></asp:Label>
-                                <asp:GridView ID="GridViewProductosNuevo" EmptyDataText="No hay registros."
-                                    AllowPaging="True" runat="server" OnRowEditing="GridViewProductosNuevo_RowEditing" OnRowUpdating="GridViewProductosNuevo_RowUpdated"
+                                <asp:GridView ID="GridViewProductosNuevo" EmptyDataText="No hay registros." OnRowEditing="GridViewProductosNuevo_RowEditing"
+                                    AllowPaging="True" runat="server" OnRowUpdating="GridViewProductosNuevo_RowUpdated"
                                     OnRowCancelingEdit="GridViewProductosNuevo_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12" OnRowDeleting="GridViewProductosNuevo_OnRowDeleting" AutoGenerateColumns="False">
                                     <Columns>
                                         <asp:TemplateField HeaderText="IdProducto" ItemStyle-Width="150" Visible="false">
@@ -131,48 +131,23 @@
                                                 <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' Width="140"></asp:TextBox>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Acción">
+                                        <ItemTemplate>
+                                          <asp:LinkButton ID="lbtnEdit" runat="server" class="btn btn-outline-danger text-center" CausesValidation="False"
+                                            CommandName="Edit" Text="Editar" ></asp:LinkButton>
+                                            <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" class="btn btn-outline-danger text-center" Text="Borrar"
+                                            OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
+                                        </ItemTemplate>
+                                        <EditItemTemplate>
+                                          <asp:LinkButton ID="lbtnUpdate" runat="server" class="btn btn-outline-danger text-center" CausesValidation="True"
+                                            CommandName="Update" Text="Modificar"></asp:LinkButton>
+                                          &nbsp;<asp:LinkButton ID="lbtnCancel"  class="btn btn-outline-danger text-center" runat="server" CausesValidation="False"
+                                            CommandName="Cancel" Text="Cancelar"></asp:LinkButton>
+                                        </EditItemTemplate>
+                                      </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
-                                <asp:GridView ID="GridViewProductosEditar" EmptyDataText="No hay registros."
-                                    AllowPaging="True" runat="server" OnRowEditing="GridViewProductos_RowEditing" OnRowUpdating="GridViewProductos_RowUpdated"
-                                    OnRowCancelingEdit="GridViewProductos_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12" OnRowDeleting="GridViewProductos_OnRowDeleting" AutoGenerateColumns="False" Visible="false">
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="IdPedido" ItemStyle-Width="150" Visible="false">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblIdPedido" runat="server" Text='<%# Eval("IdPedido") %>' ReadOnly="True"></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="IdProducto" ItemStyle-Width="150" Visible="false">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("producto.ProductoNombre") %>'></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="150">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblCantidad" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
-                                            </ItemTemplate>
-                                            <EditItemTemplate>
-                                                <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' Width="140"></asp:TextBox>
-                                            </EditItemTemplate>
-                                        </asp:TemplateField>
-                                         <asp:TemplateField HeaderText="Accion" ItemStyle-Width="200">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="btnEditar" runat="server" CommandName="Edit" class="btn btn-outline-success text-center">Editar</asp:LinkButton>
-                                        <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" class="btn btn-outline-danger text-center" Text="Borrar"
-                                            OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:LinkButton ID="btnUpdate" runat="server" CommandName="Update" class="btn btn-outline-success text-center">Modificar</asp:LinkButton>
-                                        <asp:Button ID="btnCancelar" runat="server" CommandName="Cancel" class="btn btn-outline-danger text-center" Text="Cancelar"></asp:Button>
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
-                                    </Columns>
-                                </asp:GridView>
+                                
                             </div>
                         </div>
                         <div runat="server" id="divPedidoImagen" visible="false">
@@ -188,7 +163,6 @@
                         </div>
                         <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Generar pedido" Font-Bold="True" Visible="false" />
                         <asp:Button ID="btnActualizar" runat="server" OnClick="btnActualizar_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Actualizar" Font-Bold="True" Visible="false" />
-                        <asp:Button ID="btnAgregarProductos" runat="server" OnClick="btnAgregarProductos_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Agregar Productos" Font-Bold="True" Visible="false" />
                         <asp:Button ID="btnCerrar" runat="server" CssClass="btn btn-outline-danger offset-3 col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 mt-3" OnClick="btnCerrar_Click" Text="Listado de pedidos" Visible="false" />
                         <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick" />
                     </div>

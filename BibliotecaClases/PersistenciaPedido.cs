@@ -406,7 +406,29 @@ namespace BibliotecaClases
 
         }
 
-       
+        public ProductoPedidoCantidad BuscarPedidoProductoCantidadPr(int idPedido, int IdProducto)
+        {
+            try
+            {
+                ProductoPedidoCantidad p = new ProductoPedidoCantidad();
+                using (var baseDatos = new Context())//SingleOrDefault(cl => cl.IdPedido == pedido.IdPedido);
+                {
+                    p = baseDatos.CanttidadProductos.Include("producto").SingleOrDefault(cl => cl.IdPedido == idPedido && cl.ProductoId == IdProducto);
+                }
+                if (p != null)
+                {
+                    return p;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+
+        }
     }
     
 }
