@@ -183,6 +183,8 @@ namespace BibliotecaClases
                         pe.Direccion = pedido.Direccion;
                         pe.FechaEntrega = pedido.FechaEntrega;
                         pe.FechaPedido = DateTime.Now;
+                        pe.HoraEntrega = pedido.HoraEntrega;
+                        pe.esEnvio = pedido.esEnvio;
                         //pe.productosCantidad = pedido.productosCantidad;
                         pe.UserId = pedido.UserId;
                         pe.Precio = pedido.Precio;

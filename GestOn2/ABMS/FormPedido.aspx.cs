@@ -190,9 +190,11 @@ namespace GestOn2.ABMS
                             //Elimino campos luego que se inserto con éxito
                             VaciarCampos();
                             lblPrecioproducto.Visible = true;
-                            divProductos.Visible = true;
+                            divProductos.Visible = false;
                             GridViewProductosNuevo.Visible = false;
                             btnCerrar.Enabled = true;
+                            DivGridPedido.Visible = true;
+
                         }
                         else
                         {
@@ -286,7 +288,8 @@ namespace GestOn2.ABMS
             btnNuevoPedido.Visible = true;
             btnCerrar.Visible = true;
             GridViewProductosNuevo.Visible = false;
-
+            divProductos.Visible = true;
+            RadioBtnSi.Checked = true;
 
 
         }
@@ -367,12 +370,22 @@ namespace GestOn2.ABMS
 
         protected void RadioBtnNo_CheckedChanged(object sender, EventArgs e)
         {
-            txtDireccion.Enabled = false;
-            txtDireccion.Text = "";
-            txtDireccion.Visible = false;
-            RadioBtnTarde.Visible = false;
-            Label3.Visible = false;
-            RadioBtnNoche.Visible = false;
+            if (RadioBtnNo.Checked)
+            {
+                txtDireccion.Enabled = false;
+                txtDireccion.Text = "";
+                txtDireccion.Visible = false;
+                RadioBtnTarde.Visible = false;
+                Label3.Visible = false;
+                RadioBtnNoche.Visible = false;
+                decimal precio = 0;
+                if (!String.IsNullOrEmpty(txtPrecioPedido.Text))
+                {
+                    Configuracion conf = Sistema.GetInstancia().BuscarConfiguracion("CostoEnvio");
+                    precio = decimal.Parse(txtPrecioPedido.Text) - decimal.Parse(conf.Valor);
+                }
+                txtPrecioPedido.Text = precio.ToString();
+            }
         }
     
         protected void ListProductos1_SelectedIndexChanged(object sender, EventArgs e)
@@ -586,6 +599,11 @@ namespace GestOn2.ABMS
             precio = subtotal + (pr.ProductoPrecioVenta * cantidad);
            
             txtPrecioPedido.Text = precio.ToString();
+            ProductoPedidoCantidad ppcn = new ProductoPedidoCantidad();
+            ppcn.IdPedido = idPedido;
+            ppcn.ProductoId = idProducto;
+            ppcn.Cantidad = cantidad;
+            bool g = Sistema.GetInstancia().GuardarProductoPedidoCantidad(ppcn);
             bool exito = Sistema.GetInstancia().EliminarProductoPedidoCant(ppc.IdPedido,ppc.ProductoId,ppc.Cantidad);
             lblInformativo.Visible = true;
             GridViewProductosNuevo.EditIndex = -1;
@@ -667,32 +685,45 @@ namespace GestOn2.ABMS
         {
             bool exito = false;
             int id= int.Parse(Session["IdPedido"].ToString());
-            DateTime ahora = DateTime.Now;
-            DateTime fchEntrega;
-            if (ahora.Hour >= 20)
-            {
-                fchEntrega = DateTime.Today.AddDays(1);
-            }
-            else
-            {
-                fchEntrega = DateTime.Today;
-            }
-            string Direccion = txtDireccion.Text;
-            string horaentrega = "";
-            if (RadioBtnTarde.Checked)
-            {
-                horaentrega = "Entre 14 y 16 p.m.";
-            }
-            else if (RadioBtnNoche.Checked)
-            {
-                horaentrega = "Después de las 20 p.m.";
-            }
             Pedido p = Sistema.GetInstancia().BuscarPedido(id);
             p.Precio = decimal.Parse(txtPrecioPedido.Text);
             p.Descripcion = txtDescripcion.InnerText;
-            p.Direccion = Direccion;
-            p.FechaEntrega = fchEntrega;
-            
+            if (RadioBtnSi.Checked)
+            {
+                DateTime ahora = DateTime.Now;
+                DateTime fchEntrega;
+                if (ahora.Hour >= 20)
+                {
+                    fchEntrega = DateTime.Today.AddDays(1);
+                }
+                else
+                {
+                    fchEntrega = DateTime.Today;
+                }
+                string Direccion = txtDireccion.Text;
+                string horaentrega = "";
+                if (RadioBtnTarde.Checked)
+                {
+                    horaentrega = "Entre 14 y 16 p.m.";
+                }
+                else if (RadioBtnNoche.Checked)
+                {
+                    horaentrega = "Después de las 20 p.m.";
+                }
+                p.Direccion = Direccion;
+                p.FechaEntrega = fchEntrega;
+                p.HoraEntrega = horaentrega;
+                p.esEnvio = true;
+            }
+            if(RadioBtnNo.Checked)
+            {
+                
+                p.Direccion = "";
+                p.HoraEntrega = "";
+                p.esEnvio = false;
+                p.Precio = decimal.Parse(txtPrecioPedido.Text);
+            }
+
             List<ProductoPedidoCantidad> lista = new List<ProductoPedidoCantidad>();
             foreach (GridViewRow row in GridViewProductosNuevo.Rows)
             {
@@ -722,7 +753,7 @@ namespace GestOn2.ABMS
                     DivGridPedido.Visible = true;
                     btnActualizar.Visible = false;
                     divPedidoImagen.Visible = false;
-
+                    Session["Tabla"] = null;
 
                 }
             }

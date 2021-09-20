@@ -82,7 +82,7 @@
                             <asp:Label ID="Label5" runat="server" Text="Descripción:" class="col-12 col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
                             <textarea id="txtDescripcion" class="col-12 col-md-12 col-lg-12" placeholder="Ingrese descripción" runat="server" name="S1" cols="20"></textarea><br />
                             <asp:Label ID="Label9" runat="server" Text="Envío a domicilo" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True"></asp:Label>
-                            <asp:RadioButton ID="RadioBtnNo" runat="server" Checked="True" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnNo_CheckedChanged" Text="No" AutoPostBack="True" Font-Bold="True" />
+                            <asp:RadioButton ID="RadioBtnNo" runat="server"  GroupName="Radiosbtn" OnCheckedChanged="RadioBtnNo_CheckedChanged" Text="No" AutoPostBack="True" Font-Bold="True" />
                             <asp:RadioButton ID="RadioBtnSi" runat="server" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnSi_CheckedChanged" Text="Si" Width="40px" AutoPostBack="True" Font-Bold="True" /><br />
                             <asp:TextBox ID="txtDireccion" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" placeholder="Ingrese Dirección" Visible="False"></asp:TextBox><br />
                             <asp:Label ID="Label3" runat="server" Text="Horario preferido para la entrega:" class="col-12 col-md-12 col-lg-12" Font-Bold="True" Visible="false"></asp:Label>
