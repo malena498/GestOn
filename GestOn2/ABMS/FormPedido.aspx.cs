@@ -39,7 +39,6 @@ namespace GestOn2.ABMS
                     lblPrecioproducto.Text =p.ProductoPrecioVenta.ToString();
                     
                     llenarGrillaPedidos();
-                   // Session["Tabla"] = null;
                 }
                 else
                 {
@@ -770,6 +769,7 @@ namespace GestOn2.ABMS
                 GridViewProductosNuevo.Visible = true;
                 divPedidoImagen.Visible = false;
                 chkPedidoImagen.Checked = false;
+                GrillaProductos.Visible = true;
                 divProductos.Visible = true;
             }
         }
@@ -785,6 +785,7 @@ namespace GestOn2.ABMS
                 Label6.Visible = false;
                 Label7.Visible = false;
                 divProductos.Visible = false;
+                GrillaProductos.Visible = false;
                 divPedidoImagen.Visible = true;
                 chkPedidoProducto.Checked = false;
             }
