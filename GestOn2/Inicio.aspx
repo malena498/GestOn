@@ -54,7 +54,6 @@
                             <li><a href="https://www.instagram.com/bertinatpapeleria/?hl=es-la" target="_blank" class="icoInstagram" title="Instagram"><i class="fa fa-instagram"></i></a></li>
                         </ul>
                     </div>
-                        <p class="text-left">&copy; Copyright 2021 - Bertinat Papelería.</p>
                 </div>
             </footer>
         </ContentTemplate>

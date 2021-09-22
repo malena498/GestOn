@@ -10,7 +10,6 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
                 <div id="DivFiltros" runat="server" class="form-row border border-info col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-2 ml-1 ">
-                    <h1 class="col-md-12 col-lg-12 col-sm-12 col-xl-12">Selección de Filtros</h1>
                     <div class="col-md-3 col-lg-3 col-sm-3 col-xl-3 mt-3">
                         <asp:Label ID="Label12" runat="server" Text="Filtrar por: " class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
                         <asp:DropDownList ID="ddlSeleccionaFiltro" CssClass="form-select col-7 col-md-7 col-lg-7 col-sm-7" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlSeleccionaFiltro_SelectedIndexChanged">
@@ -19,17 +18,17 @@
                         </asp:DropDownList>
                     </div>
                     <div class="col-xl-5 col-lg-4 col-md-4 col-sm-4 col-xs-4 mt-3 mb-3 p-0"  id="DivFiltroXFechas" runat="server">
-                        <asp:TextBox ID="txtFchDesde" type="datetime" class="col-xs-6 col-lg-6 col-md-6 col-sm-6 col-xl-6 " runat="server" TextMode="Date"></asp:TextBox>
-                        <asp:TextBox ID="txtFchHasta" type="datetime" class="col-xs-6 col-lg-6 col-md-6 col-sm-6 col-xl-6 " runat="server" TextMode="Date"></asp:TextBox>  
+                        <asp:TextBox ID="txtFchDesde" type="datetime" class="col-xs-5 col-lg-5 col-md-5 col-sm-5 col-xl-5 " runat="server" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="txtFchHasta" type="datetime" class="col-xs-5 col-lg-5 col-md-5 col-sm-5 col-xl-5 " runat="server" TextMode="Date"></asp:TextBox>  
                     </div>
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-xs-5 mt-3 mb-3" id="DivFiltroXTitulo" runat="server" visible="false">
                         <asp:TextBox ID="txtTitulo" placeholder="Nombre del titulo" class="col-8 col-lg-8 col-md-8 col-sm-8 col-xl-8 ml-2" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2  mt-3 mb-3" id="Div3" runat="server">
-                        <asp:LinkButton ID="btnBuscar" CssClass="btn btn-info col-md-2 col-lg-2 col-sm-2" OnClick="btnBuscar_Click" runat="server"><i class="fa fa-search"></i></asp:LinkButton>
+                        <asp:LinkButton ID="btnBuscar" CssClass="btn btn-info col-md-6 col-lg-6 col-sm-6" OnClick="btnBuscar_Click" runat="server"><i class="fa fa-search"></i> Buscar</asp:LinkButton>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 mt-3" id="Div2" runat="server">
-                        <asp:LinkButton ID="lnkNuevaOferta" runat="server" CssClass="btn btn-outline-danger col-xl-5 col-xs-5 col-sm-5 col-md-5 col-lg-5" OnClick="lnkNuevaOferta_Click"> Agregar Oferta </asp:LinkButton>
+                        <asp:LinkButton ID="lnkNuevaOferta" runat="server" CssClass="btn btn-outline-danger col-xl-12 col-xs-12 col-sm-12 col-md-12 col-lg-12" OnClick="lnkNuevaOferta_Click"> Agregar Oferta </asp:LinkButton>
                     </div>
                     <asp:Label ID="lblResultadoBusqueda" Visible="false" class="alert alert-danger col-md-3 col-lg-3 col-sm-3 col-xl-3" runat="server"></asp:Label>
                 </div>

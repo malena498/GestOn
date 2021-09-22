@@ -9,7 +9,6 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
                 <div id="DivFiltros" runat="server" class="form-row border border-info col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-2">
-                    <h1 class="col-md-12 col-lg-12 col-sm-12 col-xl-12">Selección de Filtros</h1>
                     <div class="col-md-3 col-lg-3 col-sm-3 col-xl-3 mt-4">
                         <asp:Label ID="Label12" runat="server" Text="Filtrar por: " CssClass="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
                         <asp:DropDownList ID="ddlSeleccionaFiltro" CssClass="form-select col-7 col-md-7 col-lg-7 col-sm-7" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlSeleccionaFiltro_SelectedIndexChanged">

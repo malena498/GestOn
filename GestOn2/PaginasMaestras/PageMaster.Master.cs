@@ -40,7 +40,6 @@ namespace GestOn2.PaginasMaestras
                 if (!id.Equals("0") || String.IsNullOrEmpty(id))
                 {
                     lnkLogin.Visible = false;
-                    lnkRegistro.Visible =false;
                     Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(id));
                     if (u.nivel.NombreNivel.Equals("Docente"))
                     {
@@ -91,7 +90,7 @@ namespace GestOn2.PaginasMaestras
                 hlConfiguraciones.Visible = false;
                 hlAdministrarCuenta.Visible = false;
                 formDoc.Visible = false;
-                 liConfig.Visible = false;
+                liConfig.Visible = false;
                 linotificacion.Visible = false;
 
             }

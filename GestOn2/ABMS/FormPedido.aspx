@@ -73,57 +73,60 @@
                             <RowStyle HorizontalAlign="Center" />
                         </asp:GridView>
                     </div>
-                    <div id="divConatiner" class="container-fluid  bg-light border border-dark col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4 p-3" runat="server" visible="false">
-                        <div id="divNuevoPedido" visible="false" runat="server">
-                            <asp:Label ID="Label1" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Pedido Productos"></asp:Label>
-                            <asp:RadioButton ID="chkPedidoProducto" runat="server" OnCheckedChanged="rdbPedidoProductos_CheckedChanged" GroupName="Radiosbtn2" AutoPostBack="True" Font-Bold="True" />
-                            <asp:Label ID="Label2" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Impresión de imagen"></asp:Label>
-                            <asp:RadioButton ID="chkPedidoImagen" runat="server" OnCheckedChanged="rdbPedidoImagen_CheckedChanged" GroupName="Radiosbtn2" Width="40px" AutoPostBack="True" Font-Bold="True" /><br />
-                            <asp:Label ID="Label5" runat="server" Text="Descripción:" class="col-12 col-md-12 col-lg-12" Font-Bold="True"></asp:Label>
-                            <textarea id="txtDescripcion" class="col-12 col-md-12 col-lg-12" placeholder="Ingrese descripción" runat="server" name="S1" cols="20"></textarea><br />
-                            <asp:Label ID="Label9" runat="server" Text="Envío a domicilo" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True"></asp:Label>
-                            <asp:RadioButton ID="RadioBtnNo" runat="server"  GroupName="Radiosbtn" OnCheckedChanged="RadioBtnNo_CheckedChanged" Text="No" AutoPostBack="True" Font-Bold="True" />
-                            <asp:RadioButton ID="RadioBtnSi" runat="server" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnSi_CheckedChanged" Text="Si" Width="40px" AutoPostBack="True" Font-Bold="True" /><br />
-                            <asp:TextBox ID="txtDireccion" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" placeholder="Ingrese Dirección" Visible="False"></asp:TextBox><br />
-                            <asp:Label ID="Label3" runat="server" Text="Horario preferido para la entrega:" class="col-12 col-md-12 col-lg-12" Font-Bold="True" Visible="false"></asp:Label>
-                            <br />
-                            <asp:RadioButton ID="RadioBtnTarde" runat="server" Checked="True" GroupName="RadiosbtnE" Text="Entre 14 y 16 p.m." AutoPostBack="True" Font-Bold="True" Visible="false" />
-                            <br />
-                            <asp:RadioButton ID="RadioBtnNoche" runat="server" GroupName="RadiosbtnE" Text="Después de las 20 p.m." AutoPostBack="True" Font-Bold="True" Visible="false" /><br />
-                            <asp:Label ID="lblFechaEstimadaEntrega" runat="server" class="col-12 col-md-12 col-lg-12" Font-Bold="True" Visible="false"></asp:Label>
-
-                        </div>
-                        <div id="divProductos" runat="server">
+                    <div id="divConatiner" class="container-fluid  bg-light border col-md-10 col-lg-10 col-sm-10 col-xl-10 p-3" runat="server" visible="false">
+                    <div class="row text-center">
+                        <div id="divNuevoPedido" class="form-control col-md-4 col-lg-4 col-sm-4 col-xl-4" visible="false" runat="server">
                             <div class="form-row mt-2">
-                                <asp:Label ID="Label6" runat="server" Text="Seleccionar producto" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True"></asp:Label>
-                                <asp:DropDownList ID="ListProductos1" runat="server" AutoPostBack="True" class="form-select col-6 col-md-6 col-lg-6 col-sm-6" OnSelectedIndexChanged="ListProductos1_SelectedIndexChanged"></asp:DropDownList>
-                                 <asp:Label ID="Label4" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Precio producto:"></asp:Label>
-                                <asp:Label ID="lblPrecioproducto" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:Label>
+                                <asp:RadioButton ID="chkPedidoProducto" runat="server" OnCheckedChanged="rdbPedidoProductos_CheckedChanged" CssClass="mt-2 " GroupName="Radiosbtn2" AutoPostBack="True" Font-Bold="True" />
+                                <asp:Label ID="Label1" runat="server" CssClass="col-form-label font-weight-bold" Text="Pedido de productos"></asp:Label>
+                                <asp:RadioButton ID="chkPedidoImagen" CssClass="align-items-baseline mt-2" runat="server" OnCheckedChanged="rdbPedidoImagen_CheckedChanged"  GroupName="Radiosbtn2" AutoPostBack="True" Font-Bold="True" />
+                                <asp:Label ID="Label2" runat="server" CssClass="col-form-label font-weight-bold" Text="Impresión de imagen"></asp:Label>
+                                <asp:Label ID="Label5" runat="server" Text="Descripción:" CssClass="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 font-weight-bold text-left mt-2" Font-Bold="True"></asp:Label>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12">
+                                <textarea id="txtDescripcion" placeholder="Ingrese descripción" runat="server" name="S1" class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 mt-2" rows="2"></textarea>
+                                </div>
+                                <asp:Label ID="Label9" runat="server" Text="Envío a domicilo" CssClass="col-md-5 col-lg-5 col-sm-5 col-xs-5 col-xl-5 font-weight-bold text-left mt-2" Font-Bold="True"></asp:Label>
+                                <asp:RadioButton ID="RadioBtnNo" runat="server"  GroupName="Radiosbtn" OnCheckedChanged="RadioBtnNo_CheckedChanged" class="mt-2 mr-3" Text="No" AutoPostBack="True" Font-Bold="True" />
+                                <asp:RadioButton ID="RadioBtnSi" runat="server" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnSi_CheckedChanged" class="mt-2" Text="Si" AutoPostBack="True" Font-Bold="True" />
+                                <asp:TextBox ID="txtDireccion" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-1" placeholder="Ingrese Dirección" Visible="False"></asp:TextBox>
+                                <asp:Label ID="Label3" runat="server" Text="Horario preferido para la entrega:" CssClass="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 font-weight-bold text-left mt-2" Visible="false"></asp:Label>
+                                <asp:RadioButton ID="RadioBtnTarde" runat="server" Checked="True" GroupName="RadiosbtnE" Text="Entre 14 a 16 PM" AutoPostBack="True" CssClass="mt-2 mr-2" Visible="false" />
+                                <asp:RadioButton ID="RadioBtnNoche" runat="server" GroupName="RadiosbtnE" Text="Después de las 20 PM" AutoPostBack="True" CssClass="mt-2" Visible="false" />
+                                <asp:Label ID="lblFechaEstimadaEntrega" runat="server" class="col-12 col-md-12 col-lg-12" Font-Bold="True" Visible="false"></asp:Label>
                             </div>
-                             <asp:Label ID="Label8" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Cantidad:"></asp:Label>
-                            <asp:TextBox ID="txtCantidadProducto" runat="server" placeholder="Ingrese cantidad" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" AutoPostBack="True" OnTextChanged="txtCantidadProducto_TextChanged"></asp:TextBox>
-                             <asp:Label ID="Label10" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Sub-total:"></asp:Label>
-                            <asp:TextBox ID="txtSubtotal" runat="server" placeholder="Subtotal" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Enabled="False"></asp:TextBox>
-                            <asp:Label ID="Label11" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Total:"></asp:Label>
-                            <asp:TextBox ID="txtPrecioPedido" runat="server" placeholder="Total" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Enabled="False"></asp:TextBox>
+                        </div>
+                        <div id="divProductos" class="form-control col-md-4 col-lg-4 col-sm-4 col-xl-4" runat="server">
+                            <div class="form-row mt-2">
+                                <asp:Label ID="Label6" runat="server" Text="Seleccionar producto" CssClass="col-form-label font-weight-bold"></asp:Label>
+                                <asp:DropDownList ID="ListProductos1" runat="server" AutoPostBack="True" class="form-select col-12 col-md-12 col-lg-12 col-sm-12" OnSelectedIndexChanged="ListProductos1_SelectedIndexChanged"></asp:DropDownList>
+                                <asp:Label ID="Label4" runat="server" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2" Text="Precio producto:"></asp:Label>
+                                <asp:Label ID="lblPrecioproducto" runat="server" CssClass="border border-primary font-weight-bold col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2"></asp:Label>
+                                <asp:Label ID="Label8" runat="server" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2" Text="Cantidad:"></asp:Label>
+                                <asp:TextBox ID="txtCantidadProducto" runat="server" placeholder="Ingrese cantidad" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2" AutoPostBack="True" TextMode="Number" OnTextChanged="txtCantidadProducto_TextChanged"></asp:TextBox>
+                                <asp:Label ID="Label10" runat="server" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2" Text="Sub-total:"></asp:Label>
+                                <asp:TextBox ID="txtSubtotal" runat="server" placeholder="Subtotal" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2" Enabled="False"></asp:TextBox>
+                                <asp:Label ID="Label11" runat="server"   CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2" Text="Total:"></asp:Label>
+                                <asp:TextBox ID="txtPrecioPedido" runat="server" placeholder="Total" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2" Enabled="False"></asp:TextBox>
+                            </div>
                             <asp:Button ID="btnAgregarTodo" runat="server" OnClick="btnAgregarTodo_Click" Text="Agregar" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Font-Bold="True" Enabled="False" />
-                            <div class="table table-bordered mt-3">
+                        </div>
+                            <div id="GrillaProductos" runat="server"  class="table table-bordered form-control col-md-4 col-lg-4 col-sm-4 col-xl-4">
                                 <asp:Label ID="Label7" runat="server" class="col-6 col-md-6 col-lg-6" Font-Bold="True" Text="Productos seleccionados"></asp:Label>
                                 <asp:GridView ID="GridViewProductosNuevo" EmptyDataText="No hay registros." OnRowEditing="GridViewProductosNuevo_RowEditing"
                                     AllowPaging="True" runat="server" OnRowUpdating="GridViewProductosNuevo_RowUpdated"
                                     OnRowCancelingEdit="GridViewProductosNuevo_RowCancelingEdit" class="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12" OnRowDeleting="GridViewProductosNuevo_OnRowDeleting" AutoGenerateColumns="False">
                                     <Columns>
-                                        <asp:TemplateField HeaderText="IdProducto" ItemStyle-Width="150" Visible="false">
+                                        <asp:TemplateField HeaderText="IdProducto"  Visible="false">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="150">
+                                        <asp:TemplateField HeaderText="Nombre">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("ProductoNombre") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="150">
+                                        <asp:TemplateField HeaderText="Cantidad" >
                                             <ItemTemplate>
                                                 <asp:Label ID="lblCantidad" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
                                             </ItemTemplate>
@@ -131,15 +134,15 @@
                                                 <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' Width="140"></asp:TextBox>
                                             </EditItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Acción">
+                                        <asp:TemplateField HeaderText="Acción" ItemStyle-Width="150">
                                         <ItemTemplate>
-                                          <asp:LinkButton ID="lbtnEdit" runat="server" class="btn btn-outline-danger text-center" CausesValidation="False"
-                                            CommandName="Edit" Text="Editar" ></asp:LinkButton>
-                                            <asp:Button ID="btnBorrar" runat="server" CommandName="Delete" class="btn btn-outline-danger text-center" Text="Borrar"
-                                            OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
+                                          <asp:LinkButton ID="lbtnEdit" runat="server" class="btn btn-outline-success text-center col-xl-4 col-md-4 col-xs-4 col-lg-4" CausesValidation="False"
+                                            CommandName="Edit"> <i class="fa fa-edit"></i></asp:LinkButton>
+                                            <asp:LinkButton ID="btnBorrar" runat="server" class="btn btn-outline-danger text-center col-xl-4 col-md-4 col-xs-4 col-lg-4" CausesValidation="False"
+                                            OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');" CommandName="Delete"><i class="fa fa-trash"></i></asp:LinkButton>
                                         </ItemTemplate>
                                         <EditItemTemplate>
-                                          <asp:LinkButton ID="lbtnUpdate" runat="server" class="btn btn-outline-danger text-center" CausesValidation="True"
+                                          <asp:LinkButton ID="lbtnUpdate" runat="server" class="btn btn-outline-success text-center" CausesValidation="True"
                                             CommandName="Update" Text="Modificar"></asp:LinkButton>
                                           &nbsp;<asp:LinkButton ID="lbtnCancel"  class="btn btn-outline-danger text-center" runat="server" CausesValidation="False"
                                             CommandName="Cancel" Text="Cancelar"></asp:LinkButton>
@@ -147,10 +150,8 @@
                                       </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
-                                
                             </div>
-                        </div>
-                        <div runat="server" id="divPedidoImagen" visible="false">
+                        <div runat="server" id="divPedidoImagen" class="form-control col-md-4 col-lg-4 col-sm-4 col-xl-4" visible="false">
                             <asp:FileUpload ID="fuImagenes" class="custom-file bg-light mt-3 bg-light border border-dark" runat="server" AllowMultiple="false" />
                             <asp:Button ID="btnUpload" class="btn btn-outline-danger  col-md-12 col-lg-12 col-sm-12 col-12 mt-3" runat="server" OnClick="btnUpload_Click" Text="Subir" />
 
@@ -161,9 +162,11 @@
                                 </Columns>
                             </asp:GridView>
                         </div>
-                        <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Generar pedido" Font-Bold="True" Visible="false" />
-                        <asp:Button ID="btnActualizar" runat="server" OnClick="btnActualizar_Click" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Text="Actualizar" Font-Bold="True" Visible="false" />
-                        <asp:Button ID="btnCerrar" runat="server" CssClass="btn btn-outline-danger offset-3 col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 mt-3" OnClick="btnCerrar_Click" Text="Listado de pedidos" Visible="false" />
+                        </div>
+
+                        <asp:Button ID="btnNuevoPedido" runat="server" OnClick="btnNuevoPedido_Click" CssClass="btn btn-outline-info offset-4 col-md-4 col-lg-4 col-sm-4 col-md-4 col-xl-4 mt-3" Text="Generar pedido" Font-Bold="True" Visible="false" />
+                        <asp:Button ID="btnActualizar" runat="server" OnClick="btnActualizar_Click" CssClass="btn btn-outline-success offset-4 col-md-4 col-lg-4 col-sm-4 col-md-4 col-xl-4 mt-3" Text="Actualizar" Font-Bold="True" Visible="false" />
+                        <asp:Button ID="btnCerrar" runat="server" CssClass="btn btn-outline-danger offset-4 col-md-4 col-lg-4 col-sm-4 col-md-4 col-xl-4 mt-3" OnClick="btnCerrar_Click" Text="Listado de pedidos" Visible="false" />
                         <asp:Timer ID="TimerMensajes" runat="server" Enabled="False" Interval="3000" OnTick="TimerMensajes_Tick" />
                     </div>
                 </form>

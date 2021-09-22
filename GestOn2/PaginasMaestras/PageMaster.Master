@@ -30,7 +30,8 @@
     <form id="form1" runat="server">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-primary" runat="server">
-            <asp:HyperLink ID="formInicio" class="navbar-brand" NavigateUrl="~/Inicio.aspx" runat="server">GestOn</asp:HyperLink>
+            <asp:HyperLink ID="formInicio" class="navbar-brand" NavigateUrl="~/Inicio.aspx" runat="server">
+                <i class="fa fa-home fa-2x"></i></asp:HyperLink>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -60,13 +61,17 @@
                         </div>
                     </li>
                 </ul>
-                <asp:HyperLink ID="lnkLogin" class="dropdown-item" NavigateUrl="~/Login.aspx" runat="server">Iniciar sesión</asp:HyperLink>
-                <asp:HyperLink ID="lnkRegistro" class="dropdown-item" NavigateUrl="~/Registrarse.aspx" runat="server">Registrarse</asp:HyperLink>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                         <asp:HyperLink ID="lnkLogin" class="btn-link text-dark" NavigateUrl="~/Login.aspx" runat="server">
+                            <i class="fa fa-user-plus fa-1x"></i> Iniciar sesión / Registrarse
+                         </asp:HyperLink></li>
+                    </ul>
                 <ul class="nav navbar-nav navbar-right">
                    
                     <li class="nav-item dropdown" runat="server" id="liConfig">
                         <a class="btn btn-link"  id="my_navbarDropdown2" runat="server" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-cog fa-1x"></i>
+                            <i class="fa fa-cog fa-2x"></i>
                         </a>
                         <div runat="server" class="dropdown-menu" aria-labelledby="my_navbarDropdown2" id="Div2">
                             <asp:HyperLink ID="hlAdministrarCuenta" class="dropdown-item" NavigateUrl="~/AdministrarCuenta.aspx" runat="server">Administrar cuenta</asp:HyperLink>
@@ -79,7 +84,7 @@
                      <li class="nav-item">
                          <li class="nav-item dropdown" runat="server" id="linotificacion">
                         <a class="btn btn-link"  id="A1" runat="server" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bell fa-1x"></i>
+                            <i class="fa fa-bell fa-2x"></i>
                         </a>
                             <div runat="server" class="dropdown-menu" aria-labelledby="my_navbarDropdown2" id="Div3">
                         </div>

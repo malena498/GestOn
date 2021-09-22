@@ -175,15 +175,6 @@ namespace GestOn2.PaginasMaestras {
         protected global::System.Web.UI.WebControls.HyperLink lnkLogin;
         
         /// <summary>
-        /// Control lnkRegistro.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkRegistro;
-        
-        /// <summary>
         /// Control liConfig.
         /// </summary>
         /// <remarks>
