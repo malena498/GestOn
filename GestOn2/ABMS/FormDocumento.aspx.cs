@@ -125,13 +125,13 @@ namespace GestOn2.ABMS
                         int id = Sistema.GetInstancia().GuardarDocumento(doc);
                         if (id > 0)
                         {
-                            //Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
-                            //Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
+                            Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
+                            Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
                             Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
                             lblMensaje.Visible = false;
                             lblMensaje.Text = "";
                             bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "NUEVO", id);
-                            //EnviarMailNuevoDoc(c.Valor, c2.Valor, u);
+                            EnviarMailNuevoDoc(c.Valor, c2.Valor, u);
                             VaciarCampos();
                             llenarGrillaDocumentos();
                             lblMensaje.Visible = true;
@@ -589,7 +589,7 @@ namespace GestOn2.ABMS
             correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
             correo.To.Add(mailDestino); //Correo destino?
             correo.Subject = "Se modificado un documento."; //Asunto
-            correo.Body = "El usuario:" + usuario.UserNombre + "ha realizado cambio0s en el documento " + doc.NombreDocumento; //Mensaje del correo
+            correo.Body = "El usuario:" + usuario.UserNombre + "ha realizado cambios en el documento " + doc.NombreDocumento; //Mensaje del correo
             correo.IsBodyHtml = true;
             correo.Priority = MailPriority.Normal;
             SmtpClient smtp = new SmtpClient();

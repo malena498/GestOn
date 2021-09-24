@@ -61,6 +61,7 @@
     <Compile Include="TestingPersistenciaConfiguraciones.cs" />
     <Compile Include="TestingPersistenciaPedido.cs" />
     <Compile Include="TestingPersistenciaProductos.cs" />
+    <Compile Include="TestPersistenciaNotificaciones.cs" />
     <Compile Include="TestPersistenciaOfertas.cs" />
     <Compile Include="TestPersistenciaUsuarios.cs" />
     <Compile Include="TestPersistenciaCategoriaProducto.cs" />
