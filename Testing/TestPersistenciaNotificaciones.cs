@@ -19,7 +19,6 @@ namespace Testing
             int idUsuario = 11; 
             string NombreUsuario = "Lucia Rodriguez";
             string AccionUsuario = "NUEVO";
-         
             bool ex = BibliotecaClases.Sistema.GetInstancia().GuardarNotificacionDocumento(idUsuario, NombreUsuario, AccionUsuario, idDocumento);
             if (ex)
                 result = true;
