@@ -37,6 +37,56 @@ namespace GestOn2.ABMS
                     ListProductos1.DataBind();
                     Producto p = Sistema.GetInstancia().BuscarProducto(int.Parse(ListProductos1.SelectedValue));
                     lblPrecioproducto.Text =p.ProductoPrecioVenta.ToString();
+                    RadioBtnSi.Checked = true;
+                    if (RadioBtnSi.Checked)
+                    {
+                        txtDireccion.Enabled = true;
+                        txtDireccion.Visible = true;
+                        DateTime ahora = DateTime.Now;
+                        if (!(ahora.Hour == 1 && ahora.Minute >= 30 && ahora.Hour > 8))
+                        {
+                            RadioBtnTarde.Visible = true;
+                        }
+                        Label3.Visible = true;
+                        RadioBtnNoche.Visible = true;
+                        Configuracion conf = Sistema.GetInstancia().BuscarConfiguracion("CostoEnvio");
+                        decimal precio;
+                        if (chkPedidoImagen.Checked)
+                        {
+                            precio = decimal.Parse(conf.Valor);
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrEmpty(txtPrecioPedido.Text))
+                            {
+                                precio = decimal.Parse(txtPrecioPedido.Text) + int.Parse(conf.Valor);
+
+                            }
+                            else
+                            {
+                                precio = int.Parse(conf.Valor);
+                            }
+                        }
+
+
+                        txtPrecioPedido.Text = precio.ToString();
+                    }
+                    else
+                    {
+                        txtDireccion.Enabled = false;
+                        txtDireccion.Text = "";
+                        txtDireccion.Visible = false;
+                        RadioBtnTarde.Visible = false;
+                        Label3.Visible = false;
+                        RadioBtnNoche.Visible = false;
+                        decimal precio = 0;
+                        if (!String.IsNullOrEmpty(txtPrecioPedido.Text))
+                        {
+                            Configuracion conf = Sistema.GetInstancia().BuscarConfiguracion("CostoEnvio");
+                            precio = decimal.Parse(txtPrecioPedido.Text) - decimal.Parse(conf.Valor);
+                        }
+                        txtPrecioPedido.Text = precio.ToString();
+                    }
                     
                     llenarGrillaPedidos();
                 }
@@ -187,13 +237,29 @@ namespace GestOn2.ABMS
                             btnCerrar.Enabled = false;
                             btnNuevoPedido.Visible = false;
                             //Elimino campos luego que se inserto con éxito
+                           
+                            Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
+                            Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
+
+                            bool mail = EnviarMailNuevoPedido(c.Valor, c2.Valor, u, pe);
+                            if (mail)
+                            {
+                                lblInformativo.Visible = false;
+                                lblInformativo.Text = "EXITO";
+                            }
+                            else
+                            {
+                                lblInformativo.Visible = false;
+                                lblInformativo.Text = "ERROR";
+                            }
                             VaciarCampos();
+                            lnkNuevoPedido.Visible = true;
                             lblPrecioproducto.Visible = true;
                             divProductos.Visible = false;
                             GridViewProductosNuevo.Visible = false;
                             btnCerrar.Enabled = true;
                             DivGridPedido.Visible = true;
-
+                            
                         }
                         else
                         {
@@ -558,12 +624,28 @@ namespace GestOn2.ABMS
                 Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(Session["IdUsuario"].ToString()));
                 GridViewRow row = GridViewPedidos.Rows[e.RowIndex];
                 int Id = Convert.ToInt32((row.FindControl("IdPedido") as Label).Text);
+                Pedido p = Sistema.GetInstancia().BuscarPedido(Id);
                 ActualizarStockBorrarPedido(Id);
                 bool exito = Sistema.GetInstancia().CancelarPedido(Id);
+              
+                bool ex = Sistema.GetInstancia().GuardarNotificacionPedido(u.UserId, u.UserNombre, "CANCELACION");
+                
+                Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
+                Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
+                bool mail = EnviarMailCancelarPedido(c.Valor, c2.Valor, u, p);
+                if (mail)
+                {
+                    lblInformativo.Visible = false;
+                    lblInformativo.Text = "EXITO";
+                }
+                else
+                {
+                    lblInformativo.Visible = false;
+                    lblInformativo.Text = "ERROR";
+                }
                 lblInformativo.Text = "Se elimino con éxito";
                 GridViewPedidos.EditIndex = -1;
                 llenarGrillaPedidos();
-                bool ex = Sistema.GetInstancia().GuardarNotificacionPedido(u.UserId, u.UserNombre, "CANCELACION");
             }
             catch (Exception ex)
             {
@@ -608,6 +690,7 @@ namespace GestOn2.ABMS
             GridViewProductosNuevo.EditIndex = -1;
             GridViewProductosNuevo.DataSource = dt;
             GridViewProductosNuevo.DataBind();
+
             
         }
         protected void GridViewProductosNuevo_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -745,6 +828,21 @@ namespace GestOn2.ABMS
                     lblInformativo.Text = "Se actualizo con éxito";
                     Usuario u = Sistema.GetInstancia().BuscarUsuario(p.UserId);
                     bool ex = Sistema.GetInstancia().GuardarNotificacionPedido(p.UserId, u.UserNombre,"MODIFICACION");
+                   
+                    Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
+                    Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
+
+                    bool mail =  EnviarMailModificarPedido(c.Valor, c2.Valor, u,p);
+                    if (mail)
+                    {
+                        lblInformativo.Visible = false;
+                        lblInformativo.Text = "EXITO";
+                    }
+                    else
+                    {
+                        lblInformativo.Visible = false;
+                        lblInformativo.Text = "ERROR";
+                    }
                     llenarGrillaProductosNuevo();
                     divNuevoPedido.Visible = false;
                     divProductos.Visible = false;
@@ -1017,28 +1115,63 @@ namespace GestOn2.ABMS
         }
 
         /* Envío de Email utilizado para notificar el ingreso de un pedido */
-        protected void EnviarMailNuevoPedido(String mailEmpresa, String mailDestino, Usuario u)
+        protected bool EnviarMailNuevoPedido(String mailEmpresa, String mailDestino, Usuario u, Pedido p)
         {
-            MailMessage correo = new MailMessage();
-            correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
-            correo.To.Add(mailDestino); //Correo destino?
-            correo.Subject = "Se ha ingresado un nuevo pedido."; //Asunto
-            correo.Body = "E4l usuario: " +u.UserNombre + " ha realizado un nuevo pedido."; //Mensaje del correo
-            correo.IsBodyHtml = true;
-            correo.Priority = MailPriority.Normal;
-            SmtpClient smtp = new SmtpClient();
-            smtp.UseDefaultCredentials = false;
-            smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
-            smtp.Port = 25; //Puerto de salida
-            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "05296221mg");//Cuenta de correo
-            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-            smtp.EnableSsl = true;//True si el servidor de correo permite ssl
-            smtp.Send(correo);
+            try
+            {
+                Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("Contraseñamail");
+                String envio = "";
+                string mensaje = "";
+                if (p.esEnvio)
+                {
+                    envio = "Si";
+                    mensaje = "El usuario: " + u.UserNombre + " ha realizado un nuevo pedido. Datos del pedido: " + p.Descripcion + ". Es un envio: " + envio + ". Hora de entrega preferida: " + p.HoraEntrega;
+                }
+                else
+                {
+                    envio = "No";
+                    mensaje = "El usuario: " + u.UserNombre + " ha realizado un nuevo pedido. Datos del pedido: " + p.Descripcion + ". Es un envio: " + envio;
+                }
+                MailMessage correo = new MailMessage();
+                correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
+                correo.To.Add(mailDestino); //Correo destino?
+                correo.Subject = "Se ha ingresado un nuevo pedido."; //Asunto
+                correo.Body = mensaje; //Mensaje del correo
+                correo.IsBodyHtml = true;
+                correo.Priority = MailPriority.Normal;
+                SmtpClient smtp = new SmtpClient();
+                smtp.UseDefaultCredentials = false;
+                smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
+                smtp.Port = 25; //Puerto de salida
+                smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, c.Valor);//Cuenta de correo
+                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+                smtp.EnableSsl = true;//True si el servidor de correo permite ssl
+                try
+                {
+                    smtp.Send(correo);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("No se ha podido enviar el email", ex.InnerException);
+                }
+                finally
+                {
+                    smtp.Dispose();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         /* Envío de Email utilizado para notificar la modificación de un pedido */
-        protected void EnviarMailModificarPedido(String mailEmpresa, String mailDestino, Usuario u, Pedido p)
+        protected bool EnviarMailModificarPedido(String mailEmpresa, String mailDestino, Usuario u, Pedido p)
         {
+             try
+            {
+            Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("Contraseñamail");
             MailMessage correo = new MailMessage();
             correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
             correo.To.Add(mailDestino); //Correo destino?
@@ -1050,31 +1183,46 @@ namespace GestOn2.ABMS
             smtp.UseDefaultCredentials = false;
             smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
             smtp.Port = 25; //Puerto de salida
-            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "");//Cuenta de correo
+            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, c.Valor);//Cuenta de correo
             ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
             smtp.EnableSsl = true;//True si el servidor de correo permite ssl
             smtp.Send(correo);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         /* Envío de Email utilizado para notificar la modificación de un pedido */
-        protected void EnviarMailCancelarPedido(String mailEmpresa, String mailDestino, Usuario u, Pedido p)
+        protected bool EnviarMailCancelarPedido(String mailEmpresa, String mailDestino, Usuario u, Pedido p)
         {
-            MailMessage correo = new MailMessage();
-            correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
-            correo.To.Add(mailDestino); //Correo destino?
-            correo.Subject = "Restablecer contraseña."; //Asunto
-            correo.Body = "El usuario: " + u.UserNombre + " ha cancelado el pedido" + p.Descripcion; //Mensaje del correo
-            correo.IsBodyHtml = true;
-            correo.Priority = MailPriority.Normal;
-            SmtpClient smtp = new SmtpClient();
-            smtp.UseDefaultCredentials = false;
-            smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
-            smtp.Port = 25; //Puerto de salida
-            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "");//Cuenta de correo
-            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-            smtp.EnableSsl = true;//True si el servidor de correo permite ssl
-            smtp.Send(correo);
+            try
+            {
+                Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("Contraseñamail");
+                MailMessage correo = new MailMessage();
+                correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
+                correo.To.Add(mailDestino); //Correo destino?
+                correo.Subject = "Restablecer contraseña."; //Asunto
+                correo.Body = "El usuario: " + u.UserNombre + " ha cancelado el pedido" + p.Descripcion; //Mensaje del correo
+                correo.IsBodyHtml = true;
+                correo.Priority = MailPriority.Normal;
+                SmtpClient smtp = new SmtpClient();
+                smtp.UseDefaultCredentials = false;
+                smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
+                smtp.Port = 25; //Puerto de salida
+                smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, c.Valor);//Cuenta de correo
+                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+                smtp.EnableSsl = true;//True si el servidor de correo permite ssl
+                smtp.Send(correo);
+                return true;
         }
+            catch (Exception ex)
+            {
+                return false;
+            }
+}
     }
 }
 

@@ -74,11 +74,23 @@ namespace GestOn2.ABMS
                                 bool exito = Sistema.GetInstancia().GuardarOferta(o, imagenes);
                                 if (exito)
                                 {
-                                    DivMensajeFormulario.Visible = true;
-                                    lblResultado.Text = "Oferta ingresada con éxito";
+                                    
                                     List<Usuario> u = Sistema.GetInstancia().ListadoUsuariosOfertas();
                                     Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
-                                    EnviarMail(c.Valor, u, imagenes, o);
+                                   
+                                    bool mail = EnviarMail(c.Valor, u, imagenes, o);
+                                    if (mail)
+                                    {
+                                        lblResultado.Visible = false;
+                                        lblResultado.Text = "EXITO";
+                                    }
+                                    else
+                                    {
+                                        lblResultado.Visible = false;
+                                        lblResultado.Text = "ERROR";
+                                    }
+                                    DivMensajeFormulario.Visible = true;
+                                    lblResultado.Text = "Oferta ingresada con éxito";
                                     llenarGrilla();
                                     limpiar();
                                 }
@@ -104,8 +116,7 @@ namespace GestOn2.ABMS
             }
             catch (Exception ex)
             {
-                DivMensajeFormulario.Visible = true;
-                lblResultado.Text = "No se logro guardar";
+                
             }
         }
 
@@ -467,41 +478,50 @@ namespace GestOn2.ABMS
         }
 
         /* Envío de Email utilizado para notificar el ingreso de una oferta. */
-        protected void EnviarMail(String mailEmpresa, List<Usuario> usuariosDestino, List<string> archivos, Oferta o)
+        protected bool EnviarMail(String mailEmpresa, List<Usuario> usuariosDestino, List<string> archivos, Oferta o)
         {
-            MailMessage mail = new MailMessage();
-            mail.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);
-            if (usuariosDestino != null)
+            try
             {
-                //agregado de archivo
-                foreach (Usuario u in usuariosDestino)
-                {//Correo de salida
-                    mail.To.Add(u.UserEmail); //Correo destino?
-                }
-            }
-            mail.IsBodyHtml = true;
-            mail.Subject = "¡La oferta " +o.OfertaTitulo+ " está disponible!"; //Asunto
-            if (archivos != null)
-            {
-                //agregado de archivo
-                foreach (string archivo in archivos)
+                Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("Contraseñamail");
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);
+                if (usuariosDestino != null)
                 {
-                    //comprobamos si existe el archivo y lo agregamos a los adjuntos
-                    if (System.IO.File.Exists(@archivo))
-                        mail.Attachments.Add(new Attachment(@archivo));
+                    //agregado de archivo
+                    foreach (Usuario u in usuariosDestino)
+                    {//Correo de salida
+                        mail.To.Add(u.UserEmail); //Correo destino?
+                    }
                 }
+                mail.IsBodyHtml = true;
+                mail.Subject = "¡La oferta " + o.OfertaTitulo + " está disponible!"; //Asunto
+                if (archivos != null)
+                {
+                    //agregado de archivo
+                    foreach (string archivo in archivos)
+                    {
+                        //comprobamos si existe el archivo y lo agregamos a los adjuntos
+                        if (System.IO.File.Exists(@archivo))
+                            mail.Attachments.Add(new Attachment(@archivo));
+                    }
+                }
+                mail.Body = "Oferta valida desde el día " + o.OfertaFechaDesde.ToShortDateString() + " hasta el día " + o.OfertaFechaHasta.ToShortDateString() + ". <br> Por más información y más ofertas ingrese a: https://bertinatpapeleria.com/ <br> Bertinat Papeleria."; //Mensaje del correomas ofertas en BertinatPapelería
+                mail.IsBodyHtml = true;
+                mail.Priority = MailPriority.Normal;
+                SmtpClient smtp = new SmtpClient();
+                smtp.UseDefaultCredentials = false;
+                smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
+                smtp.Port = 25; //Puerto de salida
+                smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, c.Valor);//Cuenta de correo
+                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+                smtp.EnableSsl = true;//True si el servidor de correo permite ssl
+                smtp.Send(mail);
+                return true;
             }
-            mail.Body = "Oferta valida desde el día " + o.OfertaFechaDesde.ToShortDateString()+" hasta el día "+o.OfertaFechaHasta.ToShortDateString()+ ". <br> Por más información y más ofertas ingrese a: https://bertinatpapeleria.com/ <br> Bertinat Papeleria."; //Mensaje del correomas ofertas en BertinatPapelería
-            mail.IsBodyHtml = true;
-            mail.Priority = MailPriority.Normal;
-            SmtpClient smtp = new SmtpClient();
-            smtp.UseDefaultCredentials = false;
-            smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
-            smtp.Port = 25; //Puerto de salida
-            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "");//Cuenta de correo
-            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-            smtp.EnableSsl = true;//True si el servidor de correo permite ssl
-            smtp.Send(mail);
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
        
     }

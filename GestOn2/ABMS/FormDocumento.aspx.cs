@@ -128,14 +128,24 @@ namespace GestOn2.ABMS
                             Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
                             Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
                             Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
-                            lblMensaje.Visible = false;
-                            lblMensaje.Text = "";
+                           
                             bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "NUEVO", id);
-                            EnviarMailNuevoDoc(c.Valor, c2.Valor, u);
+                           bool mail= EnviarMailNuevoDoc(c.Valor, c2.Valor, u);
+                            if (mail)
+                            {
+                                lblMensaje.Visible = false;
+                                lblMensaje.Text = "EXITO";
+                            }
+                            else
+                            {
+                                lblMensaje.Visible = false;
+                                lblMensaje.Text = "ERROR";
+                            }
                             VaciarCampos();
                             llenarGrillaDocumentos();
                             lblMensaje.Visible = true;
                             lblMensaje.Text = "Guardado con exito";
+                           
                         }
                         else
                         {
@@ -147,8 +157,8 @@ namespace GestOn2.ABMS
             }
             catch (Exception ex)
             {
-                lblMensaje.Visible = true;
-                lblMensaje.Text = "ERROR EN LA CARGA DEL ARCHIVO";
+                //lblMensaje.Visible = true;
+                //lblMensaje.Text = "ERROR EN LA CARGA DEL ARCHIVO";
             }
         }
 
@@ -296,15 +306,25 @@ namespace GestOn2.ABMS
                     bool exito = Sistema.GetInstancia().ModificarDocumento(doc);
                     if (exito)
                     {
-                        lblResultado.Visible = true;
-                        lblResultado.Text = "Modificado con éxito";
-                        GridViewDocumentos.EditIndex = -1;
                         Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
                         Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
                         string user = Session["IdUsuario"].ToString();
                         Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
                         bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user), u.UserNombre, "MODIFICACION", Id);
-                        EnviarMailModificarDoc(c.Valor, c2.Valor, u, doc);
+                        bool mail = EnviarMailModificarDoc(c.Valor, c2.Valor, u, doc);
+                        if (mail)
+                        {
+                            lblMensaje.Visible = false;
+                            lblMensaje.Text = "EXITO";
+                        }
+                        else
+                        {
+                            lblMensaje.Visible = false;
+                            lblMensaje.Text = "ERROR";
+                        }
+                        lblResultado.Visible = true;
+                        lblResultado.Text = "Modificado con éxito";
+                        GridViewDocumentos.EditIndex = -1;
                         llenarGrillaDocumentos();
                     }
                 }
@@ -326,17 +346,33 @@ namespace GestOn2.ABMS
         {
             GridViewRow row = GridViewDocumentos.Rows[e.RowIndex];
             int Id = Convert.ToInt32(GridViewDocumentos.DataKeys[e.RowIndex].Values[0]);
+            Documento d = Sistema.GetInstancia().BuscarDocumento(Id);
             bool exito = Sistema.GetInstancia().EliminarDocumento(Id);
             string user = Session["IdUsuario"].ToString();
             Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
-
+            
             if (exito)
             {
-                lblResultado.Visible = true;
-                lblResultado.Text = "Se elimino con éxito";
-                GridViewDocumentos.EditIndex = -1;
+               
                 bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user), u.UserNombre, "CANCELACION", Id);
+                Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
+                Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
+                bool mail = EnviarMailCancelarDoc(c.Valor, c2.Valor, u,d );
+                if (mail)
+                {
+                    lblResultado.Visible = false;
+                    lblResultado.Text = "EXITO";
+                }
+                else
+                {
+                    lblResultado.Visible = false;
+                    lblResultado.Text = "ERROR";
+                }
+                lblResultado.Text = "Se elimino con éxito";
+                lblResultado.Visible = true;
+                GridViewDocumentos.EditIndex = -1;
                 llenarGrillaDocumentos();
+               
             }
         }
 
@@ -563,28 +599,40 @@ namespace GestOn2.ABMS
         }
 
         /* Envío de Email utilizado para notificar el ingreso de un documento */
-        protected void EnviarMailNuevoDoc(String mailEmpresa, String mailDestino, Usuario usuario)
+        protected bool EnviarMailNuevoDoc(String mailEmpresa, String mailDestino, Usuario usuario)
         {
-            MailMessage correo = new MailMessage();
-            correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
-            correo.To.Add(mailDestino); //Correo destino?
-            correo.Subject = "Se ha ingresado un nuevo documento."; //Asunto
-            correo.Body = "El usuario:" + usuario.UserNombre + "ha realizado el ingreso de un nuevo documento. "; //Mensaje del correo
-            correo.IsBodyHtml = true;
-            correo.Priority = MailPriority.Normal;
-            SmtpClient smtp = new SmtpClient();
-            smtp.UseDefaultCredentials = false;
-            smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
-            smtp.Port = 25; //Puerto de salida
-            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "");//Cuenta de correo
-            ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-            smtp.EnableSsl = true;//True si el servidor de correo permite ssl
-            smtp.Send(correo);
+            try
+            {
+                Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("Contraseñamail");
+                MailMessage correo = new MailMessage();
+                correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
+                correo.To.Add(mailDestino); //Correo destino?
+                correo.Subject = "Se ha ingresado un nuevo documento."; //Asunto
+                correo.Body = "El usuario:" + usuario.UserNombre + "ha realizado el ingreso de un nuevo documento. "; //Mensaje del correo
+                correo.IsBodyHtml = true;
+                correo.Priority = MailPriority.Normal;
+                SmtpClient smtp = new SmtpClient();
+                smtp.UseDefaultCredentials = false;
+                smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
+                smtp.Port = 25; //Puerto de salida
+                smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, c.Valor);//Cuenta de correo
+                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+                smtp.EnableSsl = true;//True si el servidor de correo permite ssl
+                smtp.Send(correo);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         /* Envío de Email utilizado para notificar la modificación de un documento */
-        protected void EnviarMailModificarDoc(String mailEmpresa, String mailDestino, Usuario usuario, Documento doc)
+        protected bool EnviarMailModificarDoc(String mailEmpresa, String mailDestino, Usuario usuario, Documento doc)
         {
+            try
+            {
+                Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("Contraseñamail");
             MailMessage correo = new MailMessage();
             correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
             correo.To.Add(mailDestino); //Correo destino?
@@ -596,10 +644,44 @@ namespace GestOn2.ABMS
             smtp.UseDefaultCredentials = false;
             smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
             smtp.Port = 25; //Puerto de salida
-            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, "");//Cuenta de correo
+            smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa,c.Valor);//Cuenta de correo
             ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
             smtp.EnableSsl = true;//True si el servidor de correo permite ssl
             smtp.Send(correo);
+            return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+}
+
+        protected bool EnviarMailCancelarDoc(String mailEmpresa, String mailDestino, Usuario usuario, Documento doc)
+        {
+            try
+            {
+                Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("Contraseñamail");
+                MailMessage correo = new MailMessage();
+                correo.From = new MailAddress(mailEmpresa, "Bertinat Papeleria", System.Text.Encoding.UTF8);//Correo de salida
+                correo.To.Add(mailDestino); //Correo destino?
+                correo.Subject = "Se modificado un documento."; //Asunto
+                correo.Body = "El usuario:" + usuario.UserNombre + "ha cancelado el documento " + doc.NombreDocumento; //Mensaje del correo
+                correo.IsBodyHtml = true;
+                correo.Priority = MailPriority.Normal;
+                SmtpClient smtp = new SmtpClient();
+                smtp.UseDefaultCredentials = false;
+                smtp.Host = "smtp.gmail.com"; //Host del servidor de correo
+                smtp.Port = 25; //Puerto de salida
+                smtp.Credentials = new System.Net.NetworkCredential(mailEmpresa, c.Valor);//Cuenta de correo
+                ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+                smtp.EnableSsl = true;//True si el servidor de correo permite ssl
+                smtp.Send(correo);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         protected void CargarCursos(int idUsuario)

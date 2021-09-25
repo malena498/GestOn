@@ -17,11 +17,10 @@ namespace BibliotecaClases
                 {
                     foreach (Configuracion c in configuraciones)
                     {
-                        Configuracion conf = baseDatos.Configuraciones.SingleOrDefault(cl => cl.IdConfiguracion == c.IdConfiguracion);
-                        conf.IdConfiguracion = c.IdConfiguracion;
-                        conf.Valor = c.Valor;
-                        baseDatos.SaveChanges();
+                        c.Activo = true;
+                        baseDatos.Configuraciones.Add(c);
                     }
+                    baseDatos.SaveChanges();
                 }
                 return true;
             }
@@ -36,8 +35,9 @@ namespace BibliotecaClases
             try
             {
                 using (var baseDatos = new Context())
-                {
-                    return baseDatos.Configuraciones.FirstOrDefault(prop =>prop.Activo == true && prop.Nombre == nombre);
+                { 
+                    Configuracion c= baseDatos.Configuraciones.FirstOrDefault(prop => prop.Nombre == nombre && prop.Activo == true);
+                    return c;
                 }
             }
             catch (Exception ex)
@@ -46,6 +46,45 @@ namespace BibliotecaClases
             }
 
 
+        }
+
+        public bool EliminarConfiguraciones()
+        {
+            try
+            {
+                
+                using (var baseDatos = new Context())
+                {
+                    List<Configuracion> c = baseDatos.Configuraciones.Where(ej => ej.Activo == true).ToList();
+                    foreach(Configuracion co in c)
+                    {
+                        baseDatos.Configuraciones.Remove(co);
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public List<Configuracion> ListadoConfiguraciones()
+        {
+            try
+            {
+
+                using (var baseDatos = new Context())
+                {
+                    List<Configuracion> c = baseDatos.Configuraciones.Where(ej => ej.Activo == true).ToList();
+                    return c;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

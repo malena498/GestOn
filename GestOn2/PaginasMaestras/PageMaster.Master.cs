@@ -47,6 +47,7 @@ namespace GestOn2.PaginasMaestras
                         Admin.Visible = false;
                         hlConfiguraciones.Visible = false;
                         hlAdministrarCuenta.Visible = true;
+                        linotificacion.Visible = false;
                     }
                     if (u.nivel.NombreNivel.Equals("Personal"))
                     {
@@ -66,10 +67,11 @@ namespace GestOn2.PaginasMaestras
                     else if (u.nivel.UserEstandar)
                     {
                         Admin.Visible = false;
-                        formDoc.Visible = false;
+                        formDoc.Visible = true;
                         Docente.Visible = true;
                         hlConfiguraciones.Visible = false;
                         hlAdministrarCuenta.Visible = true;
+                        linotificacion.Visible = false;
 
                     }
                     else if (u.nivel.UserAdmin)
