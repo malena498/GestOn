@@ -60,6 +60,7 @@ namespace BibliotecaClases
                     {
                         baseDatos.Configuraciones.Remove(co);
                     }
+                    baseDatos.SaveChanges();
                 }
                 return true;
             }
