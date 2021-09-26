@@ -105,7 +105,7 @@ namespace Testing
             DateTime fechaHasta = Convert.ToDateTime("12/05/2021");
             String nombre = "pack lapiceras";
 
-            ofertas = BibliotecaClases.Sistema.GetInstancia().BuscarOfertaFiltros(fechaDesde, fechaHasta, nombre);
+            ofertas = BibliotecaClases.Sistema.GetInstancia().BuscarOfertaFiltros(fechaDesde, fechaHasta);
 
             if (ofertas != null)
                 result = true;

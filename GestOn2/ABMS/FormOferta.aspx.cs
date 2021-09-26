@@ -95,6 +95,8 @@ namespace GestOn2.ABMS
                                     }
                                     DivMensajeFormulario.Visible = true;
                                     lblResultado.Text = "Oferta ingresada con éxito";
+                                    GridView1.DataSource = null;
+                                    GridView1.DataBind();
                                     llenarGrilla();
                                     limpiar();
                                 }
@@ -131,21 +133,27 @@ namespace GestOn2.ABMS
                 txtFechaDesde.Text = null;
             if (txtFchHasta.Text.Equals(""))
                 txtFchHasta.Text = null;
+
             DateTime fechaDesde = DateTime.Parse(txtFchDesde.Text);
             DateTime fechaHasta = DateTime.Parse(txtFchHasta.Text);
-            string titulo;
-            if (String.IsNullOrEmpty(txtTituloOferta.Text))
-                titulo = "";
-            else
-                titulo = txtTituloOferta.Text;
-            List<Oferta> ofertas = Sistema.GetInstancia().BuscarOfertaFiltros(fechaDesde, fechaHasta, titulo);
-            if (ofertas != null)
+
+            string  titulo = txtTitulo.Text;
+
+            List<Oferta> ofertas = null;
+
+            if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("Fechas"))
             {
+                ofertas = Sistema.GetInstancia().BuscarOfertaFiltros(fechaDesde, fechaHasta);
+            }
+            else {
+                ofertas = Sistema.GetInstancia().BuscarOfertaTitulo(titulo);
+            }
+                
+            if (ofertas != null){
                 GridViewOferta.DataSource = ofertas;
                 GridViewOferta.DataBind();
             }
-            else
-            {
+            else {
                 lblResultadoBusqueda.Text = "La oferta buscada no éxiste en el sistema";
                 lblResultado.Visible = true;
             }

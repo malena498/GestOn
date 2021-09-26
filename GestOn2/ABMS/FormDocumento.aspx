@@ -9,7 +9,8 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 ">
-               <div id="DivFiltros" runat="server" class="form-row border border-info col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-2 ml-1 ">
+               <div id="DivGeneral" runat="server" class="form-row border border-info col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-2 p-3">
+               <div id="DivFiltros" runat="server" class="form-row col-md-10 col-lg-10 col-sm-10 col-xl-10 mt-1 ">
                     <div class="col-md-4 col-lg-4 col-sm-4 col-xl-4 mt-3">
                         <asp:Label ID="Label12" runat="server" Text="Filtrar por: " class="col-2 col-md-2 col-lg-2" Font-Bold="True"></asp:Label>
                         <asp:DropDownList ID="ddlSeleccionaFiltro" CssClass="form-select col-7 col-md-7 col-lg-7 col-sm-7" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlSeleccionaFiltro_SelectedIndexChanged">
@@ -38,14 +39,17 @@
                     <asp:LinkButton ID="lnkPorNroCarpeta" CssClass="btn btn-outline-success col-lg-3 col-xl-3 col-md-3 col-sm-3" runat="server" OnClick="btnBuscarNroCarpeta_Click">Buscar</asp:LinkButton>
                     </div>
                     <div id="DivFiltroPorFecha" runat="server" class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-xs-5 mt-3 mb-3">
-                    <asp:TextBox ID="txtFchDesde" type="datetime" placeholder="14/07/2021" class="col-lg-4 col-md-4 col-sm-4 col-xl-4 ml-3" runat="server" TextMode="DateTime"></asp:TextBox>
-                    <asp:TextBox ID="txtFchHasta" type="datetime" placeholder="14/08/2021" class="col-4 col-lg-4 col-md-4 col-sm-4 col-xl-4 ml-2" runat="server" TextMode="DateTime"></asp:TextBox>
+                    <asp:TextBox ID="txtFchDesde"  placeholder="14/07/2021" class="col-xs-6 col-lg-6 col-md-6 col-sm-6 col-xl-6 ml-1" runat="server" TextMode="Date"></asp:TextBox>
+                    <asp:TextBox ID="txtFchHasta"  placeholder="14/08/2021" class="col-xs-6 col-lg-6 col-md-6 col-sm-6 col-xl-6 ml-1" runat="server" TextMode="Date"></asp:TextBox>
                     <asp:LinkButton ID="btnBuscarFecha" CssClass="btn btn-outline-success col-lg-3 col-xl-3 col-md-3 col-sm-3" runat="server" OnClick="btnBuscarFecha_Click">Buscar</asp:LinkButton>
                     </div>
                     <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-3 mt-3 " id="Div2" runat="server">
-                    <asp:LinkButton ID="lnkNuevoProducto" CssClass="btn btn-outline-danger col-lg-6 col-xl-6 col-md-6 col-sm-6 ml-4" runat="server" OnClick="lnkNuevoProducto_Click">Agregar documento</asp:LinkButton>
                  </div>
                     </div>
+                   <div id="Div1" runat="server" class="form-row col-md-2 col-lg-2 col-sm-2 col-xl-2 mt-1 ">
+                    <asp:LinkButton ID="lnkNuevoProducto" CssClass="btn btn-outline-danger col-lg-12 col-xl-12 col-md-12 col-sm-12" runat="server" OnClick="lnkNuevoProducto_Click">Agregar documento</asp:LinkButton>
+               </div>
+                       </div>
             <div class="container-fluid col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4 ml-3 mt-3" runat="server" visible="false" id="divNuevaOferta">
                 <form id="form1">
                     <div class="row bg-light col-md-12 col-lg-12 col-sm-12 col-xl-12 ">

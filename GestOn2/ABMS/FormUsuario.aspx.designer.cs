@@ -184,24 +184,6 @@ namespace GestOn2 {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNuevoUsuario;
         
         /// <summary>
-        /// Control txtIdUsuario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdUsuario;
-        
-        /// <summary>
-        /// Control divMensaje.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMensaje;
-        
-        /// <summary>
         /// Control lblResultado.
         /// </summary>
         /// <remarks>
@@ -209,15 +191,6 @@ namespace GestOn2 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblResultado;
-        
-        /// <summary>
-        /// Control txtNroCarpeta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNroCarpeta;
         
         /// <summary>
         /// Control txtNombreUser.
@@ -256,6 +229,24 @@ namespace GestOn2 {
         protected global::System.Web.UI.WebControls.TextBox txtTelefonoUser;
         
         /// <summary>
+        /// Control ddlCategoriaUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCategoriaUsuario;
+        
+        /// <summary>
+        /// Control txtNroCarpeta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNroCarpeta;
+        
+        /// <summary>
         /// Control txtPassUser.
         /// </summary>
         /// <remarks>
@@ -272,15 +263,6 @@ namespace GestOn2 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassUser2;
-        
-        /// <summary>
-        /// Control ddlCategoriaUsuario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCategoriaUsuario;
         
         /// <summary>
         /// Control btnGuardar.

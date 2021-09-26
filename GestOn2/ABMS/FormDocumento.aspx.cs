@@ -36,7 +36,6 @@ namespace GestOn2.ABMS
                     {
                         GridViewDocumentos.Columns[9].Visible = false;
                         DivFiltros.Visible = false;
-                       
                     }
                     else
                     {
@@ -542,12 +541,11 @@ namespace GestOn2.ABMS
             return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
         }
 
-
         //Muestra Div con formulario para ingresar un nuevo documento
         protected void lnkNuevoProducto_Click(object sender, EventArgs e)
         {
             DivGridDocumentos.Visible = false;
-            DivFiltros.Visible = false;
+            DivGeneral.Visible = false;
             divNuevaOferta.Visible = true;
         }
 
@@ -556,10 +554,20 @@ namespace GestOn2.ABMS
         {
             divNuevaOferta.Visible = false;
             DivGridDocumentos.Visible = true;
-            DivFiltros.Visible = true;
+            Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(Session["IdUsuario"].ToString()));
+            if (!u.nivel.UserAdmin)
+            {
+                GridViewDocumentos.Columns[9].Visible = false;
+                DivFiltros.Visible = false;
+                DivGeneral.Visible = true;
+            }
+            else
+            {
+                GridViewDocumentos.Columns[9].Visible = true;
+                DivFiltros.Visible = true;
+                DivGeneral.Visible = true;
+            }
         }
-
-
 
         //Lista el dropDown del filtro con nombre de los usuarios para su posterior uso
         protected void ListarDropUsuarios()

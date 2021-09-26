@@ -18,8 +18,8 @@
                         </asp:DropDownList>
                     </div>
                     <div class="col-xl-5 col-lg-4 col-md-4 col-sm-4 col-xs-4 mt-3 mb-3 p-0"  id="DivFiltroXFechas" runat="server">
-                        <asp:TextBox ID="txtFchDesde" type="datetime" class="col-xs-5 col-lg-5 col-md-5 col-sm-5 col-xl-5 " runat="server" TextMode="Date"></asp:TextBox>
-                        <asp:TextBox ID="txtFchHasta" type="datetime" class="col-xs-5 col-lg-5 col-md-5 col-sm-5 col-xl-5 " runat="server" TextMode="Date"></asp:TextBox>  
+                        <asp:TextBox ID="txtFchDesde" class="col-xs-5 col-lg-5 col-md-5 col-sm-5 col-xl-5 " runat="server" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="txtFchHasta" class="col-xs-5 col-lg-5 col-md-5 col-sm-5 col-xl-5 " runat="server" TextMode="Date"></asp:TextBox>  
                     </div>
                     <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-xs-5 mt-3 mb-3" id="DivFiltroXTitulo" runat="server" visible="false">
                         <asp:TextBox ID="txtTitulo" placeholder="Nombre del titulo" class="col-8 col-lg-8 col-md-8 col-sm-8 col-xl-8 ml-2" runat="server"></asp:TextBox>

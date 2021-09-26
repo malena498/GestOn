@@ -171,30 +171,40 @@ namespace BibliotecaClases {
             catch { return null; }
             }
 
-            public List<Oferta> BuscarOfertaFiltros(DateTime fechaDesde, DateTime fechaHasta, string titulo)
-        {
+            public List<Oferta> BuscarOfertaFiltros(DateTime fechaDesde, DateTime fechaHasta)
+            {
             try
             {
                 List<Oferta> ofertas = new List<Oferta>();
                 using (var baseDatos = new Context())
                 {
 
-                    if (fechaDesde != null && fechaHasta != null)/*Convert(DATE, OfertaFechaDesde)*/
+                    if (fechaDesde != null && fechaHasta != null)
                     {
                         ofertas = baseDatos.Ofertas.SqlQuery("select * from Oferta where Convert(DATE,OfertaFechaDesde) >= '" + fechaDesde+ "' and Convert(DATE,OfertaFechaDesde) <= '" + fechaHasta +"'").ToList();
-                        //ofertas = baseDatos.Ofertas.Include("Imagenes").Where(ej => ej.OfertaFechaDesde == fechaDesde && ej.OfertaFechaHasta == fechaHasta).OrderBy(ej => ej.OfertaTitulo).ToList();
-                    }
-                    else if (!String.IsNullOrEmpty(titulo))
-                    {
-                        ofertas = baseDatos.Ofertas.SqlQuery("select * from Oferta where OfertaTitulo like '%"+titulo+" %'").ToList();
-                    }
-                    else if ((fechaDesde != null && fechaHasta != null) && (!String.IsNullOrWhiteSpace(titulo)))
-                    {
-                        ofertas = baseDatos.Ofertas.SqlQuery("select * from Oferta where (Convert(DATE,OfertaFechaDesde) >= '" + fechaDesde + "' and Convert(DATE,OfertaFechaDesde) <= '" + fechaHasta + "'" + ") and OfertaTitulo like '%" + titulo + " %'").ToList();
-
                     }
                     return ofertas;
+                }
+            }
+            catch (Exception ex)
+            {
+                List<Oferta> ofertas = null;
+                return ofertas;
+            }
+        }
 
+        public List<Oferta> BuscarOfertaTitulo(string titulo)
+        {
+            try
+            {
+                List<Oferta> ofertas = new List<Oferta>();
+                using (var baseDatos = new Context())
+                {
+                    if (!String.IsNullOrEmpty(titulo))
+                    {
+                        ofertas = baseDatos.Ofertas.SqlQuery("select * from Oferta where upper(OfertaTitulo) like '%" + titulo + "%'").ToList();
+                    }
+                    return ofertas;
                 }
             }
             catch (Exception ex)

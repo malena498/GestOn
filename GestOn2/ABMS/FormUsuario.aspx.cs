@@ -43,7 +43,7 @@ namespace GestOn2
                     Usuario us = Sistema.GetInstancia().BuscarUsuarioEmail(txtEmailUser.Text);
                     if (us != null)
                     {
-                        divMensaje.Visible = true;
+                        lblResultado.Visible = true;
                         lblResultado.Text = "Ya existe un usuario ingresado con este E-mail.";
                     }
                     else
@@ -51,7 +51,7 @@ namespace GestOn2
                         Usuario user = Sistema.GetInstancia().BuscarUsuarioCedula(txtCedulaUser.Text);
                         if (user != null)
                         {
-                            divMensaje.Visible = true;
+                            lblResultado.Visible = true;
                             lblResultado.Text = "La cédula ingresada ya existe en el sistema.";
                         }
                         else
@@ -64,7 +64,10 @@ namespace GestOn2
                                     string contraseña = Encriptar(txtPassUser.Text);
                                     Usuario u = new Usuario();
                                     u.UserNombre = txtNombreUser.Text;
-                                    u.NroCarpeta = Convert.ToInt32(txtNroCarpeta.Text);
+                                    if (ddlCategoriaUsuario.Text.Equals("Docente"))
+                                    {
+                                        u.NroCarpeta = Convert.ToInt32(txtNroCarpeta.Text);
+                                    }
                                     u.UserEmail = txtEmailUser.Text;
                                     u.UserCedula = txtCedulaUser.Text;
                                     u.UserTelefono = txtTelefonoUser.Text;
@@ -74,33 +77,35 @@ namespace GestOn2
                                     int exito = Sistema.GetInstancia().GuardarUsuario(u);
                                     if (exito>0)
                                     {
-                                        divMensaje.Visible = true;
+                                        lblResultado.Visible = true;
                                         lblResultado.Text = "Registrado con éxito";
+                                        lblResultado.Visible = true;
                                         limpiar();
                                     }
                                 }
                                 else
                                 {
-                                    divMensaje.Visible = true;
+                                    lblResultado.Visible = true;
                                     lblResultado.Text = "Las contraseñas no coinciden";
+                                    lblResultado.Visible = true;
                                 }
                             }
                             else
                             {
-                                divMensaje.Visible = true;
+                                lblResultado.Visible = true;
                                 lblResultado.Text = "Cédula inválida";
                             }
                         }
                     }
                 }
                 else {
-                    divMensaje.Visible = true;
+                    lblResultado.Visible = true;
                     lblResultado.Text = "Debe completar todos los campos";
                 } 
             }
             catch (Exception ex)
             {
-                divMensaje.Visible = true;
+                lblResultado.Visible = true;
                 lblResultado.Text = "Error al registrarse";
             }
         }
@@ -137,7 +142,7 @@ namespace GestOn2
         /*VERIFICA SI LOS DATOS DEL FORMULARIO ESTÁN INCOMPLETOS, RETORNANDO TRUE EN CASO QUE LO ESTÉN*/
         protected bool CamposIncompletos()
         {
-            if (String.IsNullOrEmpty(txtIdUsuario.Text) || String.IsNullOrEmpty(txtNombreUser.Text) ||
+            if (String.IsNullOrEmpty(txtNombreUser.Text) || String.IsNullOrEmpty(txtPassUser2.Text) ||
                 String.IsNullOrEmpty(txtEmailUser.Text) || String.IsNullOrEmpty(txtCedulaUser.Text) ||
                 String.IsNullOrEmpty(txtTelefonoUser.Text) || String.IsNullOrEmpty(txtPassUser.Text))
             {
@@ -302,6 +307,8 @@ namespace GestOn2
             txtTelefonoUser.Text = string.Empty;
             txtCedulaUser.Text = string.Empty;
             txtPassUser.Text = string.Empty;
+            txtNroCarpeta.Text = string.Empty;
+            txtPassUser2.Text = string.Empty;
             ddlCategoriaUsuario.ClearSelection();
         }
 
@@ -375,15 +382,6 @@ namespace GestOn2
         /*MUESTRA EN GRILLA TODOS LOS USUARIOS DADOS DE BAJA*/
         protected void chkEliminados_CheckedChanged(object sender, EventArgs e)
         {
-            /*if (chkEliminados.Checked)
-            {
-                GridViewUsuarios.DataSource = Sistema.GetInstancia().ListadoUsuariosEliminados();
-                GridViewUsuarios.DataBind();
-            }
-            else
-            {
-                llenarGrilla();
-            }*/
         }
 
         /*LISTA TODOS LOS USUARIOS FILTRANDOLOS POR CÉDULA DE IDENTIDAD*/
@@ -444,6 +442,19 @@ namespace GestOn2
             {
                 DivFiltroXNombre.Visible = false;
                 DivFiltroXCedula.Visible = true;
+            }
+        }
+
+        protected void ddlCategoriaUsuario_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlCategoriaUsuario.SelectedItem.Text.Equals("Docente"))
+            {
+                txtNroCarpeta.Enabled = true;
+                txtNroCarpeta.Visible = true;
+            }
+            else {
+                txtNroCarpeta.Enabled = false;
+                txtNroCarpeta.Visible = false;
             }
         }
     }

@@ -106,19 +106,17 @@
              <asp:Label ID="lblResultadoGrilla" CssClass="alert alert-danger col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" Visible="false" runat="server"></asp:Label>
             </div>
             <div id="divNuevoUsuario" visible="false" class="form-control border border-dark bg-light container-fluid col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4 mt-1" runat="server">
-                <asp:TextBox ID="txtIdUsuario" placeholder="Id" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-1"></asp:TextBox>
-                <div id="divMensaje" visible="false" class="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-2" runat="server">
-                <asp:Label ID="lblResultado" CssClass="alert alert-danger col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12" runat="server"></asp:Label>
-                </div>
-                <asp:TextBox ID="txtNroCarpeta" placeholder="Número de carpeta" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" TextMode="number"></asp:TextBox>
+                <h3 class="col-xl-12 col-xs-12 col-sm-12 col-lg-12 col-md-12 text-center">Nuevo usuario</h3>
+                <asp:Label ID="lblResultado" Visible="false" CssClass="alert alert-danger col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12" runat="server"></asp:Label>
                 <asp:TextBox ID="txtNombreUser" placeholder="Nombre y Apellido" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
                 <asp:TextBox ID="txtEmailUser" placeholder="E-mail" runat="server" TextMode="Email" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
                 <asp:TextBox ID="txtCedulaUser" placeholder="Cédula de identidad" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
                 <asp:TextBox ID="txtTelefonoUser" placeholder="Télefono" runat="server" TextMode="SingleLine" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
+                <asp:DropDownList ID="ddlCategoriaUsuario" runat="server" CssClass="active col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" AutoPostBack="True" OnSelectedIndexChanged="ddlCategoriaUsuario_SelectedIndexChanged">
+                </asp:DropDownList>
+                <asp:TextBox ID="txtNroCarpeta" Visible="false" placeholder="Número de carpeta" runat="server" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" TextMode="number"></asp:TextBox>
                 <asp:TextBox ID="txtPassUser"  placeholder="Contraseña" runat="server" TextMode="Password" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
                 <asp:TextBox ID="txtPassUser2" placeholder="Repetir Contraseña" runat="server" TextMode="Password" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
-                <asp:DropDownList ID="ddlCategoriaUsuario" runat="server" CssClass="active col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3">
-                </asp:DropDownList>
                 <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-outline-success col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" OnClick="btnGuardar_Click" Text="Guardar" />
                 <asp:Button ID="btnCerrar" runat="server" CssClass="btn btn-outline-danger col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" OnClick="btnCerrar_Click" Text="Ver listado" />
             </div>
