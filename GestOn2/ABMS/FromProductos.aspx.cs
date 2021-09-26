@@ -260,16 +260,13 @@ namespace GestOn2.ABMS
         protected void GridViewProductos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow &&
-      (e.Row.RowState & DataControlRowState.Edit) == DataControlRowState.Edit)
+            (e.Row.RowState & DataControlRowState.Edit) == DataControlRowState.Edit)
             {
-
                 DropDownList ddlCategoria = (DropDownList)e.Row.FindControl("ddlCategoria");
                     ddlCategoria.DataSource = Sistema.GetInstancia().ListadoCategorias();
                     ddlCategoria.DataTextField = "NombreCategoria";
                     ddlCategoria.DataValueField = "IdCategoria";
                     ddlCategoria.DataBind();
-
-                
             }
         }
 

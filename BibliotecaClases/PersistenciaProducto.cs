@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,6 @@ namespace BibliotecaClases
 {
     partial class Sistema
     {
-
         public bool GuardarProducto(Producto producto, int cate)
         {  
             try
@@ -144,11 +144,6 @@ namespace BibliotecaClases
                     }
                     catch (Exception ex)
                     {
-                        /*SqlParameter parameter = new SqlParameter("@IdPedido", idPedido);
-                        objeto = baseDatos.Database.SqlQuery<Object>("SP_Producto_Pedido @IdPedido", parameter).ToList();
-                         * SqlParameter categoryParam = new SqlParameter("@IdPedido", idPedido);
-                        List<Producto> productos = baseDatos.Database.SqlQuery<Producto>("exec SP_Producto_Pedido @IdPedido", categoryParam).ToList();
-                        return productos;*/
                     }
                     return objeto;
                 }
@@ -166,7 +161,7 @@ namespace BibliotecaClases
                 List<Producto> productos = new List<Producto>();
                 using (var baseDatos = new Context())
                 {
-                    productos = baseDatos.Productos.SqlQuery("select * from Producto where Activo = 1 and ProductoMarca like '%" + marca + "%'").ToList();
+                    productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true && ej.ProductoMarca.Contains(marca)).OrderBy(ej => ej.ProductoId).ToList();
                     return productos;
 
                 }
@@ -185,7 +180,7 @@ namespace BibliotecaClases
                 List<Producto> productos = new List<Producto>();
                 using (var baseDatos = new Context())
                 {
-                    productos = baseDatos.Productos.SqlQuery("select * from Producto where Activo = 1 and IdCategoria like '%" + categoria + "%'").ToList();
+                    productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true && ej.IdCategoria == categoria).OrderBy(ej => ej.ProductoId).ToList();
                     return productos;
 
                 }

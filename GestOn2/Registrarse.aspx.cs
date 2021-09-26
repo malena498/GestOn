@@ -244,32 +244,25 @@ namespace GestOn2
         {
             string id = ddlCategoriaUsuario.SelectedValue;
             Nivel n = Sistema.GetInstancia().BuscarNivel(int.Parse(id));
-            if (n.NombreNivel.Equals("Estudiante"))
+            if (n.NombreNivel.Equals("Docente"))
             {
                 divCurso.Visible = true;
-                txtMateria.Visible = false;
-                btnAgregar.Visible = false;
-            }
-            else if (n.NombreNivel.Equals("Docente"))
-            {
-                divCurso.Visible = true;
-
             }
             else
             {
-                ddlCurso.Visible = false;
+                ddlCurso.SelectedValue = null;
+                txtMateria.Text = null;
                 divCurso.Visible = false;
-
             }
         }
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             if (ddlCurso.SelectedItem != null)
             {
                 ddlCursosAgregados.Items.Add(ddlCurso.SelectedItem);
                 ddlCurso.Items.Remove(ddlCurso.SelectedItem);
- 
-                }
             }
+        }
     }
 }
