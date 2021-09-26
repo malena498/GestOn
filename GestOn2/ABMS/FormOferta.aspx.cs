@@ -63,7 +63,11 @@ namespace GestOn2.ABMS
                             if (!String.IsNullOrEmpty(txtURLs.Text))
                             {
                                 imagenes = txtURLs.Text.Split(char.Parse(",")).ToList();
-                                string user = Session["IdUsuario"].ToString();
+                                string user = "";
+                                if (Session["IdUsuario"] != null)
+                                {
+                                     user= Session["IdUsuario"].ToString();
+                                }
                                 Oferta o = new Oferta();
                                 o.OfertaTitulo = txtTituloOferta.Text;
                                 o.OfertaFechaDesde = DateTime.Parse(txtFechaDesde.Text);

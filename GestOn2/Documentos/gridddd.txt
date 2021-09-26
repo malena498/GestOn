@@ -1,0 +1,8 @@
+  <asp:TemplateField HeaderText="Action">
+                <ItemTemplate><asp:Button ID="Delete" runat="server" CommandName="Delete" Text="Delete" Width="45px"
+                        ToolTip="Terminates an existing application."  OnClientClick="return confirm('Are you sure you want to delete?');">
+                    </asp:Button>
+               </ItemTemplate>
+           </asp:TemplateField> 
+
+<asp:CommandField ShowDeleteButton="true" ButtonType="Button" HeaderText="Borrar" /> 

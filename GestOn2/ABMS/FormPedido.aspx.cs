@@ -656,7 +656,11 @@ namespace GestOn2.ABMS
         protected void GridViewProductosNuevo_RowUpdated(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = GridViewProductosNuevo.Rows[e.RowIndex];
-            int idPedido = int.Parse(Session["IdPedido"].ToString());
+            int idPedido = 0;
+            if (Session["IdPedido"] != null)
+            {
+                idPedido = int.Parse(Session["IdPedido"].ToString());
+            }
             int idProducto = int.Parse((row.FindControl("lblIdProducto") as Label).Text);
             int cantidad = int.Parse((row.FindControl("txtCantidad") as TextBox).Text);
 
@@ -698,21 +702,38 @@ namespace GestOn2.ABMS
             try
             {
                 GridViewRow row = GridViewProductosNuevo.Rows[e.RowIndex];
-                int idPedido = int.Parse(Session["IdPedido"].ToString());
+                int idPedido = 0;
                 int idProducto = int.Parse((row.FindControl("lblIdProducto") as Label).Text);
                 int cantidad = int.Parse((row.FindControl("lblCantidad") as Label).Text);
-                ProductoPedidoCantidad ppc = Sistema.GetInstancia().BuscarPedidoProductoCantidadPr(idPedido, idProducto);
-                Producto pr = Sistema.GetInstancia().BuscarProducto(idProducto);
-                Pedido p = Sistema.GetInstancia().BuscarPedido(idPedido);
+                DataTable dt = new DataTable();
+                if (Session["IdPedido"] != null)
+                {
+                    idPedido = int.Parse(Session["IdPedido"].ToString());
+                    ProductoPedidoCantidad ppc = Sistema.GetInstancia().BuscarPedidoProductoCantidadPr(idPedido, idProducto);
+                    Producto pr = Sistema.GetInstancia().BuscarProducto(idProducto);
+                    Pedido p = Sistema.GetInstancia().BuscarPedido(idPedido);
 
-                decimal precioAnterior = p.Precio;
-                decimal subtotal = precioAnterior - (pr.ProductoPrecioVenta * ppc.Cantidad);
+                    decimal precioAnterior = p.Precio;
+                    decimal subtotal = precioAnterior - (pr.ProductoPrecioVenta * ppc.Cantidad);
 
-                txtPrecioPedido.Text = subtotal.ToString();
-                DataTable dt = Session["Tabla"] as DataTable;
-                dt.Rows[e.RowIndex].Delete();
-                Session["Tabla"] = dt;
-                lblInformativo.Visible = true;
+                    txtPrecioPedido.Text = subtotal.ToString();
+                    dt = Session["Tabla"] as DataTable;
+                    dt.Rows[e.RowIndex].Delete();
+                    Session["Tabla"] = dt;
+                    lblInformativo.Visible = true;
+                }
+                else
+                {
+                    //decimal precioAnterior = p.Precio;
+                    //decimal subtotal = precioAnterior - (pr.ProductoPrecioVenta * ppc.Cantidad);
+                    decimal subtotal = 0;
+                    txtPrecioPedido.Text = subtotal.ToString();
+                    dt = Session["Tabla"] as DataTable;
+                    dt.Rows[e.RowIndex].Delete();
+                    Session["Tabla"] = dt;
+                    lblInformativo.Visible = true;
+                }
+               
                 bool exito = Sistema.GetInstancia().EliminarProductoPedidoCant(idPedido,idProducto, cantidad);
                 if (exito)
                 {

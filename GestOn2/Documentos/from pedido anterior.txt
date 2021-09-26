@@ -1,0 +1,19 @@
+ //ProductoPedidoCantidad ppc = new ProductoPedidoCantidad();
+                //ppc.ProductoId = idProducto;
+                //ppc.IdPedido = idPedido;
+                //ppc.Cantidad = cantidad;
+
+bool exito = Sistema.GetInstancia().GuardarProductoPedidoCantidad(ppc);
+                if (exito)
+                {
+                    txtCantidadProducto.Text = string.Empty;
+                    //decimal precioProductos = CalcularPrecioProductos(p.ProductoPrecioVenta, cantidad);
+                    //decimal precio = 0;
+
+                    //if (!String.IsNullOrEmpty(txtPrecioPedido.Text))
+                    //{
+                    //    precio = decimal.Parse(txtPrecioPedido.Text);
+                    //}
+                    //precio = precio + precioProductos;
+                    //txtPrecioPedido.Text = precio.ToString();
+                    //Session["precioTotal"] = precioProductos;

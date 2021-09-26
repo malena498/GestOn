@@ -28,8 +28,8 @@ namespace GestOn2
         {
             int id = int.Parse(Request.QueryString["IdDoc"].ToString());
             Documento d = Sistema.GetInstancia().BuscarDocumento(id);
-            string filename = d.NombreDocumento +"."+ d.Formato;
-
+            string filename = d.NombreDocumento + d.Formato;
+            // 
             if (filename != "")
             {
                 Response.Clear();
