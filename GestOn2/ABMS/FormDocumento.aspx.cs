@@ -35,10 +35,13 @@ namespace GestOn2.ABMS
                     if (!u.nivel.UserAdmin)
                     {
                         GridViewDocumentos.Columns[9].Visible = false;
+                        DivFiltros.Visible = false;
+                       
                     }
                     else
                     {
                         GridViewDocumentos.Columns[9].Visible = true;
+                        DivFiltros.Visible = true;
                     }
                     if (u.nivel.NombreNivel.Equals("Docente"))
                     {
@@ -53,6 +56,7 @@ namespace GestOn2.ABMS
                     GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
                     GridViewDocumentos.DataBind();
                     ListarDropUsuarios();
+                   
                 }
                 else
                 {

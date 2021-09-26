@@ -7,6 +7,9 @@ using System.Web.UI.WebControls;
 using BibliotecaClases;
 using BibliotecaClases.Clases;
 
+using System.Threading;
+using Microsoft.SqlServer.Server;
+using System.IO;
 namespace GestOn2
 {
     public partial class Configuraciones : System.Web.UI.Page
@@ -70,30 +73,19 @@ namespace GestOn2
             if (txtCostoEnvio.Text.Equals("") || txtLinkFB.Text.Equals("") || txtLinkIG.Text.Equals("") ||
                 txtEmail.Text.Equals("") || txtTelefono.Text.Equals(""))
             {
-                string script = @"<script type='text/javascript'>
-                            alert('Debe completar todos los campos.');
-                        </script>";
-
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
+                lblInformativo.Text= "Debe completar todos los campos.";
             }
             else
             {
                 bool exito = Sistema.GetInstancia().GuardarConfiguraciones(configuraciones);
                 if (exito)
                 {
-                    string script = @"<script type='text/javascript'>
-                            alert('Configuraciónes moddificadas con éxito.');
-                        </script>";
-
-                    ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
+                    lblInformativo.Text = "Configuraciónes moddificadas con éxito.";
+                   
                 }
                 else
                 {
-                    string script = @"<script type='text/javascript'>
-                            alert('No se logró modificar.');
-                        </script>";
-
-                    ScriptManager.RegisterStartupScript(this, typeof(Page), "alerta", script, false);
+                    lblInformativo.Text = "No se logró modificar.";
                 }
             }
 
@@ -140,6 +132,30 @@ namespace GestOn2
                 if (conf7 != null)
                 {
                     txtContrasenia.Text = conf7.Valor;
+                }
+            }
+        }
+        protected void button1_Click(object sender, EventArgs e)
+        {
+            bool desea_respaldar = true;
+
+            //poner cursor de relojito mintras respalda
+
+            if (Directory.Exists(@"c:\ Respaldo"))
+            {
+                if (File.Exists(@"c:\ Respaldo\resp.bak"))
+                {
+                        File.Delete(@"c:\ Respaldo\resp.bak");
+                }
+            }
+            else
+                Directory.CreateDirectory(@"c:\ Respaldo");
+            if (desea_respaldar)
+            {
+                bool ex = Sistema.GetInstancia().BackUp();
+                if (ex)
+                {
+                    lblInformativo.Text = "El Respaldo de la base de datos fue realizado satisfactoriamente";
                 }
             }
         }

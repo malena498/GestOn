@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using BibliotecaClases.Clases;
@@ -86,6 +87,31 @@ namespace BibliotecaClases
             {
                 return null;
             }
+        }
+        public bool BackUp()
+        {
+
+            using (var baseDatos = new Context())
+            {
+                try
+                {
+                    //@"Data Source=TPZPC127\SQLEXPRESS;user id=sa;password=Alicia2206**;MultipleActiveResultSets=True";
+                    SqlConnection connect;
+                    string con = @"Data Source=TPZPC127\SQLEXPRESS;user id=sa;password=Alicia2206**;";
+                    connect = new SqlConnection(con);
+                    connect.Open();
+                    SqlCommand command;
+                    command = new SqlCommand(@"backup database GestOn to disk ='c:\ Respaldo\resp.bak' with init,stats=10", connect);
+                    command.ExecuteNonQuery();
+                    connect.Close();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+                }
+
         }
     }
 }

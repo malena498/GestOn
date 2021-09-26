@@ -37,7 +37,10 @@
                                     
                                 </div>
                                     <asp:Button ID="btnGuardar" runat="server" class="btn btn-primary offset-1 col-md-10 col-lg-10 col-10 col-sm-10 mt-3" Text="Ingresar" OnClick="btnGuardar_Click" />
-                                </div>
+                                    <asp:Label ID="lblInformativo" runat="server" Text="" CssClass="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:Label>
+                                    <asp:LinkButton ID="lnkRespaldo" runat="server" OnClick="button1_Click" >Realizar respaldo</asp:LinkButton>
+
+                            </div>
                             </div>
                         </div>
                     </div>
