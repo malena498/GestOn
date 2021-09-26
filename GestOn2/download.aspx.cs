@@ -26,21 +26,25 @@ namespace GestOn2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            int id = int.Parse(Request.QueryString["IdDoc"].ToString());
-            Documento d = Sistema.GetInstancia().BuscarDocumento(id);
-            string filename = d.NombreDocumento + d.Formato;
-            // 
-            if (filename != "")
+            try
             {
-                Response.Clear();
+                int id = int.Parse(Request.QueryString["IdDoc"].ToString());
+                Documento d = Sistema.GetInstancia().BuscarDocumento(id);
+                string filename = d.NombreDocumento + d.Formato;
+                // 
+                if (filename != "")
+                {
+                    Response.Clear();
 
-                Response.AddHeader("content-disposition", string.Format("attachment;filename={0}", filename));
-                Response.ContentType = "application/octet-stream";
+                    Response.AddHeader("content-disposition", string.Format("attachment;filename={0}", filename));
+                    Response.ContentType = "application/octet-stream";
 
-                Response.WriteFile(Server.MapPath(Path.Combine("~/Documentos", filename)));
+                    Response.WriteFile(Server.MapPath(Path.Combine("~/Documentos", filename)));
 
-                Response.End();
+                    Response.End();
+                }
             }
+            catch { }
            
         }
 

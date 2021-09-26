@@ -56,6 +56,8 @@ namespace GestOn2.ABMS
                     ddlEstado.SelectedIndex = 2;
                 Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(Session["IdUsuario"].ToString()));
                 txtNombreUsuarioA.Text = u.UserNombre;
+                txtFechaEntrega.Text = p.HoraEntrega;
+                txtFechaPedido.Text = p.FechaPedido.ToShortDateString();
             }
         }
 
@@ -149,6 +151,8 @@ namespace GestOn2.ABMS
             {
                 lblInformativo.Text = "Se modificó con éxito";
                 lblInformativo.Visible = true;
+                limpiarCampos();
+                llenarGrillaPedidos();
             }
             else
             {
@@ -161,6 +165,17 @@ namespace GestOn2.ABMS
         {
             DivVisualizarPedidos.Visible = true;
             DivVisualizarProductos.Visible = false;
+        }
+
+        protected void limpiarCampos()
+        {
+            txtDescripcionPedidoA.Text = string.Empty;
+            txtDireccionPedidoA.Text = string.Empty;
+            txtFechaEntrega.Text = string.Empty;
+            txtFechaPedido.Text = string.Empty;
+            txtIdPedidoA.Text = string.Empty;
+            txtNombreUsuarioA.Text= string.Empty;
+            txtPrecioA.Text = string.Empty;
         }
     }
 }

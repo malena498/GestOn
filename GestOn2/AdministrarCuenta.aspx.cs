@@ -75,6 +75,22 @@ namespace GestOn2
             txtTelefonoUser.Text = user.UserTelefono;
             txtContraseña.Text = user.UserContrasenia;
         }
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (Session["IdUsuario"] != null)
+            {
+                int id = int.Parse(Session["IdUsuario"].ToString());
+                bool ex = Sistema.GetInstancia().EliminarUsuario(id);
+                if (ex)
+                {
+                    lblResultado.Text = "Cuenta eliminada con exito.";
+                    Session.Remove("IdUsuario");
+                    Session.Abandon();
+                    Response.Redirect("~/Login.aspx");
+                }
+            }
+        }
+    }
+    
 
     }
-}

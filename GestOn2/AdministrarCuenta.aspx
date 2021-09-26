@@ -29,7 +29,7 @@
                                     <asp:TextBox ID="txtConfirmarContraseña" placeholder="Repita contraseña" type="password" TextMode="Password" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2" runat="server"></asp:TextBox>
                                     <asp:Label ID="lblResultado" class="alert alert-danger offset-1 col-md-12 col-lg-12 col-12 col-sm-12 mt-0 mb-2 mt-2 ml-4" runat="server" Text="" Visible="false"></asp:Label>
                                     <asp:Button ID="btnGuardar" runat="server" class="btn btn-outline-primary offset-1 col-md-5 col-lg-5 col-xs-5 col-sm-5 mt-3" Text="Modificar" OnClick="btnGuardar_Click" />
-                                    <asp:Button ID="btnEliminar" runat="server" class="btn btn-outline-danger col-md-5 col-lg-5 col-xs-5 col-sm-5 mt-3 ml-1" Text="Eliminar cuenta"/>
+                                    <asp:Button ID="btnEliminar" runat="server" class="btn btn-outline-danger col-md-5 col-lg-5 col-xs-5 col-sm-5 mt-3 ml-1" Text="Eliminar cuenta"  OnClick="btnEliminar_Click"/>
                                 </div>
                             </div>
                         </div>

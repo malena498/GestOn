@@ -53,6 +53,7 @@
             <div class="container-fluid col-md-4 col-lg-4 col-sm-4 col-4 col-xl-4 ml-3 mt-3" runat="server" visible="false" id="divNuevaOferta">
                 <form id="form1">
                     <div class="row bg-light col-md-12 col-lg-12 col-sm-12 col-xl-12 ">
+                         <asp:TextBox ID="txtID"  class="col-md-8 col-lg-8 col-sm-8 col-md-8 col-xl-8" runat="server" TextMode="MultiLine" Visible="False"></asp:TextBox>
                         <asp:TextBox ID="txtNombre" runat="server" placeholder="Nombre del documento" class="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3"></asp:TextBox>
                         <asp:Label ID="lblMensaje" runat="server" class="alert alert-danger col-md-12 col-lg-12 col-md-12 col-sm-12 mt-3" Visible="false"></asp:Label>
                         <asp:TextBox ID="txtDescripcion" runat="server" placeholder="Descripción" class="col-md-12 col-lg-12 col-sm-12 col-md-12 col-xl-12 mt-3" TextMode="MultiLine"></asp:TextBox>
@@ -71,12 +72,13 @@
 
                             <asp:CheckBox ID="chkEsEnvio" class="col-lg-4 col-sm-4 col-md-4 col-xl-4" runat="server" OnCheckedChanged="chkEsEnvio_CheckedChanged" Text=" Con envio?" AutoPostBack="True" />
                             <asp:TextBox ID="txtDireccion" placeholder="Dirección de envío" class="col-md-8 col-lg-8 col-sm-8 col-md-8 col-xl-8" runat="server" TextMode="MultiLine" Visible="False"></asp:TextBox>
-                        </div>
+                       
+                            </div>
                         <asp:CheckBox ID="chkColor" class="col-lg-6 col-sm-6 col-md-6 col-xl-6 mt-3" runat="server" Text="Impresion a color?" />
                         <asp:CheckBox ID="chkDobleFaz" class="col-lg-6 col-sm-6 col-md-6 col-xl-6 mt-3" runat="server" Text="Es doble faz?" />
 
                         <asp:Button ID="btnUpload" runat="server" CssClass="btn btn-primary col-md-12 col-lg-12 col-md-12 col-sm-12 mt-3" OnClick="btnUpload_Click" Text="Guardar" Enabled="False" />
-
+                        <asp:Button ID="btnActualizar" runat="server" CssClass="btn btn-primary col-md-12 col-lg-12 col-md-12 col-sm-12 mt-3" OnClick="btnActualizar_Click" Text="Guardar" Enabled="False" />
                         <!-- Estos label son para guardar ruta y tipo de archivo del documento que selecciona el cliente-->
                         <asp:Label ID="lblrutaarchivo" runat="server" Visible="False"></asp:Label>
                         <asp:Label ID="lblTipoDoc" runat="server" Visible="False"></asp:Label>
@@ -102,9 +104,7 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblNombreDoc" runat="server" Text='<%# Eval("NombreDocumento") %>'></asp:Label>
                             </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:TextBox ID="txtNombreDoc" runat="server" Text='<%# Eval("NombreDocumento") %>'></asp:TextBox>
-                            </EditItemTemplate>
+                            
                             <ControlStyle />
                             <ItemStyle HorizontalAlign="Left" Wrap="True" />
                         </asp:TemplateField>
@@ -112,66 +112,51 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblDescripcionDoc" runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
                             </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:TextBox ID="txtDescripcionDoc" runat="server" Text='<%# Eval("Descripcion") %>' Width="140"></asp:TextBox>
-                            </EditItemTemplate>
+                           
                             <ControlStyle />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Fecha Ingreso">
                             <ItemTemplate>
                                 <asp:Label ID="lblFechaIngresoDoc" runat="server" Text='<%# Eval("FechaIngreso") %>'></asp:Label>
                             </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:TextBox ID="txtFechaIngresoDoc" runat="server" Text='<%# Eval("FechaIngreso") %>' Width="140"></asp:TextBox>
-                            </EditItemTemplate>
+                            
                             <ControlStyle />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="A color">
                             <ItemTemplate>
                                 <asp:CheckBox ID="chkAColorDoc" runat="server" Checked='<%# Eval("AColor") %>'></asp:CheckBox>
                             </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:CheckBox ID="chkAColorDoc1" runat="server" Checked='<%# Eval("AColor") %>' Width="140"></asp:CheckBox>
-                            </EditItemTemplate>
+                          
                             <ControlStyle />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Doble Faz">
                             <ItemTemplate>
                                 <asp:CheckBox ID="chkDobleFazDoc" runat="server" Checked='<%# Eval("EsDobleFaz") %>'></asp:CheckBox>
                             </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:CheckBox ID="chkDobleFazDoc1" runat="server" Checked='<%# Eval("EsDobleFaz") %>' Width="140"></asp:CheckBox>
-                            </EditItemTemplate>
+                            
                             <ControlStyle />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Es práctico">
                             <ItemTemplate>
                                 <asp:CheckBox ID="chkEsPractico" runat="server" Checked='<%# Eval("EsPractico") %>'></asp:CheckBox>
                             </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:CheckBox ID="chkEsPractico1" runat="server" Checked='<%# Eval("EsPractico") %>'></asp:CheckBox>
-                                <asp:TextBox ID="txtNumeroPracticoDoc" runat="server" Text='<%# Eval("NroPractico") %>' Visible="false"></asp:TextBox>
-                            </EditItemTemplate>
+                            
                             <ControlStyle />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Domicilio">
                             <ItemTemplate>
                                 <asp:CheckBox ID="chkADomicilio" runat="server" Checked='<%# Eval("esEnvio") %>'></asp:CheckBox>
                             </ItemTemplate>
-                            <EditItemTemplate>
-                                <asp:CheckBox ID="chkADomicilio1" runat="server" Checked='<%# Eval("esEnvio") %>'></asp:CheckBox>
-                                <asp:TextBox ID="txtADomicilioDoc" runat="server" Text='<%# Eval("Direccion") %>' Visible="false"></asp:TextBox>
-                            </EditItemTemplate>
+                            
                             <ControlStyle />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Accion">
                             <ItemTemplate>
-                                <asp:Button ID="btnEditar" runat="server" CssClass="btn btn-outline-success col-md-5 col-xl-5 col-lg-5 col-sm-5" CommandName="Edit" Text="E"></asp:Button>
+                                <asp:Button ID="btnEditar" runat="server" CssClass="btn btn-outline-success col-md-5 col-xl-5 col-lg-5 col-sm-5" CommandName="Update" Text="E"></asp:Button>
                                 <asp:Button ID="btnBorrar" runat="server" CssClass="btn btn-outline-danger col-md-5 col-xl-5 col-lg-5 col-sm-5" CommandName="Delete" Text="X"
                                     OnClientClick="return confirm('Esta seguro que deseea eliminar el registro?');"></asp:Button>
                             </ItemTemplate>
                             <EditItemTemplate>
-                                <asp:Button ID="btnActualizar" runat="server" CssClass="btn btn-outline-success col-md-5 col-xl-5 col-lg-5 col-sm-5" CommandName="Update" Text="Actualizar"></asp:Button>
                                 <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-outline-danger col-md-5 col-xl-5 col-lg-5 col-sm-5" CommandName="Cancel" Text="Cancelar"></asp:Button>
                             </EditItemTemplate>
                             <ItemStyle Width="150px" />

@@ -232,10 +232,8 @@ namespace GestOn2.ABMS
                             Usuario u = Sistema.GetInstancia().BuscarUsuario(user);
                             bool ex = Sistema.GetInstancia().GuardarNotificacionPedido(user, u.UserNombre, "NUEVO");
 
-                            llenarGrillaPedidos();
-                            divNuevoPedido.Visible = false;
-                            btnCerrar.Enabled = false;
-                            btnNuevoPedido.Visible = false;
+                            
+                          
                             //Elimino campos luego que se inserto con éxito
                            
                             Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
@@ -253,13 +251,19 @@ namespace GestOn2.ABMS
                                 lblInformativo.Text = "ERROR";
                             }
                             VaciarCampos();
-                            lnkNuevoPedido.Visible = true;
-                            lblPrecioproducto.Visible = true;
+                            btnCerrar.Visible = false;
+                            lblPrecioproducto.Visible = false;
                             divProductos.Visible = false;
                             GridViewProductosNuevo.Visible = false;
-                            btnCerrar.Enabled = true;
+                            divNuevoPedido.Visible = false;
+                            GrillaProductos.Visible = false;
+                            divConatiner.Visible = false;
+                            btnNuevoPedido.Visible = false;
+                            DivEncabezado.Visible = true;
                             DivGridPedido.Visible = true;
+                            llenarGrillaPedidos();
                             
+
                         }
                         else
                         {
@@ -305,6 +309,7 @@ namespace GestOn2.ABMS
 
                     Session["Tabla"] = table;
 
+                    ListProductos1.Items.Remove(ListProductos1.Items.FindByValue(p.ProductoId.ToString()));
                     GridViewProductosNuevo.DataSource = table;
                     GridViewProductosNuevo.DataBind();
                     
@@ -599,6 +604,10 @@ namespace GestOn2.ABMS
             {
                 ListProductos1.Items.Remove(ListProductos1.Items.FindByValue(pc.ProductoId.ToString()));
             }
+            DivEncabezado.Visible = false;
+            lblPrecioproducto.Visible = true;
+            divProductos.Visible = true;
+            GridViewProductosNuevo.Visible = true;
             llenarGrillaProductos(Id);
 
 
@@ -706,13 +715,12 @@ namespace GestOn2.ABMS
                 int idProducto = int.Parse((row.FindControl("lblIdProducto") as Label).Text);
                 int cantidad = int.Parse((row.FindControl("lblCantidad") as Label).Text);
                 DataTable dt = new DataTable();
+                Producto pr = Sistema.GetInstancia().BuscarProducto(idProducto);
+                Pedido p = Sistema.GetInstancia().BuscarPedido(idPedido);
                 if (Session["IdPedido"] != null)
                 {
                     idPedido = int.Parse(Session["IdPedido"].ToString());
                     ProductoPedidoCantidad ppc = Sistema.GetInstancia().BuscarPedidoProductoCantidadPr(idPedido, idProducto);
-                    Producto pr = Sistema.GetInstancia().BuscarProducto(idProducto);
-                    Pedido p = Sistema.GetInstancia().BuscarPedido(idPedido);
-
                     decimal precioAnterior = p.Precio;
                     decimal subtotal = precioAnterior - (pr.ProductoPrecioVenta * ppc.Cantidad);
 
@@ -724,9 +732,8 @@ namespace GestOn2.ABMS
                 }
                 else
                 {
-                    //decimal precioAnterior = p.Precio;
-                    //decimal subtotal = precioAnterior - (pr.ProductoPrecioVenta * ppc.Cantidad);
-                    decimal subtotal = 0;
+                    decimal precioAnterior =decimal.Parse(txtPrecioPedido.Text);
+                    decimal subtotal = precioAnterior - (pr.ProductoPrecioVenta * cantidad);
                     txtPrecioPedido.Text = subtotal.ToString();
                     dt = Session["Tabla"] as DataTable;
                     dt.Rows[e.RowIndex].Delete();
@@ -775,11 +782,18 @@ namespace GestOn2.ABMS
             {
                 lblInformativo.Text = "Se actualizo con éxito";
                 llenarGrillaProductosNuevo();
-                divNuevoPedido.Visible = false;
-                divProductos.Visible = false;
-                llenarGrillaPedidos();
-                DivGridPedido.Visible = true;
                 btnCerrar.Visible = false;
+                lblPrecioproducto.Visible = false;
+               
+                GridViewProductosNuevo.Visible = false;
+                divNuevoPedido.Visible = false;
+                GrillaProductos.Visible = false;
+                divConatiner.Visible = false;
+                GrillaProductos.Visible = false;
+                divProductos.Visible = false;
+                DivEncabezado.Visible = true;
+                DivGridPedido.Visible = true;
+                llenarGrillaPedidos();
             }
 
         }
@@ -865,14 +879,21 @@ namespace GestOn2.ABMS
                         lblInformativo.Text = "ERROR";
                     }
                     llenarGrillaProductosNuevo();
+                    btnCerrar.Visible = false;
+                    lblPrecioproducto.Visible = false;
+                    GridViewProductosNuevo.Visible = false;
                     divNuevoPedido.Visible = false;
+                    GrillaProductos.Visible = false;
+                    divConatiner.Visible = false;
+                    GrillaProductos.Visible = false;
                     divProductos.Visible = false;
-                    llenarGrillaPedidos();
+                    DivEncabezado.Visible = true;
                     DivGridPedido.Visible = true;
                     btnActualizar.Visible = false;
                     divPedidoImagen.Visible = false;
-                    Session["Tabla"] = null;
-
+                    DivEncabezado.Visible = true;
+                    DivGridPedido.Visible = true;
+                    llenarGrillaPedidos();
                 }
             }
 

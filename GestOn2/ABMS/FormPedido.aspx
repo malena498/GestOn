@@ -143,9 +143,9 @@
                                         </ItemTemplate>
                                         <EditItemTemplate>
                                           <asp:LinkButton ID="lbtnUpdate" runat="server" class="btn btn-outline-success text-center" CausesValidation="True"
-                                            CommandName="Update" Text="Modificar"></asp:LinkButton>
+                                            CommandName="Update" ><i class="fa fa-check"></i></asp:LinkButton>
                                           &nbsp;<asp:LinkButton ID="lbtnCancel"  class="btn btn-outline-danger text-center" runat="server" CausesValidation="False"
-                                            CommandName="Cancel" Text="Cancelar"></asp:LinkButton>
+                                            CommandName="Cancel" ><i class="fa fa-times"></i></asp:LinkButton>
                                         </EditItemTemplate>
                                       </asp:TemplateField>
                                         </Columns>

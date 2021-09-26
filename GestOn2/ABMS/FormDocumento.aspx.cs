@@ -55,7 +55,7 @@ namespace GestOn2.ABMS
                     GridViewDocumentos.DataSource = Sistema.GetInstancia().ListadoDocumentos();
                     GridViewDocumentos.DataBind();
                     ListarDropUsuarios();
-                   
+
                 }
                 else
                 {
@@ -131,9 +131,9 @@ namespace GestOn2.ABMS
                             Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
                             Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
                             Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
-                           
-                            bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user),u.UserNombre, "NUEVO", id);
-                           bool mail= EnviarMailNuevoDoc(c.Valor, c2.Valor, u);
+
+                            bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user), u.UserNombre, "NUEVO", id);
+                            bool mail = EnviarMailNuevoDoc(c.Valor, c2.Valor, u);
                             if (mail)
                             {
                                 lblMensaje.Visible = false;
@@ -148,7 +148,7 @@ namespace GestOn2.ABMS
                             llenarGrillaDocumentos();
                             lblMensaje.Visible = true;
                             lblMensaje.Text = "Guardado con exito";
-                           
+
                         }
                         else
                         {
@@ -270,67 +270,18 @@ namespace GestOn2.ABMS
         {
             try
             {
+                lnkNuevoProducto.Visible = false;
+                btnActualizar.Enabled = true;
+                fuDocs.Visible = false;
+                btnSubir.Visible = false;
+                GridViewDocumentos.Visible = false;
+                btnUpload.Visible = false;
+                btnActualizar.Visible = true;
+                divNuevaOferta.Visible = true;
                 GridViewRow row = GridViewDocumentos.Rows[e.RowIndex];
                 int Id = Convert.ToInt32((row.FindControl("lblIdDocumento") as Label).Text);
-                string nombre = (row.FindControl("txtNombreDoc") as TextBox).Text;
-                string descripcion = (row.FindControl("txtDescripcionDoc") as TextBox).Text;
-                DateTime FechaIngreso = DateTime.Parse((row.FindControl("txtFechaIngresoDoc") as TextBox).Text);
-                bool AColor = Convert.ToBoolean((row.FindControl("chkAColorDoc1") as CheckBox).Checked);
-                bool DobleFaz = Convert.ToBoolean((row.FindControl("chkDobleFazDoc1") as CheckBox).Checked);
-                bool EsPractico = Convert.ToBoolean((row.FindControl("chkEsPractico1") as CheckBox).Checked);
-                bool Adomicilio = Convert.ToBoolean((row.FindControl("chkADomicilio1") as CheckBox).Checked);
-                string NroPractico = (row.FindControl("txtNumeroPracticoDoc") as TextBox).Text;
-                string Dire = (row.FindControl("txtADomicilioDoc") as TextBox).Text;
-
-                lblResultado.Visible = false;
-                lblResultado.Text = string.Empty;
-
-                if (Id.Equals(0) || nombre.Equals("") || descripcion.Equals("") || FechaIngreso.Equals(null) || Dire.Equals(""))
-                {
-                    lblResultado.Visible = true;
-                    lblResultado.Text = "Debe completar todos los campos";
-                }
-                else
-                {
-                    Documento doc = null;
-                    doc = Sistema.GetInstancia().BuscarDocumento(Id);
-                    doc.NombreDocumento = nombre;
-                    doc.Descripcion = descripcion;
-                    doc.FechaIngreso = FechaIngreso;
-                    doc.AColor = AColor;
-                    doc.EsDobleFaz = DobleFaz;
-                    doc.EsPractico = EsPractico;
-                    doc.esEnvio = Adomicilio;
-                    if (EsPractico)
-                        doc.NroPractico = int.Parse(NroPractico);
-                    if (Adomicilio)
-                        doc.Direccion = Dire;
-
-                    bool exito = Sistema.GetInstancia().ModificarDocumento(doc);
-                    if (exito)
-                    {
-                        Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
-                        Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
-                        string user = Session["IdUsuario"].ToString();
-                        Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
-                        bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user), u.UserNombre, "MODIFICACION", Id);
-                        bool mail = EnviarMailModificarDoc(c.Valor, c2.Valor, u, doc);
-                        if (mail)
-                        {
-                            lblMensaje.Visible = false;
-                            lblMensaje.Text = "EXITO";
-                        }
-                        else
-                        {
-                            lblMensaje.Visible = false;
-                            lblMensaje.Text = "ERROR";
-                        }
-                        lblResultado.Visible = true;
-                        lblResultado.Text = "Modificado con éxito";
-                        GridViewDocumentos.EditIndex = -1;
-                        llenarGrillaDocumentos();
-                    }
-                }
+                CargarDatos(Id);
+             
             }
             catch (Exception ex)
             {
@@ -338,7 +289,63 @@ namespace GestOn2.ABMS
                 lblResultado.Text = "Excepción no controlada";
             }
         }
+        protected void CargarDatos(int idDocumento)
+        {
+            Documento d = Sistema.GetInstancia().BuscarDocumento(idDocumento);
+            txtID.Text = d.IdDocumento.ToString();
+            txtDescripcion.Text = d.Descripcion;
+            txtNombre.Text = d.NombreDocumento;
+            if (d.AColor)
+            {
+                chkColor.Checked = true;
+            }
+            else
+            {
+                chkColor.Checked = false;
+            }
+            if (d.EsDobleFaz)
+            {
+                chkDobleFaz.Checked = true;
+            }
+            else
+            {
+                chkDobleFaz.Checked = false;
 
+            }
+            if (d.EsPractico)
+            {
+                chkEsPractico.Checked = true;
+                txtNroPractico.Text = d.NroPractico.ToString();
+            }
+            if (d.esEnvio)
+            {
+                chkEsEnvio.Checked = true;
+                txtDireccion.Visible = true;
+                txtDireccion.Text = d.Direccion;
+            }
+            else
+            {
+                chkEsEnvio.Checked = false;
+                txtDireccion.Visible = false;
+                txtDireccion.Text = "";
+            }
+            if (d.gradoLiceal != 0)
+            {
+                divDocente.Visible = true;
+                CargarCursos(d.UserId);
+                txtNroPractico.Visible = true;
+                ddlCurso.SelectedValue = d.gradoLiceal.ToString();
+                ddlCurso.Visible = true;
+                
+            }
+            else
+            {
+                ddlCurso.Visible = false;
+                divDocente.Visible = false;
+               
+                txtNroPractico.Visible = false;
+            }
+        }
         protected void GridViewDocumento_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             GridViewDocumentos.EditIndex = -1;
@@ -719,6 +726,94 @@ namespace GestOn2.ABMS
             ddlCurso.DataValueField = "IDCURSO";
             ddlCurso.DataBind();
 
+        }
+
+        protected void btnActualizar_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(txtID.Text);
+            string nombre = txtNombre.Text;
+            string descripcion = txtDescripcion.Text;
+            DateTime FechaIngreso = DateTime.Now;
+            bool AColor = chkColor.Checked;
+            bool DobleFaz = chkDobleFaz.Checked;
+            bool EsPractico = chkEsPractico.Checked;
+            bool Adomicilio = chkEsEnvio.Checked;
+            string NroPractico = "";
+            string direccion = "";
+            if (chkEsPractico.Checked) {
+                 NroPractico = txtNroPractico.Text;
+            }
+            if (chkEsEnvio.Checked)
+            {
+                direccion = txtDireccion.Text;
+            }
+               
+
+            lblResultado.Visible = false;
+            lblResultado.Text = string.Empty;
+
+            if (id.Equals(0) || nombre.Equals("") || descripcion.Equals("") || FechaIngreso.Equals(null) )
+            {
+                if (chkEsEnvio.Checked)
+                {
+                    if (direccion.Equals(""))
+                    {
+                        lblResultado.Visible = true;
+                        lblResultado.Text = "Debe completar todos los campos";
+                    }
+                }
+                    lblResultado.Visible = true;
+                lblResultado.Text = "Debe completar todos los campos";
+            }
+            else
+            {
+                Documento doc = null;
+                doc = Sistema.GetInstancia().BuscarDocumento(id);
+                doc.NombreDocumento = nombre;
+                doc.Descripcion = descripcion;
+                doc.FechaIngreso = FechaIngreso;
+                doc.AColor = AColor;
+                doc.EsDobleFaz = DobleFaz;
+                doc.EsPractico = EsPractico;
+                doc.esEnvio = Adomicilio;
+                if (EsPractico)
+                    doc.NroPractico = int.Parse(NroPractico);
+                if (Adomicilio)
+                    doc.Direccion = direccion;
+
+                bool exito = Sistema.GetInstancia().ModificarDocumento(doc);
+                if (exito)
+                {
+                    Configuracion c = Sistema.GetInstancia().BuscarConfiguracion("CorreoEmpresa");
+                    Configuracion c2 = Sistema.GetInstancia().BuscarConfiguracion("CorreoAdmin");
+                    string user = Session["IdUsuario"].ToString();
+                    Usuario u = Sistema.GetInstancia().BuscarUsuario(int.Parse(user));
+                    bool ex = Sistema.GetInstancia().GuardarNotificacionDocumento(int.Parse(user), u.UserNombre, "MODIFICACION", id);
+                    bool mail = EnviarMailModificarDoc(c.Valor, c2.Valor, u, doc);
+                    if (mail)
+                    {
+                        lblMensaje.Visible = false;
+                        lblMensaje.Text = "EXITO";
+                    }
+                    else
+                    {
+                        lblMensaje.Visible = false;
+                        lblMensaje.Text = "ERROR";
+                    }
+                    lblResultado.Visible = true;
+                    lblResultado.Text = "Modificado con éxito";
+                    GridViewDocumentos.EditIndex = -1;
+                    llenarGrillaDocumentos();
+                    btnActualizar.Enabled = false;
+                    fuDocs.Visible = true;
+                    btnSubir.Visible = true;
+                    GridViewDocumentos.Visible = true;
+                    btnUpload.Visible = true;
+                    btnActualizar.Visible = false;
+                    divNuevaOferta.Visible = false;
+                    lnkNuevoProducto.Visible = true;
+                }
+            }
         }
     }
 }

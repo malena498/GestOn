@@ -220,6 +220,7 @@ namespace BibliotecaClases
                         pe.FechaPedido = DateTime.Now;
                         pe.productosCantidad = pedido.productosCantidad;
                         pe.UserId = pedido.UserId;
+                        pe.Estado = pedido.Estado;
                         baseDatos.SaveChanges();
                         return true;
                     }
