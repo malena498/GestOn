@@ -91,7 +91,7 @@ namespace BibliotecaClases
 
                     if (productoPedidoCantidad != null)
                     {
-                        Producto p = baseDatos.Productos.Include("Categoria").SingleOrDefault(cl => cl.ProductoId == productoPedidoCantidad.ProductoId);
+                        Producto p = baseDatos.Productos.Include("Categoria").SingleOrDefault(cl => cl.CodigoProducto == productoPedidoCantidad.ProductoId);
                         productoPedidoCantidad.producto = p;
                         baseDatos.CanttidadProductos.Add(productoPedidoCantidad);
                     }

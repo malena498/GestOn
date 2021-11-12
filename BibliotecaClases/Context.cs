@@ -40,6 +40,7 @@ namespace BibliotecaClases
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<CursoEstudiante> CursoEstudiantes { get; set; }
         public DbSet<MateriaCursoDocente> MateriaCursoDocentes { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
 
 
         public Context()
@@ -52,7 +53,7 @@ namespace BibliotecaClases
             try
             {
                 //Local 
-                String baseConnectionString = @"Data Source=TPZPC116;user id=sa;password=50983019Al;MultipleActiveResultSets=True";
+                String baseConnectionString = @"Data Source=TPZPC127\SQLEXPRESS;user id=sa;password=Alicia2206**;MultipleActiveResultSets=True";
 
                 Database.DefaultConnectionFactory = new System.Data.Entity.Infrastructure.SqlConnectionFactory(baseConnectionString);
             }

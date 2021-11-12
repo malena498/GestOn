@@ -9,22 +9,28 @@
         <ContentTemplate>
             <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-3">
                 <div id="DivFiltros" runat="server" class="form-row border border-info col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-2 p-2">
+                   <div id="Div1" class="col-xl-3 col-lg-3 col-md-3 col-xs-3 col-xs-3" runat="server">
                     <asp:Label ID="Label10" runat="server" Text="Filtrar por: " class="col-1 col-md-1 col-lg-1" Font-Bold="True"></asp:Label>
-                    <asp:DropDownList ID="ddlSeleccionaFiltro" CssClass="form-select col-2 col-md-2 col-lg-2 col-sm-2 mb-3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlSeleccionaFiltro_SelectedIndexChanged">
-                        <asp:ListItem Value="MarcaProducto">Marca Producto</asp:ListItem>
-                        <asp:ListItem Value="CategoriaProducto">Categoría Producto</asp:ListItem>
-                    </asp:DropDownList>
-                    <div id="DivFiltroXMarca" class="col-xl-7 col-lg-7 col-md-7 col-xs-7 col-xs-7" runat="server" visible="true">
+                   <asp:RadioButton ID="RadioBtnMarca" runat="server"  GroupName="Radiosbtn" OnCheckedChanged="RadioBtnMarca_CheckedChanged" class="mt-2 mr-3" Text="Marca" AutoPostBack="True" Font-Bold="True" />
+                    <asp:RadioButton ID="RadioBtnCategoria" runat="server" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnCategoria_CheckedChanged" class="mt-2" Text="Categoria" AutoPostBack="True" Font-Bold="True" />
+                    <asp:RadioButton ID="RadioBtnAmbos" runat="server" GroupName="Radiosbtn" OnCheckedChanged="RadioBtnAmbos_CheckedChanged" class="mt-2" Text="Ambas" AutoPostBack="True" Font-Bold="True" />
+                     </div>
+                       <div id="DivFiltroXMarca" class="col-xl-3 col-lg-3 col-md-3 col-xs-3 col-xs-3" runat="server" visible="true">
                     <asp:Label ID="Label1" runat="server" Text="Marca Producto" class="col-4 col-md-4 col-lg-4" Font-Bold="True"></asp:Label>
-                    <asp:TextBox ID="txtMarcaProductoFiltro"  placeholder="Ingrese marca del producto" class="col-lg-4 col-md-4 col-sm-4 col-xl-4 ml-3" runat="server"></asp:TextBox>
-                    <asp:LinkButton ID="btnBuscarXMarca"  CssClass="btn btn-outline-success col-lg-2 col-sm-2 col-md-2" runat="server" OnClick="btnBuscarXMarca_Click">Buscar</asp:LinkButton>
-                    </div>
-                    <div id="DivFiltroXCategoria" class="col-xl-7 col-lg-7 col-md-7 col-xs-7 col-xs-7" runat="server" visible ="false">
+                    <asp:DropDownList ID="ddlMarcaProductoFiltro" CssClass="form-select col-2 col-md-2 col-lg-2 col-sm-2 mb-3" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlSeleccionaFiltro_SelectedIndexChanged">
+                    </asp:DropDownList>
+                
+                     </div>
+                    <div id="DivFiltroXCategoria" class="col-xl-3 col-lg-3 col-md-3 col-xs-3 col-xs-3" runat="server" visible ="false">
                     <asp:Label ID="Label8" runat="server" Text="Categoría Producto" class="col-4 col-md-4 col-lg-4" Font-Bold="True"></asp:Label>
-                    <asp:TextBox ID="txtCategoriaFiltro"  placeholder="Ingrese categoría del producto" class="col-lg-4 col-md-4 col-sm-4 col-xl-4 ml-3" runat="server"></asp:TextBox>
-                    <asp:LinkButton ID="btnBuscarXCategoria" CssClass="btn btn-outline-success col-xl-2 col-lg-2 col-sm-2 col-md-2" runat="server" OnClick="btnBuscarXCategoria_Click">Buscar</asp:LinkButton>
+                    <asp:DropDownList ID="ddlCategoriaFiltro"  class="col-lg-4 col-md-4 col-sm-4 col-xl-4 ml-3" runat="server"></asp:DropDownList>
                  </div>
-                <asp:LinkButton ID="btnNuevoProducto" CssClass="btn btn-outline-danger col-xl-2 col-lg-2 col-sm-2 col-md-2" runat="server" OnClick="btnAgregarProducto_Click">Nuevo producto</asp:LinkButton>
+                      <div id="DivOrdenFiltro" class="col-xl-3 col-lg-3 col-md-3 col-xs-3 col-xs-3" runat="server" >
+                    <asp:Label ID="Label12" runat="server" Text="Orden:"  Font-Bold="True"></asp:Label>
+                    <asp:DropDownList ID="ddlOrden"  class="form-select col-2 col-md-2 col-lg-2 col-sm-2 mb-2" runat="server"></asp:DropDownList>
+                    <asp:LinkButton ID="LinkButton1" CssClass="btn btn-outline-success col-xl-1 col-lg-1 col-sm-1 col-md-1" runat="server" OnClick="btnBuscarXCategoria_Click"><i class="fa fa-search"></i></asp:LinkButton>
+                 </div>
+                <asp:LinkButton ID="btnNuevoProducto" CssClass="btn btn-outline-danger" Tooltip="Nuevo Producto" runat="server" OnClick="btnAgregarProducto_Click"><i class="fa fa-plus"></i></asp:LinkButton>
                 </div>
                 <hr />
                 <div class="form-row col-md-12 col-lg-12 col-sm-12 col-xl-12 mt-1"  >
@@ -35,9 +41,9 @@
                             OnRowEditing="GridViewProductos_RowEditing" OnRowUpdating="GridViewProductos_RowUpdated" CssClass="table table-light table-striped table-hover col-md-12 col-lg-12 col-sm-12 col-xl-12"
                             OnRowCancelingEdit="GridViewProductos_RowCancelingEdit" OnRowDeleting="GridViewProductos_OnRowDeleting" OnPageIndexChanging="GridViewProductos_PageIndexChanging" PageSize="5">
                             <Columns>
-                                <asp:TemplateField HeaderText="IdProducto" Visible="false">
+                                <asp:TemplateField HeaderText="CodigoProducto" Visible="true">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("ProductoId") %>' ReadOnly="True"></asp:Label>
+                                        <asp:Label ID="lblIdProducto" runat="server" Text='<%# Eval("CodigoProducto") %>' ReadOnly="True"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Nombre">
@@ -110,6 +116,8 @@
                     <div class="row text-center bg-light border border-dark offset-4 col-lg-4 col-sm-4 col-md-4 col-xl-4 col-xs-4" runat="server" id="DivNuevoProducto" visible="false">
                     <div class="form-row col-lg-12 col-sm-12 col-md-12 col-xl-12 col-xs-12 mt-2 p-2 ">
                         <h2 class="text-md-center col-lg-12 col-sm-12 col-md-12 col-xl-12 col-xs-12"> Productos </h2>
+                        <asp:Label ID="Label11" runat="server" Text="Código Producto:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
+                        <asp:TextBox ID="txtCodigoProducto" runat="server" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2"></asp:TextBox>
                         <asp:Label ID="Label2" runat="server" Text="Nombre:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
                         <asp:TextBox ID="txtNombreProducto" runat="server" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2"></asp:TextBox>
                         <asp:Label ID="Label3" runat="server" Text="Precio compra:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
@@ -117,10 +125,23 @@
                         <asp:Label ID="Label4" runat="server" Text="Precio venta:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
                         <asp:TextBox ID="txtPrecioVenta" runat="server" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2"></asp:TextBox>
                         <asp:Label ID="Label6" runat="server" Text="Marca:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
-                        <asp:TextBox ID="txtMarca" runat="server" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2"></asp:TextBox>
+                        <asp:DropDownList ID="ddlMarca" runat="server" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2"></asp:DropDownList>
+                      <div>
                         <asp:Label ID="Label7" runat="server" Text="Cantidad:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
                         <asp:TextBox ID="txtCantidad" runat="server" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2"></asp:TextBox>
-                        <asp:Label ID="Label5" runat="server" Text="Categoría:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
+                       <asp:Label ID="Label14" runat="server" Text="Unidad de Medida:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
+                       <asp:DropDownList ID="ddlUnidadMedida" runat="server" CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2"></asp:DropDownList>
+                          </div>
+                          <asp:Label ID="Label5" runat="server" Text="Imagenes:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
+                       <asp:FileUpload ID="fuImagenes" class="custom-file bg-light mt-3 bg-light border border-dark" runat="server" AllowMultiple="false" />
+                        <asp:Button ID="btnUpload" class="btn btn-outline-success  col-md-12 col-lg-12 col-sm-12 col-12 mt-1" runat="server" OnClick="btnUpload_Click" Text="Subir" />
+                        <asp:TextBox ID="txtURLs" Style="display: none;" runat="server"></asp:TextBox>
+                        <asp:GridView ID="GridView1" runat="server" Width="100%" RowStyle-HorizontalAlign="Center" RowStyle-CssClass="col-6 p-0" AutoGenerateColumns="false" ShowHeader="false" OnRowDataBound="GridView1_RowDataBound">
+                            <Columns>
+                                <asp:ImageField DataImageUrlField="Value" ControlStyle-Width="40%" />
+                            </Columns>
+                        </asp:GridView>
+                        <asp:Label ID="Label13" runat="server" Text="Categoria:" CssClass="col-md-5 col-lg-5 col-sm-5 col-md-5 col-xl-5 font-weight-bold text-left mt-2"></asp:Label>
                         <asp:DropDownList ID="lstCategorias" runat="server"  CssClass="col-md-7 col-lg-7 col-sm-7 col-md-7 col-xl-7 mt-2">
                         </asp:DropDownList>
                         <asp:LinkButton ID="linkNewCategoria" runat="server" OnClick="linkNewCategoria_Click" CssClass="col-12 col-md-12 col-lg-12 mt-3 ">Nueva Categoría</asp:LinkButton>

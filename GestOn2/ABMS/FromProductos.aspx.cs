@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.Data.Sql;
 using System.Web.UI.HtmlControls;
 using BibliotecaClases.Clases;
+using System.Drawing;
+using System.IO;
 
 namespace GestOn2.ABMS
 {
@@ -24,6 +26,9 @@ namespace GestOn2.ABMS
                 {
                     ListarProductos();
                     ListarCategorias();
+                    ListarMarcas();
+                    ListarUnidades();
+                    ListarOrden();
                 }
             }
         }
@@ -35,13 +40,58 @@ namespace GestOn2.ABMS
 
         //Listo categorias de productos en el ListBox
         public void ListarCategorias() {
-            lstCategorias.Items.Clear();    
-            lstCategorias.DataSource = Sistema.GetInstancia().ListadoCategorias();
+            List<CategoriaProducto> lista = Sistema.GetInstancia().ListadoCategorias();
+            lstCategorias.Items.Clear();
+            lstCategorias.DataSource = lista;
             lstCategorias.DataTextField = "NombreCategoria";
             lstCategorias.DataValueField = "IdCategoria";
-            lstCategorias.DataBind();  
+            lstCategorias.DataBind();
+            ddlCategoriaFiltro.Items.Clear();
+            ddlCategoriaFiltro.DataSource = lista;
+            ddlCategoriaFiltro.DataTextField = "NombreCategoria";
+            ddlCategoriaFiltro.DataValueField = "IdCategoria";
+            ddlCategoriaFiltro.DataBind();
         }
+        public void ListarMarcas()
+        {
+            List<Marca> lista = Sistema.GetInstancia().ListadoMarcas(); 
+            ddlMarcaProductoFiltro.Items.Clear();
+            ddlMarcaProductoFiltro.DataSource = lista;
+            ddlMarcaProductoFiltro.DataTextField = "NombreMarca";
+            ddlMarcaProductoFiltro.DataValueField = "IdMarca";
+            ddlMarcaProductoFiltro.DataBind();
+            ddlMarca.Items.Clear();
+            ddlMarca.DataSource = lista;
+            ddlMarca.DataTextField = "NombreMarca";
+            ddlMarca.DataValueField = "IdMarca";
+            ddlMarca.DataBind();
+        }
+        protected void ListarOrden()
+        {
+            List<String> lista = new List<string>();
+            lista.Add("A-Z");
+            lista.Add("Z-A");
+            lista.Add("Fecha Carga");
+            lista.Add("Codigo");
+            ddlOrden.Items.Clear();
+            ddlOrden.DataSource =lista;
+            ddlOrden.DataBind();
 
+
+        }
+        protected void ListarUnidades()
+        {
+            List<String> lista = new List<string>();
+            lista.Add("CM");
+            lista.Add("UNIDADES");
+            lista.Add("M");
+            lista.Add("MM");
+            ddlUnidadMedida.Items.Clear();
+            ddlUnidadMedida.DataSource = lista;
+            ddlUnidadMedida.DataBind();
+
+
+        }
         //Guardo el producto 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -58,7 +108,7 @@ namespace GestOn2.ABMS
                 lblInformativo.Visible = false;
                 lblInformativo.Text = "";
                 int cantidad = Int32.Parse(txtCantidad.Text);
-                String marca = txtMarca.Text;
+                int marca = int.Parse(ddlMarcaProductoFiltro.SelectedValue);
                 String nombre = txtNombreProducto.Text;
                 decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
                 int categoria = int.Parse(lstCategorias.SelectedValue);
@@ -66,7 +116,7 @@ namespace GestOn2.ABMS
                 CategoriaProducto cat = Sistema.GetInstancia().BuscarCategorias(categoria);
                 Producto p = new Producto();
                 p.Cantidad = cantidad;
-                p.ProductoMarca = marca;
+                p.IdMarca = marca;
                 p.ProductoNombre = nombre;
                 p.ProductoPrecioCompra = precioCompra;
                 p.ProductoPrecioVenta = PrecioVenta;
@@ -107,7 +157,7 @@ namespace GestOn2.ABMS
         //Valida si falta poner algun dato (retorna true en caso que falte alguno)
         public bool CompleteCampos() {
             if (String.IsNullOrEmpty(txtCantidad.Text) ||
-                String.IsNullOrEmpty(txtMarca.Text )||
+                
                 String.IsNullOrEmpty(txtNombreProducto.Text) ||
                 String.IsNullOrEmpty(txtPrecioCompra.Text) ||
                 String.IsNullOrEmpty(txtPrecioVenta.Text))
@@ -118,7 +168,7 @@ namespace GestOn2.ABMS
         //Vacia los campos de la pantalla excepto el id y los mensajes
         protected void VaciarCampos() {
             txtCantidad.Text = string.Empty;
-            txtMarca.Text = string.Empty;
+            ddlMarca.ClearSelection();
             txtNombreProducto.Text = string.Empty;
             txtPrecioCompra.Text = string.Empty;
             txtPrecioVenta.Text = string.Empty;
@@ -282,7 +332,7 @@ namespace GestOn2.ABMS
             GridViewRow row = GridViewProductos.Rows[e.RowIndex];
             int Id = Convert.ToInt32((row.FindControl("lblIdProducto") as Label).Text);
             string nombre = (row.FindControl("txtNombre") as TextBox).Text;
-            string marca = (row.FindControl("txtMarca") as TextBox).Text;
+            //string marca = (row.FindControl("txtMarca") as TextBox).Text;
             string cantidad = (row.FindControl("txtCantidad") as TextBox).Text;
             decimal preciocompra = decimal.Parse((row.FindControl("txtPrecioCompra") as TextBox).Text);
             decimal precioventa = decimal.Parse((row.FindControl("txtoPrecioVenta") as TextBox).Text);
@@ -294,7 +344,7 @@ namespace GestOn2.ABMS
                 Producto p = null;
                 p = Sistema.GetInstancia().BuscarProducto(Id);
                 p.ProductoNombre = nombre;
-                p.ProductoMarca = marca;
+               // p.IdMarca = marca;
                 p.ProductoPrecioCompra = preciocompra;
                 p.ProductoPrecioVenta = precioventa;
                 p.IdCategoria = IdCategoria;
@@ -331,48 +381,228 @@ namespace GestOn2.ABMS
 
         protected void btnBuscarXMarca_Click(object sender, EventArgs e)
         {
-            string marca = txtMarcaProductoFiltro.Text;
-            List<Producto> productos = Sistema.GetInstancia().ListadoProductoMarca(marca);
-            if (productos != null)
-            {
-                GridViewProductos.DataSource = productos;
-                GridViewProductos.DataBind();
-            }
+            //string marca = txtMarcaProductoFiltro.Text;
+            //List<Producto> productos = Sistema.GetInstancia().ListadoProductoMarca(marca);
+            //if (productos != null)
+            //{
+            //    GridViewProductos.DataSource = productos;
+            //    GridViewProductos.DataBind();
+            //}
         }
 
         protected void btnBuscarXCategoria_Click(object sender, EventArgs e)
         {
 
-            string categoria = txtCategoriaFiltro.Text;
-            CategoriaProducto idCat = Sistema.GetInstancia().BuscarIdCategoria(categoria);
-            if (idCat != null)
-            {
-                int cat = idCat.IdCategoria;
-                List<Producto> productos = Sistema.GetInstancia().ListadoProductoCategoria(cat);
-                if (productos != null)
-                {
-                    GridViewProductos.DataSource = productos;
-                    GridViewProductos.DataBind();
-                }
-            }
-            else {
-                List<Producto> productos = null;
-                GridViewProductos.DataSource = productos;
-                GridViewProductos.DataBind();
-            }
+            //string categoria = txtCategoriaFiltro.Text;
+            //CategoriaProducto idCat = Sistema.GetInstancia().BuscarIdCategoria(categoria);
+            //if (idCat != null)
+            //{
+            //    int cat = idCat.IdCategoria;
+            //    List<Producto> productos = Sistema.GetInstancia().ListadoProductoCategoria(cat);
+            //    if (productos != null)
+            //    {
+            //        GridViewProductos.DataSource = productos;
+            //        GridViewProductos.DataBind();
+            //    }
+            //}
+            //else {
+            //    List<Producto> productos = null;
+            //    GridViewProductos.DataSource = productos;
+            //    GridViewProductos.DataBind();
+            //}
         }
 
-        protected void ddlSeleccionaFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        protected void RadioBtnMarca_CheckedChanged(object sender, EventArgs e)
         {
-            if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("MarcaProducto"))
+            if (RadioBtnMarca.Checked)
             {
                 DivFiltroXCategoria.Visible = false;
                 DivFiltroXMarca.Visible = true;
             }
-            else if (ddlSeleccionaFiltro.SelectedItem.Value.Equals("CategoriaProducto"))
+            else
             {
                 DivFiltroXMarca.Visible = false;
                 DivFiltroXCategoria.Visible = true;
+            }
+            
+        }
+        protected void RadioBtnCategoria_CheckedChanged(object sender, EventArgs e)
+        {
+            if (RadioBtnCategoria.Checked)
+            {
+                DivFiltroXCategoria.Visible = true ;
+                DivFiltroXMarca.Visible = false;
+            }
+            else
+            {
+                DivFiltroXMarca.Visible = true;
+                DivFiltroXCategoria.Visible = false ;
+            }
+        }
+        protected void RadioBtnAmbos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (RadioBtnAmbos.Checked)
+            {
+                DivFiltroXCategoria.Visible = true;
+                DivFiltroXMarca.Visible = true;
+            }
+            else if (RadioBtnMarca.Checked)
+            {
+                DivFiltroXCategoria.Visible = false;
+                DivFiltroXMarca.Visible = true;
+            }
+            else if (RadioBtnCategoria.Checked)
+            {
+                DivFiltroXCategoria.Visible = true;
+                DivFiltroXMarca.Visible = false;
+            }
+            
+
+        }
+        protected void ddlSeleccionaFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        { }
+        protected void btnUpload_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                List<Imagen> imagenes = new List<Imagen>();
+                if (fuImagenes.HasFile)
+                {
+                    HttpPostedFile archivo = fuImagenes.PostedFile;
+                    if ((archivo != null) && (archivo.ContentLength > 0))
+                    {
+                        if (EsImagen(archivo) == false)
+                        {
+                            lblInformativo.Text = "Debe seleccionar una imagen.";
+                            return;
+                        }
+                    }
+
+
+                    int iFileSize = archivo.ContentLength;
+
+                    // todo bien subo la imagen
+                    string NombreArchivo = Path.GetFileNameWithoutExtension(fuImagenes.PostedFile.FileName);
+
+                    //CREO UNA IMAGEN BitMap
+                    System.Drawing.Bitmap imagen = new System.Drawing.Bitmap(archivo.InputStream);
+
+                    //Me fijo la orientacion por si necesito rotarla
+                    if (Array.IndexOf(imagen.PropertyIdList, 274) > -1)
+                    {
+                        var orientation = (int)imagen.GetPropertyItem(274).Value[0];
+                        switch (orientation)
+                        {
+                            case 1:
+                                break;
+                            case 2:
+                                imagen.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                                break;
+                            case 3:
+                                imagen.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                                break;
+                            case 4:
+                                imagen.RotateFlip(RotateFlipType.Rotate180FlipX);
+                                break;
+                            case 5:
+                                imagen.RotateFlip(RotateFlipType.Rotate90FlipX);
+                                break;
+                            case 6:
+                                imagen.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                                break;
+                            case 7:
+                                imagen.RotateFlip(RotateFlipType.Rotate270FlipX);
+                                break;
+                            case 8:
+                                imagen.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                                break;
+                        }
+                        imagen.RemovePropertyItem(274);
+                    }
+
+                    //Convierto la imagen en un cuadrado sin cambiar la resolucion
+                    imagen = (Bitmap)ImagenPad(imagen);
+
+                    //Creo un nombre de archivo con la fecha
+                    string nombrearchivo = string.Format("{0}_{1:yyyyMMddHHmmss}.{2}", NombreArchivo, DateTime.Now, "jpg");
+                    //Subo la imagen al servidor
+                    imagen.Save(Server.MapPath("~/Imagenes/" + nombrearchivo), System.Drawing.Imaging.ImageFormat.Jpeg);
+                    //Guardo el nombre de la imagen para guardarlo en la propiedad despues
+                    if (String.IsNullOrEmpty(txtURLs.Text))
+                    {
+                        txtURLs.Text = nombrearchivo;
+                    }
+                    else
+                    {
+                        txtURLs.Text = txtURLs.Text + "," + nombrearchivo;
+                    }
+                    CargarImagenes(imagenes);
+                    btnGuardar.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+        }
+        protected void CargarImagenes(List<Imagen> imagenes)
+        {
+            try
+            {
+                List<System.Web.UI.WebControls.ListItem> archivos = new List<System.Web.UI.WebControls.ListItem>();
+                foreach (Imagen i in imagenes)
+                {
+                    string pathImg = "~/Imagenes/" + i.ImagenURL;
+                    archivos.Add(new System.Web.UI.WebControls.ListItem(i.ImagenId.ToString(), pathImg));
+                }
+
+                //Recorro la lista de imagenes cargadas
+                String[] filePaths = txtURLs.Text.Split(char.Parse(","));
+                foreach (string filePath in filePaths)
+                {
+                    if (!String.IsNullOrEmpty(filePath))
+                    {
+                        string pathImg = "~/Imagenes/" + filePath;
+                        archivos.Add(new System.Web.UI.WebControls.ListItem(filePath, pathImg));
+                    }
+                }
+                GridView1.DataSource = archivos;
+                GridView1.DataBind();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+        private bool EsImagen(HttpPostedFile archivo)
+        {
+            return ((archivo != null) && System.Text.RegularExpressions.Regex.IsMatch(archivo.ContentType, "image/\\S+") && (archivo.ContentLength > 0));
+        }
+
+        public static System.Drawing.Image ImagenPad(System.Drawing.Image originalImage)
+        {
+            int largestDimension = Math.Max(originalImage.Height, originalImage.Width);
+            Size squareSize = new Size(largestDimension, largestDimension);
+            Bitmap squareImage = new Bitmap(squareSize.Width, squareSize.Height);
+            using (Graphics graphics = Graphics.FromImage(squareImage))
+            {
+                graphics.FillRectangle(Brushes.White, 0, 0, squareSize.Width, squareSize.Height);
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+                graphics.DrawImage(originalImage, (squareSize.Width / 2) - (originalImage.Width / 2), (squareSize.Height / 2) - (originalImage.Height / 2), originalImage.Width, originalImage.Height);
+            }
+            return squareImage;
+        }
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                //0 represents first column
+                System.Web.UI.WebControls.Image img = e.Row.Cells[0].Controls[0] as System.Web.UI.WebControls.Image;
+                img.Attributes.Add("onclick", "window.open('" + img.ImageUrl.Replace("~", "") + "', '_blank')");
             }
         }
 

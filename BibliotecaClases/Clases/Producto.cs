@@ -11,8 +11,8 @@ namespace BibliotecaClases.Clases
 {
     public class Producto
     {
-        [Key]
-        public int ProductoId { get; set; }
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CodigoProducto { get; set; }
         
         public string ProductoNombre{ get;set; }
 
@@ -26,9 +26,15 @@ namespace BibliotecaClases.Clases
         [ForeignKey("IdCategoria")]
         public CategoriaProducto Categoria { get; set; }
 
-        public string ProductoMarca { get; set; }
-
+        public int IdMarca { get; set; }
+        [ForeignKey("IdMarca")]
+        public Marca Marca { get; set; }
+        
         public int Cantidad { get; set; }
+
+        public string UnidadMedida { get; set; }
+
+         public DateTime FechaCarga { get; set; }
 
         public override string ToString()
         {

@@ -20,7 +20,7 @@ namespace Testing
             producto.ProductoPrecioVenta = 50;
             producto.ProductoPrecioCompra = 30;
             producto.IdCategoria =1;
-            producto.ProductoMarca = "Faber castell";
+            producto.IdMarca = 1;
             producto.Cantidad = 50;
 
             bool result = BibliotecaClases.Sistema.GetInstancia().GuardarProducto(producto, 1);
@@ -33,13 +33,13 @@ namespace Testing
         public void ModificarProductoTest()
         {
             BibliotecaClases.Clases.Producto producto = new BibliotecaClases.Clases.Producto();
-            producto.ProductoId = 1;
+            producto.CodigoProducto = 1;
             producto.Activo = true;
             producto.ProductoNombre = "Lapiz mecanico";
             producto.ProductoPrecioVenta = 80;
             producto.ProductoPrecioCompra = 30;
             producto.IdCategoria = 1;
-            producto.ProductoMarca = "Faber castell";
+            producto.IdMarca = 1;
             producto.Cantidad = 50;
 
             bool result = BibliotecaClases.Sistema.GetInstancia().ModificarProducto(producto);

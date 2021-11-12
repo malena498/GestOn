@@ -309,7 +309,7 @@ namespace GestOn2.ABMS
 
                     Session["Tabla"] = table;
 
-                    ListProductos1.Items.Remove(ListProductos1.Items.FindByValue(p.ProductoId.ToString()));
+                    ListProductos1.Items.Remove(ListProductos1.Items.FindByValue(p.CodigoProducto.ToString()));
                     GridViewProductosNuevo.DataSource = table;
                     GridViewProductosNuevo.DataBind();
                     

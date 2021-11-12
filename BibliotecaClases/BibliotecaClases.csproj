@@ -64,6 +64,7 @@
     <Compile Include="Clases\CategoriaProducto.cs" />
     <Compile Include="Clases\Configuracion.cs" />
     <Compile Include="Clases\Curso.cs" />
+    <Compile Include="Clases\Marca.cs" />
     <Compile Include="Clases\MateriaCursoDocente.cs" />
     <Compile Include="Clases\CursoEstudiante.cs" />
     <Compile Include="Clases\Imagen.cs" />

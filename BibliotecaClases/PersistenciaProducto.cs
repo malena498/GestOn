@@ -36,7 +36,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    Producto p = baseDatos.Productos.FirstOrDefault(de => de.ProductoId == id);
+                    Producto p = baseDatos.Productos.FirstOrDefault(de => de.CodigoProducto == id);
                     if (p != null)
                     {
                         p.Activo = false;
@@ -62,12 +62,12 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    Producto pr = baseDatos.Productos.Include("Categoria").SingleOrDefault(cl => cl.ProductoId == producto.ProductoId);
+                    Producto pr = baseDatos.Productos.Include("Categoria").SingleOrDefault(cl => cl.CodigoProducto == producto.CodigoProducto);
                     if (pr != null)
                     {
-                        pr.ProductoId = producto.ProductoId;
+                        pr.CodigoProducto = producto.CodigoProducto;
                         pr.IdCategoria = producto.IdCategoria;
-                        pr.ProductoMarca = producto.ProductoMarca;
+                        pr.IdMarca = producto.IdMarca;
                         pr.ProductoNombre = producto.ProductoNombre;
                         pr.ProductoPrecioCompra = producto.ProductoPrecioCompra;
                         pr.ProductoPrecioVenta = producto.ProductoPrecioVenta;
@@ -94,7 +94,7 @@ namespace BibliotecaClases
             {
                 using (var baseDatos = new Context())
                 {
-                    return baseDatos.Productos.Include("Categoria").FirstOrDefault(prop => prop.ProductoId == id);
+                    return baseDatos.Productos.Include("Categoria").FirstOrDefault(prop => prop.CodigoProducto == id);
                 }
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace BibliotecaClases
                 {
                     try
                     {
-                        List<Producto> productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoId).ToList();
+                        List<Producto> productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true).OrderBy(ej => ej.CodigoProducto).ToList();
                         return productos;
                     }
                     catch
@@ -154,14 +154,33 @@ namespace BibliotecaClases
             }
         }
 
-        public List<Producto> ListadoProductoMarca(string marca)
+        //public List<Producto> ListadoProductoMarca(string marca)
+        //{
+        //    try
+        //    {
+        //        List<Producto> productos = new List<Producto>();
+        //        using (var baseDatos = new Context())
+        //        {
+        //            productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true && ej.Marca.Contains(marca)).OrderBy(ej => ej.ProductoId).ToList();
+        //            return productos;
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        List<Producto> productos = null;
+        //        return productos;
+        //    }
+        //}
+
+        public List<Producto> ListadoProductoCategoria(int categoria)
         {
             try
             {
                 List<Producto> productos = new List<Producto>();
                 using (var baseDatos = new Context())
                 {
-                    productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true && ej.ProductoMarca.Contains(marca)).OrderBy(ej => ej.ProductoId).ToList();
+                    productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true && ej.IdCategoria == categoria).OrderBy(ej => ej.CodigoProducto).ToList();
                     return productos;
 
                 }
@@ -173,22 +192,22 @@ namespace BibliotecaClases
             }
         }
 
-        public List<Producto> ListadoProductoCategoria(int categoria)
+        public List<Marca> ListadoMarcas()
         {
             try
             {
-                List<Producto> productos = new List<Producto>();
+                List<Marca> marcas = new List<Marca>();
                 using (var baseDatos = new Context())
                 {
-                    productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true && ej.IdCategoria == categoria).OrderBy(ej => ej.ProductoId).ToList();
-                    return productos;
+                    marcas = baseDatos.Marcas.OrderBy(ej => ej.NombreMarca).ToList();
+                    return marcas;
 
                 }
             }
             catch (Exception ex)
             {
-                List<Producto> productos = null;
-                return productos;
+                List<Marca> marcas = null;
+                return marcas;
             }
         }
 
