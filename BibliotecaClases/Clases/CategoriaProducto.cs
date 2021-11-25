@@ -16,5 +16,6 @@ namespace BibliotecaClases.Clases
 
         public String NombreCategoria { get; set; }
 
+        public int porcentaje { get; set; }
     }
 }

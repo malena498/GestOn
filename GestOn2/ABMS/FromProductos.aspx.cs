@@ -25,8 +25,8 @@ namespace GestOn2.ABMS
                 if (!Page.IsPostBack)
                 {
                     ListarProductos();
-                    ListarCategorias();
-                    ListarMarcas();
+                    //ListarCategorias();
+                    //ListarMarcas();
                     ListarUnidades();
                     ListarOrden();
                 }
@@ -108,10 +108,10 @@ namespace GestOn2.ABMS
                 lblInformativo.Visible = false;
                 lblInformativo.Text = "";
                 int cantidad = Int32.Parse(txtCantidad.Text);
-                int marca = int.Parse(ddlMarcaProductoFiltro.SelectedValue);
+                int marca = int.Parse(ddlMarcaProductoFiltro.SelectedItem.Value);
                 String nombre = txtNombreProducto.Text;
                 decimal precioCompra = decimal.Parse(txtPrecioCompra.Text);
-                int categoria = int.Parse(lstCategorias.SelectedValue);
+                int categoria = int.Parse(lstCategorias.SelectedItem.Value);
                 decimal PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
                 CategoriaProducto cat = Sistema.GetInstancia().BuscarCategorias(categoria);
                 Producto p = new Producto();
@@ -177,7 +177,6 @@ namespace GestOn2.ABMS
         //Muestro el panel de edicion de categoria de productos
         protected void linkNewCategoria_Click(object sender, EventArgs e)
         {
-            pnlNuevaCat.Visible = true;
         }
 
         //Busco categoria de productos a través de la id
@@ -294,13 +293,6 @@ namespace GestOn2.ABMS
             }
         }
 
-        protected void btnClosePanel_Click(object sender, EventArgs e)
-        {
-            pnlNuevaCat.Visible = false;
-            txtIdCat.Text = "";
-            txtNomCat.Text = "";
-        }
-
         protected void GridViewProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridViewProductos.PageIndex = e.NewPageIndex;
@@ -317,6 +309,12 @@ namespace GestOn2.ABMS
                     ddlCategoria.DataTextField = "NombreCategoria";
                     ddlCategoria.DataValueField = "IdCategoria";
                     ddlCategoria.DataBind();
+
+                DropDownList ddlMarca = (DropDownList)e.Row.FindControl("ddlMarca");
+                ddlMarca.DataSource = Sistema.GetInstancia().ListadoMarcas();
+                ddlMarca.DataTextField = "NombreMarca";
+                ddlMarca.DataValueField = "IdMarca";
+                ddlMarca.DataBind();
             }
         }
 
@@ -332,7 +330,7 @@ namespace GestOn2.ABMS
             GridViewRow row = GridViewProductos.Rows[e.RowIndex];
             int Id = Convert.ToInt32((row.FindControl("lblIdProducto") as Label).Text);
             string nombre = (row.FindControl("txtNombre") as TextBox).Text;
-            //string marca = (row.FindControl("txtMarca") as TextBox).Text;
+            int marca = Convert.ToInt32((row.FindControl("ddlMarca") as DropDownList).SelectedValue);
             string cantidad = (row.FindControl("txtCantidad") as TextBox).Text;
             decimal preciocompra = decimal.Parse((row.FindControl("txtPrecioCompra") as TextBox).Text);
             decimal precioventa = decimal.Parse((row.FindControl("txtoPrecioVenta") as TextBox).Text);
@@ -344,7 +342,7 @@ namespace GestOn2.ABMS
                 Producto p = null;
                 p = Sistema.GetInstancia().BuscarProducto(Id);
                 p.ProductoNombre = nombre;
-               // p.IdMarca = marca;
+                p.IdMarca = marca;
                 p.ProductoPrecioCompra = preciocompra;
                 p.ProductoPrecioVenta = precioventa;
                 p.IdCategoria = IdCategoria;
@@ -354,7 +352,7 @@ namespace GestOn2.ABMS
                 {
                     lblInformativo.Visible = true;
                     lblInformativo.Text = "Se modificó con éxito";
-                   GridViewProductos.EditIndex = -1;
+                    GridViewProductos.EditIndex = -1;
                     ListarProductos();
                 }
         }
@@ -412,55 +410,23 @@ namespace GestOn2.ABMS
             //}
         }
 
-        protected void RadioBtnMarca_CheckedChanged(object sender, EventArgs e)
-        {
-            if (RadioBtnMarca.Checked)
-            {
-                DivFiltroXCategoria.Visible = false;
-                DivFiltroXMarca.Visible = true;
-            }
-            else
-            {
-                DivFiltroXMarca.Visible = false;
-                DivFiltroXCategoria.Visible = true;
-            }
-            
-        }
-        protected void RadioBtnCategoria_CheckedChanged(object sender, EventArgs e)
-        {
-            if (RadioBtnCategoria.Checked)
-            {
-                DivFiltroXCategoria.Visible = true ;
-                DivFiltroXMarca.Visible = false;
-            }
-            else
-            {
-                DivFiltroXMarca.Visible = true;
-                DivFiltroXCategoria.Visible = false ;
-            }
-        }
-        protected void RadioBtnAmbos_CheckedChanged(object sender, EventArgs e)
-        {
-            if (RadioBtnAmbos.Checked)
-            {
-                DivFiltroXCategoria.Visible = true;
-                DivFiltroXMarca.Visible = true;
-            }
-            else if (RadioBtnMarca.Checked)
-            {
-                DivFiltroXCategoria.Visible = false;
-                DivFiltroXMarca.Visible = true;
-            }
-            else if (RadioBtnCategoria.Checked)
-            {
-                DivFiltroXCategoria.Visible = true;
-                DivFiltroXMarca.Visible = false;
-            }
-            
-
-        }
         protected void ddlSeleccionaFiltro_SelectedIndexChanged(object sender, EventArgs e)
-        { }
+        {
+            if (DropFiltros.SelectedItem.Value == "Categoría")
+            {
+                DivFiltroXMarca.Visible = false;
+                DivFiltroXCategoria.Visible = true;
+            }
+            else if (DropFiltros.SelectedItem.Value == "Marca")
+            {
+                DivFiltroXCategoria.Visible = false;
+                DivFiltroXMarca.Visible = true;
+            }
+            else {
+                DivFiltroXCategoria.Visible = true;
+                DivFiltroXMarca.Visible = true;
+            }
+        }
         protected void btnUpload_Click(object sender, EventArgs e)
         {
             try
@@ -610,6 +576,7 @@ namespace GestOn2.ABMS
         {
             DivFiltros.Visible = false;
             GVProductos.Visible = false;
+            DivOrdenFiltro.Visible = false;
             DivNuevoProducto.Visible = true;
         }
 
@@ -618,6 +585,11 @@ namespace GestOn2.ABMS
             DivNuevoProducto.Visible = false;
             DivFiltros.Visible = true;
             GVProductos.Visible = true;
+        }
+
+        //Muestro el panel de edicion de marcas de productos
+        protected void linkNewMarca_Click(object sender, EventArgs e)
+        {
         }
     }
 }

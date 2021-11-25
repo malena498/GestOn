@@ -113,12 +113,12 @@ namespace BibliotecaClases
                 {
                     try
                     {
-                        List<Producto> productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true).OrderBy(ej => ej.CodigoProducto).ToList();
+                        List<Producto> productos = baseDatos.Productos.Include("Categoria").Include("Marca").Where(ej => ej.Activo == true).OrderBy(ej => ej.CodigoProducto).ToList();
                         return productos;
                     }
                     catch
                     {
-                        List<Producto> productos = baseDatos.Productos.Include("Categoria").Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoNombre).ToList();
+                        List<Producto> productos = baseDatos.Productos.Include("Categoria").Include("Marca").Where(ej => ej.Activo == true).OrderBy(ej => ej.ProductoNombre).ToList();
                         return productos;
                     }
                 }

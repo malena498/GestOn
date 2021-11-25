@@ -36,6 +36,10 @@ namespace BibliotecaClases.Clases
 
          public DateTime FechaCarga { get; set; }
 
+        public string Iva { get; set; }
+
+        public int StockMinimo { get; set; }
+
         public override string ToString()
         {
             return ProductoNombre.ToString();
